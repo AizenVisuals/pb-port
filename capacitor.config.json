@@ -1,0 +1,19 @@
+{
+  "appId": "app.pulsearena.game",
+  "appName": "PULSE ARENA",
+  "webDir": "dist-android",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  },
+  "plugins": {
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#10151D"
+    }
+  }
+}

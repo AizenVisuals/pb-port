@@ -5,3 +5,6 @@ research/rea-client-evidence.json
 
 __pycache__/
 *.pyc
+
+dist-android/
+artifacts/

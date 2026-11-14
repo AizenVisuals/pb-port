@@ -6,10 +6,22 @@
   "scripts": {
     "start": "node server/index.mjs",
     "test": "node --test test/*.test.mjs",
-    "dev": "node server/index.mjs"
+    "dev": "node server/index.mjs",
+    "android:package": "node scripts/package-android.mjs",
+    "android:sync": "npm run android:package && cap sync android",
+    "android:build": "node scripts/android-build.mjs"
   },
   "dependencies": {
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/screen-orientation": "^8.0.2",
+    "@capacitor/status-bar": "^8.0.4",
     "@napi-rs/canvas": "^0.1.80",
     "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.6.2",
+    "esbuild": "^0.28.2"
   }
 }
