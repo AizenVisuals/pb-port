@@ -45,3 +45,7 @@ Cooldowns conservadores de cobertura: socos elementais 4s, Drain Punch 7s, Hex 8
 O visual descartado de uma camada de chamas sobre o corpo normal não foi publicado. A versão final usa sprites completos gerados para repouso e ataque, em oito direções, com rosto integrado ao capuz, olhos laranja, marcas vermelhas, braços e prolongamentos de chama verde/amarelo. As duas sequências são adaptadas aos tempos dos estados do motor e usam âncoras próprias; não são 36 novas animações desenhadas à mão. Em dano, carga e movimento, o motor reutiliza poses e transformações dessas sequências; em Faint o sprite esmaece. Créditos e proveniência estão em /credits.html e research/MEGA-MARSHADOW-ART.json.
 
 Amostra inicial Mega vs outras Megas: 23 vitórias em 48 duelos de bots nível 3, quatro seeds e ambos os lados. Charizard 3/8, Gardevoir 3/8, Metagross 1/8, Blastoise 5/8, Venusaur 4/8, Gengar 7/8. Isso é um smoke test de equilíbrio, não uma estimativa de ranked. JSON completo em research/marshadow-mega-balance.json. O mesmo pool de quatro golpes iniciais foi usado em todos os confrontos; não se avaliou cada combinação dos 28 golpes.
+
+### Carregamento dos sprites
+
+A Mega é entregue em folhas pré-processadas em `public/baked2/0802mega/`, com metadados de offsets próprios e células 64×64. O runtime carrega esses PNGs diretamente. `node scripts/bake-mega-marshadow.mjs` reproduz o pré-processamento a partir dos atlases gerados; não é necessário gerar as folhas na inicialização de cada servidor. Isso reduz as alocações transitórias de imagens durante o carregamento.
