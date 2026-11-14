@@ -15,7 +15,7 @@ let saving = Promise.resolve();
 const save = () => { const snapshot = JSON.stringify(players); saving = saving.then(async () => { await writeFile(storePath+'.tmp', snapshot, { mode: 0o600 }); await rename(storePath+'.tmp', storePath); }).catch(console.error); };
 const clients = new Set(), queue = [], matches = new Map();
 const json = (res, status, value) => { res.writeHead(status, {'content-type':'application/json; charset=utf-8'}); res.end(JSON.stringify(value)); };
-const mime = {'.html':'text/html','.js':'text/javascript','.json':'application/json','.css':'text/css','.png':'image/png','.ttf':'font/ttf','.ogg':'audio/ogg','.mp3':'audio/mpeg','.wav':'audio/wav','.svg':'image/svg+xml'};
+const mime = {'.html':'text/html','.js':'text/javascript','.json':'application/json','.css':'text/css','.png':'image/png','.woff2':'font/woff2','.ttf':'font/ttf','.ogg':'audio/ogg','.mp3':'audio/mpeg','.wav':'audio/wav','.svg':'image/svg+xml'};
 const server = http.createServer(async (req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);

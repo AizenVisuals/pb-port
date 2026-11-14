@@ -1,0 +1,82 @@
+[
+  {
+    "path": "/doll.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/doll.js",
+    "sha256": "5152e4b3b2a3296bf6016ad05c6a9150686a0110575ef083730b80f81c8792da"
+  },
+  {
+    "path": "/fonts/archivo-black-latin-400-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/archivo-black-latin-400-normal.woff2",
+    "sha256": "25f33e61cf995abd6be62931cf03bf427286259177b43618cc410ee0157cfd30"
+  },
+  {
+    "path": "/fonts/archivo-latin-wght-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/archivo-latin-wght-normal.woff2",
+    "sha256": "8f704806dbedeaaeca334b11ec348bc3ac3a439d6431544b3afb54f534ee4967"
+  },
+  {
+    "path": "/fonts/atkinson-hyperlegible-latin-400-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/atkinson-hyperlegible-latin-400-normal.woff2",
+    "sha256": "d64ba838ef5472bba248620ec4fd8b5aa7cf0db2908e0bb230600caf279ba7bc"
+  },
+  {
+    "path": "/fonts/atkinson-hyperlegible-latin-700-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/atkinson-hyperlegible-latin-700-normal.woff2",
+    "sha256": "140e2bd25a7315c8a062508391426b0d8c3297400c947b8d847be28f73a199f0"
+  },
+  {
+    "path": "/fonts/barlow-condensed-latin-700-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/barlow-condensed-latin-700-normal.woff2",
+    "sha256": "3787a5a419171630e6890cfa47c4da067474d005cd0ff8dc11ec090fdc3ee2b8"
+  },
+  {
+    "path": "/fonts/barlow-condensed-latin-800-italic.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/barlow-condensed-latin-800-italic.woff2",
+    "sha256": "59b48100622b2dea5b10bbf9e98d02eecf20ea8ae000821877f2d470ec16ee55"
+  },
+  {
+    "path": "/fonts/barlow-condensed-latin-800-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/barlow-condensed-latin-800-normal.woff2",
+    "sha256": "2515494e8cc2ca07c86ea78766cfa104b796aa6ed5d66821c01d51dbb0b52bce"
+  },
+  {
+    "path": "/fonts/barlow-latin-400-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/barlow-latin-400-normal.woff2",
+    "sha256": "b0a8ad37ac45f5fb22ced461576db72e44e295107aad7a9c8a7a4bad728fd03b"
+  },
+  {
+    "path": "/fonts/barlow-latin-600-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/barlow-latin-600-normal.woff2",
+    "sha256": "4b52ddd4836b592df0e4832b8286956883cdc651b015126bdd18f184b7f90cc3"
+  },
+  {
+    "path": "/fonts/barlow-latin-700-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/barlow-latin-700-normal.woff2",
+    "sha256": "2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289"
+  },
+  {
+    "path": "/fonts/jetbrains-mono-latin-wght-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/jetbrains-mono-latin-wght-normal.woff2",
+    "sha256": "18be452724bfdc236c074ca94a249a7f41a86752c7d04ab258ce9ed5651f6a7e"
+  },
+  {
+    "path": "/fonts/nunito-latin-ext-wght-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/nunito-latin-ext-wght-normal.woff2",
+    "sha256": "f682eec1df25f15ca443164ee0cddcce91aad4d87ca5153f2d4267d08ce12982"
+  },
+  {
+    "path": "/fonts/nunito-latin-wght-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/nunito-latin-wght-normal.woff2",
+    "sha256": "1a48b70f97555c13f84b8f088a417f9179d99b5101250819350acaf6e91bb92f"
+  },
+  {
+    "path": "/fonts/pixelify-sans-latin-wght-normal.woff2",
+    "url": "https://ranked.pokemonbattlegrounds.com/fonts/pixelify-sans-latin-wght-normal.woff2",
+    "sha256": "4a5633a0c9c1b73abd133a56d3716c2d8df2ed03cb987346f72194aeb224f382"
+  },
+  {
+    "path": "/dollstrip.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/dollstrip.js",
+    "sha256": "b35020fb37e0da4e3710696f75f107dd49b1feb55b347e60dd4c52fc6d3c6a37"
+  }
+]
