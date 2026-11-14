@@ -1,4 +1,15 @@
-import { createCanvas, ImageData, GlobalFonts, Image } from '@napi-rs/canvas';
+import { createRequire } from 'node:module';
+const require=createRequire(import.meta.url);
+// Capture native drawing before canvas installs its bundler compatibility wrapper.
+const binding=require('@napi-rs/canvas/js-binding.js');
+const nativeDrawImage=binding.CanvasRenderingContext2D.prototype.drawImage;
+const {createCanvas,ImageData,GlobalFonts,Image}=require('@napi-rs/canvas');
+const compatibleDrawImage=binding.CanvasRenderingContext2D.prototype.drawImage;
+// The engine adds getContext() to native Images. The library's bundler wrapper
+// mistakes these for canvases and changes their prototype, causing a native crash.
+binding.CanvasRenderingContext2D.prototype.drawImage=function(image,...args){
+  return (image instanceof Image?nativeDrawImage:compatibleDrawImage).call(this,image,...args);
+};
 import { readFile } from 'node:fs/promises';
 import { resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,8 +25,11 @@ globalThis.document = {
   fonts: { add() {} },
 };
 globalThis.ImageData = ImageData;
+globalThis.HTMLCanvasElement = binding.CanvasElement;
+globalThis.OffscreenCanvas = binding.CanvasElement;
+globalThis.Path2D = binding.Path;
 globalThis.FontFace = class { constructor(name, url) { this.name = name; this.url = url; } async load() { const path = this.url.match(/url\((.*?)\)/)?.[1]; if (path) GlobalFonts.registerFromPath(localPath(path), this.name); return this; } };
-globalThis.Image = class extends Image { set src(path) { readFile(localPath(path)).then(bytes => { super.src = bytes; }).catch(e => this.onerror?.(e)); } };
+globalThis.Image = class extends Image { get src() { return super.src; } set src(path) { readFile(localPath(path)).then(bytes => { super.src = bytes; }).catch(e => this.onerror?.(e)); } };
 globalThis.fetch = async path => { const bytes = await readFile(localPath(path)); return { ok: true, json: async () => JSON.parse(bytes), text: async () => bytes.toString(), arrayBuffer: async () => bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) }; };
 export const engine = await import('../public/engine.bundle.js');
 export async function createSimulation(seed, teams, arena) {

@@ -1,0 +1,2800 @@
+{
+  "scope": "Static AST inspection; no per-move battle execution",
+  "moveDefinitions": 838,
+  "affectedCandidates": [
+    {
+      "name": "Fury Cutter",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7956715,
+      "end": 7962309
+    },
+    {
+      "name": "X-Scissor",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7951785,
+      "end": 7956509
+    },
+    {
+      "name": "Low Kick",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7940540,
+      "end": 7944296
+    },
+    {
+      "name": "Knock Off",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7934776,
+      "end": 7939320
+    },
+    {
+      "name": "Triple Axel",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7929680,
+      "end": 7934666
+    },
+    {
+      "name": "Focus Blast",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7910304,
+      "end": 7915424
+    },
+    {
+      "name": "Water Shuriken",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7905379,
+      "end": 7910299
+    },
+    {
+      "name": "Night Slash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7885331,
+      "end": 7890035
+    },
+    {
+      "name": "Close Combat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7875063,
+      "end": 7881074
+    },
+    {
+      "name": "Megahorn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7870165,
+      "end": 7875058
+    },
+    {
+      "name": "Lunge",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7839989,
+      "end": 7844078
+    },
+    {
+      "name": "Hammer Arm",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7826687,
+      "end": 7831434
+    },
+    {
+      "name": "Brick Break",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7778053,
+      "end": 7782781
+    },
+    {
+      "name": "X-Scissor",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7769878,
+      "end": 7774710
+    },
+    {
+      "name": "Bullet Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7766551,
+      "end": 7769873
+    },
+    {
+      "name": "Poison Jab",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7736156,
+      "end": 7740036
+    },
+    {
+      "name": "Bug Buzz",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7726209,
+      "end": 7729783
+    },
+    {
+      "name": "High Jump Kick",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7719128,
+      "end": 7726204
+    },
+    {
+      "name": "Iron Head",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7694348,
+      "end": 7699343
+    },
+    {
+      "name": "Flamethrower",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7685382,
+      "end": 7692759
+    },
+    {
+      "name": "Bug Buzz",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7677999,
+      "end": 7684639
+    },
+    {
+      "name": "Leech Life",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7646439,
+      "end": 7652091
+    },
+    {
+      "name": "Iron Head",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7641944,
+      "end": 7645703
+    },
+    {
+      "name": "Liquidation",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7635815,
+      "end": 7641110
+    },
+    {
+      "name": "First Impression",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7630120,
+      "end": 7634894
+    },
+    {
+      "name": "Iron Head",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7612917,
+      "end": 7617039
+    },
+    {
+      "name": "Water Shuriken",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7565214,
+      "end": 7568350
+    },
+    {
+      "name": "Knock Off",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7527856,
+      "end": 7532592
+    },
+    {
+      "name": "Blaze Kick",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7516583,
+      "end": 7521977
+    },
+    {
+      "name": "Psychic Fangs",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7158777,
+      "end": 7165062
+    },
+    {
+      "name": "Swords Dance",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 7126814,
+      "end": 7132404
+    },
+    {
+      "name": "Knock Off",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 7110155,
+      "end": 7113880
+    },
+    {
+      "name": "Dragon Dance",
+      "flags": [
+        "createRadialGradient"
+      ],
+      "start": 7096114,
+      "end": 7104775
+    },
+    {
+      "name": "Dark Pulse",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6991189,
+      "end": 7001554
+    },
+    {
+      "name": "Fly",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6943157,
+      "end": 6947532
+    },
+    {
+      "name": "Psyshock",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6934331,
+      "end": 6938924
+    },
+    {
+      "name": "Poltergeist",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6919832,
+      "end": 6923719
+    },
+    {
+      "name": "Flip Turn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6915358,
+      "end": 6919409
+    },
+    {
+      "name": "Low Kick",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6905856,
+      "end": 6907727
+    },
+    {
+      "name": "Triple Axel",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6903104,
+      "end": 6905308
+    },
+    {
+      "name": "Bullet Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6886266,
+      "end": 6888789
+    },
+    {
+      "name": "Mach Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6878855,
+      "end": 6881769
+    },
+    {
+      "name": "U-turn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6874069,
+      "end": 6878850
+    },
+    {
+      "name": "Close Combat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6863247,
+      "end": 6867880
+    },
+    {
+      "name": "Dragon Dance",
+      "flags": [
+        "createRadialGradient"
+      ],
+      "start": 6848845,
+      "end": 6857498
+    },
+    {
+      "name": "Knock Off",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6835133,
+      "end": 6839640
+    },
+    {
+      "name": "Stone Edge",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6824693,
+      "end": 6833334
+    },
+    {
+      "name": "Focus Blast",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6798618,
+      "end": 6803452
+    },
+    {
+      "name": "Earthquake",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6775945,
+      "end": 6781707
+    },
+    {
+      "name": "Dragon Claw",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6771606,
+      "end": 6775941
+    },
+    {
+      "name": "Dual Wingbeat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6766928,
+      "end": 6771601
+    },
+    {
+      "name": "Focus Energy",
+      "flags": [
+        "createRadialGradient"
+      ],
+      "start": 6748408,
+      "end": 6751511
+    },
+    {
+      "name": "Snipe Shot",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6736378,
+      "end": 6742039
+    },
+    {
+      "name": "Hyper Beam",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6720509,
+      "end": 6730787
+    },
+    {
+      "name": "Extreme Speed",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6702274,
+      "end": 6709415
+    },
+    {
+      "name": "Dragon Ascent",
+      "flags": [
+        "afterimage",
+        "createLinearGradient"
+      ],
+      "start": 6681753,
+      "end": 6702269
+    },
+    {
+      "name": "Autotomize",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6666349,
+      "end": 6670415
+    },
+    {
+      "name": "Fire Punch",
+      "flags": [
+        "afterimage",
+        "createRadialGradient"
+      ],
+      "start": 6663016,
+      "end": 6665712
+    },
+    {
+      "name": "Moonlight",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 6644228,
+      "end": 6645018
+    },
+    {
+      "name": "Acrobatics",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6621494,
+      "end": 6626590
+    },
+    {
+      "name": "Floral Healing",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 6615722,
+      "end": 6621112
+    },
+    {
+      "name": "Cross Poison",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6571123,
+      "end": 6577995
+    },
+    {
+      "name": "Drill Run",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6533134,
+      "end": 6537179
+    },
+    {
+      "name": "Crush Claw",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6498424,
+      "end": 6501323
+    },
+    {
+      "name": "Moonlight",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 6433982,
+      "end": 6437381
+    },
+    {
+      "name": "Swords Dance",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 6424104,
+      "end": 6429219
+    },
+    {
+      "name": "Iron Head",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6418408,
+      "end": 6424100
+    },
+    {
+      "name": "Crunch",
+      "flags": [
+        "createRadialGradient"
+      ],
+      "start": 6404101,
+      "end": 6407924
+    },
+    {
+      "name": "Phantom Force",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6355254,
+      "end": 6359082
+    },
+    {
+      "name": "Shadow Claw",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6352324,
+      "end": 6355249
+    },
+    {
+      "name": "X-Scissor",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6349593,
+      "end": 6352319
+    },
+    {
+      "name": "Night Slash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6331920,
+      "end": 6335947
+    },
+    {
+      "name": "Body Slam",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6289212,
+      "end": 6293513
+    },
+    {
+      "name": "Giga Impact",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6282086,
+      "end": 6289207
+    },
+    {
+      "name": "Crunch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6262389,
+      "end": 6265944
+    },
+    {
+      "name": "Fire Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6239646,
+      "end": 6244341
+    },
+    {
+      "name": "Earthquake",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6233414,
+      "end": 6238959
+    },
+    {
+      "name": "Dragon Claw",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6228236,
+      "end": 6233409
+    },
+    {
+      "name": "Leaf Blade",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6205883,
+      "end": 6209811
+    },
+    {
+      "name": "Mach Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6181798,
+      "end": 6185766
+    },
+    {
+      "name": "Focus Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6174428,
+      "end": 6181704
+    },
+    {
+      "name": "Fake Out",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6160208,
+      "end": 6163222
+    },
+    {
+      "name": "U-turn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6138154,
+      "end": 6142447
+    },
+    {
+      "name": "High Horsepower",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6100632,
+      "end": 6107356
+    },
+    {
+      "name": "Waterfall",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6094616,
+      "end": 6099731
+    },
+    {
+      "name": "Wave Crash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6088650,
+      "end": 6094107
+    },
+    {
+      "name": "Waterfall",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6073363,
+      "end": 6081442
+    },
+    {
+      "name": "Flip Turn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6061508,
+      "end": 6073152
+    },
+    {
+      "name": "Blast Burn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6035383,
+      "end": 6041422
+    },
+    {
+      "name": "High Jump Kick",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6027895,
+      "end": 6034375
+    },
+    {
+      "name": "Sky Uppercut",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6022843,
+      "end": 6027532
+    },
+    {
+      "name": "Blaze Kick",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6016760,
+      "end": 6022232
+    },
+    {
+      "name": "Knock Off",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6009599,
+      "end": 6015141
+    },
+    {
+      "name": "Stone Edge",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 6001274,
+      "end": 6009276
+    },
+    {
+      "name": "Swords Dance",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5995705,
+      "end": 6000675
+    },
+    {
+      "name": "Close Combat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5988465,
+      "end": 5994922
+    },
+    {
+      "name": "Flare Blitz",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5981172,
+      "end": 5987134
+    },
+    {
+      "name": "Ice Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5947048,
+      "end": 5952876
+    },
+    {
+      "name": "Hammer Arm",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5928424,
+      "end": 5935103
+    },
+    {
+      "name": "Surf",
+      "flags": [
+        "actor.draw"
+      ],
+      "start": 5921359,
+      "end": 5928308
+    },
+    {
+      "name": "Quick Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5880132,
+      "end": 5882430
+    },
+    {
+      "name": "Wing Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5877511,
+      "end": 5880127
+    },
+    {
+      "name": "Tackle",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5870367,
+      "end": 5872645
+    },
+    {
+      "name": "Dig",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5867109,
+      "end": 5870362
+    },
+    {
+      "name": "Rock Smash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5864437,
+      "end": 5866542
+    },
+    {
+      "name": "Body Slam",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5854349,
+      "end": 5857309
+    },
+    {
+      "name": "Sleep Talk",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5843354,
+      "end": 5845442
+    },
+    {
+      "name": "Heat Wave",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 5798776,
+      "end": 5803483
+    },
+    {
+      "name": "Drill Peck",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5786615,
+      "end": 5792725
+    },
+    {
+      "name": "Superpower",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5773229,
+      "end": 5777335
+    },
+    {
+      "name": "Crunch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5745236,
+      "end": 5749919
+    },
+    {
+      "name": "Extreme Speed",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5739839,
+      "end": 5743844
+    },
+    {
+      "name": "Giga Impact",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5709252,
+      "end": 5713707
+    },
+    {
+      "name": "Luster Purge",
+      "flags": [
+        "afterimage",
+        "createLinearGradient"
+      ],
+      "start": 5704800,
+      "end": 5709247
+    },
+    {
+      "name": "Dream Eater",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5686138,
+      "end": 5691982
+    },
+    {
+      "name": "Skull Bash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5658496,
+      "end": 5662514
+    },
+    {
+      "name": "Bite",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5651116,
+      "end": 5654752
+    },
+    {
+      "name": "Close Combat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5646824,
+      "end": 5650585
+    },
+    {
+      "name": "Megahorn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5642732,
+      "end": 5646819
+    },
+    {
+      "name": "Double Kick",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5621602,
+      "end": 5625395
+    },
+    {
+      "name": "Body Slam",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5610718,
+      "end": 5613244
+    },
+    {
+      "name": "Body Slam",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5592619,
+      "end": 5596879
+    },
+    {
+      "name": "Poison Jab",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5582952,
+      "end": 5585824
+    },
+    {
+      "name": "Body Slam",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5576525,
+      "end": 5581591
+    },
+    {
+      "name": "Steel Wing",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5553916,
+      "end": 5557203
+    },
+    {
+      "name": "Metal Claw",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5548012,
+      "end": 5551382
+    },
+    {
+      "name": "Quick Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5545301,
+      "end": 5547990
+    },
+    {
+      "name": "Wing Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5528122,
+      "end": 5532910
+    },
+    {
+      "name": "Thunder Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5523067,
+      "end": 5527373
+    },
+    {
+      "name": "Take Down",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5498418,
+      "end": 5502393
+    },
+    {
+      "name": "Rollout",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5488033,
+      "end": 5492104
+    },
+    {
+      "name": "Seismic Toss",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5466558,
+      "end": 5471483
+    },
+    {
+      "name": "Headbutt",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5456945,
+      "end": 5460086
+    },
+    {
+      "name": "Headbutt",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5453958,
+      "end": 5456923
+    },
+    {
+      "name": "Fury Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5436965,
+      "end": 5440409
+    },
+    {
+      "name": "Take Down",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5426435,
+      "end": 5430990
+    },
+    {
+      "name": "Horn Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5422916,
+      "end": 5426430
+    },
+    {
+      "name": "Dragon Claw",
+      "flags": [
+        "actor.draw"
+      ],
+      "start": 5403282,
+      "end": 5412181
+    },
+    {
+      "name": "Extreme Speed",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5394567,
+      "end": 5398791
+    },
+    {
+      "name": "Dragon Claw",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5358045,
+      "end": 5364451
+    },
+    {
+      "name": "Psycho Cut",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5321855,
+      "end": 5328172
+    },
+    {
+      "name": "Close Combat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5317762,
+      "end": 5321850
+    },
+    {
+      "name": "Payback",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5304200,
+      "end": 5309562
+    },
+    {
+      "name": "Shadow Force",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5287575,
+      "end": 5295095
+    },
+    {
+      "name": "Gyro Ball",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5220066,
+      "end": 5224130
+    },
+    {
+      "name": "Force Palm",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5213488,
+      "end": 5218643
+    },
+    {
+      "name": "Fury Cutter",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5185240,
+      "end": 5190438
+    },
+    {
+      "name": "Rock Climb",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5159615,
+      "end": 5168010
+    },
+    {
+      "name": "Substitute",
+      "flags": [
+        "afterimage",
+        "createRadialGradient"
+      ],
+      "start": 5137158,
+      "end": 5142680
+    },
+    {
+      "name": "Focus Blast",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5132464,
+      "end": 5137153
+    },
+    {
+      "name": "Dragon Pulse",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5119135,
+      "end": 5125687
+    },
+    {
+      "name": "Psycho Cut",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5083200,
+      "end": 5089515
+    },
+    {
+      "name": "Close Combat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5074286,
+      "end": 5078372
+    },
+    {
+      "name": "Ice Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5068308,
+      "end": 5072762
+    },
+    {
+      "name": "Wild Charge",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5058351,
+      "end": 5063907
+    },
+    {
+      "name": "Close Combat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 5008527,
+      "end": 5013214
+    },
+    {
+      "name": "Sludge Wave",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4966714,
+      "end": 4972684
+    },
+    {
+      "name": "Overheat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4956402,
+      "end": 4965881
+    },
+    {
+      "name": "Acrobatics",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4945362,
+      "end": 4950697
+    },
+    {
+      "name": "Outrage",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4941121,
+      "end": 4944888
+    },
+    {
+      "name": "Moonblast",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 4916194,
+      "end": 4919609
+    },
+    {
+      "name": "Play Rough",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4877242,
+      "end": 4882551
+    },
+    {
+      "name": "Sucker Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4854475,
+      "end": 4858660
+    },
+    {
+      "name": "Crunch",
+      "flags": [
+        "afterimage",
+        "createRadialGradient"
+      ],
+      "start": 4848062,
+      "end": 4853794
+    },
+    {
+      "name": "Dual Wingbeat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4842647,
+      "end": 4847139
+    },
+    {
+      "name": "Close Combat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4838190,
+      "end": 4842642
+    },
+    {
+      "name": "Flare Blitz",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4832229,
+      "end": 4837089
+    },
+    {
+      "name": "Spirit Break",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4815348,
+      "end": 4819854
+    },
+    {
+      "name": "Fiery Dance",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4800827,
+      "end": 4806652
+    },
+    {
+      "name": "First Impression",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4794164,
+      "end": 4799343
+    },
+    {
+      "name": "Avalanche",
+      "flags": [
+        "createRadialGradient"
+      ],
+      "start": 4765365,
+      "end": 4770926
+    },
+    {
+      "name": "Bounce",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4750799,
+      "end": 4752339
+    },
+    {
+      "name": "High Jump Kick",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4749214,
+      "end": 4750794
+    },
+    {
+      "name": "Double-Edge",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4747023,
+      "end": 4749209
+    },
+    {
+      "name": "Drill Peck",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4744459,
+      "end": 4745658
+    },
+    {
+      "name": "Dig",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4729406,
+      "end": 4732769
+    },
+    {
+      "name": "Dragon Rush",
+      "flags": [
+        "afterimage",
+        "createLinearGradient"
+      ],
+      "start": 4725231,
+      "end": 4728128
+    },
+    {
+      "name": "Volt Tackle",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4700898,
+      "end": 4704305
+    },
+    {
+      "name": "Surf",
+      "flags": [
+        "createRadialGradient"
+      ],
+      "start": 4695688,
+      "end": 4699767
+    },
+    {
+      "name": "Leaf Storm",
+      "flags": [
+        "drawImage"
+      ],
+      "start": 4689036,
+      "end": 4693250
+    },
+    {
+      "name": "Leaf Blade",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4681409,
+      "end": 4683728
+    },
+    {
+      "name": "Ice Fang",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4668615,
+      "end": 4670303
+    },
+    {
+      "name": "Waterfall",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4663641,
+      "end": 4667753
+    },
+    {
+      "name": "Iron Head",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4641574,
+      "end": 4644831
+    },
+    {
+      "name": "Poison Jab",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4637965,
+      "end": 4641569
+    },
+    {
+      "name": "Close Combat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4635256,
+      "end": 4637960
+    },
+    {
+      "name": "Wicked Blow",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4631851,
+      "end": 4635194
+    },
+    {
+      "name": "Clangorous Soul",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 4625548,
+      "end": 4629736
+    },
+    {
+      "name": "Play Rough",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4608154,
+      "end": 4612145
+    },
+    {
+      "name": "Accelerock",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4604082,
+      "end": 4607964
+    },
+    {
+      "name": "Crunch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4599643,
+      "end": 4603415
+    },
+    {
+      "name": "Body Press",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4580162,
+      "end": 4583960
+    },
+    {
+      "name": "Iron Head",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4576916,
+      "end": 4580158
+    },
+    {
+      "name": "Drill Peck",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4573527,
+      "end": 4576911
+    },
+    {
+      "name": "Brave Bird",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4567803,
+      "end": 4572389
+    },
+    {
+      "name": "Close Combat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4558419,
+      "end": 4561597
+    },
+    {
+      "name": "U-turn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4554655,
+      "end": 4558415
+    },
+    {
+      "name": "High Jump Kick",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4550099,
+      "end": 4554650
+    },
+    {
+      "name": "Play Rough",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4542158,
+      "end": 4548007
+    },
+    {
+      "name": "Wild Charge",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4536103,
+      "end": 4542153
+    },
+    {
+      "name": "Heat Crash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4459953,
+      "end": 4463998
+    },
+    {
+      "name": "Megahorn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4451886,
+      "end": 4456581
+    },
+    {
+      "name": "Outrage",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4428202,
+      "end": 4431871
+    },
+    {
+      "name": "Poison Jab",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4424259,
+      "end": 4427083
+    },
+    {
+      "name": "Shadow Ball",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4414893,
+      "end": 4418179
+    },
+    {
+      "name": "Flamethrower",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4403216,
+      "end": 4407939
+    },
+    {
+      "name": "Thunder",
+      "flags": [
+        "createRadialGradient",
+        "createLinearGradient"
+      ],
+      "start": 4306909,
+      "end": 4313062
+    },
+    {
+      "name": "Night Slash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4273926,
+      "end": 4277487
+    },
+    {
+      "name": "Surf",
+      "flags": [
+        "afterimage",
+        "createLinearGradient",
+        "actor.draw"
+      ],
+      "start": 4247690,
+      "end": 4256046
+    },
+    {
+      "name": "X-Scissor",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4237197,
+      "end": 4240233
+    },
+    {
+      "name": "Aqua Jet",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4229108,
+      "end": 4232607
+    },
+    {
+      "name": "Sunny Day",
+      "flags": [
+        "createRadialGradient",
+        "createLinearGradient"
+      ],
+      "start": 4057468,
+      "end": 4061938
+    },
+    {
+      "name": "Brave Bird",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4031295,
+      "end": 4034921
+    },
+    {
+      "name": "U-turn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 4012255,
+      "end": 4015702
+    },
+    {
+      "name": "Follow Me",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 4004183,
+      "end": 4009402
+    },
+    {
+      "name": "Fake Out",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3961237,
+      "end": 3964053
+    },
+    {
+      "name": "Ice Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3957683,
+      "end": 3960636
+    },
+    {
+      "name": "Dragon Dance",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3952490,
+      "end": 3956343
+    },
+    {
+      "name": "Waterfall",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3940241,
+      "end": 3946141
+    },
+    {
+      "name": "Ice Fang",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3930750,
+      "end": 3934650
+    },
+    {
+      "name": "Surf",
+      "flags": [
+        "actor.draw"
+      ],
+      "start": 3918232,
+      "end": 3928577
+    },
+    {
+      "name": "Iron Head",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3721392,
+      "end": 3722996
+    },
+    {
+      "name": "Close Combat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3716729,
+      "end": 3718865
+    },
+    {
+      "name": "Solar Beam",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 3710216,
+      "end": 3716314
+    },
+    {
+      "name": "Surging Strikes",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3707788,
+      "end": 3710146
+    },
+    {
+      "name": "Clangorous Soul",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 3702819,
+      "end": 3707783
+    },
+    {
+      "name": "Heat Crash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3690224,
+      "end": 3692984
+    },
+    {
+      "name": "Body Press",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3678116,
+      "end": 3680813
+    },
+    {
+      "name": "Accelerock",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3672085,
+      "end": 3674647
+    },
+    {
+      "name": "Play Rough",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3667814,
+      "end": 3672080
+    },
+    {
+      "name": "Bone Rush",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3647813,
+      "end": 3651089
+    },
+    {
+      "name": "Aerial Ace",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3447204,
+      "end": 3454503
+    },
+    {
+      "name": "Cut",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3443206,
+      "end": 3447199
+    },
+    {
+      "name": "Acrobatics",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3379839,
+      "end": 3382655
+    },
+    {
+      "name": "Dragon Claw",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3377373,
+      "end": 3379835
+    },
+    {
+      "name": "Quick Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3365779,
+      "end": 3368374
+    },
+    {
+      "name": "Brave Bird",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3326742,
+      "end": 3331364
+    },
+    {
+      "name": "Steel Wing",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3322228,
+      "end": 3325301
+    },
+    {
+      "name": "Flying Press",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3316279,
+      "end": 3322155
+    },
+    {
+      "name": "High Jump Kick",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3308595,
+      "end": 3314567
+    },
+    {
+      "name": "X-Scissor",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3304205,
+      "end": 3307823
+    },
+    {
+      "name": "Mach Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3277666,
+      "end": 3278737
+    },
+    {
+      "name": "Flare Blitz",
+      "flags": [
+        "afterimage",
+        "createRadialGradient"
+      ],
+      "start": 3274533,
+      "end": 3277661
+    },
+    {
+      "name": "X-Scissor",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3235937,
+      "end": 3238190
+    },
+    {
+      "name": "Water Pulse",
+      "flags": [
+        "createRadialGradient"
+      ],
+      "start": 3231312,
+      "end": 3235933
+    },
+    {
+      "name": "Body Slam",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3217434,
+      "end": 3220421
+    },
+    {
+      "name": "Ancient Power",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 3186274,
+      "end": 3195519
+    },
+    {
+      "name": "Superpower",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3141248,
+      "end": 3150327
+    },
+    {
+      "name": "Psycho Cut",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3132159,
+      "end": 3138421
+    },
+    {
+      "name": "Iron Head",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3114203,
+      "end": 3117665
+    },
+    {
+      "name": "Sacred Sword",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3107870,
+      "end": 3113211
+    },
+    {
+      "name": "Heavy Slam",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3091117,
+      "end": 3098328
+    },
+    {
+      "name": "Dynamic Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3085767,
+      "end": 3090486
+    },
+    {
+      "name": "Shell Smash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3071534,
+      "end": 3078071
+    },
+    {
+      "name": "Muddy Water",
+      "flags": [
+        "createLinearGradient",
+        "actor.draw"
+      ],
+      "start": 3012655,
+      "end": 3024850
+    },
+    {
+      "name": "Phantom Force",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 3004743,
+      "end": 3008080
+    },
+    {
+      "name": "Thunder",
+      "flags": [
+        "createRadialGradient",
+        "createLinearGradient"
+      ],
+      "start": 2996579,
+      "end": 3002631
+    },
+    {
+      "name": "Head Smash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2975154,
+      "end": 2982682
+    },
+    {
+      "name": "High Jump Kick",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2965214,
+      "end": 2970669
+    },
+    {
+      "name": "Flying Press",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2958539,
+      "end": 2964031
+    },
+    {
+      "name": "Gyro Ball",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2921269,
+      "end": 2926881
+    },
+    {
+      "name": "Fake Out",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2916754,
+      "end": 2920564
+    },
+    {
+      "name": "Endeavor",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2912214,
+      "end": 2916171
+    },
+    {
+      "name": "Extreme Speed",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2871702,
+      "end": 2873429
+    },
+    {
+      "name": "Dragon Ascent",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2869119,
+      "end": 2871698
+    },
+    {
+      "name": "Giga Impact",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2850612,
+      "end": 2853611
+    },
+    {
+      "name": "Meteor Mash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2848076,
+      "end": 2850607
+    },
+    {
+      "name": "Steel Wing",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2840527,
+      "end": 2843406
+    },
+    {
+      "name": "Close Combat",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2828481,
+      "end": 2832059
+    },
+    {
+      "name": "Megahorn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2825851,
+      "end": 2828477
+    },
+    {
+      "name": "Brave Bird",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2821780,
+      "end": 2825811
+    },
+    {
+      "name": "Cross Poison",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2816037,
+      "end": 2818276
+    },
+    {
+      "name": "Night Slash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2812269,
+      "end": 2815824
+    },
+    {
+      "name": "Metal Claw",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2782775,
+      "end": 2785396
+    },
+    {
+      "name": "Sky Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2766563,
+      "end": 2769526
+    },
+    {
+      "name": "Steel Wing",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2761468,
+      "end": 2763827
+    },
+    {
+      "name": "Wing Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2755362,
+      "end": 2761316
+    },
+    {
+      "name": "Iron Head",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2740201,
+      "end": 2743593
+    },
+    {
+      "name": "Guillotine",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2732206,
+      "end": 2737179
+    },
+    {
+      "name": "Double Team",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2721425,
+      "end": 2724040
+    },
+    {
+      "name": "Night Slash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2708286,
+      "end": 2712731
+    },
+    {
+      "name": "Acrobatics",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2612242,
+      "end": 2618538
+    },
+    {
+      "name": "Extreme Speed",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2571577,
+      "end": 2575571
+    },
+    {
+      "name": "Mirror Move",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2564595,
+      "end": 2566983
+    },
+    {
+      "name": "Quick Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2563496,
+      "end": 2563883
+    },
+    {
+      "name": "Hurricane",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2556522,
+      "end": 2563030
+    },
+    {
+      "name": "Volt Tackle",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2544298,
+      "end": 2546873
+    },
+    {
+      "name": "Iron Tail",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2542165,
+      "end": 2544293
+    },
+    {
+      "name": "Quick Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2540212,
+      "end": 2542161
+    },
+    {
+      "name": "Double Team",
+      "flags": [
+        "actor.draw"
+      ],
+      "start": 2538957,
+      "end": 2540204
+    },
+    {
+      "name": "Aerial Ace",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2535622,
+      "end": 2538953
+    },
+    {
+      "name": "Facade",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2532573,
+      "end": 2535575
+    },
+    {
+      "name": "Heavy Slam",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2057887,
+      "end": 2060467
+    },
+    {
+      "name": "Iron Tail",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 2054039,
+      "end": 2057882
+    },
+    {
+      "name": "Zen Headbutt",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1657057,
+      "end": 1660135
+    },
+    {
+      "name": "Raging Bull",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1651540,
+      "end": 1655418
+    },
+    {
+      "name": "Earthquake",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1632049,
+      "end": 1633506
+    },
+    {
+      "name": "Brick Break",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1628126,
+      "end": 1631069
+    },
+    {
+      "name": "Fake Out",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1624692,
+      "end": 1627320
+    },
+    {
+      "name": "Thunder Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1613615,
+      "end": 1616006
+    },
+    {
+      "name": "Megahorn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1603852,
+      "end": 1608423
+    },
+    {
+      "name": "Aqua Tail",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1592456,
+      "end": 1595584
+    },
+    {
+      "name": "Poison Jab",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1586127,
+      "end": 1588926
+    },
+    {
+      "name": "Outrage",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1556901,
+      "end": 1559688
+    },
+    {
+      "name": "Draco Meteor",
+      "flags": [
+        "createRadialGradient"
+      ],
+      "start": 1550163,
+      "end": 1556234
+    },
+    {
+      "name": "Ancient Power",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 1542897,
+      "end": 1549660
+    },
+    {
+      "name": "Nihil Light",
+      "flags": [
+        "actor.draw"
+      ],
+      "start": 1380777,
+      "end": 1388821
+    },
+    {
+      "name": "Judgment",
+      "flags": [
+        "createLinearGradient",
+        "actor.draw"
+      ],
+      "start": 1370546,
+      "end": 1379351
+    },
+    {
+      "name": "Spacial Rend",
+      "flags": [
+        "afterimage",
+        "drawImage",
+        "actor.draw"
+      ],
+      "start": 1361725,
+      "end": 1369520
+    },
+    {
+      "name": "Doom Desire",
+      "flags": [
+        "createLinearGradient",
+        "actor.draw"
+      ],
+      "start": 1349559,
+      "end": 1360380
+    },
+    {
+      "name": "Rock Slide",
+      "flags": [
+        "drawImage"
+      ],
+      "start": 1257980,
+      "end": 1264457
+    },
+    {
+      "name": "Retaliate",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1241698,
+      "end": 1246110
+    },
+    {
+      "name": "Dragon Claw",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1225246,
+      "end": 1231518
+    },
+    {
+      "name": "Zen Headbutt",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1218774,
+      "end": 1222554
+    },
+    {
+      "name": "Bolt Strike",
+      "flags": [
+        "afterimage",
+        "createRadialGradient",
+        "createLinearGradient"
+      ],
+      "start": 1208960,
+      "end": 1216496
+    },
+    {
+      "name": "Fusion Bolt",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1204025,
+      "end": 1208480
+    },
+    {
+      "name": "Wild Charge",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1186762,
+      "end": 1192985
+    },
+    {
+      "name": "Sucker Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1162253,
+      "end": 1165281
+    },
+    {
+      "name": "Poison Jab",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1158701,
+      "end": 1162249
+    },
+    {
+      "name": "Sky Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1102730,
+      "end": 1104949
+    },
+    {
+      "name": "Moonblast",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 1080375,
+      "end": 1083327
+    },
+    {
+      "name": "Thunder Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1077221,
+      "end": 1079733
+    },
+    {
+      "name": "Flame Wheel",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1074560,
+      "end": 1077217
+    },
+    {
+      "name": "Solar Beam",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 1058205,
+      "end": 1061201
+    },
+    {
+      "name": "Morning Sun",
+      "flags": [
+        "createLinearGradient"
+      ],
+      "start": 1056359,
+      "end": 1058148
+    },
+    {
+      "name": "Psychic",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1047221,
+      "end": 1051339
+    },
+    {
+      "name": "Thunder Punch",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1028605,
+      "end": 1031970
+    },
+    {
+      "name": "Dragon Claw",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1024657,
+      "end": 1028601
+    },
+    {
+      "name": "Flare Blitz",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1017780,
+      "end": 1024653
+    },
+    {
+      "name": "Shadow Ball",
+      "flags": [
+        "createRadialGradient"
+      ],
+      "start": 1005016,
+      "end": 1008096
+    },
+    {
+      "name": "Double Kick",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 1001678,
+      "end": 1004472
+    },
+    {
+      "name": "Pin Missile",
+      "flags": [
+        "afterimage",
+        "createRadialGradient"
+      ],
+      "start": 994408,
+      "end": 1001673
+    },
+    {
+      "name": "Surf",
+      "flags": [
+        "afterimage",
+        "drawImage",
+        "createLinearGradient",
+        "actor.draw"
+      ],
+      "start": 965040,
+      "end": 975468
+    },
+    {
+      "name": "Drill Peck",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 940915,
+      "end": 943955
+    },
+    {
+      "name": "Brick Break",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 922226,
+      "end": 926298
+    },
+    {
+      "name": "Quick Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 916165,
+      "end": 918814
+    },
+    {
+      "name": "Wing Attack",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 910204,
+      "end": 916160
+    },
+    {
+      "name": "X-Scissor",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 904509,
+      "end": 907580
+    },
+    {
+      "name": "Feint",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 901629,
+      "end": 903921
+    },
+    {
+      "name": "Bite",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 898946,
+      "end": 901624
+    },
+    {
+      "name": "Slash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 895817,
+      "end": 898167
+    },
+    {
+      "name": "Psychic",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 838189,
+      "end": 845883
+    },
+    {
+      "name": "Drill Run",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 819525,
+      "end": 827125
+    },
+    {
+      "name": "Megahorn",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 811323,
+      "end": 817807
+    },
+    {
+      "name": "Skull Bash",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 725740,
+      "end": 728988
+    },
+    {
+      "name": "Dragon Claw",
+      "flags": [
+        "afterimage"
+      ],
+      "start": 710296,
+      "end": 713397
+    }
+  ],
+  "notes": [
+    "Candidates indicate syntax and shared rendering paths, not proven crashes. Shared drawImage fix applies to all native Image arguments."
+  ]
+}
