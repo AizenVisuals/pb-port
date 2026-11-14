@@ -4,7 +4,7 @@ import {readdir,readFile,access} from 'node:fs/promises';
 import {resolve,dirname} from 'node:path';
 const root=resolve('public');
 test('delivered client includes every static module dependency and stylesheet font',async()=>{
- const files=(await readdir(root)).filter(f=>f.endsWith('.js'));
+ const files=(await readdir(root,{recursive:true})).filter(f=>f.endsWith('.js'));
  for(const file of files){
   const text=await readFile(resolve(root,file),'utf8');
   for(const match of text.matchAll(/(?:from|import)\s*["']([^"']+\.js)["']/g)){

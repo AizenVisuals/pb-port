@@ -1,0 +1,24 @@
+{
+  "concept": "User-supplied fan-made Mega Marshadow reference",
+  "generation": "Image generation and editing tools; full-character directional idle and attack atlases. First overlay-only design rejected by user and not deployed.",
+  "processing": "PNG metadata normalization only for compatibility with native decoder; artwork rendered into animation cells by JavaScript. Original generation outputs retained under /workspace/generated_images.",
+  "source_originals": [
+    "/workspace/generated_images/exec-b7a57d83-db7b-461b-b398-8b06e6ffdcf7.png",
+    "/workspace/generated_images/exec-16621a9c-7ac3-4741-bae7-9699031a768d.png"
+  ],
+  "atlases": [
+    {
+      "path": "public/assets/fx/custom/marshadow-mega-idle.png",
+      "sha256": "efc50e37231dbf0cf2331214d92812b9becaf6ba5dcdbfc78876adcf496b8412",
+      "columns": 4,
+      "rows": 8
+    },
+    {
+      "path": "public/assets/fx/custom/marshadow-mega-attack.png",
+      "sha256": "3a0054d8c159a951fc51852292760dd3a2adf4e86e80e5000d120d1a458697ac",
+      "columns": 4,
+      "rows": 8
+    }
+  ],
+  "base_animation_metadata_credits": "SpriteCollab / Dejais, CC BY-NC 4.0; normal Marshadow portraits Top_Kec. See MARSHADOW-ASSETS.md and public credits."
+}

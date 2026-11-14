@@ -46,11 +46,61 @@ const spectralThief={
 export function installMarshadow({species,catalog,ranked,roster,entries,faces,getMove,wrapMove}){
  if(species.marshadow)return;
  const moves=MARSHADOW.pool.map(entry=>{
+  if(entry.name==='Bulk Up'){wrapMove(bulkUp);return bulkUp;}
   if(entry.name==='Spectral Thief'){wrapMove(spectralThief);return spectralThief;}
   const source=getMove(entry.source);if(!source)throw Error('Missing Marshadow move source: '+entry.source);
   const move={...source,cooldown:entry.cd,run:source.rkOrig||source.run};delete move.rkSafe;delete move.rkOrig;wrapMove(move);return move;
  });
  // Canonical base stats; power is budgeted through cooldowns and recovery windows.
- species.marshadow={dex:'0802',name:'MARSHADOW',types:[...MARSHADOW.types],color:'#77ddb0',abilityName:'TECHNICIAN',base:{...MARSHADOW.stats},radius:11,bodyH:24,scale:1,moves};
- catalog.marshadow=MARSHADOW;ranked.marshadow=MARSHADOW;roster.push('marshadow');entries.push(MARSHADOW);faces['0802']=MARSHADOW.faces;
+ species.marshadow={dex:'0802',name:'MARSHADOW',types:[...MARSHADOW.types],color:'#77ddb0',abilityName:'TECHNICIAN',base:{...MARSHADOW.stats},radius:11,bodyH:24,scale:1,moves,mega:'marshadowMega'};
+ species.marshadowMega={...species.marshadow,dex:'0802mega',name:'MEGA MARSHADOW',mega:undefined,megaForm:true,base:{...MARSHADOW.megaStats},radius:13,bodyH:30,moves};
+ catalog.marshadow=MARSHADOW;ranked.marshadow=MARSHADOW;roster.push('marshadow');entries.push(MARSHADOW);faces['0802']=MARSHADOW.faces;faces['0802mega']=[];
 }
+
+// Complete generated Mega character atlases, composited into the original timing grid.
+let megaAtlasPromise;
+const loadSprite=path=>new Promise((resolve,reject)=>{const image=new Image;image.onload=()=>resolve(image);image.onerror=reject;image.src=path;});
+const megaAtlases=()=>megaAtlasPromise||=Promise.all([loadSprite('assets/fx/custom/marshadow-mega-idle.png'),loadSprite('assets/fx/custom/marshadow-mega-attack.png')]);
+export async function decorateMegaSpecies(species){
+ const [idle,attack]=await megaAtlases();
+ const anims={},sheetCache=new Map;
+ for(const [name,animation] of Object.entries(species.anims)){
+  const w=64,h=64;
+  const fighting=/Attack|Strike|Shoot|Swing|Double|LeapForth/.test(name),atlas=fighting?attack:idle;
+  const fades=name==='Faint'||name==='LostBalance';
+  const cacheKey=[fighting,fades,animation.cols,animation.rows].join(':');
+  const cached=sheetCache.get(cacheKey);
+  const sheet=cached?.sheet||document.createElement('canvas');
+  if(!cached){sheet.width=w*animation.cols;sheet.height=h*animation.rows;}
+  const ctx=sheet.getContext('2d');ctx.imageSmoothingEnabled=false;
+  const sw=atlas.width/4,sh=atlas.height/8;
+  const offs=[],shad=[];
+  for(let row=0;row<animation.rows;row++){
+   offs[row]=[];shad[row]=[];
+   for(let col=0;col<animation.cols;col++){
+    const root={x:32,y:56};
+    const frame=Math.min(3,Math.floor(col*4/Math.max(1,animation.cols)));
+    if(!cached){ctx.save();
+    if(fades)ctx.globalAlpha=Math.max(0,1-col/Math.max(1,animation.cols-1));
+    ctx.drawImage(atlas,frame*sw,(row%8)*sh,sw,sh,Math.round(col*w+root.x-29),Math.round(row*h+root.y-55),58,58);
+    ctx.restore();}
+    shad[row][col]={centroid:root,center:root};
+    offs[row][col]={head:{x:root.x,y:root.y-33},center:{x:root.x,y:root.y-19},lh:{x:root.x-12,y:root.y-17},rh:{x:root.x+12,y:root.y-17},centroid:{x:root.x,y:root.y-22}};
+   }
+  }
+  sheetCache.set(cacheKey,{sheet});
+  anims[name]={...animation,sheet,w,h,offs,shad};
+ }
+ return {...species,dex:'0802mega',anims};
+}
+const bulkUp={name:'Bulk Up',type:'fighting',cat:'status',power:0,cooldown:900,range:[0,400],utility:actor=>(actor.stages?.atk||0)>=2?0:65,
+ *run(b,a){
+  a.play('Charge',{loop:true});
+  b.visual({owner:'arena',layer:'ground',life:60,draw(ctx,frame,age){ctx.save();ctx.globalAlpha=1-age/60;ctx.strokeStyle='#b8ed83';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(a.x,a.y,12+age*.35,5+age*.14,0,0,Math.PI*2);ctx.stroke();ctx.restore();}});
+  for(let frame=0;frame<48;frame++)yield;
+  b.changeStage(a,'atk',1);b.changeStage(a,'def',1);b.sfx('buff',.8,a.x);
+  b.text(a.x,a.y-a.bodyH-12,'ATTACK + DEFENSE UP',{kind:'status',color:'#b8ed83',life:60});
+  for(let frame=0;frame<18;frame++)yield;
+  a.release();a.play('Idle',{loop:true});
+ }
+};

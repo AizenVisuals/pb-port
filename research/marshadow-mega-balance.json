@@ -1,0 +1,1495 @@
+{
+  "description": "Bot 1v1 smoke balance (Mega if --mega supplied); equal level, 4 seeds, both sides, stadium. Not a ranked meta prediction.",
+  "wins": 23,
+  "games": 48,
+  "results": [
+    {
+      "opponent": "charizard",
+      "seed": 17,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1975,
+      "moves": {
+        "Spectral Thief": 1,
+        "Fire Blast": 1,
+        "Ice Punch": 2,
+        "Air Slash": 2,
+        "Shadow Sneak": 1,
+        "Flamethrower": 1,
+        "Close Combat": 1,
+        "Dragon Claw": 1
+      },
+      "mega": [
+        {
+          "t": 391,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.8
+        },
+        {
+          "t": 727,
+          "side": 1,
+          "name": "MEGA CHARIZARD X",
+          "hp": 0.8
+        }
+      ]
+    },
+    {
+      "opponent": "charizard",
+      "seed": 17,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 2371,
+      "moves": {
+        "Air Slash": 3,
+        "Close Combat": 2,
+        "Flamethrower": 1,
+        "Shadow Sneak": 3,
+        "Spectral Thief": 2,
+        "Ice Punch": 2,
+        "Fire Blast": 2,
+        "Dragon Claw": 1
+      },
+      "mega": [
+        {
+          "t": 419,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.86
+        },
+        {
+          "t": 755,
+          "side": 0,
+          "name": "MEGA CHARIZARD X",
+          "hp": 0.79
+        }
+      ]
+    },
+    {
+      "opponent": "charizard",
+      "seed": 41,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1958,
+      "moves": {
+        "Fire Blast": 1,
+        "Close Combat": 1,
+        "Spectral Thief": 1,
+        "Air Slash": 2,
+        "Ice Punch": 2,
+        "Flamethrower": 1,
+        "Shadow Sneak": 1,
+        "Dragon Claw": 1
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.86
+        },
+        {
+          "t": 724,
+          "side": 1,
+          "name": "MEGA CHARIZARD X",
+          "hp": 0.94
+        }
+      ]
+    },
+    {
+      "opponent": "charizard",
+      "seed": 41,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 2267,
+      "moves": {
+        "Close Combat": 2,
+        "Air Slash": 2,
+        "Shadow Sneak": 2,
+        "Spectral Thief": 2,
+        "Fire Blast": 1,
+        "Ice Punch": 2,
+        "Flamethrower": 2
+      },
+      "mega": [
+        {
+          "t": 395,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.72
+        },
+        {
+          "t": 731,
+          "side": 0,
+          "name": "MEGA CHARIZARD X",
+          "hp": 0.9
+        }
+      ]
+    },
+    {
+      "opponent": "charizard",
+      "seed": 83,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 2084,
+      "moves": {
+        "Fire Blast": 2,
+        "Spectral Thief": 2,
+        "Air Slash": 2,
+        "Close Combat": 1,
+        "Ice Punch": 2,
+        "Flamethrower": 1,
+        "Shadow Sneak": 2,
+        "Dragon Claw": 1
+      },
+      "mega": [
+        {
+          "t": 403,
+          "side": 1,
+          "name": "MEGA CHARIZARD X",
+          "hp": 0.74
+        },
+        {
+          "t": 739,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.61
+        }
+      ]
+    },
+    {
+      "opponent": "charizard",
+      "seed": 83,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 2512,
+      "moves": {
+        "Air Slash": 3,
+        "Spectral Thief": 2,
+        "Flamethrower": 1,
+        "Ice Punch": 3,
+        "Fire Blast": 2,
+        "Close Combat": 2,
+        "Dragon Claw": 1,
+        "Shadow Sneak": 2
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.76
+        },
+        {
+          "t": 724,
+          "side": 0,
+          "name": "MEGA CHARIZARD X",
+          "hp": 0.85
+        }
+      ]
+    },
+    {
+      "opponent": "charizard",
+      "seed": 127,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 2324,
+      "moves": {
+        "Spectral Thief": 2,
+        "Flamethrower": 2,
+        "Close Combat": 2,
+        "Shadow Sneak": 2,
+        "Ice Punch": 2,
+        "Air Slash": 2,
+        "Dragon Claw": 2
+      },
+      "mega": [
+        {
+          "t": 460,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.86
+        },
+        {
+          "t": 796,
+          "side": 1,
+          "name": "MEGA CHARIZARD X",
+          "hp": 0.83
+        }
+      ]
+    },
+    {
+      "opponent": "charizard",
+      "seed": 127,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 2365,
+      "moves": {
+        "Air Slash": 3,
+        "Ice Punch": 3,
+        "Dragon Claw": 2,
+        "Fire Blast": 1,
+        "Spectral Thief": 2,
+        "Close Combat": 1,
+        "Shadow Sneak": 2
+      },
+      "mega": [
+        {
+          "t": 393,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.84
+        },
+        {
+          "t": 729,
+          "side": 0,
+          "name": "MEGA CHARIZARD X",
+          "hp": 0.85
+        }
+      ]
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 17,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1752,
+      "moves": {
+        "Spectral Thief": 1,
+        "Psychic": 2,
+        "Shadow Sneak": 1,
+        "Close Combat": 1,
+        "Hypnosis": 1,
+        "Ice Punch": 1,
+        "Moonblast": 1
+      },
+      "mega": [
+        {
+          "t": 400,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.64
+        },
+        {
+          "t": 746,
+          "side": 1,
+          "name": "MEGA GARDEVOIR",
+          "hp": 0.65
+        }
+      ]
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 17,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1961,
+      "moves": {
+        "Moonblast": 3,
+        "Shadow Sneak": 2,
+        "Close Combat": 1,
+        "Future Sight": 1,
+        "Spectral Thief": 1,
+        "Psychic": 2,
+        "Hypnosis": 1,
+        "Ice Punch": 1
+      },
+      "mega": [
+        {
+          "t": 415,
+          "side": 0,
+          "name": "MEGA GARDEVOIR",
+          "hp": 0.67
+        },
+        {
+          "t": 812,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.74
+        }
+      ]
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 41,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1722,
+      "moves": {
+        "Moonblast": 2,
+        "Spectral Thief": 1,
+        "Shadow Sneak": 1,
+        "Psychic": 2,
+        "Future Sight": 1
+      },
+      "mega": [
+        {
+          "t": 407,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.39
+        },
+        {
+          "t": 816,
+          "side": 1,
+          "name": "MEGA GARDEVOIR",
+          "hp": 0.75
+        }
+      ]
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 41,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1794,
+      "moves": {
+        "Shadow Sneak": 2,
+        "Moonblast": 2,
+        "Psychic": 1,
+        "Spectral Thief": 1,
+        "Future Sight": 1,
+        "Ice Punch": 1,
+        "Close Combat": 1
+      },
+      "mega": [
+        {
+          "t": 403,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.39
+        },
+        {
+          "t": 812,
+          "side": 0,
+          "name": "MEGA GARDEVOIR",
+          "hp": 0.61
+        }
+      ]
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 83,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1931,
+      "moves": {
+        "Psychic": 3,
+        "Spectral Thief": 2,
+        "Moonblast": 2,
+        "Shadow Sneak": 1,
+        "Future Sight": 1,
+        "Ice Punch": 1,
+        "Close Combat": 1,
+        "Hypnosis": 1
+      },
+      "mega": [
+        {
+          "t": 405,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.73
+        },
+        {
+          "t": 814,
+          "side": 1,
+          "name": "MEGA GARDEVOIR",
+          "hp": 0.26
+        }
+      ]
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 83,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1847,
+      "moves": {
+        "Moonblast": 1,
+        "Spectral Thief": 1,
+        "Psychic": 1,
+        "Close Combat": 1,
+        "Hypnosis": 1,
+        "Shadow Sneak": 1,
+        "Future Sight": 1,
+        "Ice Punch": 1
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.37
+        },
+        {
+          "t": 724,
+          "side": 0,
+          "name": "MEGA GARDEVOIR",
+          "hp": 0.61
+        }
+      ]
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 127,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1727,
+      "moves": {
+        "Spectral Thief": 1,
+        "Psychic": 2,
+        "Shadow Sneak": 1,
+        "Close Combat": 1,
+        "Moonblast": 1
+      },
+      "mega": [
+        {
+          "t": 408,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.67
+        },
+        {
+          "t": 744,
+          "side": 1,
+          "name": "MEGA GARDEVOIR",
+          "hp": 0.91
+        }
+      ]
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 127,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1598,
+      "moves": {
+        "Shadow Sneak": 2,
+        "Psychic": 1,
+        "Spectral Thief": 1,
+        "Close Combat": 1,
+        "Moonblast": 1,
+        "Future Sight": 1,
+        "Ice Punch": 1
+      },
+      "mega": [
+        {
+          "t": 423,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.63
+        },
+        {
+          "t": 832,
+          "side": 0,
+          "name": "MEGA GARDEVOIR",
+          "hp": 0.19
+        }
+      ]
+    },
+    {
+      "opponent": "metagross",
+      "seed": 17,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1920,
+      "moves": {
+        "Meteor Mash": 3,
+        "Spectral Thief": 1,
+        "Psychic": 2,
+        "Earthquake": 1,
+        "Ice Punch": 2,
+        "Close Combat": 1,
+        "Shadow Sneak": 1
+      },
+      "mega": [
+        {
+          "t": 409,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.64
+        },
+        {
+          "t": 904,
+          "side": 1,
+          "name": "MEGA METAGROSS",
+          "hp": 0.7
+        }
+      ]
+    },
+    {
+      "opponent": "metagross",
+      "seed": 17,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 2115,
+      "moves": {
+        "Psychic": 3,
+        "Close Combat": 2,
+        "Earthquake": 2,
+        "Shadow Sneak": 2,
+        "Spectral Thief": 1,
+        "Meteor Mash": 3,
+        "Ice Punch": 1
+      },
+      "mega": [
+        {
+          "t": 417,
+          "side": 0,
+          "name": "MEGA METAGROSS",
+          "hp": 0.75
+        },
+        {
+          "t": 814,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.89
+        }
+      ]
+    },
+    {
+      "opponent": "metagross",
+      "seed": 41,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1866,
+      "moves": {
+        "Psychic": 2,
+        "Earthquake": 1,
+        "Close Combat": 1,
+        "Spectral Thief": 1,
+        "Meteor Mash": 2,
+        "Shadow Sneak": 1,
+        "Ice Punch": 1
+      },
+      "mega": [
+        {
+          "t": 409,
+          "side": 1,
+          "name": "MEGA METAGROSS",
+          "hp": 0.97
+        },
+        {
+          "t": 745,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.62
+        }
+      ]
+    },
+    {
+      "opponent": "metagross",
+      "seed": 41,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1865,
+      "moves": {
+        "Psychic": 2,
+        "Spectral Thief": 1,
+        "Shadow Sneak": 2,
+        "Earthquake": 1,
+        "Meteor Mash": 2,
+        "Close Combat": 1,
+        "Ice Punch": 1
+      },
+      "mega": [
+        {
+          "t": 402,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.61
+        },
+        {
+          "t": 790,
+          "side": 0,
+          "name": "MEGA METAGROSS",
+          "hp": 0.83
+        }
+      ]
+    },
+    {
+      "opponent": "metagross",
+      "seed": 83,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 2052,
+      "moves": {
+        "Spectral Thief": 2,
+        "Meteor Mash": 3,
+        "Psychic": 2,
+        "Shadow Sneak": 2,
+        "Earthquake": 2,
+        "Close Combat": 1,
+        "Ice Punch": 2
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.85
+        },
+        {
+          "t": 800,
+          "side": 1,
+          "name": "MEGA METAGROSS",
+          "hp": 0.78
+        }
+      ]
+    },
+    {
+      "opponent": "metagross",
+      "seed": 83,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 2214,
+      "moves": {
+        "Psychic": 3,
+        "Spectral Thief": 2,
+        "Earthquake": 2,
+        "Close Combat": 2,
+        "Shadow Sneak": 1,
+        "Ice Punch": 1,
+        "Meteor Mash": 2
+      },
+      "mega": [
+        {
+          "t": 403,
+          "side": 0,
+          "name": "MEGA METAGROSS",
+          "hp": 0.87
+        },
+        {
+          "t": 739,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.67
+        }
+      ]
+    },
+    {
+      "opponent": "metagross",
+      "seed": 127,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 2121,
+      "moves": {
+        "Meteor Mash": 3,
+        "Spectral Thief": 2,
+        "Shadow Sneak": 2,
+        "Psychic": 2,
+        "Earthquake": 2,
+        "Ice Punch": 1,
+        "Close Combat": 1
+      },
+      "mega": [
+        {
+          "t": 414,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.65
+        },
+        {
+          "t": 750,
+          "side": 1,
+          "name": "MEGA METAGROSS",
+          "hp": 0.62
+        }
+      ]
+    },
+    {
+      "opponent": "metagross",
+      "seed": 127,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 2089,
+      "moves": {
+        "Meteor Mash": 3,
+        "Close Combat": 2,
+        "Earthquake": 2,
+        "Psychic": 2,
+        "Spectral Thief": 1,
+        "Shadow Sneak": 1,
+        "Ice Punch": 1
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA METAGROSS",
+          "hp": 0.87
+        },
+        {
+          "t": 724,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.91
+        }
+      ]
+    },
+    {
+      "opponent": "blastoise",
+      "seed": 17,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 2905,
+      "moves": {
+        "Close Combat": 2,
+        "Shadow Sneak": 3,
+        "Spectral Thief": 3,
+        "Ice Punch": 3,
+        "Ice Beam": 4,
+        "Hydro Pump": 4
+      },
+      "mega": [
+        {
+          "t": 392,
+          "side": 1,
+          "name": "MEGA BLASTOISE",
+          "hp": 0.86
+        },
+        {
+          "t": 789,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 1
+        }
+      ]
+    },
+    {
+      "opponent": "blastoise",
+      "seed": 17,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 2581,
+      "moves": {
+        "Hydro Pump": 3,
+        "Spectral Thief": 3,
+        "Shadow Sneak": 3,
+        "Close Combat": 2,
+        "Ice Beam": 2,
+        "Ice Punch": 2
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA BLASTOISE",
+          "hp": 0.74
+        },
+        {
+          "t": 828,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.94
+        }
+      ]
+    },
+    {
+      "opponent": "blastoise",
+      "seed": 41,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 3156,
+      "moves": {
+        "Hydro Pump": 6,
+        "Close Combat": 3,
+        "Ice Beam": 5,
+        "Spectral Thief": 3,
+        "Ice Punch": 4,
+        "Shadow Sneak": 3
+      },
+      "mega": [
+        {
+          "t": 391,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.89
+        },
+        {
+          "t": 806,
+          "side": 1,
+          "name": "MEGA BLASTOISE",
+          "hp": 0.87
+        }
+      ]
+    },
+    {
+      "opponent": "blastoise",
+      "seed": 41,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 2848,
+      "moves": {
+        "Close Combat": 3,
+        "Ice Beam": 5,
+        "Shadow Sneak": 3,
+        "Spectral Thief": 2,
+        "Hydro Pump": 4,
+        "Ice Punch": 2
+      },
+      "mega": [
+        {
+          "t": 390,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 1
+        },
+        {
+          "t": 805,
+          "side": 0,
+          "name": "MEGA BLASTOISE",
+          "hp": 0.79
+        }
+      ]
+    },
+    {
+      "opponent": "blastoise",
+      "seed": 83,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 2586,
+      "moves": {
+        "Close Combat": 3,
+        "Hydro Pump": 4,
+        "Spectral Thief": 2,
+        "Ice Beam": 4,
+        "Shadow Sneak": 3,
+        "Ice Punch": 2
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.92
+        },
+        {
+          "t": 724,
+          "side": 1,
+          "name": "MEGA BLASTOISE",
+          "hp": 0.84
+        }
+      ]
+    },
+    {
+      "opponent": "blastoise",
+      "seed": 83,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 2474,
+      "moves": {
+        "Spectral Thief": 3,
+        "Hydro Pump": 3,
+        "Shadow Sneak": 3,
+        "Close Combat": 2,
+        "Ice Beam": 2,
+        "Ice Punch": 3
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA BLASTOISE",
+          "hp": 0.87
+        },
+        {
+          "t": 827,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.82
+        }
+      ]
+    },
+    {
+      "opponent": "blastoise",
+      "seed": 127,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 2532,
+      "moves": {
+        "Close Combat": 2,
+        "Hydro Pump": 4,
+        "Ice Beam": 3,
+        "Spectral Thief": 2,
+        "Shadow Sneak": 3,
+        "Ice Punch": 2
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.91
+        },
+        {
+          "t": 724,
+          "side": 1,
+          "name": "MEGA BLASTOISE",
+          "hp": 0.84
+        }
+      ]
+    },
+    {
+      "opponent": "blastoise",
+      "seed": 127,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 2730,
+      "moves": {
+        "Ice Beam": 5,
+        "Spectral Thief": 3,
+        "Hydro Pump": 4,
+        "Shadow Sneak": 4,
+        "Close Combat": 2,
+        "Ice Punch": 3
+      },
+      "mega": [
+        {
+          "t": 409,
+          "side": 0,
+          "name": "MEGA BLASTOISE",
+          "hp": 1
+        },
+        {
+          "t": 848,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.85
+        }
+      ]
+    },
+    {
+      "opponent": "venusaur",
+      "seed": 17,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 2453,
+      "moves": {
+        "Ice Punch": 3,
+        "Outrage": 2,
+        "Spectral Thief": 2,
+        "Close Combat": 2,
+        "Petal Blizzard": 1,
+        "Shadow Sneak": 2,
+        "Sludge Bomb": 1,
+        "Earthquake": 1
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 1,
+          "name": "MEGA VENUSAUR",
+          "hp": 0.77
+        },
+        {
+          "t": 823,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.81
+        }
+      ]
+    },
+    {
+      "opponent": "venusaur",
+      "seed": 17,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 2666,
+      "moves": {
+        "Outrage": 2,
+        "Spectral Thief": 3,
+        "Petal Blizzard": 2,
+        "Ice Punch": 3,
+        "Shadow Sneak": 2,
+        "Earthquake": 2,
+        "Close Combat": 2,
+        "Sludge Bomb": 1
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA VENUSAUR",
+          "hp": 0.79
+        },
+        {
+          "t": 724,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.9
+        }
+      ]
+    },
+    {
+      "opponent": "venusaur",
+      "seed": 41,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 2579,
+      "moves": {
+        "Outrage": 2,
+        "Ice Punch": 3,
+        "Earthquake": 2,
+        "Close Combat": 2,
+        "Shadow Sneak": 3,
+        "Petal Blizzard": 2,
+        "Spectral Thief": 1,
+        "Sludge Bomb": 1
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.91
+        },
+        {
+          "t": 835,
+          "side": 1,
+          "name": "MEGA VENUSAUR",
+          "hp": 0.76
+        }
+      ]
+    },
+    {
+      "opponent": "venusaur",
+      "seed": 41,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 2881,
+      "moves": {
+        "Earthquake": 2,
+        "Ice Punch": 4,
+        "Petal Blizzard": 3,
+        "Outrage": 2,
+        "Spectral Thief": 2,
+        "Close Combat": 2,
+        "Sludge Bomb": 2,
+        "Shadow Sneak": 2
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA VENUSAUR",
+          "hp": 1
+        },
+        {
+          "t": 791,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.92
+        }
+      ]
+    },
+    {
+      "opponent": "venusaur",
+      "seed": 83,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 2577,
+      "moves": {
+        "Outrage": 2,
+        "Ice Punch": 4,
+        "Shadow Sneak": 3,
+        "Spectral Thief": 2,
+        "Sludge Bomb": 2,
+        "Close Combat": 2,
+        "Petal Blizzard": 2,
+        "Earthquake": 1
+      },
+      "mega": [
+        {
+          "t": 426,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.89
+        },
+        {
+          "t": 762,
+          "side": 1,
+          "name": "MEGA VENUSAUR",
+          "hp": 0.97
+        }
+      ]
+    },
+    {
+      "opponent": "venusaur",
+      "seed": 83,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 2847,
+      "moves": {
+        "Ice Punch": 3,
+        "Petal Blizzard": 3,
+        "Spectral Thief": 3,
+        "Earthquake": 3,
+        "Sludge Bomb": 2,
+        "Close Combat": 2,
+        "Outrage": 2,
+        "Shadow Sneak": 3
+      },
+      "mega": [
+        {
+          "t": 392,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.9
+        },
+        {
+          "t": 801,
+          "side": 0,
+          "name": "MEGA VENUSAUR",
+          "hp": 1
+        }
+      ]
+    },
+    {
+      "opponent": "venusaur",
+      "seed": 127,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 3036,
+      "moves": {
+        "Earthquake": 3,
+        "Petal Blizzard": 2,
+        "Sludge Bomb": 2,
+        "Ice Punch": 3,
+        "Spectral Thief": 2,
+        "Outrage": 2,
+        "Shadow Sneak": 3,
+        "Close Combat": 2
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.93
+        },
+        {
+          "t": 724,
+          "side": 1,
+          "name": "MEGA VENUSAUR",
+          "hp": 1
+        }
+      ]
+    },
+    {
+      "opponent": "venusaur",
+      "seed": 127,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 2953,
+      "moves": {
+        "Petal Blizzard": 3,
+        "Close Combat": 3,
+        "Outrage": 3,
+        "Ice Punch": 4,
+        "Earthquake": 2,
+        "Spectral Thief": 3,
+        "Shadow Sneak": 3,
+        "Sludge Bomb": 2
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA VENUSAUR",
+          "hp": 0.91
+        },
+        {
+          "t": 724,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.87
+        }
+      ]
+    },
+    {
+      "opponent": "gengar",
+      "seed": 17,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1943,
+      "moves": {
+        "Psychic": 2,
+        "Shadow Sneak": 2,
+        "Shadow Ball": 2,
+        "Spectral Thief": 2,
+        "Sludge Bomb": 2,
+        "Ice Punch": 2,
+        "Thunder": 1
+      },
+      "mega": [
+        {
+          "t": 396,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.59
+        },
+        {
+          "t": 799,
+          "side": 1,
+          "name": "MEGA GENGAR",
+          "hp": 0.87
+        }
+      ]
+    },
+    {
+      "opponent": "gengar",
+      "seed": 17,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1907,
+      "moves": {
+        "Shadow Sneak": 2,
+        "Psychic": 2,
+        "Spectral Thief": 2,
+        "Shadow Ball": 2,
+        "Thunder": 1,
+        "Ice Punch": 2,
+        "Sludge Bomb": 1
+      },
+      "mega": [
+        {
+          "t": 400,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 1
+        },
+        {
+          "t": 813,
+          "side": 0,
+          "name": "MEGA GENGAR",
+          "hp": 0.15
+        }
+      ]
+    },
+    {
+      "opponent": "gengar",
+      "seed": 41,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1795,
+      "moves": {
+        "Spectral Thief": 1,
+        "Shadow Ball": 2,
+        "Shadow Sneak": 2,
+        "Thunder": 1,
+        "Ice Punch": 1,
+        "Sludge Bomb": 1
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.81
+        },
+        {
+          "t": 841,
+          "side": 1,
+          "name": "MEGA GENGAR",
+          "hp": 0.13
+        }
+      ]
+    },
+    {
+      "opponent": "gengar",
+      "seed": 41,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 2232,
+      "moves": {
+        "Shadow Ball": 3,
+        "Spectral Thief": 2,
+        "Psychic": 1,
+        "Thunder": 2,
+        "Ice Punch": 3,
+        "Shadow Sneak": 3,
+        "Sludge Bomb": 1
+      },
+      "mega": [
+        {
+          "t": 398,
+          "side": 0,
+          "name": "MEGA GENGAR",
+          "hp": 1
+        },
+        {
+          "t": 734,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.6
+        }
+      ]
+    },
+    {
+      "opponent": "gengar",
+      "seed": 83,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1837,
+      "moves": {
+        "Shadow Ball": 2,
+        "Spectral Thief": 2,
+        "Thunder": 1,
+        "Sludge Bomb": 2,
+        "Shadow Sneak": 1,
+        "Psychic": 1,
+        "Ice Punch": 1
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.67
+        },
+        {
+          "t": 791,
+          "side": 1,
+          "name": "MEGA GENGAR",
+          "hp": 0.24
+        }
+      ]
+    },
+    {
+      "opponent": "gengar",
+      "seed": 83,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1815,
+      "moves": {
+        "Shadow Ball": 1,
+        "Spectral Thief": 2,
+        "Psychic": 1,
+        "Ice Punch": 2,
+        "Shadow Sneak": 1,
+        "Thunder": 1,
+        "Sludge Bomb": 1
+      },
+      "mega": [
+        {
+          "t": 406,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.77
+        },
+        {
+          "t": 742,
+          "side": 0,
+          "name": "MEGA GENGAR",
+          "hp": 0.55
+        }
+      ]
+    },
+    {
+      "opponent": "gengar",
+      "seed": 127,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1527,
+      "moves": {
+        "Shadow Sneak": 2,
+        "Psychic": 1,
+        "Spectral Thief": 1,
+        "Shadow Ball": 1,
+        "Sludge Bomb": 1,
+        "Ice Punch": 1
+      },
+      "mega": [
+        {
+          "t": 388,
+          "side": 0,
+          "name": "MEGA MARSHADOW",
+          "hp": 1
+        },
+        {
+          "t": 797,
+          "side": 1,
+          "name": "MEGA GENGAR",
+          "hp": 0.27
+        }
+      ]
+    },
+    {
+      "opponent": "gengar",
+      "seed": 127,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1675,
+      "moves": {
+        "Shadow Sneak": 2,
+        "Shadow Ball": 2,
+        "Spectral Thief": 1,
+        "Ice Punch": 1,
+        "Psychic": 1
+      },
+      "mega": [
+        {
+          "t": 406,
+          "side": 0,
+          "name": "MEGA GENGAR",
+          "hp": 0.72
+        },
+        {
+          "t": 799,
+          "side": 1,
+          "name": "MEGA MARSHADOW",
+          "hp": 0.77
+        }
+      ]
+    }
+  ]
+}
