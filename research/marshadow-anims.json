@@ -1,0 +1,607 @@
+{
+  "0802": {
+    "shadowSize": 1,
+    "anims": {
+      "Walk": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          8,
+          10,
+          8,
+          10
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Walk-Anim.png"
+      },
+      "Attack": {
+        "w": 72,
+        "h": 80,
+        "durations": [
+          4,
+          3,
+          2,
+          2,
+          2,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "rush": null,
+        "hit": 3,
+        "ret": 6,
+        "file": "Attack-Anim.png"
+      },
+      "Strike": {
+        "w": 64,
+        "h": 72,
+        "durations": [
+          1,
+          2,
+          2,
+          2,
+          2,
+          3,
+          4,
+          2,
+          2,
+          2,
+          1,
+          1,
+          2
+        ],
+        "rush": null,
+        "hit": 3,
+        "ret": 6,
+        "file": "Strike-Anim.png"
+      },
+      "Shoot": {
+        "w": 24,
+        "h": 48,
+        "durations": [
+          4,
+          8,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "rush": null,
+        "hit": 2,
+        "ret": 7,
+        "file": "Shoot-Anim.png"
+      },
+      "Rotate": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "rush": null,
+        "hit": 8,
+        "ret": null,
+        "file": "Rotate-Anim.png"
+      },
+      "Shake": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "rush": null,
+        "hit": 8,
+        "ret": null,
+        "file": "Rotate-Anim.png",
+        "copyOf": "Rotate"
+      },
+      "Dance": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "rush": null,
+        "hit": 8,
+        "ret": null,
+        "file": "Rotate-Anim.png",
+        "copyOf": "Rotate"
+      },
+      "Sleep": {
+        "w": 24,
+        "h": 32,
+        "durations": [
+          30,
+          35
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Sleep-Anim.png"
+      },
+      "Hurt": {
+        "w": 48,
+        "h": 64,
+        "durations": [
+          2,
+          8
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Hurt-Anim.png"
+      },
+      "Idle": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Idle-Anim.png"
+      },
+      "Swing": {
+        "w": 72,
+        "h": 80,
+        "durations": [
+          2,
+          1,
+          2,
+          2,
+          3,
+          2,
+          2,
+          1,
+          1
+        ],
+        "rush": null,
+        "hit": 5,
+        "ret": 5,
+        "file": "Swing-Anim.png"
+      },
+      "Double": {
+        "w": 56,
+        "h": 64,
+        "durations": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          2,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Double-Anim.png"
+      },
+      "Hop": {
+        "w": 24,
+        "h": 88,
+        "durations": [
+          2,
+          1,
+          2,
+          3,
+          4,
+          4,
+          3,
+          2,
+          1,
+          2
+        ],
+        "rush": null,
+        "hit": 9,
+        "ret": null,
+        "file": "Hop-Anim.png"
+      },
+      "Charge": {
+        "w": 32,
+        "h": 40,
+        "durations": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "rush": null,
+        "hit": 5,
+        "ret": 9,
+        "file": "Charge-Anim.png"
+      },
+      "EventSleep": {
+        "w": 24,
+        "h": 24,
+        "durations": [
+          30,
+          35
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "EventSleep-Anim.png"
+      },
+      "Wake": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          8,
+          6,
+          4,
+          14,
+          10
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Wake-Anim.png"
+      },
+      "Eat": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          6,
+          8,
+          6,
+          8
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Eat-Anim.png"
+      },
+      "Tumble": {
+        "w": 24,
+        "h": 32,
+        "durations": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Tumble-Anim.png"
+      },
+      "Pose": {
+        "w": 24,
+        "h": 48,
+        "durations": [
+          8,
+          1,
+          3,
+          2,
+          8
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Pose-Anim.png"
+      },
+      "Pull": {
+        "w": 32,
+        "h": 40,
+        "durations": [
+          10,
+          12,
+          10,
+          12,
+          10,
+          12,
+          10
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Pull-Anim.png"
+      },
+      "Pain": {
+        "w": 32,
+        "h": 48,
+        "durations": [
+          4,
+          1,
+          1,
+          1,
+          2,
+          1,
+          4,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Pain-Anim.png"
+      },
+      "Float": {
+        "w": 24,
+        "h": 24,
+        "durations": [
+          9,
+          18,
+          9,
+          14
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Float-Anim.png"
+      },
+      "DeepBreath": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          12,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          10,
+          4
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "DeepBreath-Anim.png"
+      },
+      "Nod": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          6,
+          8,
+          6
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Nod-Anim.png"
+      },
+      "Sit": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          8,
+          8,
+          8
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Sit-Anim.png"
+      },
+      "LookUp": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          6,
+          6,
+          6
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "LookUp-Anim.png"
+      },
+      "Sink": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Sink-Anim.png"
+      },
+      "Trip": {
+        "w": 32,
+        "h": 40,
+        "durations": [
+          4,
+          6,
+          4,
+          4,
+          4
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Trip-Anim.png"
+      },
+      "Laying": {
+        "w": 24,
+        "h": 24,
+        "durations": [
+          30
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Laying-Anim.png"
+      },
+      "LeapForth": {
+        "w": 24,
+        "h": 80,
+        "durations": [
+          6,
+          1,
+          1,
+          2,
+          2,
+          2
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "LeapForth-Anim.png"
+      },
+      "Head": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          4
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Head-Anim.png"
+      },
+      "Cringe": {
+        "w": 32,
+        "h": 64,
+        "durations": [
+          2,
+          8
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Cringe-Anim.png"
+      },
+      "LostBalance": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          8,
+          8
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "LostBalance-Anim.png"
+      },
+      "TumbleBack": {
+        "w": 24,
+        "h": 40,
+        "durations": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "TumbleBack-Anim.png"
+      },
+      "Faint": {
+        "w": 40,
+        "h": 40,
+        "durations": [
+          8,
+          12,
+          4,
+          10
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "Faint-Anim.png"
+      },
+      "HitGround": {
+        "w": 32,
+        "h": 40,
+        "durations": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          6,
+          4,
+          4
+        ],
+        "rush": null,
+        "hit": null,
+        "ret": null,
+        "file": "HitGround-Anim.png"
+      }
+    }
+  }
+}

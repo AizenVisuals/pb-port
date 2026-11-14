@@ -30,7 +30,7 @@ globalThis.OffscreenCanvas = binding.CanvasElement;
 globalThis.Path2D = binding.Path;
 globalThis.FontFace = class { constructor(name, url) { this.name = name; this.url = url; } async load() { const path = this.url.match(/url\((.*?)\)/)?.[1]; if (path) GlobalFonts.registerFromPath(localPath(path), this.name); return this; } };
 globalThis.Image = class extends Image { get src() { return super.src; } set src(path) { readFile(localPath(path)).then(bytes => { super.src = bytes; }).catch(e => this.onerror?.(e)); } };
-globalThis.fetch = async path => { const bytes = await readFile(localPath(path)); return { ok: true, json: async () => JSON.parse(bytes), text: async () => bytes.toString(), arrayBuffer: async () => bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) }; };
+globalThis.fetch = async path => { let bytes; try { bytes=await readFile(localPath(path)); } catch(error) { if(error.code!=='ENOENT')throw error;return {ok:false,status:404,json:async()=>{throw new Error('Asset not found: '+path);}}; } return { ok: true, status:200, json: async () => JSON.parse(bytes), text: async () => bytes.toString(), arrayBuffer: async () => bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) }; };
 export const engine = await import('../public/engine.bundle.js');
 export async function createSimulation(seed, teams, arena) {
   await Promise.all([engine.loadRankedAssets(teams.flatMap(t => t.mons)), engine.loadTrainers(teams.map(t => t.trainer)), engine.loadArena(arena)]);

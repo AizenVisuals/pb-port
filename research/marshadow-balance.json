@@ -1,0 +1,816 @@
+{
+  "description": "Initial bot 1v1 smoke balance; equal level, 4 seeds, both sides, stadium. Not a ranked meta prediction.",
+  "wins": 24,
+  "games": 48,
+  "results": [
+    {
+      "opponent": "lucario",
+      "seed": 17,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1225,
+      "moves": {
+        "Bone Rush": 2,
+        "Close Combat": 1,
+        "Meteor Mash": 2,
+        "Shadow Sneak": 2,
+        "Spectral Thief": 1,
+        "Ice Punch": 1
+      }
+    },
+    {
+      "opponent": "lucario",
+      "seed": 17,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1511,
+      "moves": {
+        "Bone Rush": 2,
+        "Spectral Thief": 2,
+        "Meteor Mash": 3,
+        "Shadow Sneak": 2,
+        "Close Combat": 2,
+        "Ice Punch": 1
+      }
+    },
+    {
+      "opponent": "lucario",
+      "seed": 41,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1543,
+      "moves": {
+        "Meteor Mash": 4,
+        "Close Combat": 2,
+        "Bone Rush": 2,
+        "Spectral Thief": 2,
+        "Shadow Sneak": 2,
+        "Ice Punch": 1
+      }
+    },
+    {
+      "opponent": "lucario",
+      "seed": 41,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1351,
+      "moves": {
+        "Bone Rush": 2,
+        "Close Combat": 2,
+        "Meteor Mash": 3,
+        "Spectral Thief": 1,
+        "Ice Punch": 1,
+        "Shadow Sneak": 1
+      }
+    },
+    {
+      "opponent": "lucario",
+      "seed": 83,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1321,
+      "moves": {
+        "Meteor Mash": 3,
+        "Close Combat": 2,
+        "Bone Rush": 2,
+        "Spectral Thief": 1,
+        "Ice Punch": 2,
+        "Shadow Sneak": 1
+      }
+    },
+    {
+      "opponent": "lucario",
+      "seed": 83,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1447,
+      "moves": {
+        "Meteor Mash": 3,
+        "Close Combat": 2,
+        "Bone Rush": 2,
+        "Shadow Sneak": 2,
+        "Spectral Thief": 1,
+        "Ice Punch": 2
+      }
+    },
+    {
+      "opponent": "lucario",
+      "seed": 127,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1378,
+      "moves": {
+        "Meteor Mash": 4,
+        "Close Combat": 2,
+        "Bone Rush": 2,
+        "Spectral Thief": 1,
+        "Shadow Sneak": 1,
+        "Ice Punch": 1
+      }
+    },
+    {
+      "opponent": "lucario",
+      "seed": 127,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1179,
+      "moves": {
+        "Bone Rush": 2,
+        "Close Combat": 1,
+        "Meteor Mash": 2,
+        "Spectral Thief": 1,
+        "Shadow Sneak": 1,
+        "Ice Punch": 1
+      }
+    },
+    {
+      "opponent": "metagross",
+      "seed": 17,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1719,
+      "moves": {
+        "Meteor Mash": 4,
+        "Spectral Thief": 2,
+        "Psychic": 4,
+        "Earthquake": 2,
+        "Ice Punch": 2,
+        "Close Combat": 2,
+        "Shadow Sneak": 2
+      }
+    },
+    {
+      "opponent": "metagross",
+      "seed": 17,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1585,
+      "moves": {
+        "Psychic": 3,
+        "Close Combat": 2,
+        "Earthquake": 2,
+        "Shadow Sneak": 2,
+        "Spectral Thief": 2,
+        "Meteor Mash": 3,
+        "Ice Punch": 2
+      }
+    },
+    {
+      "opponent": "metagross",
+      "seed": 41,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1627,
+      "moves": {
+        "Psychic": 4,
+        "Earthquake": 2,
+        "Close Combat": 2,
+        "Shadow Sneak": 2,
+        "Spectral Thief": 2,
+        "Meteor Mash": 3,
+        "Ice Punch": 1
+      }
+    },
+    {
+      "opponent": "metagross",
+      "seed": 41,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1325,
+      "moves": {
+        "Psychic": 3,
+        "Spectral Thief": 2,
+        "Shadow Sneak": 2,
+        "Earthquake": 1,
+        "Close Combat": 1,
+        "Meteor Mash": 2,
+        "Ice Punch": 2
+      }
+    },
+    {
+      "opponent": "metagross",
+      "seed": 83,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1507,
+      "moves": {
+        "Spectral Thief": 2,
+        "Meteor Mash": 2,
+        "Psychic": 3,
+        "Shadow Sneak": 2,
+        "Earthquake": 2,
+        "Close Combat": 1,
+        "Ice Punch": 2
+      }
+    },
+    {
+      "opponent": "metagross",
+      "seed": 83,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1376,
+      "moves": {
+        "Psychic": 2,
+        "Spectral Thief": 2,
+        "Earthquake": 2,
+        "Close Combat": 1,
+        "Meteor Mash": 2,
+        "Ice Punch": 1,
+        "Shadow Sneak": 1
+      }
+    },
+    {
+      "opponent": "metagross",
+      "seed": 127,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1392,
+      "moves": {
+        "Meteor Mash": 3,
+        "Spectral Thief": 2,
+        "Shadow Sneak": 2,
+        "Psychic": 2,
+        "Earthquake": 2,
+        "Close Combat": 1
+      }
+    },
+    {
+      "opponent": "metagross",
+      "seed": 127,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1739,
+      "moves": {
+        "Meteor Mash": 4,
+        "Close Combat": 2,
+        "Earthquake": 3,
+        "Spectral Thief": 2,
+        "Psychic": 3,
+        "Shadow Sneak": 2,
+        "Ice Punch": 2
+      }
+    },
+    {
+      "opponent": "greninja",
+      "seed": 17,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1563,
+      "moves": {
+        "Close Combat": 2,
+        "Ice Punch": 2,
+        "Spectral Thief": 2,
+        "Dark Pulse": 1,
+        "Shadow Sneak": 1,
+        "Blizzard": 1,
+        "Extrasensory": 1,
+        "Water Shuriken": 1
+      }
+    },
+    {
+      "opponent": "greninja",
+      "seed": 17,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1775,
+      "moves": {
+        "Extrasensory": 3,
+        "Close Combat": 2,
+        "Water Shuriken": 2,
+        "Spectral Thief": 2,
+        "Dark Pulse": 2,
+        "Ice Punch": 3,
+        "Blizzard": 1,
+        "Shadow Sneak": 1
+      }
+    },
+    {
+      "opponent": "greninja",
+      "seed": 41,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1295,
+      "moves": {
+        "Dark Pulse": 2,
+        "Close Combat": 2,
+        "Extrasensory": 2,
+        "Spectral Thief": 1,
+        "Ice Punch": 1,
+        "Shadow Sneak": 1,
+        "Water Shuriken": 1
+      }
+    },
+    {
+      "opponent": "greninja",
+      "seed": 41,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1721,
+      "moves": {
+        "Spectral Thief": 2,
+        "Dark Pulse": 2,
+        "Close Combat": 2,
+        "Blizzard": 2,
+        "Ice Punch": 2,
+        "Extrasensory": 2,
+        "Shadow Sneak": 2,
+        "Water Shuriken": 1
+      }
+    },
+    {
+      "opponent": "greninja",
+      "seed": 83,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1303,
+      "moves": {
+        "Dark Pulse": 1,
+        "Close Combat": 2,
+        "Water Shuriken": 1,
+        "Shadow Sneak": 2,
+        "Spectral Thief": 1,
+        "Extrasensory": 1,
+        "Ice Punch": 1,
+        "Blizzard": 1
+      }
+    },
+    {
+      "opponent": "greninja",
+      "seed": 83,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1328,
+      "moves": {
+        "Close Combat": 2,
+        "Extrasensory": 2,
+        "Water Shuriken": 1,
+        "Dark Pulse": 1,
+        "Spectral Thief": 1,
+        "Ice Punch": 1,
+        "Shadow Sneak": 1
+      }
+    },
+    {
+      "opponent": "greninja",
+      "seed": 127,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1934,
+      "moves": {
+        "Blizzard": 2,
+        "Extrasensory": 3,
+        "Water Shuriken": 2,
+        "Dark Pulse": 2,
+        "Close Combat": 1,
+        "Ice Punch": 2,
+        "Spectral Thief": 1,
+        "Shadow Sneak": 1
+      }
+    },
+    {
+      "opponent": "greninja",
+      "seed": 127,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1382,
+      "moves": {
+        "Extrasensory": 2,
+        "Spectral Thief": 2,
+        "Close Combat": 2,
+        "Blizzard": 1,
+        "Dark Pulse": 1,
+        "Ice Punch": 1,
+        "Shadow Sneak": 1
+      }
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 17,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1452,
+      "moves": {
+        "Spectral Thief": 2,
+        "Psychic": 3,
+        "Shadow Sneak": 2,
+        "Close Combat": 2,
+        "Hypnosis": 1,
+        "Moonblast": 2,
+        "Future Sight": 1,
+        "Ice Punch": 1
+      }
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 17,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1047,
+      "moves": {
+        "Moonblast": 1,
+        "Shadow Sneak": 1,
+        "Close Combat": 1,
+        "Future Sight": 1,
+        "Spectral Thief": 1,
+        "Psychic": 1
+      }
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 41,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1129,
+      "moves": {
+        "Moonblast": 2,
+        "Spectral Thief": 1,
+        "Shadow Sneak": 1,
+        "Psychic": 2,
+        "Future Sight": 1,
+        "Hypnosis": 1,
+        "Ice Punch": 1
+      }
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 41,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1030,
+      "moves": {
+        "Shadow Sneak": 1,
+        "Moonblast": 2,
+        "Psychic": 1,
+        "Spectral Thief": 1,
+        "Future Sight": 1,
+        "Close Combat": 1
+      }
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 83,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1178,
+      "moves": {
+        "Psychic": 2,
+        "Spectral Thief": 1,
+        "Moonblast": 2,
+        "Shadow Sneak": 1,
+        "Future Sight": 1,
+        "Close Combat": 1,
+        "Hypnosis": 1
+      }
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 83,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1166,
+      "moves": {
+        "Moonblast": 2,
+        "Spectral Thief": 1,
+        "Psychic": 2,
+        "Close Combat": 1,
+        "Hypnosis": 1
+      }
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 127,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1279,
+      "moves": {
+        "Spectral Thief": 2,
+        "Psychic": 2,
+        "Shadow Sneak": 2,
+        "Close Combat": 1,
+        "Moonblast": 1,
+        "Ice Punch": 1,
+        "Hypnosis": 1
+      }
+    },
+    {
+      "opponent": "gardevoir",
+      "seed": 127,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1200,
+      "moves": {
+        "Shadow Sneak": 2,
+        "Psychic": 2,
+        "Spectral Thief": 1,
+        "Close Combat": 1,
+        "Moonblast": 1,
+        "Future Sight": 1,
+        "Hypnosis": 1
+      }
+    },
+    {
+      "opponent": "togekiss",
+      "seed": 17,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1530,
+      "moves": {
+        "Sky Attack": 2,
+        "Ice Punch": 2,
+        "Spectral Thief": 2,
+        "Dazzling Gleam": 3,
+        "Shadow Sneak": 1,
+        "Air Slash": 2,
+        "Close Combat": 1,
+        "Shock Wave": 1
+      }
+    },
+    {
+      "opponent": "togekiss",
+      "seed": 17,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1407,
+      "moves": {
+        "Sky Attack": 2,
+        "Dazzling Gleam": 1,
+        "Spectral Thief": 2,
+        "Air Slash": 2,
+        "Close Combat": 1,
+        "Shock Wave": 1,
+        "Ice Punch": 1,
+        "Shadow Sneak": 1
+      }
+    },
+    {
+      "opponent": "togekiss",
+      "seed": 41,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1581,
+      "moves": {
+        "Dazzling Gleam": 3,
+        "Sky Attack": 1,
+        "Ice Punch": 2,
+        "Air Slash": 2,
+        "Close Combat": 2,
+        "Shock Wave": 2,
+        "Shadow Sneak": 2,
+        "Spectral Thief": 1
+      }
+    },
+    {
+      "opponent": "togekiss",
+      "seed": 41,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1423,
+      "moves": {
+        "Sky Attack": 1,
+        "Air Slash": 2,
+        "Ice Punch": 2,
+        "Dazzling Gleam": 2,
+        "Spectral Thief": 2,
+        "Close Combat": 1,
+        "Shock Wave": 1,
+        "Shadow Sneak": 1
+      }
+    },
+    {
+      "opponent": "togekiss",
+      "seed": 83,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1326,
+      "moves": {
+        "Air Slash": 2,
+        "Ice Punch": 2,
+        "Sky Attack": 1,
+        "Spectral Thief": 2,
+        "Dazzling Gleam": 2,
+        "Close Combat": 1,
+        "Shadow Sneak": 1,
+        "Shock Wave": 1
+      }
+    },
+    {
+      "opponent": "togekiss",
+      "seed": 83,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 987,
+      "moves": {
+        "Dazzling Gleam": 2,
+        "Ice Punch": 1,
+        "Sky Attack": 1,
+        "Spectral Thief": 1,
+        "Air Slash": 1,
+        "Close Combat": 1
+      }
+    },
+    {
+      "opponent": "togekiss",
+      "seed": 127,
+      "side": 0,
+      "winner": 1,
+      "won": false,
+      "frames": 1396,
+      "moves": {
+        "Ice Punch": 2,
+        "Air Slash": 2,
+        "Spectral Thief": 1,
+        "Dazzling Gleam": 2,
+        "Close Combat": 1,
+        "Sky Attack": 1,
+        "Shadow Sneak": 1
+      }
+    },
+    {
+      "opponent": "togekiss",
+      "seed": 127,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1378,
+      "moves": {
+        "Sky Attack": 1,
+        "Spectral Thief": 1,
+        "Shock Wave": 3,
+        "Air Slash": 2,
+        "Shadow Sneak": 2,
+        "Ice Punch": 2,
+        "Dazzling Gleam": 2,
+        "Close Combat": 1
+      }
+    },
+    {
+      "opponent": "gengar",
+      "seed": 17,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1458,
+      "moves": {
+        "Psychic": 3,
+        "Shadow Sneak": 3,
+        "Shadow Ball": 2,
+        "Spectral Thief": 2,
+        "Ice Punch": 1,
+        "Sludge Bomb": 2,
+        "Thunder": 1
+      }
+    },
+    {
+      "opponent": "gengar",
+      "seed": 17,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 966,
+      "moves": {
+        "Shadow Sneak": 2,
+        "Psychic": 1,
+        "Spectral Thief": 1,
+        "Shadow Ball": 1,
+        "Ice Punch": 1,
+        "Sludge Bomb": 1
+      }
+    },
+    {
+      "opponent": "gengar",
+      "seed": 41,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1153,
+      "moves": {
+        "Spectral Thief": 1,
+        "Shadow Ball": 3,
+        "Shadow Sneak": 2,
+        "Thunder": 1,
+        "Ice Punch": 2,
+        "Sludge Bomb": 1
+      }
+    },
+    {
+      "opponent": "gengar",
+      "seed": 41,
+      "side": 1,
+      "winner": 0,
+      "won": false,
+      "frames": 1524,
+      "moves": {
+        "Shadow Ball": 3,
+        "Spectral Thief": 2,
+        "Psychic": 3,
+        "Thunder": 2,
+        "Ice Punch": 2,
+        "Shadow Sneak": 2,
+        "Sludge Bomb": 2
+      }
+    },
+    {
+      "opponent": "gengar",
+      "seed": 83,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 1144,
+      "moves": {
+        "Shadow Ball": 2,
+        "Spectral Thief": 2,
+        "Thunder": 1,
+        "Psychic": 1,
+        "Ice Punch": 1,
+        "Shadow Sneak": 1,
+        "Sludge Bomb": 1
+      }
+    },
+    {
+      "opponent": "gengar",
+      "seed": 83,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1134,
+      "moves": {
+        "Shadow Ball": 1,
+        "Spectral Thief": 2,
+        "Psychic": 2,
+        "Ice Punch": 2,
+        "Shadow Sneak": 1,
+        "Thunder": 1
+      }
+    },
+    {
+      "opponent": "gengar",
+      "seed": 127,
+      "side": 0,
+      "winner": 0,
+      "won": true,
+      "frames": 906,
+      "moves": {
+        "Shadow Sneak": 2,
+        "Psychic": 1,
+        "Spectral Thief": 1,
+        "Shadow Ball": 1,
+        "Ice Punch": 1,
+        "Thunder": 1
+      }
+    },
+    {
+      "opponent": "gengar",
+      "seed": 127,
+      "side": 1,
+      "winner": 1,
+      "won": true,
+      "frames": 1024,
+      "moves": {
+        "Shadow Sneak": 2,
+        "Shadow Ball": 1,
+        "Spectral Thief": 1,
+        "Psychic": 1,
+        "Ice Punch": 1,
+        "Thunder": 1
+      }
+    }
+  ]
+}

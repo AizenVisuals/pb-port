@@ -1,0 +1,1123 @@
+{
+  "fetched_at": "2026-11-14T13:25:42.400979+00:00",
+  "resources": [
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/AnimData.xml",
+      "local": "public/assets/sprites/0802/AnimData.xml",
+      "sha256": "e7d1f2011a38a1fc09d1022f997c8e4be937f9d31df91ee8a92dcfb867600616",
+      "bytes": 14108
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Walk-Anim.png",
+      "local": "public/assets/sprites/0802/Walk-Anim.png",
+      "sha256": "001d92466e5a56a52979e75cf94cf868b850f697daa776527043d971fe0ccda3",
+      "bytes": 5219
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Walk-Offsets.png",
+      "local": "public/assets/sprites/0802/Walk-Offsets.png",
+      "sha256": "c194e0fe34243a41302f0d29587cdf8dd4db5bc6dcd599005b92a583edafbe8a",
+      "bytes": 459
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Walk-Shadow.png",
+      "local": "public/assets/sprites/0802/Walk-Shadow.png",
+      "sha256": "1e33c73a90dd411bc334f61ea50528ae77d2a46921e3773ac7d41e85e341340e",
+      "bytes": 471
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Attack-Anim.png",
+      "local": "public/assets/sprites/0802/Attack-Anim.png",
+      "sha256": "0bcc3301eb0291616a699e3f656c8f97552bc1fd721699dd870bf25c13b8a431",
+      "bytes": 17050
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Attack-Offsets.png",
+      "local": "public/assets/sprites/0802/Attack-Offsets.png",
+      "sha256": "32abcdd21060e63ac73b8d9ab00e9ae2d8a5b8c69fd2336db48b81364e97a099",
+      "bytes": 2733
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Attack-Shadow.png",
+      "local": "public/assets/sprites/0802/Attack-Shadow.png",
+      "sha256": "ad1ea240d3db69564bf36df28a6661319407e1364ae9af95f9d3801599fb5342",
+      "bytes": 5083
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Strike-Anim.png",
+      "local": "public/assets/sprites/0802/Strike-Anim.png",
+      "sha256": "791469f58ca68ac09bcf35047b86ebe141625e6471da0c101ace7b99f3e0a1cb",
+      "bytes": 26499
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Strike-Offsets.png",
+      "local": "public/assets/sprites/0802/Strike-Offsets.png",
+      "sha256": "b91d2a6c1acc881ff4002cf9e264f332e3514cc8744e6763b3fa9f78eba200e0",
+      "bytes": 2866
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Strike-Shadow.png",
+      "local": "public/assets/sprites/0802/Strike-Shadow.png",
+      "sha256": "b51f24271908a89573ebfd0245a5e4b2db9a2dc840d7fb30b1fb80446fdb92f1",
+      "bytes": 4861
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Shoot-Anim.png",
+      "local": "public/assets/sprites/0802/Shoot-Anim.png",
+      "sha256": "c0215e03fc5b45e3cca5efb8346315995a251a2f89f99b04625397c1be41fcce",
+      "bytes": 11423
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Shoot-Offsets.png",
+      "local": "public/assets/sprites/0802/Shoot-Offsets.png",
+      "sha256": "380af30012b6c8a5d8dcab4a35c9913d6e6c750df13a1631fca9dcc9d1caee56",
+      "bytes": 1285
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Shoot-Shadow.png",
+      "local": "public/assets/sprites/0802/Shoot-Shadow.png",
+      "sha256": "17050dc0acb001666f22df85002c50faa6856d162b41b91d4ceddfa6867127c5",
+      "bytes": 1615
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Rotate-Anim.png",
+      "local": "public/assets/sprites/0802/Rotate-Anim.png",
+      "sha256": "5daf20c2dec63092b4681fe0961f2c6478666edfd3669e5d97e2251cf176979a",
+      "bytes": 15061
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Rotate-Offsets.png",
+      "local": "public/assets/sprites/0802/Rotate-Offsets.png",
+      "sha256": "a56926c3a6c1fd1161785f129a4a11194267e238e958c1f467d6748d3fb065ad",
+      "bytes": 910
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Rotate-Shadow.png",
+      "local": "public/assets/sprites/0802/Rotate-Shadow.png",
+      "sha256": "353c0a8f12cd512b4aa4ea7b04758687de17fe4e9202ec26efa8c86765b601be",
+      "bytes": 781
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Sleep-Anim.png",
+      "local": "public/assets/sprites/0802/Sleep-Anim.png",
+      "sha256": "adf3d3bbcf76f5fc46bd29a93ca52c740631957ec62046121744f7f1347194c4",
+      "bytes": 546
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Sleep-Offsets.png",
+      "local": "public/assets/sprites/0802/Sleep-Offsets.png",
+      "sha256": "ef29eedb1f1dd71da4d9cbd532a790239caebd66112776c9d0311eed456ebae1",
+      "bytes": 110
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Sleep-Shadow.png",
+      "local": "public/assets/sprites/0802/Sleep-Shadow.png",
+      "sha256": "02b60aeb3fc7405686455ca107128344c08a20efd465c0f716cc5856f9871091",
+      "bytes": 164
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Hurt-Anim.png",
+      "local": "public/assets/sprites/0802/Hurt-Anim.png",
+      "sha256": "15887f3219eddf869e161f13d5bdbe7f237940b6ab14cc15915fb5e38e870502",
+      "bytes": 4823
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Hurt-Offsets.png",
+      "local": "public/assets/sprites/0802/Hurt-Offsets.png",
+      "sha256": "f3b6244221babf1f9b0fa42cd6b007d73a011dfacc9b999b2b69a4c54f74065f",
+      "bytes": 466
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Hurt-Shadow.png",
+      "local": "public/assets/sprites/0802/Hurt-Shadow.png",
+      "sha256": "c5ad1f009847f463cc9ec2017ac0449da6200bc1007dd28655ef8164233d37b6",
+      "bytes": 873
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Idle-Anim.png",
+      "local": "public/assets/sprites/0802/Idle-Anim.png",
+      "sha256": "daf6d46656c8f2a65adab562e8f492bedf6e8291a26634cfc7254bc961acec5d",
+      "bytes": 5211
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Idle-Offsets.png",
+      "local": "public/assets/sprites/0802/Idle-Offsets.png",
+      "sha256": "3e2d8ecf78de54b0c32ada5608c04a3189f3ea2461561187b428e4f4d5b21a23",
+      "bytes": 480
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Idle-Shadow.png",
+      "local": "public/assets/sprites/0802/Idle-Shadow.png",
+      "sha256": "81082638b50e9614158d4b8f426aac3b8d6f07a83d8e1af3273553f2e4ae8aa7",
+      "bytes": 617
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Swing-Anim.png",
+      "local": "public/assets/sprites/0802/Swing-Anim.png",
+      "sha256": "b39e5051a1b466abf41bf98a784284e175213846d24f083ca3476c17a6924fb9",
+      "bytes": 20886
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Swing-Offsets.png",
+      "local": "public/assets/sprites/0802/Swing-Offsets.png",
+      "sha256": "ad510d4364afef39f36ceebc2af88d11c7471d12b7faacdc6bf6a2fe835c49a3",
+      "bytes": 2518
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Swing-Shadow.png",
+      "local": "public/assets/sprites/0802/Swing-Shadow.png",
+      "sha256": "956efe9396b72ed04217f0788541d66a2bf8475f6bb3514ec5b2aa41f1ddc871",
+      "bytes": 4570
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Double-Anim.png",
+      "local": "public/assets/sprites/0802/Double-Anim.png",
+      "sha256": "5091e958db31d31b6e19d63c02f92045da359dd14e2e06aaaaa75a435ae55833",
+      "bytes": 19096
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Double-Offsets.png",
+      "local": "public/assets/sprites/0802/Double-Offsets.png",
+      "sha256": "3c8d7b9798fbd5e2698c01c831b3ca81786c059cbf969fb68ed43b7b0c0df44f",
+      "bytes": 3132
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Double-Shadow.png",
+      "local": "public/assets/sprites/0802/Double-Shadow.png",
+      "sha256": "ad47345e595468f21260a6a9638100c1dbe9b6df7ae189da9844dd8698a69d4f",
+      "bytes": 6671
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Hop-Anim.png",
+      "local": "public/assets/sprites/0802/Hop-Anim.png",
+      "sha256": "684dd967ab64283512b32a2f7df4ca33ab981ba173421f25415abd2abe868c62",
+      "bytes": 14474
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Hop-Offsets.png",
+      "local": "public/assets/sprites/0802/Hop-Offsets.png",
+      "sha256": "7073ffa26d97d13c4ed96429677f307950061439b515c751a87b5834029c32ae",
+      "bytes": 1601
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Hop-Shadow.png",
+      "local": "public/assets/sprites/0802/Hop-Shadow.png",
+      "sha256": "76f5a84c823c374ee79e9f983635f5d805599a79fa54e58750f0ed75e2239e98",
+      "bytes": 1362
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Charge-Anim.png",
+      "local": "public/assets/sprites/0802/Charge-Anim.png",
+      "sha256": "9566a3ae472d19cd09c64215160f8e5de531143dcc58890a226151201fce05a4",
+      "bytes": 5846
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Charge-Offsets.png",
+      "local": "public/assets/sprites/0802/Charge-Offsets.png",
+      "sha256": "1aceeebd62ef5b3c960efb0f2cad181680cd1163ab3af326f96e02ba1a1fee72",
+      "bytes": 860
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Charge-Shadow.png",
+      "local": "public/assets/sprites/0802/Charge-Shadow.png",
+      "sha256": "8f3fa6089a424d982f8432f7b3df148d6686e5d30560f7bc62d1e52c035d3b34",
+      "bytes": 1565
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/EventSleep-Anim.png",
+      "local": "public/assets/sprites/0802/EventSleep-Anim.png",
+      "sha256": "4991a370486ae989fc369960d2bae59531ed295f8c22474e88498763f196f7d9",
+      "bytes": 1160
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/EventSleep-Offsets.png",
+      "local": "public/assets/sprites/0802/EventSleep-Offsets.png",
+      "sha256": "c22f68e5a027357a907dbc18c8bddba652d0fd4a2392128c820f8508fdf507e7",
+      "bytes": 222
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/EventSleep-Shadow.png",
+      "local": "public/assets/sprites/0802/EventSleep-Shadow.png",
+      "sha256": "179e277f39d13f619aa0de318fcb572220a52421e3e159cee4544deae3c370a0",
+      "bytes": 326
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Wake-Anim.png",
+      "local": "public/assets/sprites/0802/Wake-Anim.png",
+      "sha256": "d2678fa2464abf27741542aeb560f8279d5b77f463c561400c354d4f4686f486",
+      "bytes": 5345
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Wake-Offsets.png",
+      "local": "public/assets/sprites/0802/Wake-Offsets.png",
+      "sha256": "2371fff0fef3e64d96e310ba39616d888eeecf9c7bbf61277ee8644eaacbfea7",
+      "bytes": 600
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Wake-Shadow.png",
+      "local": "public/assets/sprites/0802/Wake-Shadow.png",
+      "sha256": "99889315b145f4b6a8091ba48422a13032c3cbcc91fbb2e61e153e03a39bb6e2",
+      "bytes": 541
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Eat-Anim.png",
+      "local": "public/assets/sprites/0802/Eat-Anim.png",
+      "sha256": "3c31263f0b8244cde9b7788fbf616780ab4cb1d148e8be45cb1be984e6ef410e",
+      "bytes": 1058
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Eat-Offsets.png",
+      "local": "public/assets/sprites/0802/Eat-Offsets.png",
+      "sha256": "23173a5750033abc95624f8d38f284b0f9471cdb78e11c236a87c9a33f444ebb",
+      "bytes": 144
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Eat-Shadow.png",
+      "local": "public/assets/sprites/0802/Eat-Shadow.png",
+      "sha256": "2e6acb9f9ebbfa5ae951c74c27110ab3ccae5963beb5fddbaa73ba2885ab67db",
+      "bytes": 170
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Tumble-Anim.png",
+      "local": "public/assets/sprites/0802/Tumble-Anim.png",
+      "sha256": "1a3bee963a8290e2c419cb5bef284d87d1969fe80a3fd605b2ec8a95ae847c93",
+      "bytes": 1533
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Tumble-Offsets.png",
+      "local": "public/assets/sprites/0802/Tumble-Offsets.png",
+      "sha256": "cc7d945fc49cc13fd3a90fa63cb94ad8c71ffacd999074b6e531e8f7ee4aa5f2",
+      "bytes": 184
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Tumble-Shadow.png",
+      "local": "public/assets/sprites/0802/Tumble-Shadow.png",
+      "sha256": "472b4a28f8e9f2704f7785a78670a9650ef0afac47ab83849c9c2d4742f6f14e",
+      "bytes": 400
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Pose-Anim.png",
+      "local": "public/assets/sprites/0802/Pose-Anim.png",
+      "sha256": "d19416cc16bac02e663e8d3657d84bb190456f3916c6566220f1f05cf10a65c3",
+      "bytes": 4447
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Pose-Offsets.png",
+      "local": "public/assets/sprites/0802/Pose-Offsets.png",
+      "sha256": "8e11528f97e00e293ea838f4059e677c4bd1fb75fc54f4735ff7cf67e163ae1b",
+      "bytes": 567
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Pose-Shadow.png",
+      "local": "public/assets/sprites/0802/Pose-Shadow.png",
+      "sha256": "2ad794098fdfe6c55e05f8a388b48bb2d6ad1f9b70e0952cc5397f148bf981d9",
+      "bytes": 566
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Pull-Anim.png",
+      "local": "public/assets/sprites/0802/Pull-Anim.png",
+      "sha256": "f040bc971a6e21d0cf97c100e011e273a45783a32253be73d20e3c1bb38bc83f",
+      "bytes": 1061
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Pull-Offsets.png",
+      "local": "public/assets/sprites/0802/Pull-Offsets.png",
+      "sha256": "d8c425880a0b98f9fb9f90c037cb441db530e1358f184742a895bb945a411698",
+      "bytes": 158
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Pull-Shadow.png",
+      "local": "public/assets/sprites/0802/Pull-Shadow.png",
+      "sha256": "8a915c8593cadadacccd30a5dc5d91dd1967bdef0d698758dfdca8ba6c8fa717",
+      "bytes": 276
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Pain-Anim.png",
+      "local": "public/assets/sprites/0802/Pain-Anim.png",
+      "sha256": "044472b5e3b4ebc71265d81bde734beec8445072d3ded31c2217dc0bcbe12625",
+      "bytes": 13647
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Pain-Offsets.png",
+      "local": "public/assets/sprites/0802/Pain-Offsets.png",
+      "sha256": "3746a1e8009bcbac1ea4b2c4ae18838678e66a0ee452c61d6b0dbf22903531d9",
+      "bytes": 1484
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Pain-Shadow.png",
+      "local": "public/assets/sprites/0802/Pain-Shadow.png",
+      "sha256": "8d50494803b9111bc02a126e34e94a20b4d1a1ce0acdb72d939d8f55945dda0b",
+      "bytes": 1768
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Float-Anim.png",
+      "local": "public/assets/sprites/0802/Float-Anim.png",
+      "sha256": "d48619ef7723645a1e95cb259652dd6a666847827e13cfc4206b9f1a969e79d7",
+      "bytes": 1709
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Float-Offsets.png",
+      "local": "public/assets/sprites/0802/Float-Offsets.png",
+      "sha256": "7a12e8857d1df318cc191da6dd6803b6d6a1e51c5bc8f958d75eb796beddd1f3",
+      "bytes": 418
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Float-Shadow.png",
+      "local": "public/assets/sprites/0802/Float-Shadow.png",
+      "sha256": "a7329166d93da51e44f20d5ed774483d4a00db72dd0fbac57943a40122ce969e",
+      "bytes": 671
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/DeepBreath-Anim.png",
+      "local": "public/assets/sprites/0802/DeepBreath-Anim.png",
+      "sha256": "35224c6a4059aa0fa9bc36739b63935b6cb55c1bd163f54a3158d67035ccb8e9",
+      "bytes": 1236
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/DeepBreath-Offsets.png",
+      "local": "public/assets/sprites/0802/DeepBreath-Offsets.png",
+      "sha256": "963d464867303d25aceff06bd21d6457d53ea6d9b73706dd078ef3fc0975ba67",
+      "bytes": 172
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/DeepBreath-Shadow.png",
+      "local": "public/assets/sprites/0802/DeepBreath-Shadow.png",
+      "sha256": "1556cd89f59c9732f08b515b469457a882f53d3832ef4be9e56c263dca1cf024",
+      "bytes": 239
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Nod-Anim.png",
+      "local": "public/assets/sprites/0802/Nod-Anim.png",
+      "sha256": "1c79ea6e7c38e21c8ae7406ba5bca50fc6421226112393a290e320188008aaed",
+      "bytes": 2829
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Nod-Offsets.png",
+      "local": "public/assets/sprites/0802/Nod-Offsets.png",
+      "sha256": "28acc04a4906d7aedc415c957f20495c3dbe068b658893b67072d26e86f68b76",
+      "bytes": 357
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Nod-Shadow.png",
+      "local": "public/assets/sprites/0802/Nod-Shadow.png",
+      "sha256": "9d1564d3b7baf541f65a6750bc389157324fe12126c345818bbef227cf048f08",
+      "bytes": 413
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Sit-Anim.png",
+      "local": "public/assets/sprites/0802/Sit-Anim.png",
+      "sha256": "c025e47eea3d78b615fd2c613db6cb67ec93f34c25ad11e2b8a799ec824b5877",
+      "bytes": 734
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Sit-Offsets.png",
+      "local": "public/assets/sprites/0802/Sit-Offsets.png",
+      "sha256": "dded84e8c4482c8c56473658e1a559c91d53a1379519d11030b013c1cc3c713c",
+      "bytes": 120
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Sit-Shadow.png",
+      "local": "public/assets/sprites/0802/Sit-Shadow.png",
+      "sha256": "d6644c6abe64e1c7f83723bd69f850ad0f7454bab7b68e134d3c6b55b89772c5",
+      "bytes": 164
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/LookUp-Anim.png",
+      "local": "public/assets/sprites/0802/LookUp-Anim.png",
+      "sha256": "4ae26c218ddc7506845cd92e8356372e76346368f8b7a4d229b79626c73f49e0",
+      "bytes": 848
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/LookUp-Offsets.png",
+      "local": "public/assets/sprites/0802/LookUp-Offsets.png",
+      "sha256": "195ec5deb5fff7d590d1c1de474af38418e0f966b83707c739c83afc2208e517",
+      "bytes": 130
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/LookUp-Shadow.png",
+      "local": "public/assets/sprites/0802/LookUp-Shadow.png",
+      "sha256": "d6644c6abe64e1c7f83723bd69f850ad0f7454bab7b68e134d3c6b55b89772c5",
+      "bytes": 164
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Sink-Anim.png",
+      "local": "public/assets/sprites/0802/Sink-Anim.png",
+      "sha256": "3d0e75a100b2983c7b999ad90a22c6a85573f38b5b1d7ecd277f0f7d5bf1cf16",
+      "bytes": 1573
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Sink-Offsets.png",
+      "local": "public/assets/sprites/0802/Sink-Offsets.png",
+      "sha256": "db11c1056e26f505b9b121f5bceb271024e6e48b6a29d68e1f44c10cc51d3307",
+      "bytes": 218
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Sink-Shadow.png",
+      "local": "public/assets/sprites/0802/Sink-Shadow.png",
+      "sha256": "867f3257f7369a6d5fe2dea721eef71be86f013c2e0f0ae95ac3663777673c40",
+      "bytes": 231
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Trip-Anim.png",
+      "local": "public/assets/sprites/0802/Trip-Anim.png",
+      "sha256": "f3bdc3c0886b0ec68fcaa9a21e2a97a1f6103751a6022ec737eb6b556567697a",
+      "bytes": 6447
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Trip-Offsets.png",
+      "local": "public/assets/sprites/0802/Trip-Offsets.png",
+      "sha256": "c139b0e8cd656fbe254b81d6c95403611ee0beb74709a8bed0219512d2d4a048",
+      "bytes": 662
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Trip-Shadow.png",
+      "local": "public/assets/sprites/0802/Trip-Shadow.png",
+      "sha256": "fa358321aa96bb7446838d3f5ecf781626f1a3c77143070ea38393408f1c43e5",
+      "bytes": 615
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Laying-Anim.png",
+      "local": "public/assets/sprites/0802/Laying-Anim.png",
+      "sha256": "b77b1af3231bea147f97c1642ddd251981274767d2a9a32c314d6add736327e6",
+      "bytes": 881
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Laying-Offsets.png",
+      "local": "public/assets/sprites/0802/Laying-Offsets.png",
+      "sha256": "19d96cea48f1bf20b1e2fe365964d27ccec4579e605580341f67819e0ea100cf",
+      "bytes": 156
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Laying-Shadow.png",
+      "local": "public/assets/sprites/0802/Laying-Shadow.png",
+      "sha256": "ef9adbbca8b6eba42a941f9551547a66990a99c420d6d8ea59665bbcd345105d",
+      "bytes": 217
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/LeapForth-Anim.png",
+      "local": "public/assets/sprites/0802/LeapForth-Anim.png",
+      "sha256": "22696db9fdb8993f4df93aaa46a1710c48aabe4b00cd2caaa197e1fd14b118a0",
+      "bytes": 1394
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/LeapForth-Offsets.png",
+      "local": "public/assets/sprites/0802/LeapForth-Offsets.png",
+      "sha256": "6b7d8819120aac42996a66a17980f73206a87dbbceb2d1313b14675072d3a295",
+      "bytes": 185
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/LeapForth-Shadow.png",
+      "local": "public/assets/sprites/0802/LeapForth-Shadow.png",
+      "sha256": "ad345bd2dcb96bed1e23577361c90c2950dcbffd95a4d8f97dc3ac381f950a14",
+      "bytes": 351
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Head-Anim.png",
+      "local": "public/assets/sprites/0802/Head-Anim.png",
+      "sha256": "b807a8a2d539178c3a77facec1b04aa9ee483ec844ebd07fe3320b072e647ff2",
+      "bytes": 1277
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Head-Offsets.png",
+      "local": "public/assets/sprites/0802/Head-Offsets.png",
+      "sha256": "8285b19dd5552253e7a5fed6d6a04c3f25294197f00c6aec5862fc976c8c96bc",
+      "bytes": 185
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Head-Shadow.png",
+      "local": "public/assets/sprites/0802/Head-Shadow.png",
+      "sha256": "cf35b40dfa28c5f26cf140c896350ed69e8769e81e5750e4cb49c28d9e04722e",
+      "bytes": 230
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Cringe-Anim.png",
+      "local": "public/assets/sprites/0802/Cringe-Anim.png",
+      "sha256": "928ab967cb8edd4b6591aca35ea4ce61ffcda678fc8b741bdf087af53c6ec700",
+      "bytes": 819
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Cringe-Offsets.png",
+      "local": "public/assets/sprites/0802/Cringe-Offsets.png",
+      "sha256": "adc4fb749d74622d84dccb32e082addeb180d9ef4dfd3e9cda04ed7dde788851",
+      "bytes": 123
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Cringe-Shadow.png",
+      "local": "public/assets/sprites/0802/Cringe-Shadow.png",
+      "sha256": "2ef12fcc23dce079b5c642af2501b8dce94a1f0821c111dc9ce5ad811b14efdb",
+      "bytes": 206
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/LostBalance-Anim.png",
+      "local": "public/assets/sprites/0802/LostBalance-Anim.png",
+      "sha256": "41ee377c812f39895895a4e9e2282cfce08e1fc143f0ad8259193e1bbc4e3705",
+      "bytes": 703
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/LostBalance-Offsets.png",
+      "local": "public/assets/sprites/0802/LostBalance-Offsets.png",
+      "sha256": "e9b9fa470b8733de792d3b2d33c8a5b362223d4db6009e208d158b7d3a55bcca",
+      "bytes": 113
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/LostBalance-Shadow.png",
+      "local": "public/assets/sprites/0802/LostBalance-Shadow.png",
+      "sha256": "e9e067bf73bdc98cbb245d2207a69c35abb0a4d210b196769a60a3e0b1e5dcbf",
+      "bytes": 166
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/TumbleBack-Anim.png",
+      "local": "public/assets/sprites/0802/TumbleBack-Anim.png",
+      "sha256": "3e88d9fc2eed906e3092ac530b75daa4b422ee3a388a82a2cc96274d26742562",
+      "bytes": 1945
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/TumbleBack-Offsets.png",
+      "local": "public/assets/sprites/0802/TumbleBack-Offsets.png",
+      "sha256": "302739a9aa7eae50a41ed152ef153cd1294e577f9b4b2160755006ce7291708a",
+      "bytes": 223
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/TumbleBack-Shadow.png",
+      "local": "public/assets/sprites/0802/TumbleBack-Shadow.png",
+      "sha256": "0f694fd997cf382832d1c28168698350a20bcfeb1527e7f3e4abe14d81a3a536",
+      "bytes": 446
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Faint-Anim.png",
+      "local": "public/assets/sprites/0802/Faint-Anim.png",
+      "sha256": "b4e69b32934b4b9a62d29bc97ce6d22626965eb459024bee8eea4684bc349a36",
+      "bytes": 3439
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Faint-Offsets.png",
+      "local": "public/assets/sprites/0802/Faint-Offsets.png",
+      "sha256": "010a9b842b942d87f912c4365e0f252747d08cdfa4f03b0d974927c02accfe1a",
+      "bytes": 584
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/Faint-Shadow.png",
+      "local": "public/assets/sprites/0802/Faint-Shadow.png",
+      "sha256": "6ad52e98e0fcee66fbd4c5aa413615e586980602dc7e27036abdf77d77f5eb3f",
+      "bytes": 704
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/HitGround-Anim.png",
+      "local": "public/assets/sprites/0802/HitGround-Anim.png",
+      "sha256": "c0b83c311c9e050ac3321e91db2ef90383a7f1453d24fa0a6c5859129f7fd592",
+      "bytes": 1414
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/HitGround-Offsets.png",
+      "local": "public/assets/sprites/0802/HitGround-Offsets.png",
+      "sha256": "b45c3312161520d8cbb835aa37e13d19fec2f68e405e532c61a20ef87cb6be92",
+      "bytes": 208
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/HitGround-Shadow.png",
+      "local": "public/assets/sprites/0802/HitGround-Shadow.png",
+      "sha256": "a8b1fe800cdd32e0c086d9e4f954b76bf12725667dc56d49850a84a3bb8194d7",
+      "bytes": 209
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/0802/credits.txt",
+      "local": "public/assets/sprites/0802/credits.txt",
+      "sha256": "84845b5ee039eb90c5cde17c6d5242c09d4db8b654dab5c240278aaf2997069b",
+      "bytes": 632
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/portrait/0802/credits.txt",
+      "local": "public/assets/portraits/0802_credits.txt",
+      "sha256": "3cea9c8cd354b0e48e9468a63357cdfc9b695474f442aa9ff67d727942579db2",
+      "bytes": 193
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/portrait/0802/Normal.png",
+      "local": "public/assets/portraits/0802_Normal.png",
+      "sha256": "41e2024c92e7211a327dc6c141cf0cf0034dbd0b2def32b32832b8c70ce06efe",
+      "bytes": 1574
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/portrait/0802/Determined.png",
+      "local": "public/assets/portraits/0802_Determined.png",
+      "sha256": "f94b7ca372583954d588b388c663f77dfb6cf28313f5f7b8dba9f9d79dcb2e2a",
+      "bytes": 1800
+    },
+    {
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/portrait/0802/Pain.png",
+      "local": "public/assets/portraits/0802_Pain.png",
+      "sha256": "48e23b5dffd0ced37973fc16b2811967a4e8c0dd1c01d06f2f9c53be0bb6c3b3",
+      "bytes": 1620
+    }
+  ],
+  "geometry": [
+    {
+      "name": "Walk",
+      "sheet": [
+        96,
+        320
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 8,
+      "frames": 4
+    },
+    {
+      "name": "Attack",
+      "sheet": [
+        720,
+        640
+      ],
+      "cell": [
+        72,
+        80
+      ],
+      "directions": 8,
+      "frames": 10
+    },
+    {
+      "name": "Strike",
+      "sheet": [
+        832,
+        576
+      ],
+      "cell": [
+        64,
+        72
+      ],
+      "directions": 8,
+      "frames": 13
+    },
+    {
+      "name": "Shoot",
+      "sheet": [
+        288,
+        384
+      ],
+      "cell": [
+        24,
+        48
+      ],
+      "directions": 8,
+      "frames": 12
+    },
+    {
+      "name": "Rotate",
+      "sheet": [
+        216,
+        320
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 8,
+      "frames": 9
+    },
+    {
+      "name": "Shake",
+      "sheet": [
+        216,
+        320
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 8,
+      "frames": 9
+    },
+    {
+      "name": "Dance",
+      "sheet": [
+        216,
+        320
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 8,
+      "frames": 9
+    },
+    {
+      "name": "Sleep",
+      "sheet": [
+        48,
+        32
+      ],
+      "cell": [
+        24,
+        32
+      ],
+      "directions": 1,
+      "frames": 2
+    },
+    {
+      "name": "Hurt",
+      "sheet": [
+        96,
+        512
+      ],
+      "cell": [
+        48,
+        64
+      ],
+      "directions": 8,
+      "frames": 2
+    },
+    {
+      "name": "Idle",
+      "sheet": [
+        168,
+        320
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 8,
+      "frames": 7
+    },
+    {
+      "name": "Swing",
+      "sheet": [
+        648,
+        640
+      ],
+      "cell": [
+        72,
+        80
+      ],
+      "directions": 8,
+      "frames": 9
+    },
+    {
+      "name": "Double",
+      "sheet": [
+        896,
+        512
+      ],
+      "cell": [
+        56,
+        64
+      ],
+      "directions": 8,
+      "frames": 16
+    },
+    {
+      "name": "Hop",
+      "sheet": [
+        240,
+        704
+      ],
+      "cell": [
+        24,
+        88
+      ],
+      "directions": 8,
+      "frames": 10
+    },
+    {
+      "name": "Charge",
+      "sheet": [
+        320,
+        320
+      ],
+      "cell": [
+        32,
+        40
+      ],
+      "directions": 8,
+      "frames": 10
+    },
+    {
+      "name": "EventSleep",
+      "sheet": [
+        48,
+        192
+      ],
+      "cell": [
+        24,
+        24
+      ],
+      "directions": 8,
+      "frames": 2
+    },
+    {
+      "name": "Wake",
+      "sheet": [
+        120,
+        320
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 8,
+      "frames": 5
+    },
+    {
+      "name": "Eat",
+      "sheet": [
+        96,
+        40
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 1,
+      "frames": 4
+    },
+    {
+      "name": "Tumble",
+      "sheet": [
+        192,
+        32
+      ],
+      "cell": [
+        24,
+        32
+      ],
+      "directions": 1,
+      "frames": 8
+    },
+    {
+      "name": "Pose",
+      "sheet": [
+        120,
+        384
+      ],
+      "cell": [
+        24,
+        48
+      ],
+      "directions": 8,
+      "frames": 5
+    },
+    {
+      "name": "Pull",
+      "sheet": [
+        224,
+        40
+      ],
+      "cell": [
+        32,
+        40
+      ],
+      "directions": 1,
+      "frames": 7
+    },
+    {
+      "name": "Pain",
+      "sheet": [
+        384,
+        384
+      ],
+      "cell": [
+        32,
+        48
+      ],
+      "directions": 8,
+      "frames": 12
+    },
+    {
+      "name": "Float",
+      "sheet": [
+        96,
+        192
+      ],
+      "cell": [
+        24,
+        24
+      ],
+      "directions": 8,
+      "frames": 4
+    },
+    {
+      "name": "DeepBreath",
+      "sheet": [
+        216,
+        40
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 1,
+      "frames": 9
+    },
+    {
+      "name": "Nod",
+      "sheet": [
+        72,
+        320
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 8,
+      "frames": 3
+    },
+    {
+      "name": "Sit",
+      "sheet": [
+        72,
+        40
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 1,
+      "frames": 3
+    },
+    {
+      "name": "LookUp",
+      "sheet": [
+        72,
+        40
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 1,
+      "frames": 3
+    },
+    {
+      "name": "Sink",
+      "sheet": [
+        288,
+        40
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 1,
+      "frames": 12
+    },
+    {
+      "name": "Trip",
+      "sheet": [
+        160,
+        320
+      ],
+      "cell": [
+        32,
+        40
+      ],
+      "directions": 8,
+      "frames": 5
+    },
+    {
+      "name": "Laying",
+      "sheet": [
+        24,
+        192
+      ],
+      "cell": [
+        24,
+        24
+      ],
+      "directions": 8,
+      "frames": 1
+    },
+    {
+      "name": "LeapForth",
+      "sheet": [
+        144,
+        80
+      ],
+      "cell": [
+        24,
+        80
+      ],
+      "directions": 1,
+      "frames": 6
+    },
+    {
+      "name": "Head",
+      "sheet": [
+        24,
+        320
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 8,
+      "frames": 1
+    },
+    {
+      "name": "Cringe",
+      "sheet": [
+        64,
+        64
+      ],
+      "cell": [
+        32,
+        64
+      ],
+      "directions": 1,
+      "frames": 2
+    },
+    {
+      "name": "LostBalance",
+      "sheet": [
+        48,
+        40
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 1,
+      "frames": 2
+    },
+    {
+      "name": "TumbleBack",
+      "sheet": [
+        240,
+        40
+      ],
+      "cell": [
+        24,
+        40
+      ],
+      "directions": 1,
+      "frames": 10
+    },
+    {
+      "name": "Faint",
+      "sheet": [
+        160,
+        320
+      ],
+      "cell": [
+        40,
+        40
+      ],
+      "directions": 8,
+      "frames": 4
+    },
+    {
+      "name": "HitGround",
+      "sheet": [
+        256,
+        40
+      ],
+      "cell": [
+        32,
+        40
+      ],
+      "directions": 1,
+      "frames": 8
+    }
+  ]
+}
