@@ -1,0 +1,18 @@
+
+> pb-self-hosted-port@0.1.0 test
+> node --test test/*.test.mjs
+
+✔ local canvas adapter produces deterministic battle state (1247.936956ms)
+✔ complete 3v3 and 6v6 simulations end with valid winners (2685.541781ms)
+✔ HTTP serves local client and disables production sign-in (679.051856ms)
+✔ profiles issue independent tokens and invalid teams are rejected (73.622694ms)
+✔ practice loads the actual engine, ticks, accepts input, and surrenders (1612.396177ms)
+✔ two clients share seed, commands and ranked result; cancellation removes queue (1365.547636ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8628.014696

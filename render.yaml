@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: pb-port
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATA_DIR
+        value: /tmp/pb-port-data

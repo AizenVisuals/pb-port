@@ -1,0 +1,344 @@
+{
+  "evidence_id": "ev_f6fb2dda2f5a0f292ed60b275fb7314b15f8df36a5b512a25c146fa86b351f19",
+  "observations": [
+    {
+      "node_id": "jag_node_0f854d8d267fd458b61dd7deb8944aaf56b49d46901500208d2b2e328e5fcdb3",
+      "label": "/api/version",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 5454,
+            "line": 1
+          },
+          "kind": "source-range",
+          "source": "app.js",
+          "start": {
+            "column": 5414,
+            "line": 1
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "value": "/api/version"
+      }
+    },
+    {
+      "node_id": "jag_node_1fc0a5f048c8ac417c459f68e5c0a6a2fef232b33b7f0ebc57a600269e8398be",
+      "label": "network endpoint",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 909,
+            "line": 3
+          },
+          "kind": "source-range",
+          "source": "app.js",
+          "start": {
+            "column": 831,
+            "line": 3
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:WebSocket",
+        "resolution": "partial",
+        "value": "`${location.protocol===\"https:\"?\"wss\":\"ws\"}://${location.host}`"
+      }
+    },
+    {
+      "node_id": "jag_node_3810b6389bea98ed8e3fd501b23732329080b4f54d675494723735c00a1c317e",
+      "label": "/api/usage",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 24310,
+            "line": 5
+          },
+          "kind": "source-range",
+          "source": "app.js",
+          "start": {
+            "column": 24291,
+            "line": 5
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "value": "/api/usage"
+      }
+    },
+    {
+      "node_id": "jag_node_5f42718e9f7df750f38e2ad2370d6a005140015193b51406b0a8f7d5cea109ce",
+      "label": "network endpoint",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 147,
+            "line": 1
+          },
+          "kind": "source-range",
+          "source": "roster.js",
+          "start": {
+            "column": 118,
+            "line": 1
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "value": "/roster-history.json"
+      }
+    },
+    {
+      "node_id": "jag_node_83e2dc514e072898fba1d1b16af321078c734f79ac6cc360c1c9a7c7d0cd1c87",
+      "label": "network endpoint",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 17444,
+            "line": 15
+          },
+          "kind": "source-range",
+          "source": "app.js",
+          "start": {
+            "column": 17399,
+            "line": 15
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "resolution": "partial",
+        "value": "`/api/player/${encodeURIComponent(e)}`"
+      }
+    },
+    {
+      "node_id": "jag_node_8470a9ba65b80c19a5ac642aa0c84383d13ae204f4fa7d1e6a6ee040d422b991",
+      "label": "/trainers.json",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 99,
+            "line": 1
+          },
+          "kind": "source-range",
+          "source": "roster.js",
+          "start": {
+            "column": 76,
+            "line": 1
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "value": "/trainers.json"
+      }
+    },
+    {
+      "node_id": "jag_node_96f26074b4d920fe6de158b7882ef6da6a4657926cc2cadc694b8e98953eb74a",
+      "label": "/api/auth",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 9709,
+            "line": 1
+          },
+          "kind": "source-range",
+          "source": "app.js",
+          "start": {
+            "column": 9691,
+            "line": 1
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "value": "/api/auth"
+      }
+    },
+    {
+      "node_id": "jag_node_a953bd645844ca8350a8f7ade21fcbee6d8ee259e52d0b8e4ff4de42363a6453",
+      "label": "/legends.json",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 258,
+            "line": 1
+          },
+          "kind": "source-range",
+          "source": "roster.js",
+          "start": {
+            "column": 236,
+            "line": 1
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "value": "/legends.json"
+      }
+    },
+    {
+      "node_id": "jag_node_ad7872d900562b166c459ad393abdb1d62cea05e8c63cbc1679fecd55f38f5db",
+      "label": "/bosses.json",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 203,
+            "line": 1
+          },
+          "kind": "source-range",
+          "source": "roster.js",
+          "start": {
+            "column": 182,
+            "line": 1
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "value": "/bosses.json"
+      }
+    },
+    {
+      "node_id": "jag_node_b27ab00861bfa01b43cb6802fd1aeed106a8b9b9b47ec6f08bd52ca4015a3441",
+      "label": "/vote.json",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 8643,
+            "line": 15
+          },
+          "kind": "source-range",
+          "source": "app.js",
+          "start": {
+            "column": 8624,
+            "line": 15
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "value": "/vote.json"
+      }
+    },
+    {
+      "node_id": "jag_node_b9bc0d6a77b0c41808a5019e2264fad3a7678ad117e2908461b6a308cbab30ce",
+      "label": "network endpoint",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 3810,
+            "line": 15
+          },
+          "kind": "source-range",
+          "source": "app.js",
+          "start": {
+            "column": 3785,
+            "line": 15
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "resolution": "partial",
+        "value": "`/api/replay/${e}`"
+      }
+    },
+    {
+      "node_id": "jag_node_c0d7a9309d3df4f89f0fe5ae0b6cfc3c1f70fcfbd09e9b346b61f5dea7d17f5c",
+      "label": "/roster.json",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 57,
+            "line": 1
+          },
+          "kind": "source-range",
+          "source": "roster.js",
+          "start": {
+            "column": 36,
+            "line": 1
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "value": "/roster.json"
+      }
+    },
+    {
+      "node_id": "jag_node_db9b91651b22fb4909365bc424f83e65a4e08039648466ff943f3776c5423f38",
+      "label": "network endpoint",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 10447,
+            "line": 1
+          },
+          "kind": "source-range",
+          "source": "app.js",
+          "start": {
+            "column": 10316,
+            "line": 1
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "value": "/auth/discord-roles/start"
+      }
+    },
+    {
+      "node_id": "jag_node_e0df9ea2c7b5122556914c9c0129156317d77e917bdffebc397b846eb63b8ca8",
+      "label": "/auth/start",
+      "location": {
+        "available": true,
+        "value": {
+          "end": {
+            "column": 11805,
+            "line": 1
+          },
+          "kind": "source-range",
+          "source": "app.js",
+          "start": {
+            "column": 11677,
+            "line": 1
+          }
+        }
+      },
+      "properties": {
+        "endpoint_kind": "network",
+        "mechanism": "call:fetch",
+        "value": "/auth/start"
+      }
+    }
+  ]
+}

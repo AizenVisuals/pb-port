@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PB — Servidor próprio</title>
+<meta name="description" content="Build a team, battle other trainers live, climb the ranked ladder. Real-time battles in your browser, free.">
+<link rel="icon" href="/branding/logo_160.png">
+<link rel="stylesheet" href="/style.css">
+<!-- the look (web/looks/<name>.css): Broadcast (Sondre's pick, 2026-10-29); ?look=cartridge|card|base to preview another, remembered in this browser -->
+<script>
+  (function () {
+    var LOOKS = ['broadcast', 'cartridge', 'card'], q = new URLSearchParams(location.search).get('look'), l = null;
+    try { if (q) localStorage.setItem('pbr.look', JSON.stringify(q)); l = JSON.parse(localStorage.getItem('pbr.look')); } catch (e) {}
+    if (l === 'base') return;   // the plain look underneath
+    if (LOOKS.indexOf(l) < 0) l = 'broadcast';
+    document.documentElement.dataset.look = l;
+    document.write('<link rel="stylesheet" href="/looks/' + l + '.css">');
+  })();
+</script>
+<link rel="stylesheet" href="/port.css">
+</head>
+<body>
+<!-- the live arena behind the menus (backdrop.js) -->
+<canvas id="backdrop" aria-hidden="true"></canvas><div class="backshade" aria-hidden="true"></div>
+<header class="bar">
+  <img src="/branding/logo_160.png" alt="" class="logo">
+  <b class="brand">PB Ranked</b>
+  <!-- the newest Pokémon scrolling by; app.js renderNewStrip fills it (wide screens; phones keep the strip in the builder) -->
+  <div id="newTicker" class="newticker" hidden aria-label="New Pokémon"></div>
+  <span class="grow"></span>
+  <a id="discordBtn" class="discordbtn" href="https://discord.gg/pdhKHF9mxd" target="_blank" rel="noopener noreferrer" aria-label="Join the PB Discord" title="Join the Pokémon Battlegrounds Discord: battle friends, report bugs, see what is coming"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.21.38-.44.86-.61 1.25a18.3 18.3 0 0 0-5.49 0 12.6 12.6 0 0 0-.62-1.25.08.08 0 0 0-.08-.04 19.7 19.7 0 0 0-4.88 1.52.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 5.99 3.03.08.08 0 0 0 .09-.03c.46-.63.87-1.3 1.22-1.99a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.89.08.08 0 0 1-.01-.13l.37-.29a.07.07 0 0 1 .08-.01c3.93 1.79 8.18 1.79 12.06 0a.07.07 0 0 1 .08.01l.37.29a.08.08 0 0 1-.01.13c-.6.35-1.22.64-1.87.89a.08.08 0 0 0-.04.11c.36.7.77 1.36 1.22 1.99a.08.08 0 0 0 .09.03 19.8 19.8 0 0 0 6-3.03.08.08 0 0 0 .03-.06c.5-5.18-.84-9.67-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.09-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.33-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.15-1.09-2.15-2.42s.95-2.42 2.15-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.33-.95 2.42-2.16 2.42z"/></svg><span>Discord</span></a>
+  <button id="reportBtn" class="ghost icon" aria-label="Report a problem" title="Report a problem"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 21V4m0 0h11l-2 4 2 4H5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg></button>
+  <button id="helpBtn" class="ghost icon" aria-label="How battles work" title="How battles work (?)">?</button>
+  <button id="controlsBtn" class="ghost icon" aria-label="Keys and controller" title="Keys and controller"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M7 8h10a5 5 0 0 1 4.9 6l-.6 2.9a2.3 2.3 0 0 1-4 1L15.5 16h-7l-1.8 1.9a2.3 2.3 0 0 1-4-1L2.1 14A5 5 0 0 1 7 8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M7.5 10.5v3M6 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="15.5" cy="11" r="1.1" fill="currentColor"/><circle cx="17.5" cy="13" r="1.1" fill="currentColor"/></svg></button>
+  <button id="muteBtn" class="ghost icon" aria-pressed="false"></button>
+  <button id="profileBtn" class="ghost profile" hidden aria-label="Your trainer and name"><img id="profileFace" alt=""><span id="who"></span></button>
+</header>
+
+<aside class="port-note" aria-label="Sobre este servidor"><strong>Servidor próprio · versão inicial</strong><span>Treino contra bot e PvP 3v3/6v6. Para PvP, dois jogadores devem buscar no mesmo modo e formato.</span></aside>
+<main>
+  <section id="loading" class="screen center">
+    <div class="spinner" aria-hidden="true"></div>
+    <p class="muted" id="loadingText">Loading…</p>
+  </section>
+
+  <!-- first visit: what this is, your name and your trainer -->
+  <section id="welcome" class="screen" hidden>
+    <div class="hero">
+      <h1 class="wordmark"><span class="wm-pb">PB</span><span class="wm-ranked">Ranked</span></h1>
+      <p class="tagline">Real-time Pokémon battles. Real trainers. Climb.</p>
+    </div>
+    <form id="nameForm" class="card-panel">
+      <!-- sign-in first: a returning player just signs in (their name and trainer come with the account) -->
+      <div id="signinBox" class="signin top" hidden>
+        <p id="signinWhy"></p>
+        <div id="signinBtns" class="row center-row"></div>
+      </div>
+      <p id="newHere" class="muted newhere" hidden>New here? Pick your trainer name and trainer, then sign in above. You can change them later.</p>
+      <label for="nameInput">Trainer name</label>
+      <div class="row wrap">
+        <input id="nameInput" maxlength="16" minlength="2" placeholder="2 to 16 characters" autocomplete="nickname" required>
+        <button id="startBtn" class="primary">Start</button>
+      </div>
+      <p id="nameErr" class="err" role="alert"></p>
+      <label>Your trainer</label>
+      <div id="trainerPick" class="trainers" role="radiogroup" aria-label="Trainer"></div>
+    </form>
+  </section>
+
+  <!-- this account is banned (admin tools) -->
+  <section id="banned" class="screen center" hidden>
+    <h1>This account is banned</h1>
+    <p id="bannedWhy" class="muted"></p>
+    <p class="muted small">Think this is a mistake? Write to stinsonoscar@gmail.com with your trainer name.</p>
+  </section>
+
+  <!-- this account was opened in another tab or on another device -->
+  <section id="elsewhere" class="screen center" hidden>
+    <p>You are playing in another tab or on another device.</p>
+    <button id="playHereBtn" class="primary">Play here</button>
+  </section>
+
+  <section id="builder" class="screen" hidden>
+    <!-- (2026-11-13, Sondre: "This is starting to get pretty cluttered. Can we create a cleaner UI design.") The battle
+         setup is one panel: format, team, ranked or not; under them one quiet line: your rank, the arena (pick and ban,
+         behind the Arena button: app.js arenaSum) and who is online. The live counts sit on the format tabs themselves
+         (app.js renderActivity), not in a scrolling banner. -->
+    <div class="setup">
+      <div class="row wrap setuprow">
+        <div class="seg" id="formats" role="tablist" aria-label="Format"></div>
+        <div class="seg" id="teamKind" role="tablist" aria-label="Your team or a random one"></div>
+        <div class="seg" id="modes" role="tablist" aria-label="Ranked or unranked"></div>
+      </div>
+      <div class="row wrap setupfoot">
+        <span class="standing" id="rating"></span>
+        <button type="button" id="arenaBtn" class="flat optbtn" aria-expanded="false" aria-controls="arenaBox" title="The arena for your battles, and one arena you never want">Arena <b id="arenaSum"></b></button>
+        <div id="arenaBox" class="row wrap arenabox" hidden>
+          <select id="arenaPick" aria-label="Arena" title="The arena for your battles (random, or one you pick)"></select>
+          <select id="arenaBan" aria-label="Banned arena" title="Ban one arena: you are not matched with players who picked it, and it is never drawn at random for your battles"></select>
+        </div>
+        <span class="grow"></span>
+        <!-- who is online (server: activity, every 5 s); each format's players are on its tab -->
+        <div id="activity" class="activity" hidden aria-live="off"></div>
+      </div>
+      <p id="fmtNote" class="muted small fmtnote" hidden></p>
+    </div>
+
+    <div id="roomBack" class="away" hidden role="status"></div>
+    <div id="awayBox" class="away" hidden role="status"></div>
+    <div id="partyBox" class="away" hidden role="status"></div>
+    <!-- (visual review 2026-11-01) your team first: the next step is always in view -->
+    <div class="row wrap teamhead"><h2 class="grow">Your team <span class="muted" id="teamCount"></span></h2>
+      <!-- (2026-11-13 cleaner menus) the gimmick belongs to the team: it sits in the team's own heading, not in a row of its own -->
+      <div class="row gimmickrow"><label for="gimmick">Gimmick</label> <select id="gimmick" title="One per battle. Z-Moves and Gigantamax are coming later"></select></div>
+      <div id="saveBox" class="row"></div></div>
+    <ol id="team" class="team"></ol>
+    <!-- your team, kept in view under the header while you scroll through the Pokémon (app.js renderTeamMini) -->
+    <button type="button" id="teamMini" class="teammini" hidden aria-label="Your team: back to it"></button>
+    <div id="editor" class="editor" hidden></div>
+
+    <!-- (2026-11-13 cleaner menus) everything that is not "find a battle": three quiet tabs, one group of buttons in view
+         (app.js navTab). Play is open, so the ways to play are one click away and the rest two. A badge on a hidden
+         group shows as a dot on its tab (style.css). What is unavailable goes last. -->
+    <nav class="playnav" aria-label="More ways to play">
+      <div class="navtabs" id="navTabs" role="tablist">
+        <button type="button" class="flat navtab" role="tab" data-nav="play" aria-selected="true" aria-controls="navPlay">Play</button>
+        <button type="button" class="flat navtab" role="tab" data-nav="people" aria-selected="false" aria-controls="navPeople">Community</button>
+        <button type="button" class="flat navtab" role="tab" data-nav="stats" aria-selected="false" aria-controls="navStats">Stats</button>
+      </div>
+      <div class="navgroup" id="navPlay" role="tabpanel" data-nav="play">
+        <button id="towerBtn" class="ghost">Battle Tower</button>
+        <button id="practiceBtn" class="ghost">Practice vs bot</button>
+        <button id="friendBtn" class="ghost">Friendly match</button>
+        <button id="cupBtn" class="ghost">Tournaments</button>
+        <button id="gridBtn" class="ghost">PB Grid</button>
+        <button id="ticketsBtn" class="ghost" hidden>Tickets <span id="ticketsBadge" class="badgecount" hidden></span></button>
+        <!-- (closed for now: its check page ran the server out of memory - 2026-11-07; open again by putting this button back and ROYALE_OPEN=1) -->
+        <button id="royaleBtn" class="ghost" disabled title="Battle Royale is unavailable until we get better servers">Battle Royale <span class="badgecount off">unavailable</span></button>
+      </div>
+      <div class="navgroup" id="navPeople" role="tabpanel" data-nav="people" hidden>
+        <button id="friendsBtn" class="ghost">Friends <span id="friendsBadge" class="badgecount" hidden></span></button>
+        <button id="boardBtn" class="ghost">Leaderboard</button>
+        <button id="voteBtn" class="ghost">Vote next Pokémon</button>
+      </div>
+      <div class="navgroup" id="navStats" role="tabpanel" data-nav="stats" hidden>
+        <button id="historyBtn" class="ghost">Recent battles</button>
+        <button id="myStatsBtn" class="ghost">My Pokémon</button>
+        <button id="trophyBtn" class="ghost">Trophy room</button>
+        <button id="usageBtn" class="ghost">Usage stats</button>
+      </div>
+    </nav>
+
+    <!-- daily and weekly challenges (server/challenges.mjs): stars and titles, cosmetic -->
+    <section id="chBox" class="chbox" hidden aria-label="Challenges"></section>
+    <!-- the Season Championship video: enter a team, consent, where you stand (app.js renderChamp, server/champ.mjs) -->
+    <section id="champBox" class="chbox champbox" hidden aria-label="Championship"></section>
+
+    <h2>Saved teams</h2>
+    <div id="saved" class="savedlist"></div>
+
+
+
+
+    <!-- (2026-11-13 cleaner menus) search and the grid; generation, usage tier, type and "Has a Mega" are behind Filters,
+         which counts the ones that are on (app.js renderRoster; open or closed is remembered in this browser) -->
+    <div class="row wrap rosterhead"><h2>Pokémon <span class="muted">fully evolved, no legendaries</span></h2><span class="grow"></span>
+      <input id="search" type="search" placeholder="Search name, type or move, e.g. dragon flying, ice shard" autocomplete="off" aria-label="Search Pokémon by name, type or move">
+      <button type="button" id="filterBtn" class="ghost filterbtn" aria-expanded="false" aria-controls="filterBox">Filters <span id="filterCount" class="badgecount" hidden></span></button></div>
+    <div id="filterBox" class="filterbox" hidden>
+      <span class="flbl">Generation</span><div id="gens" class="seg gens" role="tablist" aria-label="Generation"></div>
+      <span class="flbl">Usage tier</span><div id="usageTiers" class="seg gens" role="tablist" aria-label="Usage tier" hidden></div>
+      <span class="flbl">Type</span><div id="typeFilters" class="row wrap chips typefilters" role="group" aria-label="Filter by type or Mega"></div>
+    </div>
+    <div id="newStrip" class="newstrip" hidden></div>
+    <div id="roster"></div>
+
+    <div class="actionbar">
+      <span id="teamStatus" class="status"></span>
+      <button id="findBtn" class="primary big">Find battle</button>
+    </div>
+  </section>
+
+  <section id="searching" class="screen center" hidden>
+    <!-- two columns on a wide, short window (style.css: the search beside the game, so nothing is below the fold) -->
+    <div class="searchmain">
+      <div class="radar" aria-hidden="true"><i></i><i></i><div class="ballspin"></div></div>
+      <h1>Finding an opponent…</h1>
+      <p class="muted" id="searchInfo" aria-live="polite"></p>
+      <p id="fullNote" class="fullnote" hidden role="status"></p>
+      <div id="searchTeam" class="searchteam"></div>
+    </div>
+    <div class="searchside">
+      <!-- Higher or Lower while you wait (web/hilo.js): open by itself in the queue, closes the moment a battle is found (the PB
+           Grid is no longer here: Sondre 2026-11-02, the main menu has it) -->
+      <button type="button" id="searchHiloBtn" class="ghost gridcta">Hide Higher or Lower</button>
+      <div id="searchHilo" class="hilo" hidden></div>
+      <p class="tip" id="searchTip"></p>
+    </div>
+    <button id="cancelBtn" class="ghost">Cancel</button>
+  </section>
+
+  <section id="battle" class="screen" hidden>
+    <div class="stagebar"><span id="youTag" class="youtag" hidden></span><span class="grow"></span>
+      <button id="surrenderBtn" class="ghost small surrender" hidden>Surrender</button><button id="reportBtn2" class="ghost icon small" aria-label="Report a problem" title="Report a problem"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 21V4m0 0h11l-2 4 2 4H5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg></button><button id="helpBtn2" class="ghost icon small" aria-label="How battles work">?</button><button id="muteBtn2" class="ghost icon small" aria-pressed="false"></button></div>
+    <div class="stage" id="stage"><canvas id="c" aria-label="Battle"></canvas><button id="fsBtn" class="fsbtn" hidden aria-label="Full screen" title="Full screen">⛶</button><button id="watchLeave" class="fsbtn leavebtn" hidden title="Stop watching this battle">✕ Leave</button><div id="stick" class="stick" hidden><i></i></div><div id="vs" class="vs" hidden></div>
+      <div id="clock" class="clock" hidden></div><div id="fieldFx" class="fieldfx" hidden aria-live="off"></div><div id="notice" class="notice" hidden role="status"></div>
+      <div id="choose" class="choose" hidden role="alert"></div><div id="reconnect" class="reconnect" hidden><div class="spinner"></div>Reconnecting to your battle…</div></div>
+    <!-- a replay (app.js playReplay): pause, speed, start over, share -->
+    <div id="replayBar" class="replaybar" hidden>
+      <button id="rpPlay" class="icon" aria-label="Pause">❚❚</button>
+      <div class="seg" id="rpSpeed" role="group" aria-label="Speed"><button data-s="1" aria-pressed="true">1×</button><button data-s="2" aria-pressed="false">2×</button><button data-s="4" aria-pressed="false">4×</button></div>
+      <div class="rptrack" title="Click or drag to jump (← → five seconds)"><i id="rpFill"></i></div><span id="rpTime" class="muted small"></span>
+      <button id="rpShare" class="primary small" hidden>Share video</button><button id="rpAgain" class="ghost small">Start over</button><button id="rpLink" class="ghost small">Copy link</button><button id="rpClose" class="ghost small">Close</button>
+      <!-- replays are kept for 24 hours (server pruneReplays): the players can keep one as a video (app.js rpNote) -->
+      <p id="rpNote" class="rpnote">Replays are deleted 24 hours after the battle.</p>
+    </div>
+    <!-- phones held sideways, Manual: a fixed stick in the empty space left of the arena (testers: "the control is in the middle") -->
+    <div id="pad" class="pad" hidden aria-hidden="true"><i></i></div>
+    <div id="mini" class="mini" aria-hidden="true"></div>
+    <div id="controls">
+      <div id="moves" class="moves"></div>
+      <div class="controls">
+        <div id="bench" class="bench"></div>
+        <button id="megaBtn" class="mega" hidden>Mega Evolve</button>
+        <button id="dodgeBtn" class="dodge" hidden title="Dodge: a quick dash the way you steer (key: Space)">Dodge</button>
+        <button id="guardBtn" class="dodge guard" hidden title="Guard: brace for half a second; a hit you catch does 65% less damage for as long as that attack lasts (key: Shift)">Guard</button>
+        <button id="manualBtn" class="manual" aria-pressed="false" title="Steer your Pokémon yourself (on a phone: drag on the arena; keys: WASD or arrows)">Auto</button>
+      </div>
+      <p id="note" class="muted note" aria-live="polite"></p>
+    </div>
+    <p id="rotateHint" class="rotate" hidden>Turn your phone sideways for a bigger battle. <button id="rotateOk" class="ghost small">OK</button></p>
+  </section>
+
+  <!-- a private room (server/rooms.mjs): a code to share, two seats, everyone else watches -->
+  <section id="room" class="screen" hidden>
+    <div class="row wrap"><h1 class="grow">Friendly room <span id="roomCode" class="roomcode"></span></h1>
+      <button id="roomCopy" class="primary">Copy invite link</button><button id="roomLeave" class="ghost">Leave room</button></div>
+    <p class="muted" id="roomInfo"></p>
+    <div class="row wrap roomfmt"><b>Format</b><div class="seg" id="roomFormats" role="tablist" aria-label="Room format"></div><b>Arena</b><select id="roomArena" aria-label="Room arena"></select><span class="grow"></span><span id="roomScore" class="roomscore"></span></div>
+    <div id="roomSeats" class="seats"></div>
+    <div id="roomMe" class="card-panel roomme"></div>
+    <div id="roomWins" class="muted small"></div>
+  </section>
+
+  <!-- a tournament (server/cups.mjs): sign-up, then the bracket -->
+  <section id="cup" class="screen" hidden>
+    <div class="row wrap"><h1 class="grow"><span id="cupName"></span> <span id="cupCode" class="roomcode"></span></h1>
+      <button id="cupCopy" class="primary">Copy invite link</button><button id="cupLeave" class="ghost">Leave</button><button id="cupClose" class="ghost" hidden>Close tournament</button></div>
+    <p class="muted" id="cupInfo"></p>
+    <div id="cupRules" class="cuprules" hidden></div>
+    <div id="cupChamp" class="champ" hidden></div>
+    <div id="cupMe" class="card-panel roomme"></div>
+    <div id="cupPlayers" class="cupplayers"></div>
+    <div id="cupLive" class="cuplive" hidden></div>
+    <div id="cupBracket" class="bracket"></div>
+  </section>
+
+  <!-- a tournament's live matches at once (web/multiwatch.js): a grid of small arenas; tap one for full size -->
+  <section id="multi" class="screen" hidden>
+    <div class="mwbar"><button id="mwLeave" class="ghost small" title="Stop watching and go back to the bracket">✕ Leave</button><b id="mwTitle" class="mwtitle"></b>
+      <span id="mwNote" class="muted small mwnote"></span><span class="grow"></span><button id="mwAll" class="small" hidden>▦ All matches</button></div>
+    <div id="mwGrid" class="mwgrid"></div>
+    <p id="mwEmpty" class="muted mwempty" hidden></p>
+  </section>
+
+  <!-- team preview (Pick 4): see their six, bring four (server startPreview) -->
+  <section id="preview" class="screen" hidden>
+    <div class="row wrap"><h1 class="grow">Team preview</h1><span id="pvClock" class="pvclock"></span></div>
+    <p id="pvInfo" class="muted"></p>
+    <div class="pvcols">
+      <div class="pvcol mine"><h3>Your team <span class="muted small">tap 4 · in the order they come out</span></h3><div id="pvMine" class="pvrow"></div></div>
+      <div class="pvcol theirs"><h3 id="pvTheirName"></h3><div id="pvTheirs" class="pvrow"></div></div>
+    </div>
+    <div class="row wrap"><label id="pvMegaRow" class="pvmega" hidden><input type="checkbox" id="pvMega" checked> <span id="pvMegaTxt"></span></label><span class="grow"></span><span id="pvState" class="muted small"></span><button id="pvGo" class="primary" disabled>Ready</button></div>
+  </section>
+
+  <!-- the trophy room (web/achievements.js): lifetime medallions and how complete the room is -->
+  <!-- PB Grid, the daily puzzle (web/grid.js; server: todayGrid) -->
+  <!-- the Battle Tower: single-player roguelite runs (server/tower.mjs, web/tower.js) -->
+  <section id="tower" class="screen" hidden><div id="towerBody"></div></section>
+  <!-- tickets, rolls and shards (server/tickets.mjs, web/tickets.js) -->
+  <section id="tickets" class="screen" hidden><div id="ticketsBody"></div></section>
+
+  <section id="gridScreen" class="screen" hidden>
+    <div class="row wrap"><h1 class="grow">PB Grid</h1><button id="gridHelpBtn" class="ghost">How to play</button><button id="gridBack" class="ghost">Back</button></div>
+    <div id="gridHost" class="gridhost"></div>
+  </section>
+
+  <!-- your own Pokémon: how often you bring each, wins, K.O.s, formats, the moves it uses (server addMastery) -->
+  <section id="myStats" class="screen" hidden>
+    <div class="row wrap"><h1 class="grow">My Pokémon</h1><label class="mssort">Sort by <select id="myStatsSort"><option value="u">Battles</option><option value="k">K.O.s</option><option value="kpb">K.O.s per battle</option><option value="wr">Win rate</option></select></label><button id="myStatsBack" class="ghost">Back</button></div>
+    <p class="muted small" id="myStatsNote"></p>
+    <div id="myStatsList" class="mslist"></div>
+  </section>
+
+  <section id="trophies" class="screen" hidden>
+    <div class="row wrap"><h1 class="grow">Trophy room</h1><button id="trophyBack" class="ghost">Back</button></div>
+    <div id="trophyHead" class="trophyhead"></div>
+    <div id="trophyList"></div>
+  </section>
+
+  <!-- vote for the next Pokémon (app.js, server/index.mjs): one vote every 24 hours -->
+  <section id="vote" class="screen" hidden>
+    <div class="row wrap"><h1>Vote for the next Pokémon</h1><span class="grow"></span><button id="voteBack" class="ghost">Back</button></div>
+    <p class="muted">Which Pokémon should come to PB Ranked next? You get one vote every 24 hours.</p>
+    <p id="voteState" class="votestate" role="status"></p>
+    <div id="voteTop" class="votetop"></div>
+    <div class="row wrap votebar">
+      <input id="voteSearch" type="search" placeholder="Search by name or type" aria-label="Search">
+      <select id="voteGen" aria-label="Generation"></select>
+      <select id="voteSort" aria-label="Sort"><option value="dex">Pokédex order</option><option value="votes">Most votes</option><option value="name">Name</option></select>
+    </div>
+    <div id="voteGrid" class="votegrid"></div>
+  </section>
+
+  <section id="board" class="screen" hidden>
+    <div class="row wrap"><h1>Leaderboard</h1><div class="seg" id="boardFormats" role="tablist" aria-label="Format"></div><div class="seg" id="boardKind" role="tablist" aria-label="Own teams or random battles"></div><span class="grow"></span><button id="boardBack" class="ghost">Back</button></div>
+    <p id="boardSeason" class="muted small"></p>
+    <table class="table"><thead><tr><th>#</th><th>Trainer</th><th>Rank</th><th>W–L</th></tr></thead><tbody id="boardRows"></tbody></table>
+  </section>
+</main>
+<footer class="legal"><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · PB Ranked is a free fan game. Not affiliated with Nintendo, The Pokémon Company, Game Freak or Creatures.</footer>
+
+<!-- the end of a battle: over everything, never clipped -->
+<div id="endCard" class="endcard" hidden role="dialog" aria-labelledby="endTitle">
+  <h1 id="endTitle"></h1>
+  <p id="endSub" class="muted"></p>
+  <div class="rating" id="ratingBox">
+    <!-- the rank wheel (as Pokémon Champions): the ring fills with this rank's points, the tier's ball in the middle -->
+    <div class="rtop"><div class="rwheel" id="rWheel"><span id="rGain" class="rgain"></span></div>
+      <div class="rinfo"><span id="rTier" class="tier"></span><b id="rRank" class="rrank"></b><div class="rrow"><b id="rNum"></b><span id="rDelta" class="delta"></span></div></div></div>
+    <div class="rbar" hidden><i id="rBar"></i></div>
+    <div class="rfoot"><div id="rDots" class="dots"></div><span id="rNext" class="muted small"></span></div>
+    <div id="rNews" class="news"></div>
+  </div>
+  <div class="row center-row">
+    <button id="askRematchBtn" class="primary rematch" hidden>Rematch</button>
+    <button id="rematchBtn" class="primary">Play again <span class="muted-in">same team</span></button>
+    <button id="replayBtn" class="ghost" hidden>Watch replay</button>
+    <button id="endShareBtn" class="ghost" hidden>Share video</button>
+    <button id="endOppBtn" class="ghost" hidden>Opponent's card</button>
+    <button id="menuBtn">Main menu</button>
+  </div>
+  <p id="rematchNote" class="rematchnote" hidden role="status"></p>
+  <a class="yt small dc" href="https://discord.gg/pdhKHF9mxd" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.21.38-.44.86-.61 1.25a18.3 18.3 0 0 0-5.49 0 12.6 12.6 0 0 0-.62-1.25.08.08 0 0 0-.08-.04 19.7 19.7 0 0 0-4.88 1.52.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 5.99 3.03.08.08 0 0 0 .09-.03c.46-.63.87-1.3 1.22-1.99a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.89.08.08 0 0 1-.01-.13l.37-.29a.07.07 0 0 1 .08-.01c3.93 1.79 8.18 1.79 12.06 0a.07.07 0 0 1 .08.01l.37.29a.08.08 0 0 1-.01.13c-.6.35-1.22.64-1.87.89a.08.08 0 0 0-.04.11c.36.7.77 1.36 1.22 1.99a.08.08 0 0 0 .09.03 19.8 19.8 0 0 0 6-3.03.08.08 0 0 0 .03-.06c.5-5.18-.84-9.67-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.09-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.33-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.15-1.09-2.15-2.42s.95-2.42 2.15-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.33-.95 2.42-2.16 2.42z"/></svg><span>Join the <b>Discord</b></span></a>
+</div>
+
+<!-- a player's public card (app.js public profiles): opened from the leaderboard, the friends list, the end card or /p/<name> -->
+<div id="cardModal" class="modal" hidden role="dialog" aria-label="Player card">
+  <div class="sheet pcsheet">
+    <div id="pcard" class="pcard"></div>
+    <div class="row center-row"><button type="button" id="pcShare" class="primary">Share card</button><button type="button" id="pcLink" class="ghost">Copy link</button><button type="button" id="pcClose">Close</button></div>
+  </div>
+</div>
+
+<!-- share a replay as a video (app.js shareVideo): only the players in the battle; made on this device, the PB tag on every frame -->
+<div id="shareModal" class="modal" hidden role="dialog" aria-labelledby="shareTitle">
+  <div class="sheet">
+    <h1 id="shareTitle">Share this battle</h1>
+    <div id="shSetup">
+      <p class="muted">Makes a video of the battle to post on TikTok, YouTube, Instagram, Snapchat, X or Facebook.</p>
+      <p class="shkeep">⏳ Replays are deleted 24 hours after the battle. Download the video to keep it.</p>
+      <label>Shape</label>
+      <div class="seg shseg" id="shShape" role="group"><button type="button" data-v="v" aria-pressed="true">Vertical 9:16<small>TikTok · Shorts · Reels · Snapchat</small></button><button type="button" data-v="h" aria-pressed="false">Landscape 16:9<small>YouTube · X · Facebook</small></button></div>
+      <label>How much</label>
+      <div class="seg shseg" id="shPart" role="group"><button type="button" data-v="all" aria-pressed="true">Whole battle<small id="shAllLen"></small></button><button type="button" data-v="seg" aria-pressed="false">Pick a part<small>for Shorts, Reels, Snapchat</small></button></div>
+      <!-- the part to post (app.js timeline): thumbnails along the battle, the chosen part as a box to slide or trim, the
+           playhead previews a moment, ▼ marks each knockout; start and end can be typed too -->
+      <div id="shSeg" class="tl" hidden>
+        <div class="tlpreview"><canvas id="tlPrev" width="480" height="270"></canvas><span id="tlAt" class="tlat"></span></div>
+        <div class="tltimes">
+          <label>Start <input id="tlStart" inputmode="numeric" maxlength="5" aria-label="Start time (m:ss)"></label>
+          <label>End <input id="tlEnd" inputmode="numeric" maxlength="5" aria-label="End time (m:ss)"></label>
+          <span id="tlLen" class="tllen"></span>
+        </div>
+        <div id="tlWrap" class="tlwrap">
+          <div id="tlRuler" class="tlruler"></div>
+          <div id="tlStrip" class="tlstrip"><div id="tlThumbs" class="tlthumbs"></div><div id="tlMarks" class="tlmarks"></div>
+            <div id="tlSel" class="tlsel" tabindex="0" aria-label="The part to post: drag to move"><i class="tlh l" tabindex="0" aria-label="Start: drag to trim"></i><i class="tlh r" tabindex="0" aria-label="End: drag to trim"></i></div>
+            <div id="tlHead" class="tlhead"></div></div>
+          <p id="tlLoad" class="muted small">Building the timeline…</p>
+        </div>
+        <p id="tlHint" class="muted small">Drag the box to move it, its edges to trim. Click the strip to preview a moment. ▼ = a knockout.</p>
+      </div>
+      <p class="muted small">It plays the battle once at normal speed while it records: keep this page open.</p>
+      <div class="row center-row"><button type="button" id="shGo" class="primary">Make video</button><button type="button" id="shCancel" class="ghost">Cancel</button></div>
+    </div>
+    <div id="shWork" hidden>
+      <div class="shpreview"><canvas id="shCanvas"></canvas></div>
+      <div class="shbar"><i id="shFill"></i></div>
+      <p id="shStatus" class="muted"></p>
+      <div class="row center-row"><button type="button" id="shStop" class="ghost">Stop</button></div>
+    </div>
+    <div id="shDone" hidden>
+      <div class="shpreview"><video id="shVideo" controls playsinline></video></div>
+      <p class="muted small">Caption (copy it into your post):</p>
+      <p id="shCaption" class="shcaption"></p>
+      <!-- one tap per platform: the video downloads, the caption is copied, the platform's upload page opens (none of them takes
+           a file from another website: the player picks the download there). Phones: the share sheet above goes straight to the apps -->
+      <p class="muted small shplat-hint">Post it: the video downloads, the caption is copied, and the upload page opens. Pick the video there and paste.</p>
+      <div class="shplat">
+        <button type="button" class="pl tt" data-url="https://www.tiktok.com/upload">TikTok</button>
+        <button type="button" class="pl yt" data-url="https://www.youtube.com/upload">YouTube</button>
+        <button type="button" class="pl ig" data-url="https://www.instagram.com/">Instagram</button>
+        <button type="button" class="pl fb" data-url="https://www.facebook.com/reels/create">Facebook</button>
+        <button type="button" class="pl xx" data-url="">X</button>
+        <button type="button" class="pl dc" data-url="https://discord.com/channels/1562531374622056540/1562531732450705498">Discord</button>
+      </div>
+      <div class="row center-row wrap"><button type="button" id="shShare" class="primary">Share…</button><a id="shDownload" class="btn" download>Download</a><button type="button" id="shCopy" class="ghost">Copy caption</button></div>
+      <div class="row center-row"><button type="button" id="shClose" class="ghost">Close</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- how battles work: on the first battle and on ? -->
+<div id="help" class="modal" hidden role="dialog" aria-labelledby="helpTitle">
+  <div class="sheet">
+    <h1 id="helpTitle">How battles work</h1>
+    <ul class="helplist">
+      <li><b>It's real time.</b> Your Pokémon fight on their own. You step in when you want to.</li>
+      <li><b>Call a move</b> with the four move buttons<span class="keys" data-keys="move1 move2 move3 move4"></span>. The fill shows its cooldown; a glow means it's ready and in range. A called move fires as soon as the current attack ends.</li>
+      <li><b>Switch</b> by tapping a Pokémon on your bench<span class="keys" data-keys="switch1 switch2 switch3"></span>. When one faints, you pick who comes in next.</li>
+      <li><b>Manual control</b>: press <b>Auto</b> to switch to <b>Manual</b> and steer your Pokémon yourself<span class="keys" data-keys="up left down right"></span> or by dragging on the arena. It then only attacks when you press a move, and only dodges when you press <b>Dodge</b><span class="keys" data-keys="dodge"></span>: a quick dash the way you steer, once every 1.5 s. Press Manual again to hand it back.</li>
+      <li><b>Auto attacks</b>: on Auto your Pokémon also picks its own moves. Don't want that? Turn off <b>Auto attacks for me</b> under your trainer (top right): it then still moves and dodges by itself, but only uses the moves you press.</li>
+      <li><b>Limited moves:</b> a healing move restores 30% of max HP, and each Pokémon can heal twice in a battle. A stat-raising move (Swords Dance, Curse…) works twice each time a Pokémon is out: switch it out and back in to use it again. Protect waits 3 s longer after each use, back to 7 s on a switch.</li>
+      <li><b>Guard</b><span class="keys" data-keys="guard"></span>, on Auto and Manual: your Pokémon braces for half a second. Catch a hit in that window and it takes <b>65% less damage</b> and little knockback, for as long as that attack keeps hitting (a whole Hyper Beam). It can't start once you're already being hit. On Manual a caught hit lets you guard again at once; a miss means a 3 s wait. Auto waits 3 s either way, and also guards by itself now and then, unless you turn off <b>Auto guard for me</b> under your trainer (top right).</li>
+      <li><b>Mega Evolve</b> (or Greninja's <b>Battle Bond</b>) once per battle<span class="keys" data-keys="mega"></span>, while the Pokémon you chose is out.</li>
+      <li><b>Time limit:</b> 4 minutes for 3v3, 7 for 6v6 (the clock at the top counts down). In the last quarter it turns into <b>sudden death</b>: every hit grows stronger, up to 4× at the end. If time still runs out, the team with more HP left wins.</li>
+      <li><b>Keys and controller:</b> plug in a controller (Xbox, PlayStation, Switch Pro…) and press a button to battle with it. Change what every key and button does under <button type="button" id="helpControls" class="linkbtn">Controls</button>.</li>
+      <li><b>Leaving</b> a match: your team keeps fighting on its own, but if you're not back when it ends, you lose.</li>
+    </ul>
+    <h2 class="helpsub">How stats and moves work</h2>
+    <ul class="helplist">
+      <li><b>Damage</b> works as in the games: physical moves use Attack against Defense, special moves Sp. Atk against Sp. Def, with type matchups and a 1.5× bonus for a move of the user's own type. Critical hits (1 in 20) do 1.5×.</li>
+      <li><b>Speed</b> doesn't shorten cooldowns. A faster Pokémon runs around the arena faster and is more likely to dodge an attack it sees coming (about Speed ÷ 260: roughly half the time at 130 Speed).</li>
+      <li><b>Cooldown</b>: every move has its own wait before it can be used again, shown on its card and as the fill on its button. Stronger moves wait longer.</li>
+      <li><b>Reach</b>: how far from the target a move can be used: <i>close</i>, <i>mid range</i> or <i>long range</i> (across the arena). A move button glows when the target is within its reach.</li>
+      <li><b>Accuracy is aim.</b> Attacks are real shots, beams and lunges: they miss when the target moves out of the way or dodges. Moves marked <i>can't be dodged</i> always land.</li>
+      <li><b>Evasion</b> (Double Team) makes decoys: an attack can hit a decoy instead of the Pokémon.</li>
+      <li><b>Stat changes</b> last until the Pokémon switches out: +1 is 1.5×, +2 is 2× and so on. Stat-raising moves work twice per stay on the field.</li>
+      <li><b>Weather</b> (Rain Dance, Sunny Day, Sandstorm, Hail) lasts 15 seconds: rain powers up Water moves and weakens Fire, sun the other way round, sand and hail chip HP every 3 seconds.</li>
+      <li><b>Flinching</b> is a brief stagger, and only when the target isn't in the middle of a move.</li>
+      <li><b>Status</b>: a burn chips HP every 3 seconds and halves physical damage; poison chips more (Toxic more each time); paralysis makes the Pokémon move at about half speed, and 1 in 5 of its moves fails; sleep stops it for 2.5–5 seconds.</li>
+    </ul>
+    <button id="helpOk" class="primary">Got it</button>
+  </div>
+</div>
+
+<!-- your trainer and name -->
+<div id="profile" class="modal" hidden role="dialog" aria-labelledby="profTitle">
+  <form class="sheet" id="profileForm">
+    <h1 id="profTitle">Your trainer</h1>
+    <!-- (2026-11-13, Sondre: "This is starting to get pretty cluttered. Can we create a cleaner UI design.") four tabs,
+         one in view (app.js profTab): who you are, how battles behave, your looks, your public card. Opens on Trainer. -->
+    <div id="profTabs" class="seg proftabs" role="tablist" aria-label="Your trainer">
+      <button type="button" role="tab" data-tab="me" aria-selected="true">Trainer</button>
+      <button type="button" role="tab" data-tab="set" aria-selected="false">Settings</button>
+      <button type="button" role="tab" data-tab="look" aria-selected="false">Look</button>
+      <button type="button" role="tab" data-tab="card" aria-selected="false">Card</button>
+    </div>
+    <div class="profpane" data-pane="me" role="tabpanel">
+      <label for="profName">Name</label>
+      <input id="profName" maxlength="16" minlength="2" required>
+      <p id="profErr" class="err" role="alert"></p>
+      <div id="profTrainers" class="trainers" role="radiogroup" aria-label="Trainer"></div>
+      <div class="dollrow"><img id="profDollFace" alt="" hidden><label class="pvmega"><input type="checkbox" id="profDollOn"> <span id="profDollText">Use my own trainer portrait</span></label><button type="button" id="profDollEdit" class="ghost small">Create</button></div>
+      <div id="discordBox" class="signin" hidden></div>
+      <div id="acctBox" class="signin" hidden>
+        <p id="acctText" class="muted"></p>
+        <div id="acctBtns" class="row center-row"></div>
+      </div>
+    </div>
+    <!-- each switch: its name, and under it in small type what it does (they save as you tick them) -->
+    <div class="profpane" data-pane="set" role="tabpanel" hidden>
+      <label class="pvmega autoatk setrow"><input type="checkbox" id="profAutoAtk"> <span>Auto attacks for me<small>Off: on Auto your Pokémon still moves and dodges by itself, but only uses the moves you press.</small></span></label>
+      <label class="pvmega autoatk setrow"><input type="checkbox" id="profAutoGuard"> <span>Auto guard for me<small>Off: on Auto your Pokémon only guards when you press Guard.</small></span></label>
+      <label class="pvmega autoatk setrow"><input type="checkbox" id="profManual"> <span>Start every battle in Manual<small>You steer your Pokémon from the first second. Press Auto any time to hand it back.</small></span></label>
+      <label class="pvmega autoatk setrow"><input type="checkbox" id="profCalm"> <span>Calm camera<small>No screen shake or zooming in (helps with motion sickness).</small></span></label>
+      <label id="profFullRow" class="pvmega autoatk setrow"><input type="checkbox" id="profFull"> <span>Full screen battles<small>Every battle opens in full screen.</small></span></label>
+      <label class="qualityrow">Graphics <select id="profQuality" aria-label="Graphics"><option value="auto">Auto</option><option value="low">Light (smoother on weak phones)</option><option value="high">Full</option></select></label>
+    </div>
+    <div class="profpane" data-pane="look" role="tabpanel" hidden>
+      <div id="trophyBox" class="trophies"></div>
+    </div>
+    <div class="profpane" data-pane="card" role="tabpanel" hidden>
+      <!-- the public card (app.js public profiles): an Ace and three favourites from the player's ten most-used -->
+      <div id="showcaseBox" class="showcase">
+        <div class="row"><b>Your player card</b><span class="grow"></span><button type="button" id="viewMyCard" class="ghost small">View card</button></div>
+        <p id="showcaseNote" class="muted small"></p>
+        <div id="showcasePick" class="scpick"></div>
+      </div>
+    </div>
+    <div class="row center-row proffoot"><button class="primary">Save</button><button type="button" id="profCancel" class="ghost">Cancel</button></div>
+  </form>
+</div>
+
+<!-- the trainer creator (web/dolledit.js): your own trainer portrait from parts -->
+<div id="dollEd" class="modal" hidden role="dialog" aria-labelledby="dollTitle">
+  <div class="sheet dollsheet">
+    <h1 id="dollTitle">Create your trainer</h1>
+    <p class="muted small">You on your trainer card, the VS screen, the battle portrait and walking on the field.</p>
+    <div class="dollmain">
+      <div class="dollleft"><canvas id="dollBig" width="44" height="44" aria-label="Your trainer portrait"></canvas><canvas id="dollWalk" width="96" height="96" aria-label="Your trainer on the field" hidden></canvas><button type="button" id="dollRandom" class="ghost small">Randomize</button></div>
+      <div class="dollright">
+        <div id="dollTabs" class="dolltabs" role="tablist" aria-label="Parts"></div>
+        <div id="dollOpts" class="dollopts"></div>
+        <div id="dollCols" class="dollcols"></div>
+      </div>
+    </div>
+    <div class="row center-row"><button type="button" id="dollSave" class="primary">Save</button><button type="button" id="dollCancel" class="ghost">Cancel</button><button type="button" id="dollRemove" class="ghost">Delete</button></div>
+  </div>
+</div>
+
+<!-- practice: a bot of your chosen level, at once, no rating -->
+<!-- the Sound panel under a speaker button (app.js openSound) -->
+<div id="soundPanel" class="soundpanel" hidden role="dialog" aria-label="Sound">
+  <button type="button" id="sndToggle" class="small"></button>
+  <label class="sndrow" for="snd_music"><span>Music</span><input type="range" id="snd_music" min="0" max="100" step="5"><b id="snd_music_v"></b></label>
+  <label class="sndrow" for="snd_sfx"><span>Move effects</span><input type="range" id="snd_sfx" min="0" max="100" step="5"><b id="snd_sfx_v"></b></label>
+  <label class="sndrow" for="snd_cries"><span>Pokémon cries</span><input type="range" id="snd_cries" min="0" max="100" step="5"><b id="snd_cries_v"></b></label>
+</div>
+<div id="gimmickAsk" class="modal" hidden role="dialog" aria-labelledby="gimmickTitle">
+  <div class="sheet">
+    <h1 id="gimmickTitle">No gimmick picked</h1>
+    <p id="gimmickText" class="muted"></p>
+    <div id="gimmickOpts" class="row wrap center-row gimmickopts"></div>
+    <div class="row center-row"><button type="button" id="gimmickNo" class="ghost">Battle without one</button></div>
+    <label class="pvmega autoatk center-row"><input type="checkbox" id="gimmickNever"> <span>Don't ask again</span></label>
+  </div>
+</div>
+<div id="practice" class="modal" hidden role="dialog" aria-labelledby="pracTitle">
+  <div class="sheet">
+    <h1 id="pracTitle">Practice vs bot</h1>
+    <p class="muted">Pick how tough. No rating on the line.</p>
+    <div id="pracLevels" class="levels"></div>
+    <div class="row center-row"><button type="button" id="pracCancel" class="ghost">Cancel</button></div>
+  </div>
+</div>
+
+<!-- friends (server/friends.mjs): add by name, requests, who is online, challenge -->
+<div id="friendsModal" class="modal" hidden role="dialog" aria-labelledby="friendsTitle">
+  <form class="sheet" id="friendsForm">
+    <h1 id="friendsTitle">Friends</h1>
+    <label for="friendName">Add a friend by trainer name</label>
+    <div class="row"><input id="friendName" maxlength="16" placeholder="Their trainer name" autocomplete="off"><button class="primary">Send request</button></div>
+    <p id="friendErr" class="err" role="alert"></p>
+    <div id="friendsList" class="friendslist"></div>
+    <div class="row center-row"><button type="button" id="friendsClose" class="ghost">Close</button></div>
+  </form>
+</div>
+
+<!-- PB Grid: pick a Pokémon for a cell (or, the puzzle done, see its answers) -->
+<div id="gridPick" class="modal" hidden role="dialog" aria-labelledby="gridPickTitle">
+  <div class="sheet gridsheet">
+    <h1 id="gridPickTitle"></h1>
+    <input id="gridSearch" type="search" placeholder="Search a Pokémon" autocomplete="off" aria-label="Search a Pokémon">
+    <div id="gridPickList" class="gridpicklist"></div>
+    <div class="row center-row"><button type="button" id="gridPickClose" class="ghost">Close</button></div>
+  </div>
+</div>
+
+<!-- your last battles, each with its replay (server: history; app.js renderHistory) -->
+<div id="historyModal" class="modal" hidden role="dialog" aria-labelledby="historyTitle">
+  <div class="sheet">
+    <h1 id="historyTitle">Recent battles</h1>
+    <p class="muted small">Replays are deleted 24 hours after the battle. To keep one, open it and download it with Share video.</p>
+    <div id="historyList" class="historylist"><p class="muted">Loading…</p></div>
+    <div class="row center-row"><button type="button" id="historyClose" class="ghost">Close</button></div>
+  </div>
+</div>
+
+<!-- a friend's challenge -->
+<!-- after a player's 5th battle, once (app.js maybeAskDiscord) -->
+<div id="discordModal" class="modal" hidden role="dialog" aria-labelledby="discordTitle">
+  <div class="sheet invite">
+    <h1 id="discordTitle">Join our Discord!</h1>
+    <p>You've played 5 battles. Come say hi on the Pokémon Battlegrounds Discord: we talk about the game there and work on new features every day, and your ideas and bug reports go straight into the next update.</p>
+    <div class="row center-row"><button type="button" id="discordYes" class="primary big">Join the Discord</button><button type="button" id="discordNo" class="ghost">Not now</button></div>
+  </div>
+</div>
+
+<div id="inviteModal" class="modal" hidden role="dialog" aria-labelledby="inviteTitle">
+  <div class="sheet invite">
+    <h1 id="inviteTitle">Challenge!</h1>
+    <p id="inviteText"></p>
+    <div class="row center-row"><button type="button" id="inviteYes" class="primary big">Accept</button><button type="button" id="inviteNo" class="ghost">Not now</button></div>
+  </div>
+</div>
+
+<!-- friendly match: make a room or join one with its code -->
+<div id="friend" class="modal" hidden role="dialog" aria-labelledby="friendTitle">
+  <form class="sheet" id="friendForm">
+    <h1 id="friendTitle">Friendly match</h1>
+    <p class="muted">Battle a friend in a private room: no rating change, and anyone with the link can watch.</p>
+    <button type="button" id="roomNew" class="primary big">Create a room</button>
+    <label for="roomCodeIn">or join with a code</label>
+    <div class="row"><input id="roomCodeIn" maxlength="6" placeholder="ABC123" autocomplete="off" autocapitalize="characters"><button class="primary">Join</button></div>
+    <p id="friendErr" class="err" role="alert"></p>
+    <div class="row center-row"><button type="button" id="friendCancel" class="ghost">Cancel</button></div>
+  </form>
+</div>
+
+<!-- tournaments: host one, or open one with its code -->
+<div id="cupModal" class="modal" hidden role="dialog" aria-labelledby="cupTitle">
+  <form class="sheet" id="cupForm">
+    <h1 id="cupTitle">Tournaments</h1>
+    <p class="muted">Live single or double elimination: everyone plays at the same time, the bracket moves on by itself, the final is best of 3. No rating change.</p>
+    <label for="cupNameIn">Host one</label>
+    <input id="cupNameIn" maxlength="32" placeholder="Tournament name, e.g. Friday Night Cup">
+    <div class="row wrap cupopts"><select id="cupFmt" aria-label="Format"><option>3v3</option><option>6v6</option><option value="dbl">Doubles</option></select>
+      <select id="cupArena" aria-label="Arena"></select>
+      <select id="cupStyle" aria-label="Bracket style"><option value="single" selected>Single elimination</option><option value="double">Double elimination</option><option value="robin">Round robin</option></select>
+      <select id="cupBo" aria-label="Wins per match"><option value="1" selected>Best of 1</option><option value="3">Best of 3</option></select>
+      <select id="cupMax" aria-label="Most players"><option value="4">Up to 4 players</option><option value="8" selected>Up to 8 players</option><option value="12" data-only="robin" hidden disabled>Up to 12 players</option><option value="16">Up to 16 players</option><option value="20" data-only="robin" hidden disabled>Up to 20 players</option><option value="32" data-only="bracket">Up to 32 players</option></select>
+</div>
+    <details id="cupRulesBox" class="cuprulesform"><summary>Entry rules <span class="muted small" id="cupRulesSum">any team</span></summary>
+      <p class="muted small">Teams that break a rule can't sign up. Rules are locked once the tournament is created.</p>
+      <div class="row wrap cupchecks">
+        <label><input type="checkbox" id="crMono"> Monotype</label>
+        <label><input type="checkbox" id="crNoParadox"> No Paradox</label>
+        <label><input type="checkbox" id="crNoMega"> No Megas</label>
+        <label><input type="checkbox" id="crNoLegend"> No legendaries / mythicals</label>
+      </div>
+      <div class="row wrap cupopts">
+        <select id="crBst" aria-label="Most base stat total per Pokémon"><option value="0">Any base stat total</option><option value="600">BST 600 or less</option><option value="550">BST 550 or less</option><option value="525">BST 525 or less</option><option value="500">BST 500 or less</option><option value="480">BST 480 or less</option></select>
+        <select id="crSame" aria-label="Most Pokémon of one type"><option value="0">Any number of one type</option><option value="1">At most 1 of a type</option><option value="2">At most 2 of a type</option><option value="3">At most 3 of a type</option></select>
+      </div>
+      <div class="crlabel">Generations <span class="muted small">(none picked: all)</span></div>
+      <div class="row wrap chips" id="crGens"></div>
+      <div class="crlabel"><select id="crTypeMode" aria-label="Type rule"><option value="only">Only these types</option><option value="ban">Ban these types</option></select> <span class="muted small">(none picked: all)</span></div>
+      <div class="row wrap chips" id="crTypes"></div>
+      <div class="crlabel">Ban Pokémon</div>
+      <div class="row"><input id="crBanIn" list="crBanList" placeholder="Pokémon name" autocomplete="off"><datalist id="crBanList"></datalist><button type="button" id="crBanAdd">Ban</button></div>
+      <div class="row wrap chips" id="crBans"></div>
+    </details>
+    <div class="row"><span class="grow"></span><button type="button" id="cupNew" class="primary">Create</button></div>
+    <label for="cupCodeIn">or open one with its code</label>
+    <div class="row"><input id="cupCodeIn" maxlength="6" placeholder="ABC123" autocomplete="off" autocapitalize="characters"><button class="primary">Open</button></div>
+    <p id="cupErr" class="err" role="alert"></p>
+    <div class="row center-row"><button type="button" id="cupCancel" class="ghost">Cancel</button></div>
+  </form>
+</div>
+
+<!-- report a problem: goes to the team's Discord channel with the match, device and version -->
+<div id="report" class="modal" hidden role="dialog" aria-labelledby="repTitle">
+  <form class="sheet" id="reportForm">
+    <h1 id="repTitle">Report a problem</h1>
+    <label for="repText">What happened?</label>
+    <textarea id="repText" rows="5" maxlength="2000" placeholder="e.g. My Charizard froze after Mega Evolving and the battle stopped."></textarea>
+    <p id="repWhat" class="muted"></p>
+    <p id="repErr" class="err" role="alert"></p>
+    <div class="row center-row"><button class="primary" id="repSend">Send report</button><button type="button" id="repCancel" class="ghost">Cancel</button></div>
+  </form>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<script type="module" src="/port.js"></script>
+</body>
+</html>

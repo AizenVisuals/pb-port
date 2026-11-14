@@ -1,0 +1,130 @@
+[
+  {
+    "path": "promo.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/promo.js",
+    "original_sha256": "337daba52ac8e31b0432a598d24cf281e07c0241a31280322a3dd8f72f71a5af",
+    "current_sha256": "337daba52ac8e31b0432a598d24cf281e07c0241a31280322a3dd8f72f71a5af"
+  },
+  {
+    "path": "ranks.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/ranks.js",
+    "original_sha256": "ca83281ee0dfaf79557a62ad90cafe6e537b1505eabcb4ae324884268701fd04",
+    "current_sha256": "ca83281ee0dfaf79557a62ad90cafe6e537b1505eabcb4ae324884268701fd04"
+  },
+  {
+    "path": "audio.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/audio.js",
+    "original_sha256": "6a392ede4cf764cddc6cd97d11f922f089813fd136644a479edfaeaee0c08276",
+    "current_sha256": "6a392ede4cf764cddc6cd97d11f922f089813fd136644a479edfaeaee0c08276"
+  },
+  {
+    "path": "grid.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/grid.js",
+    "original_sha256": "4548ced821c7a097a836ca5defe46fd48d587d04e4e0dce4b0a9097089667509",
+    "current_sha256": "4548ced821c7a097a836ca5defe46fd48d587d04e4e0dce4b0a9097089667509"
+  },
+  {
+    "path": "cosmetics.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/cosmetics.js",
+    "original_sha256": "3a6409a59e4a9fc339a228fd73790a3a9a495096b222918e8cb50f7feca8f436",
+    "current_sha256": "3a6409a59e4a9fc339a228fd73790a3a9a495096b222918e8cb50f7feca8f436"
+  },
+  {
+    "path": "tower.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/tower.js",
+    "original_sha256": "11bfd6759972260b189936e808ce8fd533c5126af5d340be3ef6313161e0c485",
+    "current_sha256": "11bfd6759972260b189936e808ce8fd533c5126af5d340be3ef6313161e0c485"
+  },
+  {
+    "path": "tickets.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/tickets.js",
+    "original_sha256": "cab6e0213adb6af87daad865a408577f1060bfe3d662bc3287d274e5990fb968",
+    "current_sha256": "cab6e0213adb6af87daad865a408577f1060bfe3d662bc3287d274e5990fb968"
+  },
+  {
+    "path": "achievements.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/achievements.js",
+    "original_sha256": "90b63e826dbe9b12e243b4fa94d8376629cb2df6c6fc30c76bc8442186833eb4",
+    "current_sha256": "90b63e826dbe9b12e243b4fa94d8376629cb2df6c6fc30c76bc8442186833eb4"
+  },
+  {
+    "path": "engine.bundle.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/engine.bundle.js",
+    "original_sha256": "a7b806df952843745edd57d6a0a8ed6e02317a133a7a61382342dba7c033d775",
+    "current_sha256": "a7b806df952843745edd57d6a0a8ed6e02317a133a7a61382342dba7c033d775"
+  },
+  {
+    "path": "cuprules.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/cuprules.js",
+    "original_sha256": "2a57b1103f61991b0cb65cb1ec0a92711dfa5987e1821031a787dbd1c56222d1",
+    "current_sha256": "2a57b1103f61991b0cb65cb1ec0a92711dfa5987e1821031a787dbd1c56222d1"
+  },
+  {
+    "path": "abilities.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/abilities.js",
+    "original_sha256": "c1157d817ef4f77d01d33de8f0b9a126ffe866df6923275b74073e0c27eac5b3",
+    "current_sha256": "c1157d817ef4f77d01d33de8f0b9a126ffe866df6923275b74073e0c27eac5b3"
+  },
+  {
+    "path": "hilo.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/hilo.js",
+    "original_sha256": "9241ce57f501ca8581f465fe2ce4ea9b29221f75c10a0bfec6cdfc1c267f00af",
+    "current_sha256": "9241ce57f501ca8581f465fe2ce4ea9b29221f75c10a0bfec6cdfc1c267f00af"
+  },
+  {
+    "path": "app.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/app.js",
+    "original_sha256": "84e6657f8ec20f9bcca89dcc94caf9c389483bb31353df640e791e0d9bba9a10",
+    "current_sha256": "4d6c14810bb8a8e16b2b2f46530d04a31ebe79f532562caa43e6483ecb131647"
+  },
+  {
+    "path": "controls.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/controls.js",
+    "original_sha256": "f5cea03593121614c7bd1353b80eaffa29d2c85bcfd0e2b460b4bba9b5ee9337",
+    "current_sha256": "f5cea03593121614c7bd1353b80eaffa29d2c85bcfd0e2b460b4bba9b5ee9337"
+  },
+  {
+    "path": "multiwatch.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/multiwatch.js",
+    "original_sha256": "74c5dbb90531936c1680a54a36e4cee35ca518aaf6a53c32f90999dbf3837663",
+    "current_sha256": "74c5dbb90531936c1680a54a36e4cee35ca518aaf6a53c32f90999dbf3837663"
+  },
+  {
+    "path": "roster.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/roster.js",
+    "original_sha256": "b49b04303587be793111d80d74b6afa9540803c95d5831946e9d55ae97c43473",
+    "current_sha256": "00a669c428157a6919b5cf15c4d5c6218186f5846e4d16f31a48a550c08d4a5b"
+  },
+  {
+    "path": "dolledit.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/dolledit.js",
+    "original_sha256": "b397124e3ba2796b16abd85a839a5c079f8e76997be61ef34df9d488c0d53398",
+    "current_sha256": "b397124e3ba2796b16abd85a839a5c079f8e76997be61ef34df9d488c0d53398"
+  },
+  {
+    "path": "backdrop.js",
+    "url": "https://ranked.pokemonbattlegrounds.com/backdrop.js",
+    "original_sha256": "fab64ae825b0fcf817569be0ca3ba84423344450ea696a99773ad0f649d6d799",
+    "current_sha256": "fab64ae825b0fcf817569be0ca3ba84423344450ea696a99773ad0f649d6d799"
+  },
+  {
+    "path": "style.css",
+    "url": "https://ranked.pokemonbattlegrounds.com/style.css",
+    "sha256": "fa7a028587057d0c7dba54dae4c5da86d933ff78e43d91386fdb1f5e540bdd35"
+  },
+  {
+    "path": "looks/broadcast.css",
+    "url": "https://ranked.pokemonbattlegrounds.com/looks/broadcast.css",
+    "sha256": "6f33f9e2139f1af7b9f4e6cb4e8fd67f0a544f52f87460235fb4d21af8bc53f4"
+  },
+  {
+    "path": "looks/cartridge.css",
+    "url": "https://ranked.pokemonbattlegrounds.com/looks/cartridge.css",
+    "sha256": "9887c1af8da1176c8d1e7406e7404d2ecfd521bc2c4eb17fb79c65e6836e502a"
+  },
+  {
+    "path": "looks/card.css",
+    "url": "https://ranked.pokemonbattlegrounds.com/looks/card.css",
+    "sha256": "289978b60bda9563262f9d8f85e2ed323c6eccea32cb9384d20090d36ca9c0ad"
+  }
+]

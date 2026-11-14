@@ -1,0 +1,7 @@
+.port-note{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1rem;max-width:1160px;margin:1rem auto;padding:.7rem 1rem;background:#17212f;color:#f0f4f8;border-radius:8px;font-family:Rubik,sans-serif;font-size:14px;line-height:1.5}
+.port-note strong{color:#ffcf4a}.port-note span{max-width:80ch}
+[data-port-unavailable]{display:none!important}
+:focus-visible{outline:3px solid #ffcf4a;outline-offset:3px}
+@media(max-width:700px){.port-note{margin:.7rem;font-size:14px}.port-note span{display:block}input,select{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.screen.entering{animation:none!important}}
+body[data-screen="battle"] .port-note{display:none}

@@ -1,0 +1,599 @@
+/* ==========================================================================
+   PB Ranked look: "Cartridge menu"
+   Handheld-era game menus, our own take: pixel window frames with stepped corners, a red ▶ cursor for
+   whatever is selected, chunky menu buttons that press down, a pixel display face for anything you tap or read
+   at a glance and a highly legible text face for everything you read in full.
+
+   One meaning per colour:
+     yellow  #F8C848  the action that moves you forward (Find battle, Ready, Sign up, Create, Start, Save)
+     red     #E04038  the cursor: what is selected / picked / you
+     green   #58D080  live, ready, win (and the HP bar, as in battle)
+     blue    #283878  structure: window frames, the header, labels (LEAD, NEW, section tabs)
+     pink    #E070C8  Mega Evolution only
+   Light "paper" windows are for short, focused moments (welcome, dialogs, the result, seats);
+   long screens (team builder, roster, leaderboard) stay on calm dark windows.
+   Loads after /style.css when <html data-look="cartridge">.
+   ========================================================================== */
+
+/* fonts: self-hosted (SIL OFL, licences in web/fonts), never from a CDN */
+@font-face { font-family: 'Pixelify Sans'; font-style: normal; font-display: swap; font-weight: 400 700; src: url(/fonts/pixelify-sans-latin-wght-normal.woff2) format('woff2'); }
+/* "Cart Pixel": Pixelify Sans minus the glyphs that blur together at UI sizes (B/G, C/O, c/o, 5/S, the digits, ( ) that read as { }):
+   those fall through to JetBrains Mono, which sits well beside it. The big wordmark uses the full Pixelify Sans. */
+@font-face { font-family: 'Cart Pixel'; font-style: normal; font-display: swap; font-weight: 400 700; src: url(/fonts/pixelify-sans-latin-wght-normal.woff2) format('woff2');
+  unicode-range: U+0020-0027, U+002A-002F, U+003A-0041, U+0044-0062, U+0064-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212; }
+@font-face { font-family: 'Atkinson Hyperlegible'; font-style: normal; font-display: swap; font-weight: 400; src: url(/fonts/atkinson-hyperlegible-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Atkinson Hyperlegible'; font-style: normal; font-display: swap; font-weight: 700; src: url(/fonts/atkinson-hyperlegible-latin-700-normal.woff2) format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-display: swap; font-weight: 100 800; src: url(/fonts/jetbrains-mono-latin-wght-normal.woff2) format('woff2'); }
+
+:root[data-look=cartridge] {
+  --px-font: 'Cart Pixel', 'JetBrains Mono', ui-monospace, monospace;
+  --tx-font: 'Atkinson Hyperlegible', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  --pg: #101820; --ink: #080c14;
+  --frame: #283878; --frame-hi: #3a50a0; --frame-lt: #5068c0;
+  --win: #18223a; --win2: #1f2c4c; --win3: #2a3a64;
+  --paper: #f8f8f0; --paper2: #e8e8dc; --paper3: #d4d4c4;
+  --cursor: #e04038; --go: #58d080; --go-ink: #1c7a44; --gold: #f8c848; --gold-dk: #a87410;
+  --warn: #f05838; --warn-ink: #c02e1e; --mega: #e070c8;
+  --focus: #80d0ff;
+
+  /* the base stylesheet's names, remapped */
+  --bg: var(--pg); --panel: var(--win); --panel2: var(--win2); --line: #34446c; --text: #f8f8f0; --muted: #aab6d4;
+  --accent: var(--gold); --red: var(--cursor); --blue: #3858c8; --good: var(--go); --bad: var(--warn);
+  --o: var(--ink);   /* outline colour for pixel buttons; light windows switch it */
+
+  /* pixel art, drawn at 1 unit = 2 CSS px */
+  --win-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' shape-rendering='crispEdges'%3E%3Cpath fill='%23080c14' d='M2 0h5v1h1v1h1v5H8v1H7v1H2V8H1V7H0V2h1V1h1z'/%3E%3Cpath fill='%23283878' d='M2 1h5v1h1v5H7v1H2V7H1V2h1z'/%3E%3Cpath fill='%233e56a8' d='M3 3h3v3H3z'/%3E%3Cpath fill='%2318223a' d='M4 4h1v1H4z'/%3E%3C/svg%3E");
+  --win-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' shape-rendering='crispEdges'%3E%3Cpath fill='%23080c14' d='M2 0h5v1h1v1h1v5H8v1H7v1H2V8H1V7H0V2h1V1h1z'/%3E%3Cpath fill='%23283878' d='M2 1h5v1h1v5H7v1H2V7H1V2h1z'/%3E%3Cpath fill='%2398a8e0' d='M3 3h3v3H3z'/%3E%3Cpath fill='%23f8f8f0' d='M4 4h1v1H4z'/%3E%3C/svg%3E");
+  --win-pick: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' shape-rendering='crispEdges'%3E%3Cpath fill='%23080c14' d='M2 0h5v1h1v1h1v5H8v1H7v1H2V8H1V7H0V2h1V1h1z'/%3E%3Cpath fill='%23e04038' d='M2 1h5v1h1v5H7v1H2V7H1V2h1z'/%3E%3Cpath fill='%23f08070' d='M3 3h3v3H3z'/%3E%3Cpath fill='%23222e50' d='M4 4h1v1H4z'/%3E%3C/svg%3E");
+  --win-live: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' shape-rendering='crispEdges'%3E%3Cpath fill='%23080c14' d='M2 0h5v1h1v1h1v5H8v1H7v1H2V8H1V7H0V2h1V1h1z'/%3E%3Cpath fill='%2358d080' d='M2 1h5v1h1v5H7v1H2V7H1V2h1z'/%3E%3Cpath fill='%2330905a' d='M3 3h3v3H3z'/%3E%3Cpath fill='%23f8f8f0' d='M4 4h1v1H4z'/%3E%3C/svg%3E");
+  --cur: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='5' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23080c14' d='M1 1h1v1h1v1h1v1h1v1h-1v1h-1v1h-1v1H1z'/%3E%3Cpath fill='%23e04038' d='M0 0h1v1h1v1h1v1h1v1h-1v1h-1v1h-1v1H0z'/%3E%3C/svg%3E");
+  --box-off: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='7' shape-rendering='crispEdges'%3E%3Cpath fill='%23080c14' d='M0 0h7v7H0z'/%3E%3Cpath fill='%230c1424' d='M1 1h5v5H1z'/%3E%3Cpath fill='%23384a78' d='M1 1h5v1H1z'/%3E%3C/svg%3E");
+  --box-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='7' shape-rendering='crispEdges'%3E%3Cpath fill='%23080c14' d='M0 0h7v7H0z'/%3E%3Cpath fill='%23e04038' d='M1 1h5v5H1z'/%3E%3Cpath fill='%23f8f8f0' d='M1 3h1v1H1zM2 4h1v1H2zM3 3h1v1H3zM4 2h1v1H4zM5 1h1v1H5z'/%3E%3C/svg%3E");
+  --arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='4' shape-rendering='crispEdges'%3E%3Cpath fill='%23303840' d='M0 0h7v1h-1v1h-1v1h-1v1h-1v-1h-1v-1h-1v-1H0z'/%3E%3C/svg%3E");
+  --ico-flag: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath fill='%23080c14' d='M2 2h1v9H2zM3 2h7v1h-1v1h-1v1h1v1h1v1H3z'/%3E%3Cpath fill='%23f8f8f0' d='M1 1h1v9H1z'/%3E%3Cpath fill='%23e04038' d='M2 1h7v1h-1v1h-1v1h1v1h1v1H2z'/%3E%3C/svg%3E");
+  --ico-snd: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath fill='%23f8f8f0' d='M1 4h2v3H1zM3 4h1V3h1V2h1v7H5V8H4V7H3zM7 4h1v3H7zM8 2h1v1H8zM9 3h1v5H9zM8 8h1v1H8z'/%3E%3C/svg%3E");
+  --ico-mute: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' shape-rendering='crispEdges'%3E%3Cpath fill='%23f8f8f0' d='M1 4h2v3H1zM3 4h1V3h1V2h1v7H5V8H4V7H3z'/%3E%3Cpath fill='%23f05838' d='M7 3h1v1H7zM9 3h1v1H9zM8 4h1v1H8zM7 5h1v1H7zM9 5h1v1H9z'/%3E%3C/svg%3E");
+  /* textures: a quiet 2-tone checker for the page, an ordered-dither screen for the arena behind the menus */
+  --checker: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' shape-rendering='crispEdges'%3E%3Cpath fill='%23ffffff' fill-opacity='.022' d='M0 0h8v8H0zM8 8h8v8H8z'/%3E%3C/svg%3E");
+  --dither: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'%3E%3Cpath fill='%23101820' d='M0 0h1v1H0zM2 2h1v1H2z'/%3E%3Cpath fill='%23101820' fill-opacity='.5' d='M2 0h1v1H2zM0 2h1v1H0z'/%3E%3C/svg%3E");
+  --dots: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'%3E%3Cpath fill='%23080c14' fill-opacity='.38' d='M0 0h2v2H0z'/%3E%3C/svg%3E");
+  /* the backdrop behind trainer portraits: banded sky, like a trainer card photo */
+  --portrait: linear-gradient(180deg, #b8d0f8 0 34%, #a0c0f0 34% 58%, #88b0e8 58% 78%, #7098d8 78%);
+}
+
+/* ---------------------------------------------------------------- base: page, type, texture */
+:root[data-look=cartridge], :root[data-look=cartridge] body {
+  background: var(--pg) var(--checker); color: var(--text); font: 15px/1.5 var(--tx-font);
+}
+:root[data-look=cartridge] body { -webkit-font-smoothing: antialiased; }
+:root[data-look=cartridge] h1, :root[data-look=cartridge] h2, :root[data-look=cartridge] h3 { font-family: var(--px-font); font-weight: 700; letter-spacing: .01em; }
+:root[data-look=cartridge] h1 { font-size: 28px; line-height: 1.15; text-shadow: 2px 2px 0 var(--ink); }
+:root[data-look=cartridge] h2 { font-size: 19px; line-height: 1.2; }
+:root[data-look=cartridge] .muted { color: var(--muted); }
+::selection { background: var(--cursor); color: #fff; }
+
+/* the arena behind the menus: tinted into the palette and screened with a dither, so it reads as a quiet scene */
+:root[data-look=cartridge] #backdrop { filter: saturate(.55) brightness(.62) contrast(1.15); }
+:root[data-look=cartridge] .backshade {
+  background:
+    var(--dots),
+    linear-gradient(180deg, var(--pg) 0, rgba(16,24,32,.7) 8%, rgba(16,24,32,0) 22%, rgba(16,24,32,0) 70%, rgba(16,24,32,.75) 88%, var(--pg) 100%);
+}
+:root[data-look=cartridge] .backshade::after { content: ''; position: absolute; inset: 0; background: #1c2c70; mix-blend-mode: multiply; opacity: .55; }
+:root[data-look=cartridge] body[data-screen=builder], :root[data-look=cartridge] body[data-screen=board] { --bd: .5; }
+
+/* focus: always visible, a cool cyan on dark, deep blue on paper */
+:root[data-look=cartridge] button:focus-visible, :root[data-look=cartridge] input:focus-visible, :root[data-look=cartridge] select:focus-visible,
+:root[data-look=cartridge] textarea:focus-visible, :root[data-look=cartridge] [tabindex]:focus-visible, :root[data-look=cartridge] a:focus-visible {
+  outline: 3px solid var(--focus); outline-offset: 4px;
+}
+:root[data-look=cartridge] .team li > button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* ---------------------------------------------------------------- windows (9-slice pixel frames) */
+/* dark window: long screens, the builder's panels */
+:root[data-look=cartridge] .card-panel, :root[data-look=cartridge] .editor, :root[data-look=cartridge] .ytcard, :root[data-look=cartridge] .newstrip,
+:root[data-look=cartridge] .away, :root[data-look=cartridge] #board .table {
+  background: none; border: 8px solid transparent; border-image: var(--win-dark) 4 fill / 8px stretch; border-radius: 0;
+  box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; filter: drop-shadow(0 4px 0 rgba(8,12,20,.6));
+}
+/* light window: short focused moments */
+:root[data-look=cartridge] #welcome .card-panel, :root[data-look=cartridge] .sheet, :root[data-look=cartridge] .endcard, :root[data-look=cartridge] .toast,
+:root[data-look=cartridge] .seat, :root[data-look=cartridge] .champ, :root[data-look=cartridge] .notice, :root[data-look=cartridge] .choose {
+  background: none; border: 8px solid transparent; border-image: var(--win-light) 4 fill / 8px stretch; border-radius: 0;
+  box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; filter: drop-shadow(0 4px 0 rgba(8,12,20,.6));
+  --text: #303840; --muted: #59636f; --line: #b4b4a4; --focus: #283878; --o: #303840; color: var(--text);
+}
+
+/* ---------------------------------------------------------------- buttons: menu buttons with a hard pixel edge that press down */
+:root[data-look=cartridge] button, :root[data-look=cartridge] a.btn {
+  --b: var(--win3); --bt: var(--paper); --d: 4px;
+  font-family: var(--px-font); font-weight: 600; font-size: 16px; letter-spacing: .02em; line-height: 1.15;
+  background: var(--b); color: var(--bt); border: 0; border-radius: 0; text-shadow: none; filter: none;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.16), inset 0 -3px 0 rgba(0,0,0,.22),
+    0 -2px 0 var(--o), 0 2px 0 var(--o), -2px 0 0 var(--o), 2px 0 0 var(--o), 0 var(--d) 0 2px var(--o);
+  transition: transform .05s linear, box-shadow .05s linear, background-color .1s;
+}
+:root[data-look=cartridge] button.small, :root[data-look=cartridge] a.btn.small { --d: 3px; font-size: 16px; }
+:root[data-look=cartridge] button.big { --d: 5px; font-size: 19px; font-weight: 700; padding: 12px 26px; letter-spacing: .03em; }
+@media (hover: hover) {
+  :root[data-look=cartridge] button:not(:disabled):hover, :root[data-look=cartridge] a.btn:hover { transform: none; filter: brightness(1.12); }
+}
+:root[data-look=cartridge] button:not(:disabled):active, :root[data-look=cartridge] a.btn:active {
+  transform: translateY(var(--d)); filter: brightness(.95);
+  box-shadow: inset 0 2px 0 rgba(0,0,0,.18), 0 -2px 0 var(--o), 0 2px 0 var(--o), -2px 0 0 var(--o), 2px 0 0 var(--o);
+}
+:root[data-look=cartridge] button.ghost { --b: var(--win2); --d: 3px; }
+:root[data-look=cartridge] button.ghost:not(:disabled):active { box-shadow: 0 -2px 0 var(--o), 0 2px 0 var(--o), -2px 0 0 var(--o), 2px 0 0 var(--o); }
+/* the one forward action */
+:root[data-look=cartridge] button.primary { --b: var(--gold); --bt: #2a1c00; font-weight: 700;
+  box-shadow: inset 0 2px 0 #fff0a8, inset 0 -3px 0 #d89a20, 0 -2px 0 var(--o), 0 2px 0 var(--o), -2px 0 0 var(--o), 2px 0 0 var(--o), 0 var(--d) 0 2px var(--o); }
+:root[data-look=cartridge] button.primary:not(:disabled):active { box-shadow: inset 0 3px 0 #d89a20, 0 -2px 0 var(--o), 0 2px 0 var(--o), -2px 0 0 var(--o), 2px 0 0 var(--o); }
+:root[data-look=cartridge] button:disabled { opacity: 1; --b: #2a3048; --bt: #7d87a3; cursor: not-allowed;
+  box-shadow: 0 -2px 0 var(--o), 0 2px 0 var(--o), -2px 0 0 var(--o), 2px 0 0 var(--o); }
+:root[data-look=cartridge] button.primary:disabled { --b: #4a4a3c; --bt: #a8a490; }
+/* brand sign-in buttons keep their colours, take the pixel shape */
+:root[data-look=cartridge] button.discord { --b: #5865f2; --bt: #fff; }
+:root[data-look=cartridge] button.google { --b: #fff; --bt: #1f1f1f; }
+:root[data-look=cartridge] button.discord, :root[data-look=cartridge] button.google {
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,.18), 0 -2px 0 var(--o), 0 2px 0 var(--o), -2px 0 0 var(--o), 2px 0 0 var(--o), 0 var(--d) 0 2px var(--o); }
+/* inside paper windows: light secondary buttons */
+:root[data-look=cartridge] .sheet button, :root[data-look=cartridge] .endcard button, :root[data-look=cartridge] #welcome .card-panel button,
+:root[data-look=cartridge] .seat button { --b: var(--paper2); --bt: #303840; }
+:root[data-look=cartridge] .sheet button.primary, :root[data-look=cartridge] .endcard button.primary, :root[data-look=cartridge] #welcome .card-panel button.primary { --b: var(--gold); --bt: #2a1c00; }
+:root[data-look=cartridge] .sheet button:disabled { --b: #d8d8cc; --bt: #8a8f98; }
+
+/* a.btn (YouTube links) */
+:root[data-look=cartridge] a.btn { min-height: 40px; padding: 8px 14px; gap: 8px; }
+:root[data-look=cartridge] a.btn.ghost { --b: var(--win2); }
+:root[data-look=cartridge] a.btn.yt-sub { --b: #e8102c; --bt: #fff; }
+:root[data-look=cartridge] a.btn.yt-sub svg rect { fill: #fff; }
+
+/* menu cursor: a red ▶ that appears on the option you point at (menus) or sits on what is selected */
+:root[data-look=cartridge] .playnav button, :root[data-look=cartridge] .levels button { position: relative; }
+:root[data-look=cartridge] .playnav button { padding-left: 26px; }
+:root[data-look=cartridge] .playnav button::before, :root[data-look=cartridge] .levels button::before {
+  content: ''; position: absolute; left: 8px; top: 50%; width: 10px; height: 16px; margin-top: -8px; background: var(--cur) no-repeat 0 0 / 10px 16px; opacity: 0;
+}
+@media (hover: hover) {
+  :root[data-look=cartridge] .playnav button:not(:disabled):hover::before, :root[data-look=cartridge] .levels button:not(:disabled):hover::before { opacity: 1; animation: cart-nudge .6s steps(2) infinite; }
+}
+:root[data-look=cartridge] .playnav button:focus-visible::before, :root[data-look=cartridge] .levels button:focus-visible::before { opacity: 1; }
+@keyframes cart-nudge { 50% { transform: translateX(2px); } }
+
+/* ---------------------------------------------------------------- inputs: a recessed text-entry box */
+:root[data-look=cartridge] input, :root[data-look=cartridge] select, :root[data-look=cartridge] textarea {
+  background: var(--paper); color: #303840; border: 0; border-radius: 0; font: 16px/1.3 var(--tx-font);
+  box-shadow: inset 0 3px 0 var(--paper3), 0 -2px 0 var(--o), 0 2px 0 var(--o), -2px 0 0 var(--o), 2px 0 0 var(--o);
+}
+:root[data-look=cartridge] .sheet input, :root[data-look=cartridge] .sheet select, :root[data-look=cartridge] .sheet textarea,
+:root[data-look=cartridge] #welcome .card-panel input { background: #fff; }
+:root[data-look=cartridge] input::placeholder, :root[data-look=cartridge] textarea::placeholder { color: #6e7682; opacity: 1; }
+:root[data-look=cartridge] select { -webkit-appearance: none; appearance: none; padding-right: 36px; cursor: pointer; font-weight: 700;
+  background: var(--paper) var(--arrow) no-repeat right 12px center / 14px 8px; }
+:root[data-look=cartridge] label { font-family: var(--px-font); font-weight: 600; font-size: 16px; letter-spacing: .02em; color: var(--muted); }
+:root[data-look=cartridge] kbd { font: 700 11px/1 var(--mono); border: 0; border-radius: 0; padding: 2px 5px; background: var(--paper2); color: #303840;
+  box-shadow: 0 0 0 1px #303840, 0 2px 0 1px #303840; }
+:root[data-look=cartridge] .err { color: var(--warn); font-weight: 700; }
+:root[data-look=cartridge] .sheet .err, :root[data-look=cartridge] #welcome .card-panel .err { color: var(--warn-ink); }
+
+/* ---------------------------------------------------------------- header: a title bar */
+:root[data-look=cartridge] .bar {
+  background: var(--frame) repeating-linear-gradient(180deg, rgba(255,255,255,.035) 0 2px, transparent 2px 4px);
+  border-bottom: 0; backdrop-filter: none; -webkit-backdrop-filter: none; padding: 8px 16px 10px; gap: 10px;
+  box-shadow: inset 0 2px 0 var(--frame-lt), inset 0 -2px 0 #1c2858, 0 2px 0 var(--ink), 0 4px 0 rgba(8,12,20,.45);
+}
+:root[data-look=cartridge] .bar .logo { border-radius: 0; animation: none; width: 32px; height: 32px; filter: drop-shadow(2px 2px 0 var(--ink)); }
+:root[data-look=cartridge] .brand { font-family: var(--px-font); font-weight: 700; font-size: 24px; letter-spacing: .02em; color: var(--paper); text-shadow: 2px 2px 0 var(--ink); }
+:root[data-look=cartridge] button.icon { --b: #1c2858; --d: 3px; min-width: 40px; min-height: 40px; width: 40px; padding: 0; font-size: 20px; font-weight: 700; margin: 0 2px; }
+:root[data-look=cartridge] .stagebar button.icon { --b: var(--win2); width: 36px; min-width: 36px; min-height: 34px; }
+/* pixel icons for the flag and the speaker (the SVG stays in the markup for nothing but looks; the buttons keep their aria-labels) */
+:root[data-look=cartridge] #reportBtn svg, :root[data-look=cartridge] #reportBtn2 svg, :root[data-look=cartridge] #muteBtn svg, :root[data-look=cartridge] #muteBtn2 svg { display: none; }
+:root[data-look=cartridge] #reportBtn, :root[data-look=cartridge] #reportBtn2 { background-image: var(--ico-flag); background-repeat: no-repeat; background-position: center; background-size: 20px 20px; }
+:root[data-look=cartridge] #muteBtn, :root[data-look=cartridge] #muteBtn2 { background-image: var(--ico-snd); background-repeat: no-repeat; background-position: center; background-size: 20px 20px; }
+:root[data-look=cartridge] #muteBtn[aria-pressed=true], :root[data-look=cartridge] #muteBtn2[aria-pressed=true] { background-image: var(--ico-mute); }
+:root[data-look=cartridge] .bar button.profile { --b: #1c2858; --d: 3px; padding: 3px 12px 3px 3px; min-height: 40px; margin-left: 4px; font-size: 16px; }
+:root[data-look=cartridge] .profile img { border-radius: 0; background: var(--portrait); width: 34px; height: 34px; box-shadow: 0 0 0 2px var(--ink); }
+
+/* portraits: a trainer-card photo, not a flat square */
+:root[data-look=cartridge] .trainer img, :root[data-look=cartridge] .seat img.face, :root[data-look=cartridge] .cupplayer img, :root[data-look=cartridge] .table td img,
+:root[data-look=cartridge] .iside .face { border-radius: 0; background: var(--portrait); }
+
+/* ---------------------------------------------------------------- welcome */
+:root[data-look=cartridge] .hero { margin-top: 5vh; }
+:root[data-look=cartridge] .wordmark { font-family: 'Pixelify Sans', var(--px-font); font-weight: 700; gap: .22em; font-size: clamp(52px, 10vw, 96px); line-height: 1; letter-spacing: .02em; text-shadow: none; }
+:root[data-look=cartridge] .wm-pb { border-radius: 0; background: var(--cursor); color: var(--paper); padding: .02em .16em .06em;
+  box-shadow: inset 0 .06em 0 #f07868, inset 0 -.08em 0 #a82820, 0 0 0 4px var(--ink), 0 .1em 0 4px var(--ink); text-shadow: 3px 3px 0 #7a1810; }
+:root[data-look=cartridge] .wm-ranked { color: var(--paper);
+  text-shadow: 3px 0 0 var(--ink), -3px 0 0 var(--ink), 0 3px 0 var(--ink), 0 -3px 0 var(--ink), 3px 3px 0 var(--ink), -3px 3px 0 var(--ink), 3px -3px 0 var(--ink), -3px -3px 0 var(--ink),
+    0 7px 0 var(--frame), 3px 7px 0 var(--frame), -3px 7px 0 var(--frame), 0 9px 0 var(--ink), 3px 9px 0 var(--ink), -3px 9px 0 var(--ink); }
+:root[data-look=cartridge] .tagline { font-family: var(--px-font); font-weight: 500; font-size: clamp(17px, 2.3vw, 21px); color: var(--paper); margin-top: 18px; letter-spacing: .02em;
+  text-shadow: 2px 2px 0 var(--ink); }
+:root[data-look=cartridge] #welcome .card-panel { padding: 14px 18px 16px; margin-top: 24px; }
+:root[data-look=cartridge] #welcome .card-panel label { color: #283878; font-size: 16px; }
+:root[data-look=cartridge] #welcome .card-panel input { min-height: 46px; }
+:root[data-look=cartridge] #startBtn { min-width: 110px; }
+:root[data-look=cartridge] .signin { border-top: 2px dashed var(--line); }
+
+/* trainer picker: tiles on paper, the picked one gets the cursor */
+:root[data-look=cartridge] .trainers { gap: 8px; padding: 4px 4px 22px; }
+:root[data-look=cartridge] .trainer { --b: var(--paper2); --bt: #303840; position: relative; font-family: var(--tx-font); font-weight: 700; font-size: 12.5px; line-height: 1.2;
+  padding: 6px 4px 5px; gap: 4px; box-shadow: inset 0 0 0 2px #303840; transform: none !important; }
+:root[data-look=cartridge] .trainer:not(:disabled):active { box-shadow: inset 0 0 0 2px #303840; filter: brightness(.95); }
+:root[data-look=cartridge] .trainer img { width: 48px; height: 48px; box-shadow: 0 0 0 2px #303840; }
+@media (hover: hover) { :root[data-look=cartridge] .trainer:hover { filter: none; --b: #fff; } }
+:root[data-look=cartridge] .trainer[aria-checked=true], :root[data-look=cartridge] .trainer[aria-checked=true]:not(:disabled):active {
+  --b: #fff; color: #303840; border: 0; box-shadow: inset 0 0 0 3px var(--cursor); }
+:root[data-look=cartridge] .trainer[aria-checked=true]::before { content: ''; position: absolute; left: 5px; bottom: 5px; width: 10px; height: 16px; background: var(--cur) 0 0 / 10px 16px; }
+
+/* the channel card */
+:root[data-look=cartridge] .ytcard { padding: 10px 12px; }
+:root[data-look=cartridge] .ythumb { border-radius: 0; box-shadow: 0 0 0 2px var(--ink); }
+:root[data-look=cartridge] .ythumb .play { border-radius: 0; background: #e8102c; box-shadow: 0 0 0 2px var(--ink), 0 4px 0 2px var(--ink); }
+:root[data-look=cartridge] .ytinfo small { font-family: var(--px-font); color: #98b0f0; font-weight: 600; font-size: 12px; letter-spacing: .08em; }
+:root[data-look=cartridge] .ytinfo b { font-family: var(--px-font); font-weight: 600; font-size: 18px; line-height: 1.2; }
+:root[data-look=cartridge] .ytinfo .row { margin-top: 6px; }
+
+/* ---------------------------------------------------------------- tabs (format, mode, generation, room format) */
+:root[data-look=cartridge] .seg { border: 0; border-radius: 0; background: var(--win); gap: 0;
+  box-shadow: 0 -2px 0 var(--ink), 0 2px 0 var(--ink), -2px 0 0 var(--ink), 2px 0 0 var(--ink), 0 5px 0 2px rgba(8,12,20,.6); }
+:root[data-look=cartridge] .seg button, :root[data-look=cartridge] #modes button {
+  --b: transparent; --bt: #c4cce4; position: relative; padding: 8px 14px 8px 24px; box-shadow: none; min-height: 42px; font-size: 16px; transform: none; }
+:root[data-look=cartridge] .seg button + button { box-shadow: inset 2px 0 0 #0c1424; }
+:root[data-look=cartridge] .seg button[aria-selected=true], :root[data-look=cartridge] #modes button[aria-selected=true] {
+  --b: var(--paper); --bt: #303840; color: #303840; background: var(--paper); font-weight: 700; box-shadow: inset 0 -3px 0 var(--paper3); }
+:root[data-look=cartridge] .seg button[aria-selected=true]::before {
+  content: ''; position: absolute; left: 8px; top: 50%; width: 10px; height: 16px; margin-top: -8px; background: var(--cur) 0 0 / 10px 16px; }
+:root[data-look=cartridge] .seg button:not(:disabled):active { transform: none; box-shadow: none; }
+@media (hover: hover) { :root[data-look=cartridge] .seg button:not([aria-selected=true]):not(:disabled):hover { --b: var(--win3); background: var(--win3); filter: none; } }
+:root[data-look=cartridge] .seg button:disabled { --b: transparent; }
+:root[data-look=cartridge] .standing { font-family: var(--px-font); font-weight: 500; font-size: 16px; color: var(--paper); text-shadow: 2px 2px 0 var(--ink); }
+
+/* ---------------------------------------------------------------- team builder */
+:root[data-look=cartridge] #builder > .row:first-child { gap: 16px; margin-top: 6px; }
+:root[data-look=cartridge] .playnav { gap: 12px; padding: 6px 4px 10px; margin: 10px -4px 0; }
+/* section titles: a label with a dotted pixel rule running to the edge */
+:root[data-look=cartridge] #builder h2, :root[data-look=cartridge] section.gen h3 {
+  display: flex; align-items: center; gap: 10px; color: var(--paper); text-shadow: 2px 2px 0 var(--ink); }
+:root[data-look=cartridge] #builder h2::after, :root[data-look=cartridge] section.gen h3::after {
+  content: ''; flex: 1; min-width: 12px; height: 4px; background: repeating-linear-gradient(90deg, var(--frame-lt) 0 4px, transparent 4px 8px); box-shadow: 0 2px 0 rgba(8,12,20,.6); }
+:root[data-look=cartridge] #builder h2 .muted { font-family: var(--tx-font); font-weight: 400; font-size: 14px; color: var(--muted); text-shadow: 1px 1px 0 var(--ink); }
+:root[data-look=cartridge] #teamCount { font-family: var(--mono) !important; font-weight: 700 !important; }
+:root[data-look=cartridge] .teamhead { align-items: center; margin-top: 8px; }
+:root[data-look=cartridge] .teamhead h2 { margin: 18px 0 12px; }
+
+/* saved teams */
+:root[data-look=cartridge] .savedlist { gap: 12px; }
+:root[data-look=cartridge] .saved { border: 0; border-radius: 0; background: var(--win); box-shadow: 0 0 0 2px var(--ink), 0 4px 0 2px rgba(8,12,20,.6); overflow: visible; }
+:root[data-look=cartridge] .saved.on { box-shadow: 0 0 0 2px var(--cursor), 0 0 0 4px var(--ink); }
+:root[data-look=cartridge] .saved button { --b: transparent; box-shadow: none; transform: none !important; min-height: 54px; }
+:root[data-look=cartridge] .saved button:not(:disabled):active { box-shadow: none; background: var(--win3); }
+:root[data-look=cartridge] .saved .open b { font-family: var(--px-font); font-size: 16px; }
+:root[data-look=cartridge] .saved .play { color: var(--gold); border-left: 2px solid var(--ink); }
+:root[data-look=cartridge] .saved .del { color: var(--muted); border-left: 2px solid var(--ink); font-size: 20px; }
+:root[data-look=cartridge] .saved .del.sure { --b: var(--warn); color: #fff; background: var(--warn); }
+:root[data-look=cartridge] #saveBox { gap: 12px; }
+:root[data-look=cartridge] #saveBox input { min-height: 38px; }
+:root[data-look=cartridge] .saved-ok { color: var(--go); font-family: var(--px-font); font-size: 16px; }
+
+/* your team: party slots, each its own small window; the one you are editing wears the cursor frame */
+:root[data-look=cartridge] .team { gap: 12px; }
+:root[data-look=cartridge] .team li { background: rgba(8,12,20,.6); border: 2px dashed #5068c0; border-radius: 0; min-height: 118px; position: relative; }
+:root[data-look=cartridge] .team li.filled { border: 8px solid transparent; border-image: var(--win-dark) 4 fill / 8px stretch; background: none; filter: drop-shadow(0 4px 0 rgba(8,12,20,.6)); }
+:root[data-look=cartridge] .team li.editing { border-image: var(--win-pick) 4 fill / 8px stretch; }
+:root[data-look=cartridge] .team li.editing::before { content: ''; position: absolute; left: 6px; top: 26px; width: 10px; height: 16px; background: var(--cur) 0 0 / 10px 16px; z-index: 1; }
+:root[data-look=cartridge] .team li > button, :root[data-look=cartridge] .team li > button:not(:disabled):active { background: transparent; box-shadow: none; transform: none; filter: none;
+  border-radius: 0; padding: 6px 6px 8px; gap: 2px; font-size: 13px; color: var(--text); }
+:root[data-look=cartridge] .team li img, :root[data-look=cartridge] .card img { box-shadow: 0 0 0 2px var(--ink); }
+:root[data-look=cartridge] .team li .nm { font-family: var(--px-font); font-weight: 700; font-size: 16px; margin-top: 6px; color: var(--paper); }
+:root[data-look=cartridge] .team li .lead, :root[data-look=cartridge] .newtag {
+  font-family: var(--px-font); font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--paper); background: var(--frame-hi);
+  padding: 0 6px; line-height: 16px; border-radius: 0; box-shadow: 0 0 0 2px var(--ink); }
+:root[data-look=cartridge] .team li .lead { margin: 4px 0 2px; }
+:root[data-look=cartridge] .team li .empty { font-family: var(--px-font); color: #8494bc; font-size: 15px; }
+:root[data-look=cartridge] .mlist { font-family: var(--tx-font); font-weight: 400; letter-spacing: 0; font-size: 13px; color: #c4cce4; gap: 1px; margin-top: 4px; }
+:root[data-look=cartridge] .mlist .missing { color: var(--warn); font-weight: 700; }
+:root[data-look=cartridge] .mlist .missing::before { content: '! '; }
+
+/* the move editor */
+:root[data-look=cartridge] .editor { padding: 10px 14px 12px; margin-top: 14px; }
+:root[data-look=cartridge] .editor > .row:first-child { gap: 10px; }
+:root[data-look=cartridge] .editor > .row:first-child > b { font-family: var(--px-font); font-size: 22px; font-weight: 700; text-shadow: 2px 2px 0 var(--ink); }
+:root[data-look=cartridge] .abilities { gap: 6px 22px; font-size: 14px; margin: 10px 0 4px; }
+:root[data-look=cartridge] .abil b { font-family: var(--px-font); font-weight: 600; font-size: 16px; color: #98b0f0; }
+:root[data-look=cartridge] .abil span { color: #d4dbef; }
+:root[data-look=cartridge] .stats { gap: 8px 14px; margin: 12px 0 6px; font: 700 14px/1.2 var(--mono); }
+:root[data-look=cartridge] .stat b { font-family: var(--tx-font); font-weight: 700; font-size: 12.5px; color: var(--muted); margin-bottom: 1px; }
+:root[data-look=cartridge] .stat .sbar { height: 8px; border-radius: 0; background: #0c1424; margin-top: 4px; box-shadow: 0 0 0 2px var(--ink); }
+:root[data-look=cartridge] .stat .sbar i, :root[data-look=cartridge] .hp i, :root[data-look=cartridge] .rbar i { border-radius: 0;
+  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 8px); mask-image: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 8px); }
+:root[data-look=cartridge] .pool { gap: 8px; margin-top: 12px; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+:root[data-look=cartridge] .pmove { --b: var(--win2); position: relative; padding: 8px 34px 9px 12px; gap: 4px; min-height: 70px; border: 0; border-left: 0;
+  box-shadow: inset 6px 0 0 var(--tc), inset 8px 0 0 var(--ink), inset 0 0 0 2px var(--ink); transform: none !important; }
+:root[data-look=cartridge] .pmove:not(:disabled):active { box-shadow: inset 6px 0 0 var(--tc), inset 8px 0 0 var(--ink), inset 0 0 0 2px var(--ink); background: var(--win3); }
+@media (hover: hover) { :root[data-look=cartridge] .pmove:hover { filter: none; --b: var(--win3); } }
+:root[data-look=cartridge] .pmove::after { content: ''; position: absolute; right: 10px; top: 10px; width: 14px; height: 14px; background: var(--box-off) 0 0 / 14px 14px; }
+:root[data-look=cartridge] .pmove.on { --b: #2a2c50; background: color-mix(in srgb, var(--tc) 16%, #222a4c); border: 0;
+  box-shadow: inset 6px 0 0 var(--tc), inset 8px 0 0 var(--ink), inset 0 0 0 2px var(--cursor), inset 0 0 0 4px var(--ink); }
+:root[data-look=cartridge] .pmove.on:not(:disabled):active { box-shadow: inset 6px 0 0 var(--tc), inset 8px 0 0 var(--ink), inset 0 0 0 2px var(--cursor), inset 0 0 0 4px var(--ink); }
+:root[data-look=cartridge] .pmove.on::after { background-image: var(--box-on); }
+:root[data-look=cartridge] .pmove.on .nm::after { content: none; }
+:root[data-look=cartridge] .pmove .nm { font-family: var(--px-font); font-weight: 600; font-size: 17px; line-height: 1.15; color: var(--paper); }
+:root[data-look=cartridge] .pmove .meta { font: 400 13px/1.3 var(--tx-font); color: #b8c2de; gap: 3px 10px; align-items: center; }
+:root[data-look=cartridge] .pmove .meta .mt { font: 700 12px/16px var(--px-font); letter-spacing: .06em; text-transform: uppercase; color: #fff; background: var(--tc);
+  padding: 0 5px; text-shadow: 1px 0 0 var(--ink), -1px 0 0 var(--ink), 0 1px 0 var(--ink), 0 -1px 0 var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+:root[data-look=cartridge] .pmove .meta .mp, :root[data-look=cartridge] .pmove .meta .ma { font: 600 12.5px/1.3 var(--mono); }
+:root[data-look=cartridge] .pmove .desc { font: 400 13px/1.35 var(--tx-font); color: #d4dbef; }
+:root[data-look=cartridge] .editor > p.small { margin: 10px 0 0; }
+
+:root[data-look=cartridge] .gimmickrow { margin-top: 18px; gap: 12px; }
+:root[data-look=cartridge] .gimmickrow label { font-size: 17px; color: var(--paper); text-shadow: 2px 2px 0 var(--ink); }
+:root[data-look=cartridge] .gimmickrow .muted { font-size: 14px; color: var(--muted); }
+:root[data-look=cartridge] #gimmick { min-height: 42px; }
+
+/* type chips: pixel labels */
+:root[data-look=cartridge] .type { font: 700 12px/16px var(--px-font); letter-spacing: .06em; border-radius: 0; padding: 0 5px; box-shadow: 0 0 0 1px var(--ink); text-shadow: 1px 1px 0 rgba(8,12,20,.85); }
+:root[data-look=cartridge] .type.light { text-shadow: none; }
+
+/* the roster */
+:root[data-look=cartridge] .rosterhead { margin-top: 20px; gap: 12px; }
+:root[data-look=cartridge] .rosterhead h2 { flex: 1 1 320px; margin: 10px 0; }
+:root[data-look=cartridge] #search { width: min(340px, 100%); min-height: 44px; }
+:root[data-look=cartridge] .gens { margin: 10px 0 6px; max-width: 100%; }
+:root[data-look=cartridge] .gens button { padding: 8px 12px 8px 24px; min-height: 42px; font-size: 16px; }
+:root[data-look=cartridge] section.gen h3 { font-size: 16px; text-transform: none; letter-spacing: .03em; border-bottom: 0; margin: 22px 0 12px; padding: 0; }
+:root[data-look=cartridge] .roster { gap: 10px; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); }
+:root[data-look=cartridge] .card { --b: var(--win); padding: 22px 6px 9px; gap: 5px; border: 0; transform: none !important;
+  box-shadow: inset 0 0 0 2px var(--ink), inset 0 4px 0 #26345a; }
+:root[data-look=cartridge] .card:not(:disabled):active { box-shadow: inset 0 0 0 2px var(--ink); background: var(--win3); }
+@media (hover: hover) { :root[data-look=cartridge] .card:hover { filter: none; --b: var(--win2); box-shadow: inset 0 0 0 2px #5068c0; } }
+:root[data-look=cartridge] .card.on, :root[data-look=cartridge] .card.on:not(:disabled):active {
+  --b: #222a4c; background: #222a4c; border: 0; box-shadow: inset 0 0 0 2px var(--cursor), inset 0 0 0 4px var(--ink); }
+:root[data-look=cartridge] .card.on::before { content: ''; position: absolute; left: 8px; top: 40px; width: 10px; height: 16px; background: var(--cur) 0 0 / 10px 16px; }
+:root[data-look=cartridge] .card .num { font: 600 11px/1 var(--mono); color: #8494bc; top: 8px; left: 9px; }
+:root[data-look=cartridge] .card .nm { font: 700 14.5px/1.2 var(--tx-font); letter-spacing: 0; margin-top: 4px; color: var(--paper); }
+:root[data-look=cartridge] .card .newtag { top: 6px; right: 7px; }
+:root[data-look=cartridge] .badge { font: 700 12px/1.2 var(--tx-font); color: var(--mega); letter-spacing: 0; }
+:root[data-look=cartridge] .badge::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 5px; vertical-align: 1px; background: var(--mega); box-shadow: 0 0 0 1px var(--ink); transform: rotate(45deg); }
+
+/* the NEW strip */
+:root[data-look=cartridge] .newstrip { padding: 8px 12px 10px; margin: 6px 0 14px; }
+:root[data-look=cartridge] .newhead { gap: 8px; font-size: 14px; }
+:root[data-look=cartridge] .newhead > b { font-family: var(--px-font); font-size: 17px; }
+:root[data-look=cartridge] .newhead .newvid { color: #98b0f0; font-weight: 700; }
+:root[data-look=cartridge] .newnames { gap: 10px; padding: 10px 4px 6px; }
+:root[data-look=cartridge] .newchip { --b: var(--win2); font: 700 14px/1.2 var(--tx-font); letter-spacing: 0; padding: 2px 12px 2px 3px; margin: 2px; box-shadow: inset 0 0 0 2px var(--ink); transform: none !important; }
+:root[data-look=cartridge] .newchip:not(:disabled):active { box-shadow: inset 0 0 0 2px var(--ink); }
+
+/* the action bar: the bottom strip of the menu */
+:root[data-look=cartridge] .actionbar {
+  background: var(--frame) repeating-linear-gradient(180deg, rgba(255,255,255,.035) 0 2px, transparent 2px 4px); border-top: 0; backdrop-filter: none; -webkit-backdrop-filter: none;
+  box-shadow: 0 -2px 0 var(--ink), 0 -4px 0 rgba(8,12,20,.45), inset 0 2px 0 var(--frame-lt); padding-top: 12px; padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
+:root[data-look=cartridge] .actionbar .status { color: #d4dcf4; font-size: 15px; }
+:root[data-look=cartridge] .actionbar .status.ready { color: var(--go); font-family: var(--px-font); font-weight: 600; font-size: 16px; text-shadow: 2px 2px 0 var(--ink); }
+:root[data-look=cartridge] .actionbar .status.ready::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 8px; vertical-align: 1px; background: var(--go); box-shadow: 0 0 0 2px var(--ink); }
+:root[data-look=cartridge] #findBtn { min-width: 180px; }
+
+/* ---------------------------------------------------------------- searching, loading */
+:root[data-look=cartridge] .spinner { border-radius: 0; border: 4px solid var(--win3); border-top-color: var(--cursor); animation: spin .8s steps(8) infinite; }
+:root[data-look=cartridge] #searching h1 { font-size: 30px; }
+:root[data-look=cartridge] .tip { color: #d4dcf4; }
+:root[data-look=cartridge] #loadingText { font-family: var(--px-font); font-size: 17px; color: var(--paper); }
+
+/* ---------------------------------------------------------------- toast: a game text box */
+:root[data-look=cartridge] .toast { font-weight: 700; font-size: 15px; padding: 10px 30px 12px 16px; bottom: 88px; }
+:root[data-look=cartridge] .toast::after { content: ''; position: absolute; right: 10px; bottom: 8px; width: 12px; height: 8px;
+  background: var(--cursor); clip-path: polygon(0 0, 100% 0, 100% 25%, 83% 25%, 83% 50%, 67% 50%, 67% 75%, 33% 75%, 33% 50%, 17% 50%, 17% 25%, 0 25%); }
+
+/* ---------------------------------------------------------------- modals */
+:root[data-look=cartridge] .modal { background: rgba(8,12,20,.8); }
+:root[data-look=cartridge] .sheet { padding: 14px 20px 18px; }
+:root[data-look=cartridge] .sheet h1 { color: #283878; text-shadow: none; font-size: 28px; margin: 4px 0 10px; }
+:root[data-look=cartridge] .sheet h1::before { content: ''; display: inline-block; width: 10px; height: 16px; margin-right: 10px; vertical-align: 2px; background: var(--cur) 0 0 / 10px 16px; }
+:root[data-look=cartridge] .sheet label { color: #283878; font-size: 16px; }
+:root[data-look=cartridge] .sheet p { font-size: 15px; }
+:root[data-look=cartridge] .helplist li { color: #303840; margin: 10px 0; }
+:root[data-look=cartridge] .helplist li::marker { color: var(--cursor); }
+:root[data-look=cartridge] .helplist b { font-family: var(--px-font); font-weight: 700; font-size: 16px; color: #283878; }
+:root[data-look=cartridge] #helpOk { min-width: 140px; }
+:root[data-look=cartridge] .sheet > .row.center-row:last-child, :root[data-look=cartridge] .sheet > button:last-child { margin-top: 10px; }
+:root[data-look=cartridge] .cupopts { gap: 14px; }
+:root[data-look=cartridge] .sheet .row { gap: 14px; }
+:root[data-look=cartridge] #friend .sheet > .big { margin: 10px 0 18px; }
+:root[data-look=cartridge] #roomCodeIn, :root[data-look=cartridge] #cupCodeIn { font-family: var(--mono); font-weight: 700; }
+:root[data-look=cartridge] #profile .trainers { margin-bottom: 14px; }
+:root[data-look=cartridge] .levels { gap: 12px; margin: 16px 0; }
+:root[data-look=cartridge] .levels button { padding: 10px 4px 10px; gap: 4px; }
+:root[data-look=cartridge] .levels button::before { left: 6px; top: 22px; margin-top: 0; }
+:root[data-look=cartridge] .levels b { font: 700 24px/1 var(--mono); color: #283878; }
+:root[data-look=cartridge] .levels span { color: #303840; font-size: 14px; }
+:root[data-look=cartridge] .modetag { border-radius: 0; background: var(--frame-hi); border: 0; color: var(--paper); font-family: var(--px-font); box-shadow: 0 0 0 2px var(--ink); }
+
+/* ---------------------------------------------------------------- friendly room */
+:root[data-look=cartridge] #room h1, :root[data-look=cartridge] #cup h1, :root[data-look=cartridge] #board h1 { font-size: 30px; margin: 10px 0; line-height: 1.35; }
+:root[data-look=cartridge] #room > .row:first-child, :root[data-look=cartridge] #cup > .row:first-child { gap: 14px; }
+:root[data-look=cartridge] .roomcode { font: 700 .82em/1 var(--mono); letter-spacing: .14em; color: #303840; background: var(--paper); border-radius: 0; padding: 4px 6px 4px 12px;
+  margin: 4px 0 4px 10px; display: inline-block; line-height: 1; vertical-align: 3px; text-shadow: none; box-shadow: inset 0 -3px 0 var(--paper3), 0 0 0 3px var(--ink), 0 4px 0 3px rgba(8,12,20,.6); }
+:root[data-look=cartridge] #roomInfo, :root[data-look=cartridge] #cupInfo { color: #d4dcf4; font-size: 15px; text-shadow: 1px 1px 0 var(--ink); }
+:root[data-look=cartridge] .roomfmt { gap: 14px; margin: 10px 0 18px; }
+:root[data-look=cartridge] .roomfmt > b { font-family: var(--px-font); font-size: 17px; text-shadow: 2px 2px 0 var(--ink); }
+:root[data-look=cartridge] .roomscore { font-family: var(--px-font); text-shadow: 2px 2px 0 var(--ink); }
+:root[data-look=cartridge] .seats { gap: 14px; }
+:root[data-look=cartridge] .seat { position: relative; min-height: 170px; gap: 8px; padding: 14px 12px; }
+:root[data-look=cartridge] .seat img.face { width: 72px; height: 72px; box-shadow: 0 0 0 2px #303840, 0 0 0 4px var(--paper), 0 0 0 6px #283878; margin-bottom: 4px; }
+:root[data-look=cartridge] .seat b { font-family: var(--px-font); font-weight: 700; font-size: 18px; color: #303840; }
+:root[data-look=cartridge] .seat .st { font-family: var(--px-font); font-weight: 600; font-size: 16px; color: #59636f; }
+:root[data-look=cartridge] .seat .st.ready { color: var(--go-ink); } :root[data-look=cartridge] .seat .st.off { color: var(--warn-ink); }
+:root[data-look=cartridge] .seat .st.ready::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 6px; background: var(--go); box-shadow: 0 0 0 2px #303840; vertical-align: 1px; }
+:root[data-look=cartridge] .seat.you::before { content: ''; position: absolute; left: 10px; top: 12px; width: 10px; height: 16px; background: var(--cur) 0 0 / 10px 16px; }
+:root[data-look=cartridge] .seat.empty { border: 2px dashed #3e5080; border-image: none; background: rgba(12,20,36,.6); filter: none; padding: 18px 12px;
+  --text: #c4cce4; --muted: #aab6d4; color: #c4cce4; }
+:root[data-look=cartridge] .seat.empty b { color: #c4cce4; }
+:root[data-look=cartridge] .seat.empty button { --b: var(--win2); --bt: var(--paper); --o: var(--ink); }
+:root[data-look=cartridge] .seats .vsmid { font-family: var(--px-font); font-weight: 700; font-style: normal; font-size: 30px; color: var(--paper);
+  text-shadow: 2px 0 0 var(--ink), -2px 0 0 var(--ink), 0 2px 0 var(--ink), 0 -2px 0 var(--ink), 0 5px 0 var(--ink); }
+:root[data-look=cartridge] .roomme { padding: 12px 16px 14px; margin: 18px 0; }
+:root[data-look=cartridge] .roomme > b { font-family: var(--px-font); font-size: 19px; }
+:root[data-look=cartridge] .roomme .mons { gap: 10px; margin: 12px 2px; }
+:root[data-look=cartridge] .roomme .mons img { box-shadow: 0 0 0 2px var(--ink); }
+:root[data-look=cartridge] .roomme .row { gap: 14px; }
+:root[data-look=cartridge] #roomWins { color: #d4dcf4; }
+
+/* ---------------------------------------------------------------- tournaments */
+:root[data-look=cartridge] .cupplayers { gap: 10px; }
+:root[data-look=cartridge] .cupplayer { border: 0; border-radius: 0; background: var(--win); font-family: var(--px-font); font-weight: 600; font-size: 16px; box-shadow: 0 0 0 2px var(--ink); position: relative; }
+:root[data-look=cartridge] .cupplayer img { box-shadow: 0 0 0 2px var(--ink); }
+:root[data-look=cartridge] .cupplayer.you { box-shadow: 0 0 0 2px var(--cursor), 0 0 0 4px var(--ink); }
+:root[data-look=cartridge] .bracket { gap: 18px; }
+:root[data-look=cartridge] .bround h3 { font-family: var(--px-font); font-size: 16px; color: var(--paper); text-shadow: 2px 2px 0 var(--ink); }
+:root[data-look=cartridge] .bmatch { border: 0; border-radius: 0; background: var(--win); box-shadow: 0 0 0 2px var(--ink), 0 4px 0 2px rgba(8,12,20,.6); overflow: visible; }
+:root[data-look=cartridge] .bmatch.mine { box-shadow: 0 0 0 2px var(--cursor), 0 0 0 4px var(--ink); }
+:root[data-look=cartridge] .bmatch.live { box-shadow: 0 0 0 2px var(--go), 0 0 0 4px var(--ink); }
+:root[data-look=cartridge] .bside + .bside { border-top: 2px solid #0c1424; }
+:root[data-look=cartridge] .bside .nm { font-family: var(--px-font); font-weight: 600; font-size: 16px; }
+:root[data-look=cartridge] .bside.win .nm { color: var(--go); }
+:root[data-look=cartridge] .bside .sc { font-family: var(--mono); }
+:root[data-look=cartridge] .bnote { color: var(--muted); }
+:root[data-look=cartridge] .champ { padding: 14px; }
+:root[data-look=cartridge] .champ b { font-family: var(--px-font); color: var(--go);
+  text-shadow: 2px 0 0 var(--ink), -2px 0 0 var(--ink), 0 2px 0 var(--ink), 0 -2px 0 var(--ink), 0 4px 0 var(--ink); }
+
+/* ---------------------------------------------------------------- leaderboard */
+:root[data-look=cartridge] #board > .row:first-child { gap: 16px; }
+:root[data-look=cartridge] .feature { border: 0; border-radius: 0; background: var(--win); box-shadow: inset 6px 0 0 #e8102c, 0 0 0 2px var(--ink); padding: 10px 14px 10px 20px; margin: 10px 0 18px; color: #d4dcf4; }
+:root[data-look=cartridge] .feature b { font-family: var(--px-font); font-weight: 600; font-size: 16px; color: var(--paper); }
+:root[data-look=cartridge] #board .table { border-collapse: separate; border-spacing: 0; }
+:root[data-look=cartridge] .table th { font-family: var(--px-font); font-weight: 600; font-size: 16px; color: #98b0f0; border-bottom: 2px solid var(--ink); padding: 10px 12px; }
+:root[data-look=cartridge] .table td { border-bottom: 2px solid #121a30; padding: 8px 12px; font-size: 15px; }
+:root[data-look=cartridge] .table tbody tr:nth-child(even) td { background: rgba(255,255,255,.03); }
+:root[data-look=cartridge] .table td:first-child { font: 700 15px/1 var(--mono); color: var(--muted); width: 3.5em; }
+:root[data-look=cartridge] .table td[colspan] { font: 400 15px/1.4 var(--tx-font); width: auto; padding: 14px 12px; }
+:root[data-look=cartridge] .table td:nth-child(2) { font-family: var(--px-font); font-weight: 600; font-size: 16px; }
+:root[data-look=cartridge] .table td:nth-child(3), :root[data-look=cartridge] .table td:nth-child(4) { font-family: var(--mono); font-size: 14px; white-space: nowrap; }
+:root[data-look=cartridge] .table td img { border-radius: 0; box-shadow: 0 0 0 2px var(--ink); }
+:root[data-look=cartridge] .table tr.you td { background: rgba(224,64,56,.16); font-weight: 700; }
+:root[data-look=cartridge] .table tr.you td:first-child::before { content: ''; display: inline-block; width: 10px; height: 16px; margin: -4px 6px -4px -4px; vertical-align: middle; background: var(--cur) 0 0 / 10px 16px; }
+
+/* ---------------------------------------------------------------- the battle: frame, intro, controls */
+:root[data-look=cartridge] .stage { border-radius: 0; box-shadow: 0 0 0 2px var(--ink), 0 0 0 6px var(--frame), 0 0 0 8px var(--ink); margin-top: 8px; margin-bottom: 8px; }
+:root[data-look=cartridge] .youtag { border-radius: 0; background: var(--paper); color: #303840; font: 700 12px/1 var(--px-font); letter-spacing: .1em; padding: 5px 10px; box-shadow: 0 0 0 2px var(--ink); }
+:root[data-look=cartridge] .youtag.watch { background: var(--win2); color: var(--paper); border: 0; }
+:root[data-look=cartridge] .clock { border-radius: 0; background: var(--ink); border: 2px solid var(--frame-lt); font-family: var(--px-font); font-weight: 600; letter-spacing: .04em; }
+:root[data-look=cartridge] .clock.sd { background: #4a1410; border-color: var(--warn); }
+:root[data-look=cartridge] .clock.warn { background: var(--warn); border-color: var(--ink); }
+:root[data-look=cartridge] .notice { font-family: var(--px-font); font-weight: 600; padding: 4px 12px; }
+:root[data-look=cartridge] .choose { font-family: var(--px-font); font-weight: 700; padding: 8px 18px 10px; animation: none; }
+:root[data-look=cartridge] .choose small { font-family: var(--tx-font); font-weight: 700; }
+:root[data-look=cartridge] .reconnect { font-family: var(--px-font); }
+
+/* the VS intro: red side against blue side, split hard, screened with a dither */
+:root[data-look=cartridge] .vs.intro {
+  background: var(--dither), linear-gradient(100deg, #6a1410 0 49.6%, var(--ink) 49.6% 50.4%, #142a78 50.4%); }
+:root[data-look=cartridge] .iformat { font-family: var(--px-font); font-weight: 600; color: var(--paper); letter-spacing: .3em; text-shadow: 2px 2px 0 var(--ink); }
+:root[data-look=cartridge] .iside .face { border: 0; box-shadow: 0 0 0 3px var(--ink), 0 0 0 7px var(--cursor), 0 0 0 10px var(--ink); }
+:root[data-look=cartridge] .iside.s1 .face { box-shadow: 0 0 0 3px var(--ink), 0 0 0 7px #4870e8, 0 0 0 10px var(--ink); }
+:root[data-look=cartridge] .iside .you { border-radius: 0; background: var(--paper); color: #303840; font-family: var(--px-font); box-shadow: 0 0 0 2px var(--ink); top: -14px; z-index: 1; }
+:root[data-look=cartridge] .iname { font-family: var(--px-font); font-weight: 700; margin-top: 10px; color: var(--paper);
+  text-shadow: 2px 0 0 var(--ink), -2px 0 0 var(--ink), 0 2px 0 var(--ink), 0 -2px 0 var(--ink), 0 4px 0 var(--ink); }
+:root[data-look=cartridge] .istand { font-family: var(--px-font); color: #d4dcf4; text-shadow: 2px 2px 0 var(--ink); }
+:root[data-look=cartridge] .vsmark { font-family: var(--px-font); font-weight: 700; font-style: normal; color: var(--paper); letter-spacing: .02em;
+  text-shadow: -4px 0 0 var(--ink), 4px 0 0 var(--ink), 0 -4px 0 var(--ink), 0 4px 0 var(--ink), -4px -4px 0 var(--ink), 4px -4px 0 var(--ink), -4px 4px 0 var(--ink), 4px 4px 0 var(--ink),
+    -8px 8px 0 var(--cursor), 8px 8px 0 #4870e8, 0 12px 0 var(--ink); }
+:root[data-look=cartridge] .icount { font-family: var(--px-font); font-weight: 700; color: var(--paper);
+  text-shadow: 3px 0 0 var(--ink), -3px 0 0 var(--ink), 0 3px 0 var(--ink), 0 -3px 0 var(--ink), 0 6px 0 var(--ink); }
+:root[data-look=cartridge] .imons img { box-shadow: 0 0 0 2px var(--ink); margin: 2px; }
+
+/* moves and bench: the battle menu */
+:root[data-look=cartridge] .moves { gap: 10px; margin-top: 12px; }
+:root[data-look=cartridge] .move { --b: var(--win); border: 0; padding: 8px 10px 8px 16px; transform: none !important;
+  box-shadow: inset 6px 0 0 var(--tc, #888), inset 8px 0 0 var(--ink), inset 0 0 0 2px var(--ink); }
+:root[data-look=cartridge] .move:not(:disabled):active { box-shadow: inset 6px 0 0 var(--tc, #888), inset 8px 0 0 var(--ink), inset 0 0 0 2px var(--ink); background: var(--win3); }
+:root[data-look=cartridge] .move .nm { font-family: var(--px-font); font-weight: 600; font-size: 16px; }
+:root[data-look=cartridge] .move .meta { font-family: var(--tx-font); font-weight: 700; letter-spacing: .04em; color: #b8c2de; }
+:root[data-look=cartridge] .move .cd { background: repeating-linear-gradient(90deg, rgba(255,255,255,.1) 0 2px, rgba(255,255,255,.04) 2px 4px); }
+:root[data-look=cartridge] .move.ready.near { box-shadow: inset 6px 0 0 var(--tc), inset 8px 0 0 var(--ink), inset 0 0 0 2px var(--tc), inset 0 0 0 4px var(--ink); }
+:root[data-look=cartridge] .move.called, :root[data-look=cartridge] .move.called:not(:disabled):active { box-shadow: inset 6px 0 0 var(--tc, #888), inset 8px 0 0 var(--ink), inset 0 0 0 2px var(--cursor), inset 0 0 0 4px var(--ink); }
+:root[data-look=cartridge] .move.placeholder { color: var(--muted); }
+:root[data-look=cartridge] .move:disabled { opacity: .55; --b: var(--win); }
+:root[data-look=cartridge] .controls { gap: 10px; margin-top: 10px; }
+:root[data-look=cartridge] .bench { gap: 8px; }
+:root[data-look=cartridge] .mon { --b: var(--win); border: 0; font: 700 12.5px/1.2 var(--tx-font); letter-spacing: 0; transform: none !important; box-shadow: inset 0 0 0 2px var(--ink); }
+:root[data-look=cartridge] .mon:not(:disabled):active { box-shadow: inset 0 0 0 2px var(--ink); background: var(--win3); }
+:root[data-look=cartridge] .mon.out { box-shadow: inset 0 0 0 2px #98b0f0, inset 0 0 0 4px var(--ink); }
+:root[data-look=cartridge] .mon.want { box-shadow: inset 0 0 0 2px var(--go), inset 0 0 0 4px var(--ink); }
+:root[data-look=cartridge] .bench.choosing .mon:not(:disabled) { box-shadow: inset 0 0 0 2px var(--go), inset 0 0 0 4px var(--ink); }
+@keyframes glow { 50% { box-shadow: inset 0 0 0 4px var(--go), inset 0 0 0 6px var(--ink); } }
+:root[data-look=cartridge] .mon:disabled { opacity: .5; --b: var(--win); }
+:root[data-look=cartridge] .hp { border-radius: 0; height: 6px; background: #0c1424; box-shadow: 0 0 0 2px var(--ink); overflow: hidden; }
+:root[data-look=cartridge] .mega { --b: var(--mega); --bt: #200c20; font-weight: 700; background: var(--mega); color: #200c20; border: 0; }
+:root[data-look=cartridge] .mega.want { box-shadow: inset 0 0 0 3px var(--cursor), 0 -2px 0 var(--o), 0 2px 0 var(--o), -2px 0 0 var(--o), 2px 0 0 var(--o), 0 var(--d) 0 2px var(--o); }
+:root[data-look=cartridge] .mega.waiting { --b: #6a3a68; background: #6a3a68; color: var(--paper); }
+:root[data-look=cartridge] .mega.done, :root[data-look=cartridge] .mega:disabled { --b: #2a3048; background: #2a3048; color: #8a94b0; border: 0; }
+:root[data-look=cartridge] .mega kbd { background: rgba(255,255,255,.4); color: #200c20; }
+:root[data-look=cartridge] .note { font-size: 14px; }
+@media (max-width: 700px) {
+  :root[data-look=cartridge] .stage { box-shadow: 0 2px 0 var(--ink), 0 -2px 0 var(--ink); margin: 0; }
+  :root[data-look=cartridge] .mini .side { border-radius: 0; background: var(--win); box-shadow: inset 0 0 0 2px var(--ink); font-family: var(--px-font); }
+  :root[data-look=cartridge] .mini .side.you { border: 0; box-shadow: inset 0 0 0 2px var(--paper), inset 0 0 0 4px var(--ink); }
+  :root[data-look=cartridge] .mini .hp { height: 8px; }
+}
+
+/* ---------------------------------------------------------------- the result card */
+:root[data-look=cartridge] .endcard { padding: 14px 18px 16px; }
+:root[data-look=cartridge] .endcard h1 { font-family: var(--px-font); font-weight: 700; font-size: clamp(34px, 6vw, 46px); letter-spacing: .03em; color: #303840; text-shadow: 3px 3px 0 var(--paper3); }
+:root[data-look=cartridge] .endcard.won h1 { color: var(--go);
+  text-shadow: 3px 0 0 var(--ink), -3px 0 0 var(--ink), 0 3px 0 var(--ink), 0 -3px 0 var(--ink), 3px 3px 0 var(--ink), -3px 3px 0 var(--ink), 3px -3px 0 var(--ink), -3px -3px 0 var(--ink), 0 7px 0 var(--ink); }
+:root[data-look=cartridge] .endcard p { font-size: 15px; }
+/* the rating: a recessed readout in the paper window, not a card in a card */
+:root[data-look=cartridge] .rating { background: var(--paper2); border-radius: 0; padding: 12px 14px; margin: 10px 0 18px; box-shadow: inset 0 0 0 2px #303840, inset 0 4px 0 var(--paper3); }
+:root[data-look=cartridge] .rrow b { font: 700 32px/1 var(--mono); color: #303840; }
+:root[data-look=cartridge] .tier { border-radius: 0; font-family: var(--px-font); font-weight: 700; color: #fff; text-shadow: 1px 1px 0 rgba(8,12,20,.7); box-shadow: 0 0 0 2px #303840; }
+:root[data-look=cartridge] .delta { font-family: var(--mono); }
+:root[data-look=cartridge] .delta.up { color: var(--go-ink); } :root[data-look=cartridge] .delta.down { color: var(--warn-ink); }
+:root[data-look=cartridge] .rbar { height: 12px; border-radius: 0; background: #fff; box-shadow: 0 0 0 2px #303840; margin-top: 12px; }
+:root[data-look=cartridge] .rbar i { background: var(--go); }
+:root[data-look=cartridge] .endcard.lost .rbar i { background: #8a94b0; }
+:root[data-look=cartridge] .dots i { border-radius: 0; width: 12px; height: 12px; background: #fff; box-shadow: 0 0 0 2px #303840; }
+:root[data-look=cartridge] .dots i.on { background: #283878; }
+:root[data-look=cartridge] .news { font-family: var(--px-font); color: #283878; font-size: 17px; }
+:root[data-look=cartridge] .endcard .row { gap: 16px; }
+:root[data-look=cartridge] .muted-in { font-family: var(--tx-font); opacity: .8; }
+:root[data-look=cartridge] .ytask { border: 0; border-radius: 0; background: #fff; box-shadow: inset 6px 0 0 #e8102c, inset 0 0 0 2px #303840; padding: 12px 14px 12px 20px; }
+:root[data-look=cartridge] .yt.small { color: #303840; }
+:root[data-look=cartridge] .yt { border-radius: 0; }
+
+/* ---------------------------------------------------------------- layout fixes and phones */
+:root[data-look=cartridge] .row.wrap { row-gap: 12px; }
+@media (max-width: 700px) {
+  :root[data-look=cartridge] .bar { padding: 8px 10px 10px; gap: 6px; }
+  :root[data-look=cartridge] button.icon { margin: 0 1px; }
+  :root[data-look=cartridge] .bar button.profile { min-width: 0; flex: 0 1 auto; overflow: hidden; }
+  :root[data-look=cartridge] #who { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  :root[data-look=cartridge] .team { gap: 10px; }
+  :root[data-look=cartridge] .team li > button { padding: 4px 2px 6px; }
+  :root[data-look=cartridge] .team li .nm { font-size: 14px; }
+  :root[data-look=cartridge] .mlist { font-size: 12px; }
+  :root[data-look=cartridge] .pool { grid-template-columns: 1fr; }
+  :root[data-look=cartridge] .roster { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; }
+  :root[data-look=cartridge] .gimmickrow #gimmick { flex: 1 1 200px; min-width: 0; }
+  :root[data-look=cartridge] .rosterhead h2 { flex-basis: 100%; }
+  :root[data-look=cartridge] #search { width: 100%; }
+  :root[data-look=cartridge] .gens { padding: 0; }
+  :root[data-look=cartridge] .playnav { margin-left: -10px; margin-right: -10px; padding-left: 12px; padding-right: 12px; }
+  :root[data-look=cartridge] .actionbar .status { font-size: 14px; }
+  :root[data-look=cartridge] .actionbar .status.ready { font-size: 15px; }
+  :root[data-look=cartridge] #findBtn { min-width: 0; padding: 12px 18px; }
+  :root[data-look=cartridge] .sheet { padding: 12px 14px 16px; }
+  :root[data-look=cartridge] .sheet h1 { font-size: 24px; }
+  :root[data-look=cartridge] #room h1, :root[data-look=cartridge] #cup h1, :root[data-look=cartridge] #board h1 { font-size: 26px; }
+  :root[data-look=cartridge] .seat { min-height: 150px; }
+  :root[data-look=cartridge] #room > .row:first-child h1, :root[data-look=cartridge] #cup > .row:first-child h1, :root[data-look=cartridge] #board > .row:first-child h1 { flex-basis: 100%; margin-bottom: 0; }
+  :root[data-look=cartridge] .wordmark { font-size: clamp(48px, 15vw, 72px); }
+  :root[data-look=cartridge] .table td, :root[data-look=cartridge] .table th { padding: 8px 6px; }
+  :root[data-look=cartridge] .table td:nth-child(2) { font-size: 16px; }
+  :root[data-look=cartridge] .table td img { width: 24px; height: 24px; margin-right: 6px; }
+}
+@media (max-width: 380px) {
+  :root[data-look=cartridge] .bar button.icon { width: 36px; min-width: 36px; }
+}

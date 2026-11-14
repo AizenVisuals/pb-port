@@ -1,0 +1,13 @@
+{
+  "name": "PB port — servidor de teste",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-24-bookworm",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Jogar PB port",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "npm ci --no-audit --no-fund",
+  "postStartCommand": "sh -c 'npm start > /tmp/pb-port-server.log 2>&1 &'"
+}

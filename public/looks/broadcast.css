@@ -1,0 +1,429 @@
+/* Look: Broadcast. A battle-stream overlay: the page speaks the in-battle HUD's language (heavy condensed italic
+   capitals, red corner vs blue corner, hard edges) so the menus and the battle are one product.
+   Colour has one job each: PB red = the brand and the action to take; blue = the other side; yellow = live, ready, win,
+   rating up; white outline = selected. Fonts: Barlow Condensed (display), Barlow (text), JetBrains Mono (numbers, codes). */
+
+@font-face { font-family: 'Barlow Condensed'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/barlow-condensed-latin-700-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Barlow Condensed'; font-style: normal; font-weight: 800; font-display: swap; src: url(/fonts/barlow-condensed-latin-800-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Barlow Condensed'; font-style: italic; font-weight: 800; font-display: swap; src: url(/fonts/barlow-condensed-latin-800-italic.woff2) format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/barlow-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 600; font-display: swap; src: url(/fonts/barlow-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Barlow'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/barlow-latin-700-normal.woff2) format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 100 800; font-display: swap; src: url(/fonts/jetbrains-mono-latin-wght-normal.woff2) format('woff2'); }
+
+html[data-look=broadcast] {
+  --bg: #0b0c10; --panel: #16181f; --panel2: #1f222b; --line: #2c303b; --text: #f2efe8; --muted: #8f94a1;
+  --accent: #ffd23f; --red: #e3262f; --blue: #2f6bff; --good: #3ddc84; --bad: #ff4d4d;
+  --display: 'Barlow Condensed', 'Arial Narrow', sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+  /* 4px stepped corners: the pixel cut used on every surface instead of rounded boxes */
+  --cut: polygon(0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px));
+  --slant: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+html[data-look=broadcast] body { font-family: Barlow, system-ui, sans-serif; font-size: 15.5px; background: var(--bg); }
+html[data-look=broadcast] :where(h1, h2, h3, button, .seg button, .tier, .roomcode, .wordmark, .brand, .badge, .newtag, .iname, .vsmark, .iformat, .icount, .yt-sub, a.btn, #endTitle, .champ b, label, .st) {
+  font-family: var(--display); font-weight: 800; letter-spacing: .02em;
+}
+html[data-look=broadcast] :where(h1, h2, button, .seg button, .tier, a.btn, #endTitle, .vsmark, .iname, .champ b, .brand) { font-style: italic; text-transform: uppercase; }
+html[data-look=broadcast] label { text-transform: uppercase; font-size: 13px; letter-spacing: .08em; color: var(--muted); font-style: normal; }
+html[data-look=broadcast] h1 { font-size: 34px; line-height: 1; letter-spacing: .01em; }
+html[data-look=broadcast] h2 { font-size: 20px; }
+/* section titles as a broadcast caption: a red bar slanting in from the left */
+html[data-look=broadcast] #builder h2 { display: inline-flex; align-items: center; gap: 8px; }
+html[data-look=broadcast] #builder h2::before { content: ''; width: 18px; height: 14px; background: var(--red); clip-path: polygon(30% 0, 100% 0, 70% 100%, 0 100%); }
+html[data-look=broadcast] :is(#rating, .standing, .roomcode, .sc, #searchInfo, .stat, .num, kbd, .delta, #rNum, .clock, .table td:nth-child(3), .table td:nth-child(4)) { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* ---------------------------------------------------------------- surfaces: fill contrast and hard cuts, not 1px boxes */
+html[data-look=broadcast] :is(.card-panel, .sheet, .editor, .seat, .bmatch, .ytcard, .rating, .roomme, .away, .newstrip, .endcard, #roster .card, .team li, .saved, .pmove, .cupplayer, .feature, .toast) {
+  border-radius: 0; border: 0; clip-path: var(--cut); box-shadow: none;
+}
+html[data-look=broadcast] :is(.card-panel, .sheet, .roomme, .ytcard, .endcard) { background: var(--panel); }
+html[data-look=broadcast] .sheet { padding: 0 0 18px; }
+html[data-look=broadcast] .sheet > * { margin-left: 20px; margin-right: 20px; }
+html[data-look=broadcast] .sheet > h1:first-child { margin: 0 0 14px; padding: 14px 20px 12px; background: linear-gradient(100deg, var(--red) 0 62%, transparent 62.1%), var(--panel2); font-size: 26px; }
+html[data-look=broadcast] .modal { background: rgba(5,6,9,.78); }
+html[data-look=broadcast] .card-panel { background: rgba(22,24,31,.93); }
+/* the backdrop: crisp, darker, with scanlines, and the same temperature as the panels */
+html[data-look=broadcast] #backdrop { filter: brightness(.55) saturate(.8) contrast(1.05); }
+html[data-look=broadcast] .backshade { background:
+  repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 1px, transparent 1px 3px),
+  linear-gradient(115deg, rgba(227,38,47,.22), transparent 38%, transparent 62%, rgba(47,107,255,.2)),
+  linear-gradient(180deg, rgba(11,12,16,.55), rgba(11,12,16,.2) 30%, rgba(11,12,16,.25) 65%, rgba(11,12,16,.92)); }
+html[data-look=broadcast] body[data-screen=builder], html[data-look=broadcast] body[data-screen=board] { --bd: .22; }
+
+/* ---------------------------------------------------------------- buttons: parallelograms, a hard edge underneath */
+html[data-look=broadcast] button, html[data-look=broadcast] a.btn {
+  border: 0; border-radius: 0; background: var(--panel2); color: var(--text); box-shadow: inset 0 -3px 0 rgba(0,0,0,.45);
+  clip-path: var(--slant); padding: 10px 22px; letter-spacing: .04em; font-size: 16px;
+}
+html[data-look=broadcast] button:not(:disabled):active, html[data-look=broadcast] a.btn:active { transform: translateY(2px); box-shadow: inset 0 -1px 0 rgba(0,0,0,.45); }
+html[data-look=broadcast] button.primary, html[data-look=broadcast] a.btn.primary { background: var(--red); color: #fff; text-shadow: 0 2px 0 rgba(0,0,0,.35); box-shadow: inset 0 -4px 0 #8f1118; }
+html[data-look=broadcast] button.primary:not(:disabled):active { box-shadow: inset 0 -1px 0 #8f1118; }
+html[data-look=broadcast] button.primary:disabled { background: #2a2d36; color: #6d7280; text-shadow: none; box-shadow: none; opacity: 1; }
+html[data-look=broadcast] button.big { font-size: 21px; padding: 12px 34px; }
+html[data-look=broadcast] button.ghost { background: rgba(255,255,255,.06); box-shadow: none; }
+html[data-look=broadcast] button.ghost:not(:disabled):hover { background: var(--panel2); filter: none; }
+html[data-look=broadcast] button.ghost:disabled { background: transparent; color: #5c616d; }
+html[data-look=broadcast] button.small { font-size: 14px; padding: 6px 16px; min-height: 34px; }
+html[data-look=broadcast] a.btn.yt-sub { background: var(--red); box-shadow: inset 0 -3px 0 #8f1118; }
+/* header icon buttons: no boxes */
+html[data-look=broadcast] .bar { background: rgba(11,12,16,.9); border-bottom: 2px solid var(--red); }
+html[data-look=broadcast] :is(.bar, .stagebar) button.icon { clip-path: none; background: transparent; box-shadow: none; min-width: 40px; padding: 6px 8px; color: #b9bdc8; }
+html[data-look=broadcast] button.icon svg { flex: 0 0 auto; }
+html[data-look=broadcast] .bar button.icon:hover { color: var(--text); }
+html[data-look=broadcast] #profileBtn { clip-path: var(--slant); background: var(--panel2); box-shadow: none; text-transform: none; font-style: normal; font-family: Barlow, sans-serif; font-weight: 700; letter-spacing: 0; }
+html[data-look=broadcast] #profileFace { border-radius: 0; background: transparent; }
+html[data-look=broadcast] .brand { font-size: 22px; letter-spacing: .03em; }
+html[data-look=broadcast] .bar .logo { animation: none; }
+
+/* tabs: a filled slab with a red underline when chosen; never yellow */
+html[data-look=broadcast] .seg { border: 0; border-radius: 0; background: var(--panel); clip-path: var(--slant); padding: 0 6px; }
+html[data-look=broadcast] .seg button { clip-path: none; box-shadow: none; background: transparent; color: var(--muted); font-size: 17px; padding: 8px 14px; }
+html[data-look=broadcast] .seg button[aria-selected=true] { color: #fff; background: var(--panel2); box-shadow: inset 0 -3px 0 var(--red); }
+html[data-look=broadcast] #modes button[aria-selected=true] { color: #fff; background: var(--panel2); }
+html[data-look=broadcast] .playnav button { font-size: 15px; }
+
+/* ---------------------------------------------------------------- welcome: the wordmark, red corner vs blue corner */
+html[data-look=broadcast] .hero { margin-top: 5vh; }
+html[data-look=broadcast] .wordmark { font-style: italic; text-transform: uppercase; gap: .12em; font-size: clamp(58px, 12vw, 120px); letter-spacing: 0; }
+html[data-look=broadcast] .wm-pb { background: var(--red); color: #fff; border-radius: 0; padding: .02em .16em .02em .12em; clip-path: polygon(.18em 0, 100% 0, calc(100% - .18em) 100%, 0 100%); text-shadow: 0 .05em 0 rgba(0,0,0,.35); }
+html[data-look=broadcast] .wm-ranked { color: #fff; -webkit-text-stroke: 0; text-shadow: .04em .05em 0 #000; }
+html[data-look=broadcast] .tagline { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: clamp(15px, 2.1vw, 19px); color: var(--text); }
+html[data-look=broadcast] .tagline::before { content: ''; display: inline-block; width: 26px; height: 3px; background: var(--red); vertical-align: middle; margin-right: 12px; }
+html[data-look=broadcast] .hero :is(h1, p) { text-shadow: 0 3px 0 #000, 0 4px 24px rgba(0,0,0,.6); }
+html[data-look=broadcast] #welcome .card-panel { border-top: 0; background: linear-gradient(180deg, var(--red) 0 4px, rgba(22,24,31,.95) 4px); }
+/* trainer portraits on the panel colour, not a pale blue square */
+html[data-look=broadcast] :is(.trainer img, .seat img.face, .cupplayer img, .iside .face, .table td img) { background: #262a34; border-radius: 0; }
+html[data-look=broadcast] .trainer { clip-path: var(--cut); background: var(--panel2); box-shadow: none; text-transform: none; font-style: normal; font-family: Barlow, sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0; padding: 6px 4px 4px; }
+html[data-look=broadcast] .trainer[aria-checked=true] { background: var(--panel2); box-shadow: inset 0 0 0 2px #fff, inset 0 -4px 0 var(--red); }
+
+/* ---------------------------------------------------------------- team builder */
+html[data-look=broadcast] .team li { background: var(--panel); min-height: 120px; }
+html[data-look=broadcast] .team li:not(.filled) { background: repeating-linear-gradient(135deg, var(--panel) 0 8px, #13151b 8px 16px); }
+html[data-look=broadcast] .team li.filled { box-shadow: inset 0 3px 0 var(--red); }
+html[data-look=broadcast] .team li.editing { background: var(--panel2); box-shadow: inset 0 0 0 2px #fff, inset 0 3px 0 var(--red); }
+html[data-look=broadcast] .team li.incomplete { box-shadow: inset 0 3px 0 var(--bad); }
+html[data-look=broadcast] .team li > button { clip-path: none; }
+html[data-look=broadcast] .team li .nm { font-family: var(--display); font-style: italic; text-transform: uppercase; font-size: 16px; letter-spacing: .03em; }
+html[data-look=broadcast] .team li .lead { display: inline-block; background: var(--red); color: #fff; font-family: var(--display); font-weight: 800; font-style: italic; text-transform: uppercase; padding: 0 6px; font-size: 11px; letter-spacing: .08em; }
+html[data-look=broadcast] .mlist { color: #c7c9d1; font-family: Barlow, sans-serif; font-style: normal; text-transform: none; font-weight: 500; font-size: 13px; letter-spacing: 0; }
+html[data-look=broadcast] .team li > button { font-style: normal; text-transform: none; letter-spacing: 0; }
+html[data-look=broadcast] .editor { background: var(--panel2); box-shadow: inset 0 3px 0 #fff; }
+html[data-look=broadcast] .pmove { background: var(--panel); border-left: 0; box-shadow: inset 3px 0 0 var(--tc); clip-path: var(--cut); text-transform: none; font-style: normal; font-family: Barlow, sans-serif; letter-spacing: 0; padding: 8px 12px; }
+html[data-look=broadcast] .pmove.on { background: #2a2e39; box-shadow: inset 0 0 0 2px #fff, inset 6px 0 0 var(--tc); }
+html[data-look=broadcast] .pmove .nm { font-size: 15px; }
+html[data-look=broadcast] .stat .sbar { border-radius: 0; background: #2a2e39; } html[data-look=broadcast] .stat .sbar i { border-radius: 0; }
+html[data-look=broadcast] .stat b { font-family: Barlow, sans-serif; text-transform: uppercase; letter-spacing: .05em; }
+html[data-look=broadcast] #roster .card { background: var(--panel); text-transform: none; font-style: normal; font-family: Barlow, sans-serif; letter-spacing: 0; box-shadow: none; }
+html[data-look=broadcast] #roster .card:hover { background: var(--panel2); }
+html[data-look=broadcast] #roster .card.on { background: var(--panel2); box-shadow: inset 0 0 0 2px #fff, inset 0 -3px 0 var(--red); }
+html[data-look=broadcast] #roster .card .nm { font-family: var(--display); font-style: italic; font-weight: 800; text-transform: uppercase; font-size: 15px; letter-spacing: .03em; }
+html[data-look=broadcast] .card img, html[data-look=broadcast] .team img { background: transparent; }
+html[data-look=broadcast] .badge { color: #ff8a8f; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+html[data-look=broadcast] .badge::before { content: '◆ '; color: var(--red); }
+html[data-look=broadcast] .newtag { background: var(--accent); color: #111; border-radius: 0; clip-path: var(--slant); padding: 0 8px; font-style: italic; }
+html[data-look=broadcast] .gen h3 { font-family: var(--display); font-style: italic; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); border-bottom: 2px solid var(--line); padding-bottom: 4px; }
+html[data-look=broadcast] .newstrip { background: linear-gradient(100deg, rgba(227,38,47,.28), var(--panel) 45%); border: 0; }
+html[data-look=broadcast] .newhead .newvid { color: #fff; text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
+html[data-look=broadcast] .newchip { background: var(--panel2); box-shadow: none; clip-path: var(--cut); font-family: Barlow, sans-serif; font-style: normal; text-transform: none; letter-spacing: 0; font-weight: 700; }
+html[data-look=broadcast] .actionbar { background: rgba(11,12,16,.94); border-top: 2px solid var(--red); }
+html[data-look=broadcast] .actionbar .status.ready { color: var(--text); font-family: var(--display); font-style: italic; text-transform: uppercase; font-size: 16px; letter-spacing: .04em; }
+html[data-look=broadcast] .actionbar .status.ready::before { content: '● '; color: var(--accent); }
+html[data-look=broadcast] select { border-radius: 0; background: var(--panel2); border: 0; box-shadow: inset 0 -2px 0 var(--line); font-family: Barlow, sans-serif; font-weight: 600; }
+html[data-look=broadcast] input, html[data-look=broadcast] textarea { border-radius: 0; border: 0; background: #0f1015; box-shadow: inset 0 0 0 2px var(--line); }
+html[data-look=broadcast] :is(input, textarea, select):focus-visible { outline: 0; box-shadow: inset 0 0 0 2px #fff; }
+html[data-look=broadcast] .saved { background: var(--panel); }
+html[data-look=broadcast] .saved button { clip-path: none; box-shadow: none; }
+html[data-look=broadcast] .saved .play { color: #fff; background: var(--red); }
+html[data-look=broadcast] .ytcard .ytinfo small, html[data-look=broadcast] .ytinfo small { color: var(--red); font-family: var(--display); font-weight: 800; font-style: italic; font-size: 13px; }
+html[data-look=broadcast] .ythumb { border-radius: 0; clip-path: var(--cut); }
+html[data-look=broadcast] .feature { background: linear-gradient(100deg, rgba(227,38,47,.25), var(--panel) 40%); }
+
+/* ---------------------------------------------------------------- rooms, tournaments, leaderboard: red corner vs blue corner */
+html[data-look=broadcast] .seats .seat:first-child { background: linear-gradient(160deg, rgba(227,38,47,.35), var(--panel) 55%); }
+html[data-look=broadcast] .seats .seat:last-child { background: linear-gradient(200deg, rgba(47,107,255,.35), var(--panel) 55%); }
+html[data-look=broadcast] .seat.empty { background: repeating-linear-gradient(135deg, var(--panel) 0 8px, #13151b 8px 16px) !important; }
+html[data-look=broadcast] .seat.you { box-shadow: inset 0 0 0 2px #fff; }
+html[data-look=broadcast] .seat b { font-family: var(--display); font-style: italic; text-transform: uppercase; font-size: 20px; }
+html[data-look=broadcast] .seat .st.ready { color: var(--accent); }
+html[data-look=broadcast] .seats .vsmid { font-family: var(--display); font-style: italic; font-size: 44px; color: #fff; text-shadow: 3px 3px 0 var(--red); }
+html[data-look=broadcast] .roomcode { background: #000; color: #fff; border-radius: 0; font-style: normal; letter-spacing: .2em; padding: 2px 12px; box-shadow: inset 0 -3px 0 var(--red); }
+html[data-look=broadcast] .bmatch { background: var(--panel); }
+html[data-look=broadcast] .bmatch.live { box-shadow: inset 3px 0 0 var(--accent); } html[data-look=broadcast] .bmatch.mine { box-shadow: inset 0 0 0 2px #fff; }
+html[data-look=broadcast] .bside .nm { font-family: var(--display); font-style: italic; text-transform: uppercase; font-size: 15px; } html[data-look=broadcast] .bside.win .nm { color: var(--accent); }
+html[data-look=broadcast] .champ { background: linear-gradient(100deg, var(--red), #7a1218); border: 0; clip-path: var(--cut); border-radius: 0; }
+html[data-look=broadcast] .champ b { color: #fff; font-size: 36px; }
+html[data-look=broadcast] .table th { font-family: var(--display); font-style: italic; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); border-bottom: 2px solid var(--red); }
+html[data-look=broadcast] .table td:nth-child(3), html[data-look=broadcast] .table td:nth-child(4), html[data-look=broadcast] .table th:nth-child(3), html[data-look=broadcast] .table th:nth-child(4) { text-align: right; }
+html[data-look=broadcast] .table tr.you td { background: rgba(227,38,47,.16); }
+
+/* ---------------------------------------------------------------- searching, battle intro, controls, result */
+html[data-look=broadcast] #searching h1 { font-size: 42px; }
+html[data-look=broadcast] .ballspin { filter: drop-shadow(0 4px 0 #000); }
+html[data-look=broadcast] .iformat { color: #fff; font-family: var(--display); font-style: italic; font-weight: 800; letter-spacing: .14em; background: var(--red); padding: 2px 14px; justify-self: center; clip-path: var(--slant); }
+html[data-look=broadcast] .vsmark { color: #fff; text-shadow: .05em .05em 0 var(--red), .09em .09em 0 #000; }
+html[data-look=broadcast] .iname { font-size: clamp(16px, 2.6vw, 30px); }
+html[data-look=broadcast] .iside .you { background: var(--accent); color: #111; border-radius: 0; clip-path: var(--slant); padding: 1px 10px; }
+html[data-look=broadcast] .iside.s0 .face { border: 0; box-shadow: 0 0 0 3px var(--red); } html[data-look=broadcast] .iside.s1 .face { border: 0; box-shadow: 0 0 0 3px var(--blue); }
+html[data-look=broadcast] .icount { font-style: italic; font-size: clamp(40px, 9vw, 110px); text-shadow: .05em .05em 0 var(--red), .08em .08em 0 #000; }
+html[data-look=broadcast] .youtag { border-radius: 0; clip-path: var(--slant); padding: 3px 14px; font-family: var(--display); font-style: italic; font-size: 14px; }
+html[data-look=broadcast] .move { border-radius: 0; border: 0; border-left: 0; background: var(--panel); box-shadow: inset 4px 0 0 var(--tc); clip-path: var(--cut); text-transform: none; font-style: normal; font-family: Barlow, sans-serif; letter-spacing: 0; }
+html[data-look=broadcast] .move .nm { font-family: var(--display); font-style: italic; font-weight: 800; text-transform: uppercase; font-size: 16px; letter-spacing: .03em; }
+html[data-look=broadcast] .move.ready.near { box-shadow: inset 4px 0 0 var(--tc), inset 0 0 0 2px var(--tc); }
+html[data-look=broadcast] .move.called { box-shadow: inset 0 0 0 3px var(--accent); }
+html[data-look=broadcast] .mon { clip-path: var(--cut); text-transform: none; font-style: normal; font-family: Barlow, sans-serif; letter-spacing: 0; font-weight: 600; }
+html[data-look=broadcast] .mon.out { box-shadow: inset 0 0 0 2px #fff; }
+/* Mega: its own moment (dark, a keystone ring of the type colours), not a pastel gradient */
+html[data-look=broadcast] .mega { background: #12131a; color: #fff; clip-path: var(--slant); box-shadow: inset 0 0 0 2px transparent;
+  background-image: linear-gradient(#12131a, #12131a), conic-gradient(from 0deg, #ff4d4d, #ffd23f, #3ddc84, #2f6bff, #b04dff, #ff4d4d); background-origin: border-box; background-clip: padding-box, border-box; border: 3px solid transparent; }
+html[data-look=broadcast] .mega.waiting { background-image: linear-gradient(#1d1f29, #1d1f29), conic-gradient(from 0deg, #ff4d4d, #ffd23f, #3ddc84, #2f6bff, #b04dff, #ff4d4d); }
+html[data-look=broadcast] .mega.done { background: var(--panel2); background-image: none; border: 3px solid var(--line); color: var(--muted); }
+html[data-look=broadcast] .mega kbd { color: #fff; border-color: rgba(255,255,255,.4); }
+html[data-look=broadcast] kbd { border-radius: 0; background: #000; border: 0; box-shadow: inset 0 -2px 0 var(--line); color: #fff; }
+html[data-look=broadcast] .endcard { background: var(--panel); padding: 0 0 16px; }
+html[data-look=broadcast] .endcard > * { margin-left: 18px; margin-right: 18px; }
+html[data-look=broadcast] .endcard h1 { margin: 0 0 6px; padding: 14px 18px 10px; font-size: 46px; color: #fff; text-shadow: 3px 3px 0 #000; }
+html[data-look=broadcast] .endcard.won h1 { background: linear-gradient(100deg, var(--red) 0 70%, transparent 70.1%), var(--panel2); color: #fff; text-shadow: 3px 3px 0 #000; }
+html[data-look=broadcast] .endcard.lost h1 { background: linear-gradient(100deg, #3a3d48 0 70%, transparent 70.1%), var(--panel2); color: #d9dbe2; }
+html[data-look=broadcast] .rating { background: var(--panel2); border-radius: 0; }
+html[data-look=broadcast] #rNum { font-size: 38px; font-weight: 800; }
+html[data-look=broadcast] .delta { font-family: var(--mono); } html[data-look=broadcast] .delta.up { color: var(--accent); }
+html[data-look=broadcast] .tier { border-radius: 0; clip-path: var(--slant); padding: 3px 12px; }
+html[data-look=broadcast] .rbar { border-radius: 0; background: #2a2e39; height: 8px; } html[data-look=broadcast] .rbar i { border-radius: 0; }
+html[data-look=broadcast] .dots i { border-radius: 0; width: 12px; height: 12px; transform: rotate(45deg); } html[data-look=broadcast] .dots i.on { background: var(--accent); }
+html[data-look=broadcast] .ytask { border: 0; border-radius: 0; clip-path: var(--cut); background: linear-gradient(100deg, rgba(227,38,47,.3), var(--panel2) 50%); }
+html[data-look=broadcast] .toast { background: #000; color: #fff; box-shadow: inset 0 -3px 0 var(--red); font-family: Barlow, sans-serif; font-weight: 600; }
+html[data-look=broadcast] .levels button { flex-direction: column; } html[data-look=broadcast] .levels b { font-family: var(--mono); font-style: normal; }
+html[data-look=broadcast] .muted { color: var(--muted); }
+
+/* the team bar */
+html[data-look=broadcast] .teammini { clip-path: none; background: rgba(11,12,16,.95); border-bottom: 2px solid var(--red); box-shadow: 0 8px 20px rgba(0,0,0,.45); font-style: normal; text-transform: none; letter-spacing: 0; }
+html[data-look=broadcast] .teammini b { font-family: var(--display); font-style: italic; text-transform: uppercase; font-size: 17px; }
+html[data-look=broadcast] .teammini .slot { background: var(--panel2); clip-path: none; border-radius: 10px; }   /* (no clip: the remove × sits on its corner) */
+html[data-look=broadcast] .teammini .why { font-family: Barlow, sans-serif; }
+/* sign-in buttons keep their providers' colours */
+html[data-look=broadcast] button.discord { background: #5865f2; color: #fff; box-shadow: inset 0 -4px 0 #3c45a8; }
+html[data-look=broadcast] button.google { background: #fff; color: #1f1f1f; box-shadow: inset 0 -4px 0 #9aa0a6; }
+html[data-look=broadcast] .signin.top .row { gap: 10px; }
+
+/* ---------------------------------------------------------------- the Champions pass (stage 1, 2026-10-30): Sondre's reference is
+   Pokémon Champions. Kept: the red brand, the type, the captions. Changed: selection is one lime with a yellow ➤ cursor
+   everywhere (was a white outline), buttons are round on the left and cut at a slant on the right, moves are filled with
+   their type, and the panels go a little deeper indigo with soft diagonal light bands. */
+html[data-look=broadcast] {
+  --bg: #0b0a15; --panel: #17162b; --panel2: #221f3d; --line: #33304f; --muted: #9a97b5;
+  --bands: linear-gradient(118deg, rgba(255,255,255,.05) 0 20%, transparent 20% 58%, rgba(255,255,255,.035) 58% 72%, transparent 72%);
+  --pill: polygon(0 0, 100% 0, calc(100% - 11px) 100%, 0 100%);
+}
+html[data-look=broadcast] :is(.card-panel, .sheet, .editor, .endcard, .roomme, .bmatch, .rating) { background-image: var(--bands); }
+html[data-look=broadcast] .card-panel { background-color: rgba(23,22,43,.93); }
+
+/* buttons: the pill (round left, slant right) */
+html[data-look=broadcast] :is(button, a.btn):not(.icon):not(.move):not(.mon):not(.trainer):not(.mega):not(.lookopt):not(.pvmon):not(.pmove):not(#roster .card):not(.team li > button):not(.saved button):not(.seg button):not(.rmx):not(.tkchip):not(.gridcell):not(.gridopt):not(.tw-card):not(.tw-reward):not(.linkbtn):not(.flat) {   /* (.flat: a text tab or disclosure, style.css "cleaner menus" 2026-11-13) */
+  border-radius: 999px 0 0 999px; clip-path: var(--pill); padding-left: 20px; padding-right: 24px; }
+html[data-look=broadcast] .seg { border-radius: 999px 0 0 999px; clip-path: var(--pill); padding: 4px 16px 4px 4px; }
+html[data-look=broadcast] .seg button { border-radius: 999px 0 0 999px; clip-path: var(--pill); }
+html[data-look=broadcast] button:focus-visible { outline: none; box-shadow: inset 0 0 0 3px var(--cursor); }
+
+/* one selection colour: lime, dark ink, the ➤ cursor on tabs */
+html[data-look=broadcast] :is(.seg button[aria-selected=true], #modes button[aria-selected=true], .replaybar .seg button[aria-pressed=true]) { background: var(--sel); color: var(--selink); box-shadow: none; }
+html[data-look=broadcast] :is(.seg button[aria-selected=true], #modes button[aria-selected=true])::before { content: '➤'; display: inline-block; margin-right: 6px; color: #5d7000; font-style: normal; }
+html[data-look=broadcast] :is(#roster .card.on, .team li.editing, .saved.on, .lookopt.on) { box-shadow: inset 0 0 0 3px var(--sel); outline: none; }
+html[data-look=broadcast] #roster .card.on { background: linear-gradient(180deg, color-mix(in srgb, var(--sel) 22%, transparent), transparent 70%), var(--panel2); }   /* (a lime wash on the navy: mixed in, lime and navy came out flat grey) */
+html[data-look=broadcast] .trainer[aria-checked=true] { background: color-mix(in srgb, var(--sel) 14%, var(--panel2)); box-shadow: inset 0 0 0 3px var(--sel); }
+html[data-look=broadcast] .pmove.on { background: color-mix(in srgb, var(--sel) 10%, #2a2e39); box-shadow: inset 0 0 0 2px var(--sel), inset 6px 0 0 var(--tc); }
+html[data-look=broadcast] .pmove.on .nm::after { color: var(--sel); }
+html[data-look=broadcast] .mon.out { box-shadow: inset 0 0 0 3px var(--sel); }
+html[data-look=broadcast] .table tr.you td { background: color-mix(in srgb, var(--sel) 12%, transparent); }
+html[data-look=broadcast] .seat.you, html[data-look=broadcast] .bmatch.mine { box-shadow: inset 0 0 0 3px var(--sel); }
+
+/* moves: the type fill (style.css) in this look's type */
+html[data-look=broadcast] .move { background: linear-gradient(100deg, color-mix(in srgb, var(--tc) 92%, #fff), color-mix(in srgb, var(--tc) 68%, #000)); box-shadow: none;
+  border-radius: 999px 0 0 999px; clip-path: var(--pill); padding-left: 6px; }
+html[data-look=broadcast] .move .nm { text-shadow: 0 2px 0 rgba(0,0,0,.35); }
+html[data-look=broadcast] .move .meta { font-family: Barlow, sans-serif; }
+html[data-look=broadcast] .move .ty { font-family: var(--display); font-style: italic; font-size: 12px; }
+html[data-look=broadcast] .move .pw { font-family: var(--display); font-size: 22px; }
+html[data-look=broadcast] .move.ready.near { box-shadow: inset 0 0 0 3px rgba(255,255,255,.9); }
+html[data-look=broadcast] .move.called { background: var(--sel); color: var(--selink); box-shadow: none; }
+html[data-look=broadcast] .move.called .nm { text-shadow: none; }
+html[data-look=broadcast] .move.placeholder { background: var(--panel); }
+
+/* team preview: the pill rows (style.css), in this look's type */
+html[data-look=broadcast] .pvmon { background: linear-gradient(100deg, #3b3591, #27226a); box-shadow: none; padding: 4px 34px 4px 6px; border-radius: 999px 0 0 999px;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%); font-style: normal; text-transform: none; letter-spacing: 0; font-family: Barlow, sans-serif; color: #fff; }
+html[data-look=broadcast] .pvcol.theirs .pvmon { background: linear-gradient(260deg, #b8236a, #6e1446); padding: 4px 6px 4px 34px; border-radius: 0 999px 999px 0; clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%); }
+html[data-look=broadcast] .pvmon.pick.on { background: var(--sel); color: var(--selink); }
+html[data-look=broadcast] .pvmon.pick:disabled { opacity: 1; }
+html[data-look=broadcast] .pvtx b { font-family: var(--display); font-style: italic; font-weight: 800; text-transform: uppercase; font-size: 19px; letter-spacing: .03em; }
+html[data-look=broadcast] .pvclock { font-family: var(--mono); font-size: 30px; }
+html[data-look=broadcast] .pvnum { font-family: var(--display); font-style: italic; text-transform: uppercase; font-size: 15px; }
+@media (max-width: 700px) { html[data-look=broadcast] .pvmon { padding-right: 26px; } html[data-look=broadcast] .pvcol.theirs .pvmon { padding-left: 26px; } html[data-look=broadcast] .pvtx b { font-size: 15px; } }
+
+/* ---------------------------------------------------------------- stage 3 (2026-10-30): the team as a row of Champions box tiles
+   (round tiles, lime with a ▼ pointer on the one being edited), the trophy room's medallion rows and ring, the result card */
+html[data-look=broadcast] .team li { position: relative; clip-path: none; border-radius: 16px; background: linear-gradient(160deg, #2a2660, #1b1840); box-shadow: inset 0 -4px 0 rgba(0,0,0,.35); overflow: visible; }
+html[data-look=broadcast] .team li:not(.filled) { background: rgba(255,255,255,.035); box-shadow: inset 0 0 0 2px rgba(255,255,255,.08); }
+html[data-look=broadcast] .team li.filled { box-shadow: inset 0 -4px 0 rgba(0,0,0,.35); }
+/* the slot being edited (visual review 2026-11-01: a full lime card with grey move names was hard to read and louder than
+   FIND BATTLE): the navy card in a lime frame (the editor below names it) */
+html[data-look=broadcast] .team li.editing { background: var(--panel2); color: var(--text); box-shadow: inset 0 0 0 3px var(--sel), inset 0 6px 0 var(--sel); }
+html[data-look=broadcast] .team li.editing::before { content: '▼'; position: absolute; left: 50%; top: -18px; translate: -50% 0; color: var(--cursor); font-size: 16px; text-shadow: 0 2px 0 #000; animation: bob 1s ease-in-out infinite; }
+@keyframes bob { 50% { translate: -50% -4px; } }
+html[data-look=broadcast] .team li.editing .mlist, html[data-look=broadcast] .team li.editing .muted { color: #e6e3f7; }
+html[data-look=broadcast] .team li.incomplete { box-shadow: inset 0 0 0 3px var(--bad), inset 0 -4px 0 rgba(0,0,0,.35); }
+html[data-look=broadcast] .team li > button { border-radius: 16px; background: transparent; box-shadow: none; color: inherit; }
+html[data-look=broadcast] .team li .lead { border-radius: 999px 0 0 999px; clip-path: var(--pill); padding: 0 10px 0 7px; }
+html[data-look=broadcast] #team { padding-top: 14px; }
+
+/* the trophy room */
+html[data-look=broadcast] .ring { width: 132px; height: 132px; background: radial-gradient(closest-side, var(--bg) 76%, transparent 77%), conic-gradient(var(--sel) calc(var(--p) * 1%), var(--line) 0); filter: drop-shadow(0 0 14px rgba(214,245,49,.18)); }
+html[data-look=broadcast] .ring b { font-family: var(--display); font-style: italic; font-size: 32px; }
+html[data-look=broadcast] .tgroup h3 { font-family: var(--display); font-style: italic; text-transform: uppercase; letter-spacing: .06em; display: flex; align-items: center; gap: 8px; }
+html[data-look=broadcast] .tgroup h3::before { content: ''; width: 18px; height: 14px; background: var(--red); clip-path: polygon(30% 0, 100% 0, 70% 100%, 0 100%); }
+html[data-look=broadcast] .tcard { border: 0; padding: 8px 26px 8px 16px; gap: 12px; background: var(--bands), linear-gradient(100deg, var(--panel2), var(--panel)); border-radius: 999px 0 0 999px; clip-path: var(--pill); }
+html[data-look=broadcast] .tcard.maxed { background: var(--bands), linear-gradient(100deg, #5a4a10, #2a2410 70%); box-shadow: inset 0 0 0 2px #ffd24a; }
+html[data-look=broadcast] .tcard .ttxt b { font-family: var(--display); font-style: italic; font-weight: 800; text-transform: uppercase; font-size: 17px; letter-spacing: .03em; }
+html[data-look=broadcast] .medal { width: 54px; height: 54px; filter: drop-shadow(0 3px 0 rgba(0,0,0,.45)); }
+html[data-look=broadcast] .medal.locked { opacity: .8; }
+html[data-look=broadcast] .tbar { height: 7px; border-radius: 999px; background: #2e2a55; } html[data-look=broadcast] .tbar i { background: var(--sel); border-radius: 999px; }
+html[data-look=broadcast] .pips i { width: 10px; height: 10px; transform: rotate(45deg); border-radius: 2px; }
+
+/* the result card: a big slanted banner (gold and lime on a win, slate on a loss) */
+html[data-look=broadcast] .endcard { box-shadow: 0 24px 70px rgba(0,0,0,.6); }
+html[data-look=broadcast] .endcard h1 { font-size: 54px; padding: 16px 18px 12px; }
+html[data-look=broadcast] .endcard.won h1 { background: linear-gradient(100deg, #ffd21f 0, var(--sel) 66%, transparent 66.1%), var(--panel2); color: #1c1a05; text-shadow: 2px 2px 0 rgba(255,255,255,.4); }
+html[data-look=broadcast] .endcard.lost h1 { background: linear-gradient(100deg, #4a4668 0 66%, transparent 66.1%), var(--panel2); color: #e4e2f4; }
+html[data-look=broadcast] .rating { background-color: var(--panel2); border-radius: 0 0 0 0; clip-path: var(--cut); }
+html[data-look=broadcast] .rbar { height: 10px; border-radius: 999px; background: #2e2a55; } html[data-look=broadcast] .rbar i { border-radius: 999px; background: linear-gradient(90deg, #ffd21f, var(--sel)); }
+html[data-look=broadcast] .endcard.lost .rbar i { background: linear-gradient(90deg, #6b6890, #9a97c4); }
+html[data-look=broadcast] .delta.up { color: var(--sel); }
+html[data-look=broadcast] .news { color: var(--sel); font-family: var(--display); font-style: italic; text-transform: uppercase; letter-spacing: .04em; }
+
+/* ---- Bench (switch) tiles: the name fits its tile (cut with … on narrow phones), compact italic caps as the plates ---- */
+html[data-look=broadcast] .bench .mon { font-size: 13px; padding: 6px 3px 7px; min-width: 0; background: linear-gradient(180deg, var(--panel2), var(--panel)); }
+html[data-look=broadcast] .bench .mon > span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--display); font-style: italic; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; }
+html[data-look=broadcast] .bench .mon .hp { height: 4px; background: #2e2a55; }
+@media (max-width: 480px) { html[data-look=broadcast] .bench .mon { font-size: 11.5px; } html[data-look=broadcast] .bench .mon img { width: 32px; height: 32px; } }
+
+/* ---- Phones: the HP panel under the battle, as the plates (deep indigo, italic caps, slim bars; yours ringed in lime) ---- */
+html[data-look=broadcast] .youtag { white-space: nowrap; }
+html[data-look=broadcast] .mini .side { position: relative; background: linear-gradient(180deg, var(--panel2), var(--panel)); border: 0; border-radius: 14px 4px 4px 14px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); padding: 7px 16px 8px 12px; box-shadow: inset 4px 0 0 #3a6ae8; }
+html[data-look=broadcast] .mini .side:first-child { box-shadow: inset 4px 0 0 #e8341c; }
+html[data-look=broadcast] .mini .side.you { box-shadow: inset 4px 0 0 var(--sel), inset 0 0 0 2px var(--sel); }
+html[data-look=broadcast] .mini .nm { align-items: baseline; }
+html[data-look=broadcast] .mini .nm > span:first-child { font-family: var(--display); font-style: italic; font-weight: 800; text-transform: uppercase; font-size: 16px; letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+html[data-look=broadcast] .mini .nm > .muted { font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 11px; white-space: nowrap; }
+html[data-look=broadcast] .mini .hp { height: 6px; border-radius: 3px; background: #2e2a55; }
+html[data-look=broadcast] .mini .hp i { border-radius: 3px; }
+@media (max-width: 420px) {
+  html[data-look=broadcast] .stagebar .youtag { font-size: 12.5px; padding: 3px 11px; }
+  html[data-look=broadcast] .stagebar .surrender { padding: 8px 14px; }
+  html[data-look=broadcast] .stagebar .icon.small { width: 34px; min-width: 34px; }
+}
+
+/* ---- Popups (Pokémon Champions reference): a rounded deep-indigo panel lifted off a blurred backdrop, the title in a
+   header strip with a lime slash and a lime underline, choices as pill tiles that light lime under the cursor, the main
+   action in lime (Find battle stays PB red on the menu) ---- */
+html[data-look=broadcast] .modal { background: rgba(6,5,16,.66); backdrop-filter: blur(6px) saturate(.8); -webkit-backdrop-filter: blur(6px) saturate(.8); }
+html[data-look=broadcast] .modal .sheet { clip-path: none !important; border-radius: 22px !important;   /* (beats the :is() surfaces rule above, which carries #roster's specificity) */ padding-bottom: 20px;
+  background: radial-gradient(120% 60% at 100% 0, rgba(214,245,49,.07), transparent 60%), var(--bands), linear-gradient(180deg, var(--panel2), var(--panel) 160px);
+  box-shadow: 0 0 0 2px #2e2a55, 0 0 0 5px rgba(11,10,21,.9), 0 28px 70px rgba(0,0,0,.65) !important; }
+html[data-look=broadcast] .modal .sheet > h1:first-child { position: relative; margin: 0 0 16px; padding: 16px 24px 13px 46px; font-size: 27px; color: #fff;
+  background: linear-gradient(90deg, #2c2862, #1d1a3c 70%, transparent); box-shadow: inset 0 -3px 0 var(--sel); }
+html[data-look=broadcast] .modal .sheet > h1:first-child::before { content: ''; position: absolute; left: 20px; top: 50%; width: 14px; height: 22px; translate: 0 -50%; background: var(--sel); clip-path: polygon(45% 0, 100% 0, 55% 100%, 0 100%); }
+html[data-look=broadcast] .modal button.primary { background: var(--sel); color: var(--selink); text-shadow: none; box-shadow: inset 0 -4px 0 #8aa619; }
+html[data-look=broadcast] .modal button.primary:not(:disabled):hover { filter: brightness(1.06); }
+html[data-look=broadcast] .modal button.ghost { background: #2a2650; }
+html[data-look=broadcast] .modal button.ghost:not(:disabled):hover { background: #36316a; }
+html[data-look=broadcast] .modal :is(input, textarea, select) { background: #100e22; border-radius: 10px; box-shadow: inset 0 0 0 2px #2e2a55; }
+html[data-look=broadcast] .modal :is(input, textarea, select):focus-visible { box-shadow: inset 0 0 0 2px var(--sel); }
+/* practice levels: pill tiles, lime with a ➤ under the cursor */
+html[data-look=broadcast] .levels button { position: relative; background: linear-gradient(180deg, #2c2862, #1f1c46); padding: 12px 4px 10px; }
+html[data-look=broadcast] .levels b { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 28px; line-height: 1; }
+html[data-look=broadcast] .levels button:not(:disabled):is(:hover, :focus-visible) { background: var(--sel); color: var(--selink); box-shadow: none; }
+html[data-look=broadcast] .levels button:not(:disabled):is(:hover, :focus-visible) span { color: var(--selink); }
+
+/* ---- The battle intro (Pokémon Champions reference): the screen splits on a diagonal, each side's half in its colour
+   (deep, banded) sliding in from its edge, a lime seam between them; big portraits in rings (yours lime), the names in heavy
+   italic caps, the team as round tiles; VS slams onto the seam; the countdown in lime ---- */
+html[data-look=broadcast] .vs.intro { background: var(--sel); overflow: hidden; gap: 0 1.5vw; }
+html[data-look=broadcast] .vs.intro::before, html[data-look=broadcast] .vs.intro::after { content: ''; position: absolute; inset: 0; z-index: 0; background-image: var(--bands); }
+html[data-look=broadcast] .vs.intro::before { clip-path: polygon(0 0, 56% 0, 44% 100%, 0 100%); background-color: #3a0f1c; background-image: var(--bands), radial-gradient(90% 90% at 18% 50%, rgba(232,52,28,.5), transparent 70%), linear-gradient(110deg, #561018, #1e0e26 75%); animation: vsL .45s cubic-bezier(.2,.9,.3,1) both; }
+html[data-look=broadcast] .vs.intro::after { clip-path: polygon(57% 0, 100% 0, 100% 100%, 45% 100%); background-color: #0f1840; background-image: var(--bands), radial-gradient(90% 90% at 82% 50%, rgba(58,106,232,.5), transparent 70%), linear-gradient(250deg, #10245e, #111234 75%); animation: vsR .45s cubic-bezier(.2,.9,.3,1) both; }
+@keyframes vsL { from { translate: -100% 0; } } @keyframes vsR { from { translate: 100% 0; } }
+html[data-look=broadcast] .vs.intro > * { position: relative; z-index: 1; }
+html[data-look=broadcast] .vs.intro .iformat { background: #0b0a15; color: var(--sel); box-shadow: none; padding: 4px 18px; }
+html[data-look=broadcast] .iside { gap: 8px; padding: 10px 14px 12px; border-radius: 18px; }
+html[data-look=broadcast] .iside .face { width: clamp(64px, 12vw, 150px); height: clamp(64px, 12vw, 150px); border-radius: 50%; background: radial-gradient(circle at 50% 35%, #3a3570, #15132c); }
+html[data-look=broadcast] .iside.s0 .face { box-shadow: 0 0 0 4px #e8341c, 0 0 0 8px rgba(11,10,21,.8), 0 10px 28px rgba(0,0,0,.5); }
+html[data-look=broadcast] .iside.s1 .face { box-shadow: 0 0 0 4px #3a6ae8, 0 0 0 8px rgba(11,10,21,.8), 0 10px 28px rgba(0,0,0,.5); }
+html[data-look=broadcast] .iside:has(.you) .face { box-shadow: 0 0 0 4px var(--sel), 0 0 0 8px rgba(11,10,21,.8), 0 0 34px rgba(214,245,49,.35); }
+html[data-look=broadcast] .iside .you { top: -2px; z-index: 2; background: var(--sel); color: var(--selink); font-family: var(--display); font-style: italic; font-weight: 800; font-size: clamp(11px, 1.4vw, 15px); padding: 2px 14px; }
+html[data-look=broadcast] .iname { font-size: clamp(20px, 3.6vw, 44px); line-height: 1; color: #fff; text-shadow: 0 3px 0 rgba(0,0,0,.55); }
+html[data-look=broadcast] .istand { font-family: var(--mono); color: #d8d4f4; background: rgba(11,10,21,.6); padding: 2px 10px; border-radius: 999px; }
+html[data-look=broadcast] .istand:empty { display: none; }
+html[data-look=broadcast] .imons { gap: 6px; max-width: 40vw; }
+html[data-look=broadcast] .imons img { width: clamp(28px, 4.6vw, 54px); height: clamp(28px, 4.6vw, 54px); border-radius: 50%; background: rgba(11,10,21,.55); box-shadow: inset 0 0 0 2px rgba(255,255,255,.12); }
+html[data-look=broadcast] .imons img:nth-child(n) { animation: fadeIn .3s both; } html[data-look=broadcast] .imons > :nth-child(2) { animation-delay: .05s; } html[data-look=broadcast] .imons > :nth-child(3) { animation-delay: .1s; } html[data-look=broadcast] .imons > :nth-child(4) { animation-delay: .15s; } html[data-look=broadcast] .imons > :nth-child(5) { animation-delay: .2s; } html[data-look=broadcast] .imons > :nth-child(6) { animation-delay: .25s; }
+html[data-look=broadcast] .vs.intro .vsmark { font-size: clamp(48px, 11vw, 140px); color: #fff; text-shadow: .04em .04em 0 #0b0a15, -.02em -.02em 0 #0b0a15, .07em .07em 0 rgba(0,0,0,.4); -webkit-text-stroke: .02em #0b0a15; }
+html[data-look=broadcast] .vs.intro .icount { color: var(--sel); text-shadow: .04em .04em 0 #0b0a15, .07em .07em 0 rgba(0,0,0,.45); -webkit-text-stroke: .015em #0b0a15; }
+html[data-look=broadcast] .vs.intro .icount.wait { font-size: clamp(18px, 3vw, 34px); color: #fff; }
+
+/* ---- Searching (Pokémon Champions reference): the radar in lime, chips for the format and rank, the time waited big,
+   your team as round tiles on a pill, the tip in a box with a lime TIP tag ---- */
+html[data-look=broadcast] #searching h1 { font-size: clamp(30px, 5vw, 46px); margin-top: 4px; }
+html[data-look=broadcast] .schip { font-family: var(--display); font-style: italic; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; font-size: 15px; background: #221f3d; box-shadow: inset 0 0 0 2px #2e2a55; }
+html[data-look=broadcast] .stime { font-family: var(--mono); font-weight: 700; font-size: 38px; color: var(--sel); text-shadow: 0 0 18px rgba(214,245,49,.35); }
+html[data-look=broadcast] #searching .searchteam { gap: 8px; padding: 10px 18px; border-radius: 999px; background: rgba(23,22,43,.82); box-shadow: inset 0 0 0 2px #2e2a55; }
+html[data-look=broadcast] .searchteam img { width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(circle at 50% 35%, #3a3570, #15132c); box-shadow: 0 0 0 2px #2e2a55; }
+html[data-look=broadcast] #searching .tip { position: relative; max-width: 540px; padding: 14px 18px 12px; margin-top: 18px; border-radius: 14px; background: rgba(23,22,43,.82); box-shadow: inset 0 0 0 2px #2e2a55; color: #d8d4f4; }
+html[data-look=broadcast] #searching .tip::before { content: 'TIP'; position: absolute; left: 16px; top: -11px; padding: 1px 12px; background: var(--sel); color: var(--selink); font: italic 800 13px var(--display); letter-spacing: .08em; clip-path: var(--slant); }
+html[data-look=broadcast] #searching .tip:empty { display: none; }
+
+/* ---- Leaderboard (Pokémon Champions reference): each trainer a pill row, the top three with gold / silver / bronze
+   place medals, your row ringed in lime; the rank as a slanted tier chip ---- */
+html[data-look=broadcast] #board .table { border-collapse: separate; border-spacing: 0 6px; backdrop-filter: none; }
+html[data-look=broadcast] #board .table th { border: 0; padding: 4px 14px; font-size: 13px; }
+html[data-look=broadcast] #board .table td { border: 0; padding: 9px 14px; background: linear-gradient(180deg, var(--panel2), var(--panel)); }
+html[data-look=broadcast] #board .table td:first-child { border-radius: 999px 0 0 999px; width: 52px; text-align: center; font: italic 800 20px var(--display); color: #c9c3ef; }
+html[data-look=broadcast] #board .table td:last-child { border-radius: 0 999px 999px 0; padding-right: 22px; }
+html[data-look=broadcast] #board .table td[colspan] { border-radius: 999px; text-align: center; font: inherit; width: auto; }
+html[data-look=broadcast] #board .table tbody tr:nth-child(-n+3) td:first-child { color: #1d1a10; background-clip: padding-box; }
+html[data-look=broadcast] #board .table tbody tr:nth-child(-n+3):not(:has(td[colspan])) td:first-child { background: radial-gradient(circle at 50% 50%, var(--medal) 0 15px, transparent 16px), linear-gradient(180deg, var(--panel2), var(--panel)); }
+html[data-look=broadcast] #board .table tbody tr:nth-child(1) { --medal: #ffd24a; } html[data-look=broadcast] #board .table tbody tr:nth-child(2) { --medal: #c8d0e0; } html[data-look=broadcast] #board .table tbody tr:nth-child(3) { --medal: #d08a5a; }
+html[data-look=broadcast] #board .table td img { border-radius: 50%; width: 34px; height: 34px; background: radial-gradient(circle at 50% 35%, #3a3570, #15132c); box-shadow: 0 0 0 2px #2e2a55; }
+html[data-look=broadcast] #board .table td:nth-child(2) { font-weight: 700; }
+html[data-look=broadcast] #board .table .tier { clip-path: var(--slant); border-radius: 0; padding: 2px 12px; font-family: var(--display); font-style: italic; }
+html[data-look=broadcast] #board .table tr.you td { background: color-mix(in srgb, var(--sel) 14%, var(--panel2)); box-shadow: inset 0 2px 0 var(--sel), inset 0 -2px 0 var(--sel); }
+html[data-look=broadcast] #board .table tr.you td:first-child { box-shadow: inset 2px 2px 0 var(--sel), inset 2px -2px 0 var(--sel); }
+html[data-look=broadcast] #board .table tr.you td:last-child { box-shadow: inset -2px 2px 0 var(--sel), inset -2px -2px 0 var(--sel); }
+
+/* ---- Recent battles: pill rows, WON in lime / LOST in slate on the near edge, round portraits ---- */
+html[data-look=broadcast] .hrow { position: relative; border: 0; border-radius: 999px; padding: 6px 8px 6px 64px; background: linear-gradient(180deg, var(--panel2), var(--panel)); }
+html[data-look=broadcast] .hrow::before { content: 'LOST'; position: absolute; left: 0; top: 0; bottom: 0; width: 56px; display: grid; place-items: center; border-radius: 999px 0 0 999px; background: #3a3566; color: #c9c3ef; font: italic 800 15px var(--display); letter-spacing: .04em; clip-path: polygon(0 0, 100% 0, 84% 100%, 0 100%); }
+html[data-look=broadcast] .hrow.won::before { content: 'WON'; background: var(--sel); color: var(--selink); }
+html[data-look=broadcast] .hrow img { border-radius: 50%; background: radial-gradient(circle at 50% 35%, #3a3570, #15132c); box-shadow: 0 0 0 2px #2e2a55; }
+html[data-look=broadcast] .hrow .hinfo b { font-family: var(--display); font-style: italic; font-weight: 800; text-transform: uppercase; font-size: 16px; letter-spacing: .02em; }
+html[data-look=broadcast] .hrow button { min-height: 34px; }
+
+/* ---- team members: the remove × (a plain round button, not the look's slanted pill) ---- */
+html[data-look=broadcast] .team li > button.rmx, html[data-look=broadcast] .rmx { clip-path: none; border-radius: 50%; padding: 0; width: 22px; height: 22px; min-height: 0; background: rgba(11,10,21,.8); color: #d8d4f4;
+  font: 700 16px/1 system-ui, sans-serif; letter-spacing: 0; text-transform: none; font-style: normal; box-shadow: 0 0 0 1.5px rgba(255,255,255,.2); text-shadow: none; }
+html[data-look=broadcast] .team li > button.rmx:is(:hover, :focus-visible), html[data-look=broadcast] .rmx:is(:hover, :focus-visible) { background: var(--red); color: #fff; }
+html[data-look=broadcast] .teammini .slot .rmx { width: 16px; height: 16px; font-size: 12px; opacity: 1; background: #3a3566; color: #fff; }
+html[data-look=broadcast] .team li.dragging { box-shadow: inset 0 0 0 3px var(--sel), 0 18px 36px rgba(0,0,0,.6) !important; }
+html[data-look=broadcast] .team li.dragging { clip-path: none; border-radius: 14px; }   /* (its lifted shadow shows) */
+html[data-look=broadcast] #askRematchBtn { background: var(--sel); color: var(--selink); text-shadow: none; box-shadow: inset 0 -4px 0 #8aa619; }
+html[data-look=broadcast] #askRematchBtn.asked { background: #2a2650; color: #d8d4f4; box-shadow: none; }
+html[data-look=broadcast] .endcard .rematchnote.ask { font-family: var(--display); font-style: italic; text-transform: uppercase; font-size: 18px; letter-spacing: .03em; }
+html[data-look=broadcast] .discordbtn { border-radius: 0; clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); padding: 0 18px; font-family: var(--display); font-style: italic; text-transform: uppercase; letter-spacing: .04em; font-size: 15px; }
+@media (max-width: 560px) { html[data-look=broadcast] .discordbtn { padding: 0; width: 42px; } }
+html[data-look=broadcast] .ytbtn { border-radius: 0; clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); padding: 0 18px; font-family: var(--display); font-style: italic; text-transform: uppercase; letter-spacing: .04em; font-size: 15px; }
+@media (max-width: 560px) { html[data-look=broadcast] .ytbtn { padding: 0; width: 42px; } }
+html[data-look=broadcast] .tkchip { font-family: var(--display); font-style: italic; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; font-size: 14px; }
+html[data-look=broadcast] .tkchip { clip-path: none; box-shadow: none; border-radius: 999px; padding: 3px 12px 3px 4px; background: rgba(255,255,255,.06); color: var(--text); }
+html[data-look=broadcast] .tkchip:hover { background: rgba(214,245,49,.18); }
+@media (max-width: 420px) { html[data-look=broadcast] :is(.ytbtn, .discordbtn) { width: 38px; } }
+html[data-look=broadcast] .shseg button[aria-pressed=true] { background: var(--sel); color: var(--selink); box-shadow: none; }

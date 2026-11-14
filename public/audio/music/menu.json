@@ -1,0 +1,44 @@
+{
+ "menu1": {
+  "title": "Lobby Lights",
+  "loopStart": 0.25,
+  "loopEnd": 60.25,
+  "sampleRate": 48000,
+  "loopStartSample": 12000,
+  "loopEndSample": 2892000,
+  "seconds": 60,
+  "bpm": 96,
+  "bars": 24,
+  "key": "F major",
+  "character": "relaxed lofi-chip: swung beat, jazzy 7th chords, mellow lead",
+  "lufs": -18
+ },
+ "menu2": {
+  "title": "Open Bracket",
+  "loopStart": 0.25,
+  "loopEnd": 64.25,
+  "sampleRate": 48000,
+  "loopStartSample": 12000,
+  "loopEndSample": 3084000,
+  "seconds": 64,
+  "bpm": 120,
+  "bars": 32,
+  "key": "D major",
+  "character": "bright adventurous: bouncing bass, sparkling arps, singing lead, half-time bridge",
+  "lufs": -18
+ },
+ "menu3": {
+  "title": "Queue Pulse",
+  "loopStart": 0.25,
+  "loopEnd": 68.516667,
+  "sampleRate": 48000,
+  "loopStartSample": 12000,
+  "loopEndSample": 3288800,
+  "seconds": 68.266667,
+  "bpm": 112.5,
+  "bars": 32,
+  "key": "A minor",
+  "character": "cool / tense pre-battle: ostinato pulse, driving bass, gliding square lead",
+  "lufs": -18
+ }
+}
