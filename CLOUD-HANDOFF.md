@@ -144,3 +144,5 @@ Código: `a28c5809d860caf7eb7c2fd89f8c4eb0d4bc8d76`; assets APK e SHA-256 com es
 - Certificado real do APK mantém SHA1 5A:55:45:EF:2B:5B:DA:F2:82:CF:CE:C1:75:6D:B3:DA:D1:B0:D9:72. Firebase Google já configurado; login real do usuário, nuvem e amigos continuam sem validação/implementação adicional nesta rodada. Não confundir instalação com performance física, controle de dois dedos ou login real validados.
 
 - Atualização final instalada e aberta no Redmi: captura `redmi-final-lobby.png` mostra CharmanderNv.9 e830moedas preservados após o novo APK. SHA256 final `c90ddf201db35fdf7511d85d803e73f0a1d9c1ab9e41b8a33cb4081e7422089c`.
+
+Entrega 0.3.0 publicada e lida de volta pela API GitHub: https://github.com/AizenVisuals/pb-port/releases/tag/pulse-arena-v0.3.0-test.1 . Código `6090f479783d87586ae488c4e6fbfbbb5bfd7f52`; APK99563077bytes, assets uploaded e digest remoto igual ao SHA256 local acima. Repositório permanece privado. A revisão/documentação e todos os relatórios desta rodada estão nesse commit.
