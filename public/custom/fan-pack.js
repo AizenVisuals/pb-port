@@ -11,6 +11,6 @@ export function installFanPack({species,catalog,ranked,roster,entries,faces,getM
  const absol=species.absolNM;if(absol){
   absol.mega='absolMegaZ';species.absolMegaZ={...absol,dex:'fan_absolmegaz',name:'MEGA ABSOL Z',types:['dark','ghost'],base:{hp:65,atk:154,def:60,spa:75,spd:60,spe:151},abilityName:'SHARPNESS',rkAbility:'Sharpness',mega:undefined,megaForm:true,weight:49,scale:1,radius:13,bodyH:30};
   for(const table of[catalog,ranked])if(table.absolNM)table.absolNM={...table.absolNM,mega:'absolMegaZ',megaAbility:'Sharpness',megaWeight:49,megaIdleH:64,megaIdleVis:56};
-  const entry=entries.find(x=>x.key==='absolNM');if(entry)Object.assign(entry,{mega:'absolMegaZ',megaAbility:'Sharpness',megaWeight:49,megaIdleH:64,megaIdleVis:56});faces.fan_absolmegaz=[];
+  const entry=entries.find(x=>x.key==='absolNM');if(entry)Object.assign(entry,{mega:'absolMegaZ',megaAbility:'Sharpness',megaWeight:49,megaIdleH:64,megaIdleVis:56});faces.fan_absolmegaz=['Normal'];
  }
 }

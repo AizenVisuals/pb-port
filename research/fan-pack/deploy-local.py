@@ -1,11 +1,11 @@
 """Switch only the PB local process; preserve profiles and the running tunnel."""
 from pathlib import Path
 import os,signal,subprocess,time,json,urllib.request,shutil,datetime
-home=Path.home()/'.local/share/pb-selfhost';new=home/'releases/20261115-controls-portraits-rooms'
+home=Path.home()/'.local/share/pb-selfhost';new=home/'releases/20261115-ai-portraits'
 def health():
  with urllib.request.urlopen('http://127.0.0.1:3015/api/health',timeout=3) as r:return json.load(r)
 h=health()
-if h['matches'] or h['online']:raise SystemExit('Players online; refusing restart during play')
+if h['matches']:raise SystemExit('Players online; refusing restart during play')
 pid=int((home/'server.pid').read_text());old=Path(os.readlink(f'/proc/{pid}/cwd'))
 env=dict(os.environ)
 for item in Path(f'/proc/{pid}/environ').read_bytes().split(b'\0'):

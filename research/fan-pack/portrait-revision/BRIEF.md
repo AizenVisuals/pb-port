@@ -1,0 +1,1 @@
+User correction: zoom/crop the original supplied Absol Z image and translate to pixel art. Preserve its existing composition, head angle, expression and proportions. Do not compose a new portrait from the common Absol. Previous composed study superseded; do not deploy it or expand the set from it.
