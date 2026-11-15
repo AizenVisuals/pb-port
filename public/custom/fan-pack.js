@@ -5,7 +5,7 @@ export function installFanPack({species,catalog,ranked,roster,entries,faces,getM
  for(const entry of FAN_PACK){
   if(species[entry.key])continue;
   const moves=entry.pool.map(def=>{const original=getMove(def.source);if(!original)throw Error('Missing fan-pack move '+def.source);const move={...original,cooldown:def.cd,run:original.rkOrig||original.run};delete move.rkSafe;delete move.rkOrig;wrapMove(move);return move;});
-  species[entry.key]={dex:entry.dex,name:entry.name.toUpperCase(),types:entry.types,base:entry.stats,weight:entry.weight,color:entry.types[0]==='fire'?'#c33132':entry.types[0]==='grass'?'#39866a':entry.types[0]==='water'?'#468ac4':'#e8d9ec',abilityName:entry.ability.toUpperCase(),rkAbility:entry.ability,ability:abilities.get(entry.ability.toUpperCase()),flies:entry.types.includes('flying'),levitate:entry.ability==='Levitate',radius:12,bodyH:28,scale:.9,moves};
+  species[entry.key]={dex:entry.dex,name:entry.name.toUpperCase(),types:entry.types,base:entry.stats,weight:entry.weight,color:entry.types[0]==='fire'?'#c33132':entry.types[0]==='grass'?'#39866a':entry.types[0]==='water'?'#468ac4':'#e8d9ec',abilityName:entry.ability.toUpperCase(),rkAbility:entry.ability,ability:abilities.get(entry.ability.toUpperCase()),flies:entry.types.includes('flying'),levitate:entry.ability==='Levitate',radius:12,bodyH:28,scale:.9,spriteGroundOffset:entry.key==='eereon'?5:0,moves};
   catalog[entry.key]=entry;ranked[entry.key]=entry;roster.push(entry.key);entries.push(entry);faces[entry.dex]=['Normal'];
  }
  const absol=species.absolNM;if(absol){
