@@ -1,0 +1,347 @@
+{
+  "scope": "Small level50 seeded bot 1v1 regression sample, sides alternated. Not human/PvP meta proof. No stat changes inferred from small sample.",
+  "results": [
+    {
+      "key": "hawajaku",
+      "foe": "charizard",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": false,
+      "frames": 2825
+    },
+    {
+      "key": "hawajaku",
+      "foe": "charizard",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": false,
+      "frames": 1997
+    },
+    {
+      "key": "hawajaku",
+      "foe": "greninja",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": true,
+      "frames": 1751
+    },
+    {
+      "key": "hawajaku",
+      "foe": "greninja",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": true,
+      "frames": 1578
+    },
+    {
+      "key": "hawajaku",
+      "foe": "lucario",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": false,
+      "frames": 1718
+    },
+    {
+      "key": "hawajaku",
+      "foe": "lucario",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": false,
+      "frames": 1704
+    },
+    {
+      "key": "hawajaku",
+      "foe": "gengar",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": false,
+      "frames": 1910
+    },
+    {
+      "key": "hawajaku",
+      "foe": "gengar",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": false,
+      "frames": 1542
+    },
+    {
+      "key": "kyasupada",
+      "foe": "charizard",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": false,
+      "frames": 2324
+    },
+    {
+      "key": "kyasupada",
+      "foe": "charizard",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": true,
+      "frames": 2134
+    },
+    {
+      "key": "kyasupada",
+      "foe": "greninja",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": true,
+      "frames": 2108
+    },
+    {
+      "key": "kyasupada",
+      "foe": "greninja",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": true,
+      "frames": 2105
+    },
+    {
+      "key": "kyasupada",
+      "foe": "lucario",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": false,
+      "frames": 1476
+    },
+    {
+      "key": "kyasupada",
+      "foe": "lucario",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": false,
+      "frames": 1847
+    },
+    {
+      "key": "kyasupada",
+      "foe": "gengar",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": true,
+      "frames": 1371
+    },
+    {
+      "key": "kyasupada",
+      "foe": "gengar",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": true,
+      "frames": 1619
+    },
+    {
+      "key": "eereon",
+      "foe": "charizard",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": true,
+      "frames": 2894
+    },
+    {
+      "key": "eereon",
+      "foe": "charizard",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": true,
+      "frames": 3537
+    },
+    {
+      "key": "eereon",
+      "foe": "greninja",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": false,
+      "frames": 2514
+    },
+    {
+      "key": "eereon",
+      "foe": "greninja",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": true,
+      "frames": 2949
+    },
+    {
+      "key": "eereon",
+      "foe": "lucario",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": true,
+      "frames": 2257
+    },
+    {
+      "key": "eereon",
+      "foe": "lucario",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": true,
+      "frames": 2649
+    },
+    {
+      "key": "eereon",
+      "foe": "gengar",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": true,
+      "frames": 2170
+    },
+    {
+      "key": "eereon",
+      "foe": "gengar",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": true,
+      "frames": 2150
+    },
+    {
+      "key": "absolNM",
+      "foe": "charizard",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": true,
+      "frames": 1848,
+      "ability": "Sharpness",
+      "mega": [
+        "MEGA ABSOL Z"
+      ]
+    },
+    {
+      "key": "absolNM",
+      "foe": "charizard",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": false,
+      "frames": 2198,
+      "ability": "Sharpness",
+      "mega": [
+        "MEGA ABSOL Z"
+      ]
+    },
+    {
+      "key": "absolNM",
+      "foe": "greninja",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": false,
+      "frames": 2235,
+      "ability": "Sharpness",
+      "mega": [
+        "MEGA ABSOL Z"
+      ]
+    },
+    {
+      "key": "absolNM",
+      "foe": "greninja",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": false,
+      "frames": 2135,
+      "ability": "Sharpness",
+      "mega": [
+        "MEGA ABSOL Z"
+      ]
+    },
+    {
+      "key": "absolNM",
+      "foe": "lucario",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": false,
+      "frames": 1752,
+      "ability": "Sharpness",
+      "mega": [
+        "MEGA ABSOL Z"
+      ]
+    },
+    {
+      "key": "absolNM",
+      "foe": "lucario",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": false,
+      "frames": 1958,
+      "ability": "Sharpness",
+      "mega": [
+        "MEGA ABSOL Z"
+      ]
+    },
+    {
+      "key": "absolNM",
+      "foe": "gengar",
+      "seed": 31,
+      "side": 0,
+      "done": true,
+      "win": true,
+      "frames": 1243,
+      "ability": "Sharpness",
+      "mega": [
+        "MEGA ABSOL Z"
+      ]
+    },
+    {
+      "key": "absolNM",
+      "foe": "gengar",
+      "seed": 71,
+      "side": 1,
+      "done": true,
+      "win": true,
+      "frames": 1271,
+      "ability": "Sharpness",
+      "mega": [
+        "MEGA ABSOL Z"
+      ]
+    }
+  ],
+  "summary": {
+    "hawajaku": {
+      "games": 8,
+      "wins": 2,
+      "unfinished": 0
+    },
+    "kyasupada": {
+      "games": 8,
+      "wins": 5,
+      "unfinished": 0
+    },
+    "eereon": {
+      "games": 8,
+      "wins": 7,
+      "unfinished": 0
+    },
+    "absolNM": {
+      "games": 8,
+      "wins": 3,
+      "unfinished": 0
+    }
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "page": 1,
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "page": 2,
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "page": 3,
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "page": 4,
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "page": 5,
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "page": 6,
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "page": 7,
+    "error": "HTTP Error 403: Forbidden"
+  }
+]

@@ -1,0 +1,167 @@
+{
+  "assets": [
+    {
+      "key": "ferunoga",
+      "path": "public/assets/fx/fan-pack/ferunoga-atlas.png",
+      "source": "native image_gen reference-conditioned generation, corrected directions",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "columns": 4,
+      "rows": 8,
+      "cellSize": [
+        221.75,
+        221.75
+      ],
+      "directions": [
+        "S",
+        "SE",
+        "E",
+        "NE",
+        "N",
+        "NW",
+        "W",
+        "SW"
+      ],
+      "statesByColumn": [
+        "idle1",
+        "idle2",
+        "attackWindup",
+        "attackRelease"
+      ],
+      "sha256": "78cc88df7d19abb8396167afddbfcdd5215d7604b6c7848d6311ff1e9ac5fa8f",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "identityReference": "1000158941.jpg, finalbottomform only; creatorunknown",
+      "styleReference": "public/assets/fx/custom/marshadow-mega-idle.png rendering/grid only",
+      "promptFiles": [
+        "research/fan-pack/art/ferunoga-prompt.txt",
+        "research/fan-pack/art/ferunoga-correction-prompt.txt"
+      ],
+      "inspection": "Identity,32cells and facing directions visually inspected; corrected right-facing rows after firstdraft. Reardiagonal poses remain close toprofile; runtime review required. Attackrelease includes shortfirebreath painted in sprite.",
+      "walk": {
+        "path": "public/assets/fx/fan-pack/ferunoga-walk.png",
+        "columns": 6,
+        "durations": [
+          6,
+          6,
+          8,
+          6,
+          6,
+          6
+        ],
+        "motionReference": "public/assets/sprites/0024/Walk-Anim.png",
+        "sha256": "a7cb6972bac5adaf2e6fb6b830d1dfdd824452c316660c39efa9c3dbb02d66c6",
+        "inspection": "Six distinct coil/head positions, lateral body-wave progression. Eight directions inspected; loop contact poses reviewed in exported native-size preview.",
+        "promptFile": "research/fan-pack/art/ferunoga-walk-prompt.txt"
+      },
+      "conceptCredit": "E/ (@Loca_ruchem), confirmed by user; independently recovered water-line post"
+    },
+    {
+      "key": "hawajaku",
+      "path": "public/assets/fx/fan-pack/hawajaku-atlas.png",
+      "source": "native image_gen, reference-conditioned",
+      "columns": 4,
+      "rows": 8,
+      "sha256": "246b907cf1cf106ed4f88ec75638e7be86a8cb8daee27d0f491e5c2012e57c13",
+      "identityReference": "grass-line.jpg",
+      "inspection": "32 full-body cells and directional turn inspected. Palette and key silhouette match. Final small-sprite runtime review pending.",
+      "walk": {
+        "path": "public/assets/fx/fan-pack/hawajaku-walk.png",
+        "columns": 4,
+        "durations": [
+          8,
+          10,
+          8,
+          10
+        ],
+        "motionReference": "public/baked2/0257/Walk.png",
+        "sha256": "0b590751688714fab96f792b48e0bd6068998a7de0b45fd9af1c95258152e5ef",
+        "inspection": "Visible alternating bird-leg support, bent knees and lifted feet; preserved eye-spotted fan. Eight directions inspected. Loop contact poses reviewed in exported native-size preview.",
+        "promptFile": "research/fan-pack/art/hawajaku-walk-prompt.txt"
+      },
+      "conceptCredit": "E/ (@Loca_ruchem), confirmed by user; independently recovered water-line post"
+    },
+    {
+      "key": "kyasupada",
+      "path": "public/assets/fx/fan-pack/kyasupada-atlas.png",
+      "source": "native image_gen, reference-conditioned",
+      "columns": 4,
+      "rows": 8,
+      "sha256": "98ce44c290495c3f00dda46ddbcb979a7e13bc87a4d256428e6c79860c3ee570",
+      "identityReference": "water-line.jpg",
+      "inspection": "32 full-body cells and directional turn inspected. Palette and key silhouette match. Final small-sprite runtime review pending.",
+      "walk": {
+        "path": "public/assets/fx/fan-pack/kyasupada-walk.png",
+        "columns": 4,
+        "durations": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "motionReference": "public/baked2/0475/Walk.png",
+        "sha256": "400b6f7222dd12e734bf4659abae76ccae66f7713e1f358ffdccfb358934e6ae",
+        "inspection": "Bent knees, alternating support leg and lifted feet, cloud tail follows; all 8 directions inspected. Loop contact poses reviewed in exported native-size preview.",
+        "promptFile": "research/fan-pack/art/kyasupada-walk-prompt.txt"
+      },
+      "conceptCredit": "E/ (@Loca_ruchem), confirmed by user; independently recovered water-line post"
+    },
+    {
+      "key": "eereon",
+      "path": "public/assets/fx/fan-pack/eereon-atlas.png",
+      "source": "native image_gen reference-conditioned",
+      "columns": 4,
+      "rows": 8,
+      "sha256": "08a68c1450c37e26984d5381d290cdfaf5228815fd7f92854418cab3c57eb983",
+      "identityReference": "eereon.jpg",
+      "promptFile": "research/fan-pack/art/eereon-final-prompt.txt",
+      "inspection": "32 full-body cells, cardinal and diagonal views inspected; matched key palette and silhouette. Simplified poses for 64px runtime.",
+      "walk": {
+        "path": "public/assets/fx/fan-pack/eereon-walk.png",
+        "columns": 4,
+        "durations": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "motionReference": "public/baked2/0197/Walk.png",
+        "sha256": "97b543379613d09b2c81414183d16126f4c9318846636864ec02c86f7181273b",
+        "inspection": "Alternating lifted and planted paws, preserved ghost fur and seal. All 8 directions and 4 poses inspected. Loop contact poses reviewed in exported native-size preview.",
+        "promptFile": "research/fan-pack/art/eereon-walk-prompt.txt"
+      },
+      "conceptCredit": "Harlequinwaffles (@hwaffuru)"
+    },
+    {
+      "key": "absolmegaz",
+      "path": "public/assets/fx/fan-pack/absolmegaz-atlas.png",
+      "source": "native image_gen reference-conditioned",
+      "columns": 4,
+      "rows": 8,
+      "sha256": "143d2044061b04eaa178186d769321fff3a6c2e8648bfe70da39c3866d9f2a80",
+      "identityReference": "absolmegaz.jpg",
+      "promptFile": "research/fan-pack/art/absolmegaz-final-prompt.txt",
+      "inspection": "32 full-body cells, cardinal and diagonal views inspected; matched key palette and silhouette. Simplified poses for 64px runtime.",
+      "walk": {
+        "path": "public/assets/fx/fan-pack/absolmegaz-walk.png",
+        "columns": 4,
+        "durations": [
+          8,
+          10,
+          8,
+          10
+        ],
+        "motionReference": "public/baked2/0359/Walk.png",
+        "sha256": "b9e2d4952b5b28c7c7fdcb38bbb033fa3ec72771aa88db7c16deec4a96feda0a",
+        "inspection": "Four visibly distinct alternating paw poses in eight directions; loop contact poses reviewed in exported native-size preview.",
+        "promptFile": "research/fan-pack/art/absolmegaz-walk-prompt.txt"
+      },
+      "conceptCredit": "The Pok\u00e9mon Company, official Mega Absol Z"
+    }
+  ],
+  "pending": []
+}

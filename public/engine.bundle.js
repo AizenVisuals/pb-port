@@ -1830,3 +1830,7 @@ export function pulseEvolve(b,actor,targetKey,moves){
 }
 export function pulseSpeciesDefinition(key){return ms[key];}
 export function pulseSwitch(b,actor,to){const team=b.teams[actor.side],target=team?.mons[to];if(!target||target===actor||target.fainted||team.ctl||actor.action||b.cinematic||actor.fainted)return false;b.rk.sides[actor.side].wantMove=null;team.switches++;team.lastSwitch=b.tick;b.switchLog.push({t:b.tick,side:actor.side,from:actor.name,to:target.name,pivot:true});team.ctl=z9a(b,team,actor,target);return true;}
+
+// Fan pack for the PB combat build; PULSE mobile integration is a separate task.
+import{installFanPack}from'./custom/fan-pack.js';
+installFanPack({species:ms,catalog:ej,ranked:vr,roster:_4e,entries:I4e,faces:ii0,getMove:yj,wrapMove:U4e});

@@ -1,0 +1,833 @@
+{
+  "scope": "Local native PB engine, level50 bot-vs-bot 1v1, fixed seeds, no Mega/items selected; no production service. Small nonhuman sample, not a competitive win-rate estimate.",
+  "creature": "ferunoga",
+  "stats": {
+    "hp": 88,
+    "atk": 72,
+    "def": 85,
+    "spa": 117,
+    "spd": 85,
+    "spe": 83
+  },
+  "defaults": [
+    "ferunoga:Flamethrower",
+    "ferunoga:Dark Pulse",
+    "ferunoga:Fire Fang",
+    "ferunoga:Dragon Pulse"
+  ],
+  "summary": {
+    "charizard": {
+      "games": 4,
+      "wins": 4,
+      "losses": 0,
+      "unfinished": 0,
+      "meanFrames": 3722
+    },
+    "greninja": {
+      "games": 4,
+      "wins": 0,
+      "losses": 4,
+      "unfinished": 0,
+      "meanFrames": 2411
+    },
+    "gengar": {
+      "games": 4,
+      "wins": 4,
+      "losses": 0,
+      "unfinished": 0,
+      "meanFrames": 1668
+    },
+    "lucario": {
+      "games": 4,
+      "wins": 0,
+      "losses": 4,
+      "unfinished": 0,
+      "meanFrames": 1287
+    },
+    "venusaur": {
+      "games": 4,
+      "wins": 1,
+      "losses": 3,
+      "unfinished": 0,
+      "meanFrames": 2178
+    }
+  },
+  "results": [
+    {
+      "opponent": "charizard",
+      "seed": 7,
+      "done": true,
+      "winnerSide": 0,
+      "frames": 4113,
+      "steps": 4113,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 559,
+            "maxHp": 1980,
+            "fainted": false
+          }
+        ],
+        [
+          {
+            "key": "charizard",
+            "hp": 0,
+            "maxHp": 1854,
+            "fainted": true
+          }
+        ]
+      ],
+      "moves": {
+        "Dark Pulse": 7,
+        "Flamethrower": 9,
+        "Dragon Pulse": 4,
+        "Dragon Claw": 4,
+        "Fire Fang": 3,
+        "Fire Blast": 4,
+        "Air Slash": 3
+      }
+    },
+    {
+      "opponent": "charizard",
+      "seed": 31,
+      "done": true,
+      "winnerSide": 0,
+      "frames": 3300,
+      "steps": 3300,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 937,
+            "maxHp": 1980,
+            "fainted": false
+          }
+        ],
+        [
+          {
+            "key": "charizard",
+            "hp": 0,
+            "maxHp": 1854,
+            "fainted": true
+          }
+        ]
+      ],
+      "moves": {
+        "Dragon Claw": 3,
+        "Flamethrower": 7,
+        "Air Slash": 3,
+        "Dark Pulse": 5,
+        "Dragon Pulse": 4,
+        "Fire Fang": 3,
+        "Fire Blast": 2
+      }
+    },
+    {
+      "opponent": "charizard",
+      "seed": 71,
+      "done": true,
+      "winnerSide": 0,
+      "frames": 3375,
+      "steps": 3375,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 805,
+            "maxHp": 1980,
+            "fainted": false
+          }
+        ],
+        [
+          {
+            "key": "charizard",
+            "hp": 0,
+            "maxHp": 1854,
+            "fainted": true
+          }
+        ]
+      ],
+      "moves": {
+        "Air Slash": 3,
+        "Flamethrower": 8,
+        "Dragon Claw": 4,
+        "Dragon Pulse": 4,
+        "Fire Blast": 3,
+        "Fire Fang": 3,
+        "Dark Pulse": 4
+      }
+    },
+    {
+      "opponent": "charizard",
+      "seed": 151,
+      "done": true,
+      "winnerSide": 0,
+      "frames": 4099,
+      "steps": 4099,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 594,
+            "maxHp": 1980,
+            "fainted": false
+          }
+        ],
+        [
+          {
+            "key": "charizard",
+            "hp": 0,
+            "maxHp": 1854,
+            "fainted": true
+          }
+        ]
+      ],
+      "moves": {
+        "Dark Pulse": 6,
+        "Dragon Pulse": 7,
+        "Flamethrower": 11,
+        "Fire Fang": 2,
+        "Air Slash": 5,
+        "Dragon Claw": 3,
+        "Fire Blast": 4
+      }
+    },
+    {
+      "opponent": "greninja",
+      "seed": 7,
+      "done": true,
+      "winnerSide": 1,
+      "frames": 2010,
+      "steps": 2010,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 0,
+            "maxHp": 1980,
+            "fainted": true
+          }
+        ],
+        [
+          {
+            "key": "greninja",
+            "hp": 1206,
+            "maxHp": 1782,
+            "fainted": false
+          }
+        ]
+      ],
+      "moves": {
+        "Water Shuriken": 5,
+        "Dark Pulse": 6,
+        "Flamethrower": 2,
+        "Blizzard": 2,
+        "Dragon Pulse": 1,
+        "Fire Fang": 1
+      }
+    },
+    {
+      "opponent": "greninja",
+      "seed": 31,
+      "done": true,
+      "winnerSide": 1,
+      "frames": 2255,
+      "steps": 2255,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 0,
+            "maxHp": 1980,
+            "fainted": true
+          }
+        ],
+        [
+          {
+            "key": "greninja",
+            "hp": 998,
+            "maxHp": 1782,
+            "fainted": false
+          }
+        ]
+      ],
+      "moves": {
+        "Dark Pulse": 6,
+        "Blizzard": 3,
+        "Water Shuriken": 5,
+        "Dragon Pulse": 2,
+        "Flamethrower": 2
+      }
+    },
+    {
+      "opponent": "greninja",
+      "seed": 71,
+      "done": true,
+      "winnerSide": 1,
+      "frames": 2797,
+      "steps": 2797,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 0,
+            "maxHp": 1980,
+            "fainted": true
+          }
+        ],
+        [
+          {
+            "key": "greninja",
+            "hp": 725,
+            "maxHp": 1782,
+            "fainted": false
+          }
+        ]
+      ],
+      "moves": {
+        "Dark Pulse": 7,
+        "Blizzard": 3,
+        "Water Shuriken": 5,
+        "Dragon Pulse": 2,
+        "Flamethrower": 3
+      }
+    },
+    {
+      "opponent": "greninja",
+      "seed": 151,
+      "done": true,
+      "winnerSide": 1,
+      "frames": 2581,
+      "steps": 2581,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 0,
+            "maxHp": 1980,
+            "fainted": true
+          }
+        ],
+        [
+          {
+            "key": "greninja",
+            "hp": 961,
+            "maxHp": 1782,
+            "fainted": false
+          }
+        ]
+      ],
+      "moves": {
+        "Water Shuriken": 6,
+        "Dark Pulse": 6,
+        "Dragon Pulse": 2,
+        "Blizzard": 3,
+        "Fire Fang": 1,
+        "Flamethrower": 2
+      }
+    },
+    {
+      "opponent": "gengar",
+      "seed": 7,
+      "done": true,
+      "winnerSide": 0,
+      "frames": 1545,
+      "steps": 1545,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 716,
+            "maxHp": 1980,
+            "fainted": false
+          }
+        ],
+        [
+          {
+            "key": "gengar",
+            "hp": 0,
+            "maxHp": 1638,
+            "fainted": true
+          }
+        ]
+      ],
+      "moves": {
+        "Thunder": 2,
+        "Dark Pulse": 2,
+        "Shadow Ball": 3,
+        "Dragon Pulse": 1,
+        "Sludge Bomb": 3,
+        "Flamethrower": 1,
+        "Fire Fang": 1
+      }
+    },
+    {
+      "opponent": "gengar",
+      "seed": 31,
+      "done": true,
+      "winnerSide": 0,
+      "frames": 1530,
+      "steps": 1530,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 1232,
+            "maxHp": 1980,
+            "fainted": false
+          }
+        ],
+        [
+          {
+            "key": "gengar",
+            "hp": 0,
+            "maxHp": 1638,
+            "fainted": true
+          }
+        ]
+      ],
+      "moves": {
+        "Shadow Ball": 3,
+        "Sludge Bomb": 2,
+        "Dark Pulse": 2,
+        "Thunder": 1,
+        "Flamethrower": 1,
+        "Dragon Pulse": 1
+      }
+    },
+    {
+      "opponent": "gengar",
+      "seed": 71,
+      "done": true,
+      "winnerSide": 0,
+      "frames": 2183,
+      "steps": 2183,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 416,
+            "maxHp": 1980,
+            "fainted": false
+          }
+        ],
+        [
+          {
+            "key": "gengar",
+            "hp": 0,
+            "maxHp": 1638,
+            "fainted": true
+          }
+        ]
+      ],
+      "moves": {
+        "Thunder": 3,
+        "Fire Fang": 2,
+        "Shadow Ball": 5,
+        "Dark Pulse": 2,
+        "Sludge Bomb": 4,
+        "Flamethrower": 2,
+        "Dragon Pulse": 1
+      }
+    },
+    {
+      "opponent": "gengar",
+      "seed": 151,
+      "done": true,
+      "winnerSide": 0,
+      "frames": 1414,
+      "steps": 1414,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 891,
+            "maxHp": 1980,
+            "fainted": false
+          }
+        ],
+        [
+          {
+            "key": "gengar",
+            "hp": 0,
+            "maxHp": 1638,
+            "fainted": true
+          }
+        ]
+      ],
+      "moves": {
+        "Dark Pulse": 2,
+        "Sludge Bomb": 2,
+        "Thunder": 1,
+        "Fire Fang": 1,
+        "Shadow Ball": 2,
+        "Dragon Pulse": 1,
+        "Flamethrower": 1
+      }
+    },
+    {
+      "opponent": "lucario",
+      "seed": 7,
+      "done": true,
+      "winnerSide": 1,
+      "frames": 1319,
+      "steps": 1319,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 0,
+            "maxHp": 1980,
+            "fainted": true
+          }
+        ],
+        [
+          {
+            "key": "lucario",
+            "hp": 777,
+            "maxHp": 1755,
+            "fainted": false
+          }
+        ]
+      ],
+      "moves": {
+        "Extreme Speed": 3,
+        "Flamethrower": 2,
+        "Bone Rush": 2,
+        "Dragon Pulse": 1,
+        "Aura Sphere": 1,
+        "Meteor Mash": 1
+      }
+    },
+    {
+      "opponent": "lucario",
+      "seed": 31,
+      "done": true,
+      "winnerSide": 1,
+      "frames": 1161,
+      "steps": 1161,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 0,
+            "maxHp": 1980,
+            "fainted": true
+          }
+        ],
+        [
+          {
+            "key": "lucario",
+            "hp": 915,
+            "maxHp": 1755,
+            "fainted": false
+          }
+        ]
+      ],
+      "moves": {
+        "Bone Rush": 2,
+        "Fire Fang": 1,
+        "Extreme Speed": 1,
+        "Aura Sphere": 1,
+        "Flamethrower": 1,
+        "Meteor Mash": 1,
+        "Dark Pulse": 1
+      }
+    },
+    {
+      "opponent": "lucario",
+      "seed": 71,
+      "done": true,
+      "winnerSide": 1,
+      "frames": 1247,
+      "steps": 1247,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 0,
+            "maxHp": 1980,
+            "fainted": true
+          }
+        ],
+        [
+          {
+            "key": "lucario",
+            "hp": 1011,
+            "maxHp": 1755,
+            "fainted": false
+          }
+        ]
+      ],
+      "moves": {
+        "Aura Sphere": 2,
+        "Dark Pulse": 1,
+        "Meteor Mash": 2,
+        "Flamethrower": 1,
+        "Bone Rush": 1,
+        "Dragon Pulse": 1,
+        "Fire Fang": 1,
+        "Extreme Speed": 1
+      }
+    },
+    {
+      "opponent": "lucario",
+      "seed": 151,
+      "done": true,
+      "winnerSide": 1,
+      "frames": 1422,
+      "steps": 1422,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 0,
+            "maxHp": 1980,
+            "fainted": true
+          }
+        ],
+        [
+          {
+            "key": "lucario",
+            "hp": 260,
+            "maxHp": 1755,
+            "fainted": false
+          }
+        ]
+      ],
+      "moves": {
+        "Bone Rush": 2,
+        "Flamethrower": 2,
+        "Aura Sphere": 3,
+        "Extreme Speed": 2,
+        "Fire Fang": 1,
+        "Meteor Mash": 1,
+        "Dark Pulse": 1
+      }
+    },
+    {
+      "opponent": "venusaur",
+      "seed": 7,
+      "done": true,
+      "winnerSide": 1,
+      "frames": 2465,
+      "steps": 2465,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 0,
+            "maxHp": 1980,
+            "fainted": true
+          }
+        ],
+        [
+          {
+            "key": "venusaur",
+            "hp": 184,
+            "maxHp": 1881,
+            "fainted": false
+          }
+        ]
+      ],
+      "moves": {
+        "Outrage": 3,
+        "Flamethrower": 3,
+        "Sludge Bomb": 2,
+        "Dark Pulse": 2,
+        "Earthquake": 2,
+        "Petal Blizzard": 2,
+        "Fire Fang": 1,
+        "Dragon Pulse": 1
+      }
+    },
+    {
+      "opponent": "venusaur",
+      "seed": 31,
+      "done": true,
+      "winnerSide": 1,
+      "frames": 2263,
+      "steps": 2263,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 0,
+            "maxHp": 1980,
+            "fainted": true
+          }
+        ],
+        [
+          {
+            "key": "venusaur",
+            "hp": 661,
+            "maxHp": 1881,
+            "fainted": false
+          }
+        ]
+      ],
+      "moves": {
+        "Outrage": 4,
+        "Fire Fang": 3,
+        "Flamethrower": 3,
+        "Earthquake": 3,
+        "Dragon Pulse": 1,
+        "Sludge Bomb": 3,
+        "Petal Blizzard": 1,
+        "Dark Pulse": 1
+      }
+    },
+    {
+      "opponent": "venusaur",
+      "seed": 71,
+      "done": true,
+      "winnerSide": 1,
+      "frames": 2396,
+      "steps": 2396,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 0,
+            "maxHp": 1980,
+            "fainted": true
+          }
+        ],
+        [
+          {
+            "key": "venusaur",
+            "hp": 172,
+            "maxHp": 1881,
+            "fainted": false
+          }
+        ]
+      ],
+      "moves": {
+        "Earthquake": 4,
+        "Dark Pulse": 3,
+        "Fire Fang": 2,
+        "Sludge Bomb": 3,
+        "Dragon Pulse": 2,
+        "Petal Blizzard": 2,
+        "Flamethrower": 2,
+        "Outrage": 1
+      }
+    },
+    {
+      "opponent": "venusaur",
+      "seed": 151,
+      "done": true,
+      "winnerSide": 0,
+      "frames": 1586,
+      "steps": 1586,
+      "levels": [
+        50,
+        50
+      ],
+      "remaining": [
+        [
+          {
+            "key": "ferunoga",
+            "hp": 949,
+            "maxHp": 1980,
+            "fainted": false
+          }
+        ],
+        [
+          {
+            "key": "venusaur",
+            "hp": 0,
+            "maxHp": 1881,
+            "fainted": true
+          }
+        ]
+      ],
+      "moves": {
+        "Outrage": 2,
+        "Flamethrower": 3,
+        "Fire Fang": 2,
+        "Earthquake": 1,
+        "Petal Blizzard": 1,
+        "Sludge Bomb": 1,
+        "Dark Pulse": 1
+      }
+    }
+  ]
+}
