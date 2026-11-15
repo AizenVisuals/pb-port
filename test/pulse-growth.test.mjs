@@ -1,5 +1,5 @@
 import{test}from'node:test';import assert from'node:assert/strict';import{readFile,access}from'node:fs/promises';
-import{createProgression,SAVE_KEY}from'../public/pulse/progression.js';import{EVOLUTIONS,levelOf,xpAt,ITEMS}from'../public/pulse/growth.js';import{CHAPTER_ONE}from'../public/pulse/campaign.js';
+import{createProgression,SAVE_KEY}from'../public/pulse/progression.js';import{EVOLUTIONS,levelOf,xpAt,ITEMS,STONES,STONE_EVOLUTIONS}from'../public/pulse/growth.js';import{CHAPTER_ONE}from'../public/pulse/campaign.js';
 const roster=JSON.parse(await readFile(new URL('../public/roster.json',import.meta.url)));const disk=()=>{const m=new Map();return{getItem:k=>m.get(k)??null,setItem:(k,v)=>m.set(k,v)}};
 const make=(storage=disk(),rng=()=>0)=>{const p=createProgression({storage,profileMode:'journey',rng});assert(p.setCatalog(roster).ok);return p};
 function setXP(p,key,level){const fixture=JSON.parse(p.exportSave());fixture.growth.pokemon[key].xp=xpAt(level);assert(p.importSave(JSON.stringify(fixture)).ok);}
@@ -7,9 +7,9 @@ test('all six starters begin at level five with legal basic moves, not advanced 
  for(const key of ['bulbasaur','charmander','squirtle','chikorita','cyndaquil','totodile']){const p=make();assert(p.chooseStarter(key).ok);assert.equal(p.getCatalog().find(m=>m.key===key).level,5);const known=p.getMoves(key);assert(known.length);assert(!known.some(m=>['Flamethrower','Hydro Pump','Solar Beam'].includes(m.name)));assert(p.getTeam().moves[key].length>=1);}
 });
 test('first-clear XP, ticket cadence and daily tickets persist without duplicate rewards',()=>{
- const storage=disk(),p=make(storage);p.chooseStarter('chikorita');let xp=125,tickets=2;
- for(const [index,stage]of CHAPTER_ONE.slice(0,3).entries()){p.beginStage(stage.id,'growth-'+stage.id);if(stage.wild)p.resolveEncounter('fled');const result=p.completeStage({id:'growth-'+stage.id,won:true,frames:600});assert(result.ok);xp+=300+index*180;tickets+=1+(index===2?1:0);assert.equal(p.completeStage({id:'growth-'+stage.id,won:true,frames:600}).ok,false);}
- assert.equal(p.getSave().growth.pokemon.chikorita.xp,xp);assert.equal(p.getSave().growth.inventory.moveTicket,tickets);
+ const storage=disk(),p=make(storage);p.chooseStarter('chikorita');let xp=0,tickets=2;
+ for(const [index,stage]of CHAPTER_ONE.slice(0,3).entries()){p.beginStage(stage.id,'growth-'+stage.id);if(stage.wild)p.resolveEncounter('fled');const result=p.completeStage({id:'growth-'+stage.id,won:true,frames:600});assert(result.ok);xp+=300+index*180;tickets+=1+(index===2?1:0);assert.equal(result.trainerXp.xp,300+index*180);assert.equal(p.completeStage({id:'growth-'+stage.id,won:true,frames:600}).ok,false);}
+ assert.equal(p.getSave().trainer.xp,xp);assert.equal(p.getSave().growth.pokemon.chikorita.xp,125);assert.equal(p.getSave().growth.inventory.moveTicket,tickets);
  assert.equal(p.claimDaily().tickets,2);assert.equal(p.claimDaily().ok,false);assert.equal(make(storage).getSave().growth.inventory.moveTicket,tickets+2);
 });
 test('special gacha consumes exactly one inventory ticket, teaches compatible unique moves and rejects bad RNG',()=>{
@@ -43,4 +43,11 @@ test('a TM stays in inventory for incompatible targets and legacy techniques mig
  // Deliberately use an actually recognized v0.3 legacy technique, not invented data.
  const legacy=roster.find(m=>m.key==='charmander').pool.find(m=>m.name==='Dragon Pulse');
  if(legacy){old.growth.specialMoves.charmander=[legacy.id];storage.setItem(SAVE_KEY,JSON.stringify(old));const q=make(storage);assert.equal(q.getSave().trainerName,old.trainerName);assert.deepEqual(q.getSave().unlocked,old.unlocked);assert.equal(q.getSave().growth.tmSchema,1);}
+});
+test('stone table covers the roster lines and stone/badge assets are present',async()=>{
+ const lines={vulpix:['fire-stone','ninetales'],eevee:['water-stone','vaporeon'],growlithe:['fire-stone','arcanine'],clefairy:['moon-stone','clefable'],jigglypuff:['moon-stone','wigglytuff'],gloom:['leaf-stone','vileplume'],exeggcute:['leaf-stone','exeggutor'],staryu:['water-stone','starmie'],shellder:['water-stone','cloyster'],poliwhirl:['water-stone','poliwrath'],pikachu:['thunder-stone','raichu']};
+ for(const [from,[stone,to]]of Object.entries(lines))assert.equal(STONE_EVOLUTIONS[from][stone],to,from);
+ assert.equal(STONE_EVOLUTIONS.eevee['thunder-stone'],'jolteon');assert.equal(STONE_EVOLUTIONS.eevee['fire-stone'],'flareon');
+ for(const [key,entry]of Object.entries(STONES)){assert(Number.isInteger(entry.price)&&entry.price>0,key);await access(new URL('../public/pulse/assets/items/'+key+'.png',import.meta.url));}
+ await access(new URL('../public/pulse/assets/badges/kanto-1.png',import.meta.url));
 });

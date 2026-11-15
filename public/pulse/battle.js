@@ -97,6 +97,7 @@ export class OfflineBattle {
   command(input = {}) {
     if (!this.battle || this.state !== 'running' || this.result) return false;
     if(input.kind==='evolve')return this.growth?.requestEvolution()||false;
+    if(input.kind==='cancel-evolution')return this.growth?.cancelAutoEvolution()||false;
     const allowed = new Set(['move','manual','steer','dodge','guard','switch','mega','autoatk','autoguard']);
     if (!allowed.has(input.kind)) return false;
     const command = {...input, side: 0};
@@ -169,7 +170,7 @@ export class OfflineBattle {
     const opponent = b.fighters[1];
     const opponentIndex = b.teams[1].mons.indexOf(opponent);
     const snapshot = {
-      canEvolve:this.growth?.canEvolve()||false,
+      canEvolve:this.growth?.canEvolve()||false,evolutionPrompt:this.growth?.evolutionPrompt?.()||null,
       id: this.id, state: this.state, frame: b.frame, phase: b.phase, secondsLeft: e.timeLeft(b),
       manual: !!side.manual, choosing: !!side.choosing, canMega: !!side.gimmick && !side.megaDone && !b.teams[0].mons[side.gimmick.mon]?.fainted,
       megaDone: !!side.megaDone, switchCharge: e.switchReady(b, 0), dodgeReady: e.dodgeReadyIn(b, 0) <= 0,
@@ -245,7 +246,7 @@ export class OfflineBattle {
     this.state = 'ended';
     this.result = {id: this.id, won: winner === 0, winner, format: this.format, difficulty: this.difficulty,
       frames: this.battle?.frame || 0, duration: (this.battle?.frame || 0) / 60,
-      team: structuredClone(this.team), reason};
+      team: structuredClone(this.team), reason, koXp:this.growth?.koXpTotal?.()||0};
     this.audio?.stop?.();
     this.render?.();
     this._emit();

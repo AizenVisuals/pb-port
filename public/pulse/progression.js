@@ -1,6 +1,6 @@
 import {LEARNSETS} from './learnsets.js';
 const moveRequirementAvailable=(key,id)=>LEARNSETS[key]?.levelMoves[id]!==undefined||LEARNSETS[key]?.specialMoves.includes(id);
-import {initialGrowth,ensureGrowth,validateGrowth,learnedMoves,selectedMoves,levelOf,xpAt,addXP,ITEMS,EVOLUTIONS,specialPool,awardTicketWin} from './growth.js';
+import {initialGrowth,ensureGrowth,validateGrowth,learnedMoves,selectedMoves,levelOf,xpAt,addXP,koXpFor,ITEMS,STONES,STONE_EVOLUTIONS,EVOLUTIONS,specialPool,awardTicketWin} from './growth.js';
 import {bannerPool} from './banners.js';
 import {INITIAL_PARTNERS,CHAPTER_ONE,newJourney,validateJourney} from './campaign.js';
 /** PULSE ARENA local-only progression. Acquisition rarity never modifies combat stats. */
@@ -15,13 +15,14 @@ const unique=items=>new Set(items).size===items.length;
 const utcDay=timestamp=>new Date(timestamp).toISOString().slice(0,10);
 const success=(save,extra={})=>({ok:true,...extra,save:freeze(clone(save))});
 const failure=error=>({ok:false,error});
-const defaultSave=timestamp=>({version:1,trainerName:'Treinador',coins:600,diamonds:0,shinies:[],shinyEquipped:[],unlocked:[...STARTERS],favorite:'marshadow',team:{mons:STARTERS.slice(0,3),moves:{},gimmick:null},records:{battles:0,wins:0,losses:0},gacha:{pulls:0,pity:0},dailyClaimedAt:null,claimedBattles:[],lastRewardAt:null,createdAt:timestamp,updatedAt:timestamp});
+const defaultSave=timestamp=>({version:1,trainerName:'Treinador',trainer:{xp:0},coins:600,diamonds:0,shinies:[],shinyEquipped:[],unlocked:[...STARTERS],favorite:'marshadow',team:{mons:STARTERS.slice(0,3),moves:{},gimmick:null},records:{battles:0,wins:0,losses:0},gacha:{pulls:0,pity:0},dailyClaimedAt:null,claimedBattles:[],lastRewardAt:null,createdAt:timestamp,updatedAt:timestamp});
 function validateSave(value){
  if(value?.journey)validateJourney(value.journey);
- if(value?.version===1){value={...value,diamonds:value.diamonds??0,shinies:value.shinies??[],shinyEquipped:value.shinyEquipped??[]};}
+ if(value?.version===1){value={...value,diamonds:value.diamonds??0,shinies:value.shinies??[],shinyEquipped:value.shinyEquipped??[],trainer:value.trainer??{xp:0}};}
  validateGrowth(value);
  if(!value||value.version!==1)throw Error('Versão de progresso não suportada.');
  if(typeof value.trainerName!=='string'||!validName(value.trainerName))throw Error('Nome de treinador inválido.');
+ if(!value.trainer||!integer(value.trainer.xp,0,1000000))throw Error('Experiência de treinador inválida.');
  if(!integer(value.coins)||!Array.isArray(value.unlocked)||(!value.unlocked.length&&!(value.profileMode==='journey'&&value.journey?.starter===null))||!value.unlocked.every(key)||!unique(value.unlocked))throw Error('Coleção ou saldo inválido.');
  if(!(value.favorite===null&&value.profileMode==='journey'&&value.journey?.starter===null)&&(!key(value.favorite)||!value.unlocked.includes(value.favorite)))throw Error('Favorito inválido.');
  if(!integer(value.diamonds)||!Array.isArray(value.shinies)||!unique(value.shinies)||!value.shinies.every(m=>key(m)&&value.unlocked.includes(m))||!Array.isArray(value.shinyEquipped)||!unique(value.shinyEquipped)||!value.shinyEquipped.every(m=>value.shinies.includes(m)))throw Error('Diamantes ou versões shiny inválidos.');
@@ -63,6 +64,7 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
  if(!save){save=defaultSave(time());if(profileMode==='journey')Object.assign(save,{profileMode:'journey',journey:newJourney(),unlocked:[],favorite:null,team:{mons:[],moves:{},gimmick:null}});}
  const persist=()=>{save.updatedAt=time();if(storage)try{storage.setItem(SAVE_KEY,JSON.stringify(save));}catch{memoryOnly=true;storage=null;message='O aparelho não conseguiu salvar o progresso. Exporte uma cópia antes de sair.';}};
  const entry=mon=>monsters.get(mon);
+ const addTrainerXP=amount=>{save.trainer??={xp:0};const before=levelOf(save.trainer.xp);save.trainer.xp=Math.min(1000000,save.trainer.xp+amount);return {xp:amount,from:before,to:levelOf(save.trainer.xp)};};
  const oldLegalMoves=(mon,moves)=>Array.isArray(moves)&&moves.length===Math.min(4,entry(mon)?.pool?.length||4)&&unique(moves)&&moves.every(id=>entry(mon)?.pool?.some(m=>m.id===id));
  const legalMoves=(mon,moves,state=save)=>state.growth?Array.isArray(moves)&&moves.length>=1&&moves.length<=4&&unique(moves)&&moves.every(id=>learnedMoves(state,entry(mon)).some(m=>m.id===id)):oldLegalMoves(mon,moves);
  const catalogValid=candidate=>{
@@ -126,13 +128,20 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
    if(!j?.active||result?.id!==j.active.id||typeof result.won!=='boolean'||!integer(result.frames,60))return failure('Resultado de fase inválido.');
    if(j.active.encounter?.state==='pending')return failure('Resolva o encontro selvagem primeiro.');
    const stage=CHAPTER_ONE.find(x=>x.id===j.active.stage);let coins=0;const first=result.won&&!j.cleared.includes(stage.id);
-   const growth=addXP(save,save.team.mons,result.won?(first?300+CHAPTER_ONE.indexOf(stage)*180:150+CHAPTER_ONE.indexOf(stage)*30):60);let tickets=awardTicketWin(save,result.won);if(first&&save.growth){save.growth.inventory.moveTicket++;tickets++;}
+   const trainerXp=addTrainerXP(result.won?(first?300+CHAPTER_ONE.indexOf(stage)*180:150+CHAPTER_ONE.indexOf(stage)*30):60);let tickets=awardTicketWin(save,result.won);if(first&&save.growth){save.growth.inventory.moveTicket++;tickets++;}
    if(result.won&&!j.cleared.includes(stage.id)){j.cleared.push(stage.id);coins=stage.firstClearCoins;save.coins+=coins;if(stage.badge)j.badges.push(stage.badge);}
-   save.records.battles++;save.records[result.won?'wins':'losses']++;j.resolvedBattles.push(j.active.id);j.active=null;persist();return success(save,{coins,growth,tickets});
+   save.records.battles++;save.records[result.won?'wins':'losses']++;j.resolvedBattles.push(j.active.id);j.active=null;persist();return success(save,{coins,trainerXp,tickets});
   },
   getMoves(mon){const item=entry(mon);return item?clone(learnedMoves(save,item)):[];},
   getTeam(){const team=clone(save.team);if(save.growth)for(const key of team.mons)team.moves[key]=selectedMoves(save,entry(key));return team;},
   buyItem(id,count=1){if(!save.growth||!ITEMS[id]||!integer(count,1,99))return failure('Item indisponível.');const spent=ITEMS[id].price*count;if(save.coins<spent)return failure('Moedas insuficientes.');save.coins-=spent;save.growth.inventory[id]+=count;persist();return success(save,{spent});},
+  buyStone(id){if(!save.growth||!STONES[id])return failure('Pedra indisponível.');const spent=STONES[id].price;if(save.coins<spent)return failure('Moedas insuficientes.');save.coins-=spent;save.growth.stoneInventory[id]=(save.growth.stoneInventory[id]||0)+1;persist();return success(save,{spent});},
+  useStone(mon,stoneId){const g=save.growth;if(!g||!save.unlocked.includes(mon)||!(g.stoneInventory?.[stoneId]>0))return failure('Escolha uma pedra da mochila e um Pokémon obtido.');
+   if(save.journey?.active)return failure('Use a pedra depois de concluir a fase em andamento.');
+   const target=STONE_EVOLUTIONS[mon]?.[stoneId];if(!target||!entry(target))return failure('Essa pedra não evolui esse Pokémon.');
+   const result=api.evolvePokemon(mon,target,stoneId);if(!result.ok)return result;
+   g.stoneInventory[stoneId]--;persist();return success(save,{from:mon,target,stone:stoneId});
+  },
   equipItem(mon,id){if(!save.growth||!save.unlocked.includes(mon)||id!==null&&!ITEMS[id])return failure('Escolha um item e um Pokémon da coleção.');if(save.journey?.active)return failure('Troque os itens depois de terminar a fase em andamento.');const old=save.growth.held[mon];if(old===id)return success(save);if(id&&save.growth.inventory[id]<1)return failure('Esse item não está na mochila.');if(old)save.growth.inventory[old]++;delete save.growth.held[mon];if(id){save.growth.inventory[id]--;save.growth.held[mon]=id;}persist();return success(save);},
   consumeHeld({battleId,mon,item}){const g=save.growth,event=battleId+':'+mon+':'+item;if(!g||typeof battleId!=='string'||!battleId.length||battleId.length>160||g.held[mon]!==item||!ITEMS[item]||item==='leftovers'||g.processedItems.includes(event))return failure('Item já consumido ou indisponível.');delete g.held[mon];g.processedItems.push(event);persist();return success(save);},
   summonMove(mon){const item=entry(mon),g=save.growth;if(!g||!item||!save.unlocked.includes(mon))return failure('Escolha um Pokémon da sua coleção.');const pool=specialPool(save,mon,item);if(!pool.length)return failure('Todos os golpes especiais disponíveis para esse Pokémon já foram aprendidos.');if(g.inventory.moveTicket<1)return failure('Você precisa de um ticket de técnica.');const roll=Number(rng());if(!Number.isFinite(roll)||roll<0||roll>=1)return failure('Não foi possível sortear a técnica.');const id=pool[Math.floor(roll*pool.length)];g.tmInventory||={};g.tmInventory[id]=(g.tmInventory[id]||0)+1;g.inventory.moveTicket--;persist();return success(save,{mon,move:clone(item.pool.find(m=>m.id===id)),spent:1});},
@@ -142,8 +151,9 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
    if(!target)return failure('Esse Pokémon não é compatível com esta TM.');if(learnedMoves(save,item).some(x=>x.name===target.name))return failure('Esse Pokémon já conhece este golpe.');
    g.tmInventory[id]--;g.specialMoves[mon]||=[];g.specialMoves[mon].push(target.id);persist();return success(save,{mon,move:clone(target)});
   },
-  previewEvolution(mon){
-   const edge=EVOLUTIONS[mon],record=save.growth?.pokemon[mon];if(!edge||!record||levelOf(record.xp)<edge[1]||!entry(edge[0]))return null;
+  previewEvolution(mon,stoneId=null){
+   const stoneTarget=stoneId?STONE_EVOLUTIONS[mon]?.[stoneId]:null;
+   const edge=stoneTarget?[stoneTarget,1]:EVOLUTIONS[mon],record=save.growth?.pokemon[mon];if(!edge||!record||(!stoneTarget&&levelOf(record.xp)<edge[1])||!entry(edge[0]))return null;
    const target=edge[0],next=clone(save);next.growth.pokemon[target]={xp:record.xp};
    const knownNames=learnedMoves(save,entry(mon)).map(m=>m.name);
    const inherited=entry(target).pool.filter(m=>knownNames.includes(m.name)).filter(m=>moveRequirementAvailable(target,m.id));
@@ -152,7 +162,7 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
    next.team.moves[target]=learnedMoves(next,entry(target)).filter(m=>oldNames.includes(m.name)).map(m=>m.id).slice(0,4);
    return {from:mon,target,level:levelOf(record.xp),moves:selectedMoves(next,entry(target)),inherited:next.growth.inherited[target]};
   },
-  evolvePokemon(mon,target){const evolution=api.previewEvolution(mon);if(!evolution||evolution.target!==target)return failure('Esse Pokémon ainda não pode evoluir.');const g=save.growth,xp=g.pokemon[mon].xp;g.pokemon[target]={xp:Math.max(xp,g.pokemon[target]?.xp||0)};delete g.pokemon[mon];delete g.specialMoves[mon];g.inherited[target]=evolution.inherited;delete g.inherited[mon];save.unlocked=save.unlocked.filter(k=>k!==mon);if(!save.unlocked.includes(target))save.unlocked.push(target);g.evolutions.push(mon+'>'+target);if(g.held[mon]){if(g.held[target])g.inventory[g.held[target]]++;g.held[target]=g.held[mon];delete g.held[mon];}save.team.mons=[...new Set(save.team.mons.map(k=>k===mon?target:k))];delete save.team.moves[mon];save.team.moves[target]=evolution.moves;if(save.favorite===mon)save.favorite=target;save.shinyEquipped=save.shinyEquipped.filter(k=>k!==mon);save.shinies=save.shinies.filter(k=>k!==mon);if(save.team.gimmick&&!entry(save.team.mons[save.team.gimmick.mon])?.mega)save.team.gimmick=null;persist();return success(save,{from:mon,target});},
+  evolvePokemon(mon,target,stoneId=null){const evolution=api.previewEvolution(mon,stoneId);if(!evolution||evolution.target!==target)return failure('Esse Pokémon ainda não pode evoluir.');const g=save.growth,xp=g.pokemon[mon].xp;if(g.pendingAuto?.mon===mon)g.pendingAuto=null;if(g.suppressedAuto)delete g.suppressedAuto[mon];g.pokemon[target]={xp:Math.max(xp,g.pokemon[target]?.xp||0)};delete g.pokemon[mon];delete g.specialMoves[mon];g.inherited[target]=evolution.inherited;delete g.inherited[mon];save.unlocked=save.unlocked.filter(k=>k!==mon);if(!save.unlocked.includes(target))save.unlocked.push(target);g.evolutions.push(mon+'>'+target);if(g.held[mon]){if(g.held[target])g.inventory[g.held[target]]++;g.held[target]=g.held[mon];delete g.held[mon];}save.team.mons=[...new Set(save.team.mons.map(k=>k===mon?target:k))];delete save.team.moves[mon];save.team.moves[target]=evolution.moves;if(save.favorite===mon)save.favorite=target;save.shinyEquipped=save.shinyEquipped.filter(k=>k!==mon);save.shinies=save.shinies.filter(k=>k!==mon);if(save.team.gimmick&&!entry(save.team.mons[save.team.gimmick.mon])?.mega)save.team.gimmick=null;persist();return success(save,{from:mon,target});},
   setShinyCatalog(keys){if(!Array.isArray(keys)||keys.some(k=>!entry(k)))return failure('Catálogo shiny inválido.');shinyCatalog=new Set(keys);return {ok:true};},
   getCatalog(){return freeze([...monsters.values()].map(mon=>({...clone(mon),owned:save.unlocked.includes(mon.key),level:save.growth?levelOf(save.growth.pokemon[mon.key]?.xp??125):50,xp:save.growth?.pokemon[mon.key]?.xp??null,heldItem:save.growth?.held[mon.key]||null,learned:learnedMoves(save,mon).map(m=>m.id),price:ECONOMY.prices[mon.rarity],shinyAvailable:shinyCatalog.has(mon.key)})));},
   getSave(){return freeze(clone(save));},
@@ -198,8 +208,12 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
    save.claimedBattles.push(result.id);save.records.battles++;save.records[result.won?'wins':'losses']++;
    const timestamp=time(),eligible=result.reason!=='surrender'&&result.frames>=300&&(save.lastRewardAt===null||timestamp-save.lastRewardAt>=8000);
    const coins=eligible?(result.won?60+10*result.difficulty:25+5*result.difficulty):0;
-   const growth=eligible?addXP(save,save.team.mons,result.won?180+result.difficulty*35:60):[];const tickets=awardTicketWin(save,eligible&&result.won);if(eligible){save.coins+=coins;save.lastRewardAt=timestamp;}persist();return success(save,{coins,growth,tickets,rewarded:eligible,won:result.won});
+   const trainerXp=eligible?addTrainerXP(result.won?180+result.difficulty*35:60):null;const tickets=awardTicketWin(save,eligible&&result.won);if(eligible){save.coins+=coins;save.lastRewardAt=timestamp;}persist();return success(save,{coins,trainerXp,tickets,rewarded:eligible,won:result.won});
   },
+  awardKnockoutXP({foeLevel=5,participants=[],killer=null}={}){const g=save.growth;if(!g)return failure('Progressão indisponível.');const total=koXpFor(foeLevel);const keys=[...new Set((participants||[]).filter(k=>g.pokemon[k]))];if(!keys.length)return failure('Nenhum participante válido.');const share=Math.floor(total/keys.length);let remainder=total-share*keys.length;const changes=[];for(const key of keys){const amount=share+(key===killer&&remainder>0?remainder:0);if(key===killer)remainder=0;changes.push(...addXP(save,[key],amount));}persist();return success(save,{total,changes,participants:keys});},
+  suppressAutoEvolution(mon,level){const g=save.growth;if(!g||!save.unlocked.includes(mon)||!integer(level,1,100))return failure('Evolução indisponível.');g.suppressedAuto??={};g.suppressedAuto[mon]=level;if(g.pendingAuto?.mon===mon)g.pendingAuto=null;persist();return success(save);},
+  deferAutoEvolution(mon,level){const g=save.growth;if(!g||!save.unlocked.includes(mon)||!integer(level,1,100))return failure('Evolução indisponível.');g.pendingAuto={mon,level};persist();return success(save);},
+  clearPendingAuto(){const g=save.growth;if(!g)return failure('Progressão indisponível.');g.pendingAuto=null;persist();return success(save);},
   exportSave(){return JSON.stringify(save,null,2);},
   importSave(json){try{if(typeof json!=='string'||json.length>2*1024*1024)return failure('Arquivo de progresso inválido ou muito grande.');const candidate=validateSave(JSON.parse(json));const migrating=!candidate.growth;ensureGrowth(candidate,monsters);if(migrating&&candidate.growth)for(const key of candidate.team.mons)candidate.team.moves[key]=selectedMoves(candidate,entry(key));catalogValid(candidate);save=candidate;recovered=false;if(!memoryOnly)message='';persist();return success(save);}catch(error){return failure(error.message||'Arquivo de progresso inválido.');}}
  };

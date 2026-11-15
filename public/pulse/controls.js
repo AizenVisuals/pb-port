@@ -6,7 +6,7 @@ export function bindBattleControls({surface, stick, knob, getSnapshot, command})
     if (!button || button.disabled) return null;
     if (button.dataset.move !== undefined) return {kind:'move',index:Number(button.dataset.move)};
     if (button.dataset.switch !== undefined) return {kind:'switch',to:Number(button.dataset.switch)};
-    const kind = {'battle-auto':'manual','battle-guard':'guard','battle-dodge':'dodge','battle-mega':'mega'}[button.id];
+    const kind = {'battle-auto':'manual','battle-guard':'guard','battle-dodge':'dodge','battle-mega':'mega','battle-evolve-cancel':'cancel-evolution'}[button.id];
     return kind ? {kind} : null;
   };
   const resetStick = () => {

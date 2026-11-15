@@ -1,0 +1,1513 @@
+{
+  "revision": "aab3eb6c7167b247a45f5c12c85515341d0c9895",
+  "origin": "https://github.com/PMDCollab/SpriteCollab",
+  "scope": "Canonical animation assets only; combat definitions and runtime tests still required. Original artist credits preserved.",
+  "species": {
+    "0094": {
+      "dex": "0094",
+      "animations": [
+        {
+          "name": "Walk",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            8,
+            10,
+            8,
+            10
+          ]
+        },
+        {
+          "name": "Attack",
+          "w": 72,
+          "h": 80,
+          "durations": [
+            4,
+            2,
+            4,
+            1,
+            1,
+            1,
+            2,
+            2,
+            2,
+            2,
+            4
+          ]
+        },
+        {
+          "name": "Strike",
+          "w": 72,
+          "h": 72,
+          "durations": [
+            2,
+            2,
+            4,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            4
+          ]
+        },
+        {
+          "name": "Shoot",
+          "w": 56,
+          "h": 64,
+          "durations": [
+            2,
+            4,
+            1,
+            1,
+            10,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Sleep",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            30,
+            35
+          ]
+        },
+        {
+          "name": "Hurt",
+          "w": 48,
+          "h": 56,
+          "durations": [
+            2,
+            8
+          ]
+        },
+        {
+          "name": "Idle",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            40,
+            4,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4
+          ]
+        },
+        {
+          "name": "Swing",
+          "w": 72,
+          "h": 80,
+          "durations": [
+            2,
+            1,
+            2,
+            2,
+            3,
+            2,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Double",
+          "w": 56,
+          "h": 64,
+          "durations": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Hop",
+          "w": 32,
+          "h": 80,
+          "durations": [
+            2,
+            1,
+            2,
+            3,
+            4,
+            4,
+            3,
+            2,
+            1,
+            2
+          ]
+        },
+        {
+          "name": "Charge",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Rotate",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "EventSleep",
+          "w": 32,
+          "h": 24,
+          "durations": [
+            30,
+            35
+          ]
+        },
+        {
+          "name": "Wake",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            6,
+            4,
+            8,
+            4,
+            6
+          ]
+        },
+        {
+          "name": "Eat",
+          "w": 32,
+          "h": 32,
+          "durations": [
+            6,
+            8,
+            6,
+            8
+          ]
+        },
+        {
+          "name": "Tumble",
+          "w": 24,
+          "h": 40,
+          "durations": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "name": "Pose",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            12,
+            2,
+            2,
+            8
+          ]
+        },
+        {
+          "name": "Pull",
+          "w": 40,
+          "h": 48,
+          "durations": [
+            10,
+            12,
+            10,
+            12,
+            10,
+            12,
+            10
+          ]
+        },
+        {
+          "name": "Pain",
+          "w": 32,
+          "h": 48,
+          "durations": [
+            4,
+            1,
+            1,
+            1,
+            2,
+            1,
+            4,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Float",
+          "w": 32,
+          "h": 32,
+          "durations": [
+            9,
+            18,
+            9,
+            14
+          ]
+        },
+        {
+          "name": "DeepBreath",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            12,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            10,
+            4
+          ]
+        },
+        {
+          "name": "Nod",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            6,
+            8,
+            6
+          ]
+        },
+        {
+          "name": "Sit",
+          "w": 32,
+          "h": 32,
+          "durations": [
+            8,
+            8,
+            8
+          ]
+        },
+        {
+          "name": "LookUp",
+          "w": 32,
+          "h": 32,
+          "durations": [
+            6,
+            6,
+            6
+          ]
+        },
+        {
+          "name": "Sink",
+          "w": 24,
+          "h": 40,
+          "durations": [
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6
+          ]
+        },
+        {
+          "name": "Trip",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            4,
+            6,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "name": "Laying",
+          "w": 32,
+          "h": 24,
+          "durations": [
+            30
+          ]
+        },
+        {
+          "name": "LeapForth",
+          "w": 32,
+          "h": 80,
+          "durations": [
+            6,
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Head",
+          "w": 32,
+          "h": 48,
+          "durations": [
+            4
+          ]
+        },
+        {
+          "name": "Cringe",
+          "w": 32,
+          "h": 56,
+          "durations": [
+            2,
+            8
+          ]
+        },
+        {
+          "name": "LostBalance",
+          "w": 24,
+          "h": 40,
+          "durations": [
+            8,
+            8
+          ]
+        },
+        {
+          "name": "TumbleBack",
+          "w": 24,
+          "h": 40,
+          "durations": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "name": "Faint",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            8,
+            12,
+            4,
+            10
+          ]
+        },
+        {
+          "name": "HitGround",
+          "w": 32,
+          "h": 48,
+          "durations": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            6,
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    "0065": {
+      "dex": "0065",
+      "animations": [
+        {
+          "name": "Walk",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            8,
+            12,
+            8,
+            12
+          ]
+        },
+        {
+          "name": "Attack",
+          "w": 72,
+          "h": 72,
+          "durations": [
+            2,
+            4,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2,
+            2,
+            4
+          ]
+        },
+        {
+          "name": "Shoot",
+          "w": 32,
+          "h": 48,
+          "durations": [
+            2,
+            2,
+            4,
+            6,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            4
+          ]
+        },
+        {
+          "name": "SpAttack",
+          "w": 32,
+          "h": 48,
+          "durations": [
+            2,
+            2,
+            6,
+            2,
+            4,
+            2,
+            2,
+            2,
+            4
+          ]
+        },
+        {
+          "name": "Sleep",
+          "w": 24,
+          "h": 32,
+          "durations": [
+            30,
+            35
+          ]
+        },
+        {
+          "name": "Hurt",
+          "w": 48,
+          "h": 64,
+          "durations": [
+            2,
+            8
+          ]
+        },
+        {
+          "name": "Idle",
+          "w": 32,
+          "h": 48,
+          "durations": [
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6
+          ]
+        },
+        {
+          "name": "Swing",
+          "w": 80,
+          "h": 80,
+          "durations": [
+            2,
+            1,
+            2,
+            2,
+            3,
+            2,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Double",
+          "w": 64,
+          "h": 72,
+          "durations": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Hop",
+          "w": 40,
+          "h": 88,
+          "durations": [
+            2,
+            1,
+            2,
+            3,
+            4,
+            4,
+            3,
+            2,
+            1,
+            2
+          ]
+        },
+        {
+          "name": "Charge",
+          "w": 40,
+          "h": 48,
+          "durations": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Rotate",
+          "w": 32,
+          "h": 40,
+          "durations": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
+    }
+  },
+  "files": [
+    {
+      "path": "public/assets/sprites/0065/AnimData.xml",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/AnimData.xml",
+      "bytes": 5130,
+      "sha256": "fd450298293b267daf070a877e125904a295219b8c67cddead27e346f0c22bbe"
+    },
+    {
+      "path": "public/assets/sprites/0065/Attack-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Attack-Anim.png",
+      "bytes": 15050,
+      "sha256": "b0a0627a33079516055c4114da3291d2f12ec9daaa78f6d61a81908280403eb5"
+    },
+    {
+      "path": "public/assets/sprites/0065/Attack-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Attack-Offsets.png",
+      "bytes": 2520,
+      "sha256": "2166fb8d2371d5f59eb8a002455fd79164432ded6c3fcc64543b2a494efad809"
+    },
+    {
+      "path": "public/assets/sprites/0065/Attack-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Attack-Shadow.png",
+      "bytes": 4950,
+      "sha256": "f8ee3794364cf3074110577b7f3da023c318064ef99ad1b327104cd2519863dd"
+    },
+    {
+      "path": "public/assets/sprites/0065/Charge-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Charge-Anim.png",
+      "bytes": 7399,
+      "sha256": "7ea8621cb8a95a63f94e6342fa92ab70137ce71154e7a09a547729e0107e04fb"
+    },
+    {
+      "path": "public/assets/sprites/0065/Charge-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Charge-Offsets.png",
+      "bytes": 1287,
+      "sha256": "e4464d142b02a2047b148b6493066dc1e08c10e99da92dd6d407e19aa2c959db"
+    },
+    {
+      "path": "public/assets/sprites/0065/Charge-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Charge-Shadow.png",
+      "bytes": 2490,
+      "sha256": "06fd84c70bc16cf01bf38672e5749d32214c3ee562a20c52c44ca7d6369c386d"
+    },
+    {
+      "path": "public/assets/sprites/0065/Double-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Double-Anim.png",
+      "bytes": 18844,
+      "sha256": "e0729a949c8c6de371eb059cc87f87bbada0ebb5088279fecc5d1c009c04896b"
+    },
+    {
+      "path": "public/assets/sprites/0065/Double-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Double-Offsets.png",
+      "bytes": 3581,
+      "sha256": "0dcd2a495635a452777aedff9b6c72c01504d1cd77884eb258968488a6940ac1"
+    },
+    {
+      "path": "public/assets/sprites/0065/Double-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Double-Shadow.png",
+      "bytes": 7008,
+      "sha256": "fdd13e686bad6f5ea44b9d861357e7e45ac0d175d1c376869c9d458219e211aa"
+    },
+    {
+      "path": "public/assets/sprites/0065/Hop-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Hop-Anim.png",
+      "bytes": 15333,
+      "sha256": "50eb15618e775ca4d7baa93941d36763b0644f1fee2026e6429e91869b60cdcf"
+    },
+    {
+      "path": "public/assets/sprites/0065/Hop-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Hop-Offsets.png",
+      "bytes": 2037,
+      "sha256": "1c44b4a20b38a12c621dc19b48d6e7278ddc129c425e2397c25fe8695876d226"
+    },
+    {
+      "path": "public/assets/sprites/0065/Hop-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Hop-Shadow.png",
+      "bytes": 2335,
+      "sha256": "0673f2f705f773daa3955604e7c5c3bc7e14cba55b79f3ef5c8fbc4e8965a1fe"
+    },
+    {
+      "path": "public/assets/sprites/0065/Hurt-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Hurt-Anim.png",
+      "bytes": 5818,
+      "sha256": "3e3fc242f39f069c1db815689bb9276107a012d3a8c7253d4c17ca9ba15c1188"
+    },
+    {
+      "path": "public/assets/sprites/0065/Hurt-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Hurt-Offsets.png",
+      "bytes": 480,
+      "sha256": "bdd99407ff07eaf6d2d6015387e4048ce9989420bced7a2d0ce9a744c5f65a32"
+    },
+    {
+      "path": "public/assets/sprites/0065/Hurt-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Hurt-Shadow.png",
+      "bytes": 844,
+      "sha256": "ac6de71c1c2d68f7b57c3628d73cabee468c84be9da37305bcf53ed6999365a5"
+    },
+    {
+      "path": "public/assets/sprites/0065/Idle-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Idle-Anim.png",
+      "bytes": 7015,
+      "sha256": "9ffb292d6af152f830201880c5138991f3d1f0a98cdc0a2e832f6b12605d1a1e"
+    },
+    {
+      "path": "public/assets/sprites/0065/Idle-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Idle-Offsets.png",
+      "bytes": 996,
+      "sha256": "c92c61bc9699f45109a3fe81954e61fdd692cf9fb72a194943db33886f110f52"
+    },
+    {
+      "path": "public/assets/sprites/0065/Idle-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Idle-Shadow.png",
+      "bytes": 1210,
+      "sha256": "97eb7083e7d9298767040ec4cad03b05637d70e68f79d7d7a0f95620c7b407a1"
+    },
+    {
+      "path": "public/assets/sprites/0065/Rotate-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Rotate-Anim.png",
+      "bytes": 17294,
+      "sha256": "aead15a4bb54167df4c5bd934591eb6b78a34fdfe214aa7cdd53d83448317f1c"
+    },
+    {
+      "path": "public/assets/sprites/0065/Rotate-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Rotate-Offsets.png",
+      "bytes": 1255,
+      "sha256": "5efec24c8044a62d460203421b150df67efb30745ebdc8e977efeefd527ef67f"
+    },
+    {
+      "path": "public/assets/sprites/0065/Rotate-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Rotate-Shadow.png",
+      "bytes": 1223,
+      "sha256": "269c21eac13bbd401c92d60d5b907d3e446000839828f93ef34d0312984342d5"
+    },
+    {
+      "path": "public/assets/sprites/0065/Shoot-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Shoot-Anim.png",
+      "bytes": 10737,
+      "sha256": "575d0aed56d42b50b6db9fbae8db91650e2c832623f599429f3852bff12c0e6a"
+    },
+    {
+      "path": "public/assets/sprites/0065/Shoot-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Shoot-Offsets.png",
+      "bytes": 1398,
+      "sha256": "8d17ef22f987ed6613d6b808ad4507ba351a2a06fdd2fe9557fc7fce0d3d1083"
+    },
+    {
+      "path": "public/assets/sprites/0065/Shoot-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Shoot-Shadow.png",
+      "bytes": 1969,
+      "sha256": "8eeffa3bc26e4fe24826ba350c76e0f44a53cc2b3fa2ca2afd933955d8d6ce95"
+    },
+    {
+      "path": "public/assets/sprites/0065/Sleep-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Sleep-Anim.png",
+      "bytes": 639,
+      "sha256": "d77f832483c2e5258025f171c39e1a6d1dc5a61f3b6fcadf2c0b6988a50fa37f"
+    },
+    {
+      "path": "public/assets/sprites/0065/Sleep-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Sleep-Offsets.png",
+      "bytes": 117,
+      "sha256": "01850d9b1b91ad3d8c684f7cdc8c3d92662900123ede79843843442a45cf33e7"
+    },
+    {
+      "path": "public/assets/sprites/0065/Sleep-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Sleep-Shadow.png",
+      "bytes": 171,
+      "sha256": "a0d55d82d6b02af5d74520339c875217aa2588f4d486574bf0ddda2725b3964d"
+    },
+    {
+      "path": "public/assets/sprites/0065/SpAttack-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/SpAttack-Anim.png",
+      "bytes": 8348,
+      "sha256": "eba0f563729e661877ee5945c6f833c4e4b6227d576e80f16b9eb3e52afb6746"
+    },
+    {
+      "path": "public/assets/sprites/0065/SpAttack-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/SpAttack-Offsets.png",
+      "bytes": 1111,
+      "sha256": "e6c55ea45efe95824894605bd0750e5287a35eac703acf7debff71971ff55d23"
+    },
+    {
+      "path": "public/assets/sprites/0065/SpAttack-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/SpAttack-Shadow.png",
+      "bytes": 1297,
+      "sha256": "f91fed8e48c7b801b0c158228a61e93e876ba8abfd3e5c518afbea74ed0cd983"
+    },
+    {
+      "path": "public/assets/sprites/0065/Swing-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Swing-Anim.png",
+      "bytes": 22938,
+      "sha256": "fc9127a63a566f9a219c948eb485007350278a4e08e6988085a66be3654c37d1"
+    },
+    {
+      "path": "public/assets/sprites/0065/Swing-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Swing-Offsets.png",
+      "bytes": 2734,
+      "sha256": "24b0d4940150020a5064424ec16e47e50736afaca878d19bc598d61ad4685e3e"
+    },
+    {
+      "path": "public/assets/sprites/0065/Swing-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Swing-Shadow.png",
+      "bytes": 4941,
+      "sha256": "ff79097314bde013e9b62805bbd02702097b59bc938355ca7c95722d84d15a6f"
+    },
+    {
+      "path": "public/assets/sprites/0065/Walk-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Walk-Anim.png",
+      "bytes": 6224,
+      "sha256": "472a6e8e1517ff6ddc6ae027d90d34d580cfc3acd57363c4907de959c2e37c0c"
+    },
+    {
+      "path": "public/assets/sprites/0065/Walk-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Walk-Offsets.png",
+      "bytes": 592,
+      "sha256": "be1a11d643724abe91e017e1c6756bfaf02906d7b90a2b48c5ad09f593be1882"
+    },
+    {
+      "path": "public/assets/sprites/0065/Walk-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/Walk-Shadow.png",
+      "bytes": 535,
+      "sha256": "1ec150c932f208ce21ceccbfc72b21ef85a17cd42133734ce2a2e0638c49eed7"
+    },
+    {
+      "path": "public/assets/sprites/0065/credits.txt",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0065/credits.txt",
+      "bytes": 133,
+      "sha256": "1353007bbf4de6233a149b9758f52221e5be5064ff3f6fe59db0e54a622cca10"
+    },
+    {
+      "path": "public/assets/sprites/0094/AnimData.xml",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/AnimData.xml",
+      "bytes": 14111,
+      "sha256": "cffb806df2432f57a596eb2d945e7eac7ca4b66dd7e51c7bd06cfdd6de221df0"
+    },
+    {
+      "path": "public/assets/sprites/0094/Attack-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Attack-Anim.png",
+      "bytes": 22286,
+      "sha256": "b2596f947660df1ea04a2b96768d06944ec61908a12d1c42b8d2a88d307259e2"
+    },
+    {
+      "path": "public/assets/sprites/0094/Attack-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Attack-Offsets.png",
+      "bytes": 2938,
+      "sha256": "7cd4fcdee9dee1a32098233eb2d43056bb9dce1d0ac830862c5f4759c0f6dd53"
+    },
+    {
+      "path": "public/assets/sprites/0094/Attack-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Attack-Shadow.png",
+      "bytes": 5448,
+      "sha256": "67ebcb0aee6e808cc5d8c7ae6a011663e1234947b228148f980129e94f3a65eb"
+    },
+    {
+      "path": "public/assets/sprites/0094/Charge-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Charge-Anim.png",
+      "bytes": 7507,
+      "sha256": "d76088a212234303e97ce5b7a517b811b50df19b05ffd02d39ffefa00f3a5425"
+    },
+    {
+      "path": "public/assets/sprites/0094/Charge-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Charge-Offsets.png",
+      "bytes": 1002,
+      "sha256": "b104791f0634135c17780b03daf88199375c3b70d2b34ce6895be869db63fcd3"
+    },
+    {
+      "path": "public/assets/sprites/0094/Charge-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Charge-Shadow.png",
+      "bytes": 2090,
+      "sha256": "ba4479486af5d5a167d1bca9a422f2bcbca139e2801ea53ce05cc3c02adeb747"
+    },
+    {
+      "path": "public/assets/sprites/0094/Cringe-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Cringe-Anim.png",
+      "bytes": 856,
+      "sha256": "b929a38ff4a826f06c8ee7c4de2790aed819102d905cc332a0d2089672137198"
+    },
+    {
+      "path": "public/assets/sprites/0094/Cringe-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Cringe-Offsets.png",
+      "bytes": 117,
+      "sha256": "e440ad12fe6a2893a53b1d95f763d1ef6fd6f5dfe0ebd0dc67d0f6f53b577c0a"
+    },
+    {
+      "path": "public/assets/sprites/0094/Cringe-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Cringe-Shadow.png",
+      "bytes": 205,
+      "sha256": "a646b3be0f1689ccba7ca64802fe799c1b80919aac809dc05d03d37bcda291fa"
+    },
+    {
+      "path": "public/assets/sprites/0094/DeepBreath-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/DeepBreath-Anim.png",
+      "bytes": 1415,
+      "sha256": "b570e372e88d8dfacf13eebbca276a009a663e7282df99428b15e50daa040660"
+    },
+    {
+      "path": "public/assets/sprites/0094/DeepBreath-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/DeepBreath-Offsets.png",
+      "bytes": 185,
+      "sha256": "e5bce47027f638c721aa816caf58d5b70794161ae61e51b0ff586135bd3a6323"
+    },
+    {
+      "path": "public/assets/sprites/0094/DeepBreath-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/DeepBreath-Shadow.png",
+      "bytes": 268,
+      "sha256": "8e84ca50b5cad5a1837024cbab9afe9ecc8bf286818f964a670999906207d6ca"
+    },
+    {
+      "path": "public/assets/sprites/0094/Double-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Double-Anim.png",
+      "bytes": 21153,
+      "sha256": "b0f63b0556fa13ea768f1bc6d0b3d21e8bb7ca76632eafe0d7fc1c09abb36324"
+    },
+    {
+      "path": "public/assets/sprites/0094/Double-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Double-Offsets.png",
+      "bytes": 3195,
+      "sha256": "ac282a0c57232dda91d18a9f027f00094632bd2187b8b4ba7366ab45049df086"
+    },
+    {
+      "path": "public/assets/sprites/0094/Double-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Double-Shadow.png",
+      "bytes": 6450,
+      "sha256": "92cc70998f4cb954b44c730295501d7a5b03d6e66de57f7894968d7930d57722"
+    },
+    {
+      "path": "public/assets/sprites/0094/Eat-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Eat-Anim.png",
+      "bytes": 968,
+      "sha256": "466028e69f5e92c60c6a6560ccf6febc0044d96d85bab52d28938e82b6a256ee"
+    },
+    {
+      "path": "public/assets/sprites/0094/Eat-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Eat-Offsets.png",
+      "bytes": 142,
+      "sha256": "ba47c7668fee86fe795d2d8ecf304d97319062247b3d9b4b9adc19ecbf863e35"
+    },
+    {
+      "path": "public/assets/sprites/0094/Eat-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Eat-Shadow.png",
+      "bytes": 172,
+      "sha256": "1f211773c469fe0645e3d62b65971bfad59acf07088529b5318c911e32c52222"
+    },
+    {
+      "path": "public/assets/sprites/0094/EventSleep-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/EventSleep-Anim.png",
+      "bytes": 1625,
+      "sha256": "ee6a7e33dd63accc61fbba91ecb4b8ccb789a3c002860f2ada50a624a9e77ba5"
+    },
+    {
+      "path": "public/assets/sprites/0094/EventSleep-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/EventSleep-Offsets.png",
+      "bytes": 214,
+      "sha256": "1dff0175cdd5291b1434a3630d843a0fe0a056757351b214ce76701eda482133"
+    },
+    {
+      "path": "public/assets/sprites/0094/EventSleep-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/EventSleep-Shadow.png",
+      "bytes": 388,
+      "sha256": "80dd85544b4f19f8a22874d6feee1fe919c91c8605658a9e488a6ca789e5d872"
+    },
+    {
+      "path": "public/assets/sprites/0094/Faint-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Faint-Anim.png",
+      "bytes": 3946,
+      "sha256": "80a78671aec2d40e14d220ed92ac37a7f8a12c0c9293e149636c2e212e9425ea"
+    },
+    {
+      "path": "public/assets/sprites/0094/Faint-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Faint-Offsets.png",
+      "bytes": 495,
+      "sha256": "a5848ad0e460c73b9580932e9bff310f5c91aa9116763d937aab212e1d818651"
+    },
+    {
+      "path": "public/assets/sprites/0094/Faint-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Faint-Shadow.png",
+      "bytes": 633,
+      "sha256": "76f0e73624ac0f22d1e8b4650ee44b84abdf60f068d78914a74682cf73236bf1"
+    },
+    {
+      "path": "public/assets/sprites/0094/Float-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Float-Anim.png",
+      "bytes": 2811,
+      "sha256": "432201f3cc9a0ee2e7cfa4f40058ad604130615beb90e80384a39a8ccb7590c1"
+    },
+    {
+      "path": "public/assets/sprites/0094/Float-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Float-Offsets.png",
+      "bytes": 426,
+      "sha256": "489c07b9d31e1c094e82641776558b63843d76d0dcdb95bfebcbc3a32313aa24"
+    },
+    {
+      "path": "public/assets/sprites/0094/Float-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Float-Shadow.png",
+      "bytes": 802,
+      "sha256": "43202fcb1ae880c1d68f4ebe968d3dc2f4860f9d7967202fc93b1cc467c2b0ec"
+    },
+    {
+      "path": "public/assets/sprites/0094/Head-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Head-Anim.png",
+      "bytes": 1679,
+      "sha256": "2cf24d057dd3ea1ec78802e4791d30571284e9f53f76d901044f0ad8d144b732"
+    },
+    {
+      "path": "public/assets/sprites/0094/Head-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Head-Offsets.png",
+      "bytes": 215,
+      "sha256": "0970d033b1c6912067b8c4687c0cb3f5e06b5b0d27bb69b45f1d48d9c0f18918"
+    },
+    {
+      "path": "public/assets/sprites/0094/Head-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Head-Shadow.png",
+      "bytes": 240,
+      "sha256": "e57f74fb94194b440cdf10232c7e25d735b4edb4a7e2ceb8ee5c16e1dd326ff1"
+    },
+    {
+      "path": "public/assets/sprites/0094/HitGround-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/HitGround-Anim.png",
+      "bytes": 1762,
+      "sha256": "47d30fa94555457de0487b6c93f9847200861d0fda7f85069f485158db6482fe"
+    },
+    {
+      "path": "public/assets/sprites/0094/HitGround-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/HitGround-Offsets.png",
+      "bytes": 215,
+      "sha256": "f576aa03526b83a45e00f2657dbe89beb8629548659f1c8473c0154f01d7e782"
+    },
+    {
+      "path": "public/assets/sprites/0094/HitGround-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/HitGround-Shadow.png",
+      "bytes": 217,
+      "sha256": "5542ec50f9b87f24a2fdf579f6ee7900403be5ef07c90a2f84f770fc75be253e"
+    },
+    {
+      "path": "public/assets/sprites/0094/Hop-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Hop-Anim.png",
+      "bytes": 19401,
+      "sha256": "daffa2fb584dda45d6db7b399bb187f56371404792994a4ce30b46f2e54be594"
+    },
+    {
+      "path": "public/assets/sprites/0094/Hop-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Hop-Offsets.png",
+      "bytes": 1750,
+      "sha256": "0cbc9a5bf118d84ea40366c4fc21ac6a15f9b0f67cf87c2dadafff3be57d5a7a"
+    },
+    {
+      "path": "public/assets/sprites/0094/Hop-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Hop-Shadow.png",
+      "bytes": 1700,
+      "sha256": "a69d4c436d7890cd1d5b77d420d95b53a786e144fd545aeb2219d6810b4947fd"
+    },
+    {
+      "path": "public/assets/sprites/0094/Hurt-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Hurt-Anim.png",
+      "bytes": 5993,
+      "sha256": "74e2457a2e7429a8417fc46ff39c48fae7fa04f2a19d01533cf4f5db8969e49a"
+    },
+    {
+      "path": "public/assets/sprites/0094/Hurt-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Hurt-Offsets.png",
+      "bytes": 437,
+      "sha256": "6e7d6b1f21749a43b02af97cc65c5eb9eb46f40dc117571f6194c4f3e2ca6b62"
+    },
+    {
+      "path": "public/assets/sprites/0094/Hurt-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Hurt-Shadow.png",
+      "bytes": 815,
+      "sha256": "df7815c9541ff2a2416b89ee31260fb0bb23e9f9c037457468f59cf976f1d0bb"
+    },
+    {
+      "path": "public/assets/sprites/0094/Idle-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Idle-Anim.png",
+      "bytes": 11194,
+      "sha256": "b361da86327436f28508f8b0bb1c5cc59807cc75d1e586ab19f218f7db175169"
+    },
+    {
+      "path": "public/assets/sprites/0094/Idle-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Idle-Offsets.png",
+      "bytes": 995,
+      "sha256": "03ceb51d32034231a35ed508a9689a52932acb559663e4b9a1beff333b4dab2e"
+    },
+    {
+      "path": "public/assets/sprites/0094/Idle-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Idle-Shadow.png",
+      "bytes": 1752,
+      "sha256": "64951f780de7ad608869385a015f1cd2ae765f43e2f87a2f1f59016203282c3c"
+    },
+    {
+      "path": "public/assets/sprites/0094/Laying-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Laying-Anim.png",
+      "bytes": 1059,
+      "sha256": "4c522592c20ae7ee708c39bd6d0a34374f14d356c9349c1f3924801620ca351c"
+    },
+    {
+      "path": "public/assets/sprites/0094/Laying-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Laying-Offsets.png",
+      "bytes": 171,
+      "sha256": "5a75fa0a2177b64b403fc10f6b5bb576a765abf1ce12e978fcfac7a0f05a3ef0"
+    },
+    {
+      "path": "public/assets/sprites/0094/Laying-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Laying-Shadow.png",
+      "bytes": 212,
+      "sha256": "c7599f7cc11d680aab552166cdbeb4a868109a5f3dd20b8f6a7be3e912bf9960"
+    },
+    {
+      "path": "public/assets/sprites/0094/LeapForth-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/LeapForth-Anim.png",
+      "bytes": 1600,
+      "sha256": "50f491adf015e8ebe97eeca295a0fa0230a3b7f29de8c09fc8d4972e758a6a2c"
+    },
+    {
+      "path": "public/assets/sprites/0094/LeapForth-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/LeapForth-Offsets.png",
+      "bytes": 207,
+      "sha256": "524502c2ca86456a10cfd0d643472a0dfd819ed999102fbb682810fe32dc7be4"
+    },
+    {
+      "path": "public/assets/sprites/0094/LeapForth-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/LeapForth-Shadow.png",
+      "bytes": 361,
+      "sha256": "3b8cf62780e2af84ecdc9ad8b6f338b7c2d6a2331c4e07b00358c18ed1c59e6b"
+    },
+    {
+      "path": "public/assets/sprites/0094/LookUp-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/LookUp-Anim.png",
+      "bytes": 820,
+      "sha256": "09526c4253f89d012bf453615d9cfc62714085dff9cacc9d4a887ddad27dfb8d"
+    },
+    {
+      "path": "public/assets/sprites/0094/LookUp-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/LookUp-Offsets.png",
+      "bytes": 129,
+      "sha256": "0515ea0499d83923d5704a48bca682567f6d772ab603b21099ba6ac2c0168ce9"
+    },
+    {
+      "path": "public/assets/sprites/0094/LookUp-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/LookUp-Shadow.png",
+      "bytes": 165,
+      "sha256": "ab5134544837a60c494888e933857aae2a17de476e9cbb9f209cce26951fe3b4"
+    },
+    {
+      "path": "public/assets/sprites/0094/LostBalance-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/LostBalance-Anim.png",
+      "bytes": 659,
+      "sha256": "51c992ea5df82dd212b1d68446039638efffa8a2d2a546d0fbebed33326ef65d"
+    },
+    {
+      "path": "public/assets/sprites/0094/LostBalance-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/LostBalance-Offsets.png",
+      "bytes": 115,
+      "sha256": "6ab4ec9a7bd8a50f25adf84899b201039e715186bc9102a431b04e7ce719262c"
+    },
+    {
+      "path": "public/assets/sprites/0094/LostBalance-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/LostBalance-Shadow.png",
+      "bytes": 166,
+      "sha256": "e9e067bf73bdc98cbb245d2207a69c35abb0a4d210b196769a60a3e0b1e5dcbf"
+    },
+    {
+      "path": "public/assets/sprites/0094/Nod-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Nod-Anim.png",
+      "bytes": 3322,
+      "sha256": "bbe899ad225734f50c9c2fc2609a45f6e98a82a1c27794fd9017a1c84c94c387"
+    },
+    {
+      "path": "public/assets/sprites/0094/Nod-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Nod-Offsets.png",
+      "bytes": 385,
+      "sha256": "373857dfe7eba14460e856e30644752e591a5dda35c8b61be6dde4a692785715"
+    },
+    {
+      "path": "public/assets/sprites/0094/Nod-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Nod-Shadow.png",
+      "bytes": 476,
+      "sha256": "04fc1c593f38dc518d13b72a75e6a990072fbe89ec95cb5ad32ec0b5ec60aa10"
+    },
+    {
+      "path": "public/assets/sprites/0094/Pain-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Pain-Anim.png",
+      "bytes": 15314,
+      "sha256": "2b7c7a538a03520e3d3803653ee0cd6c887732818cf460e26acc9c14d847d14b"
+    },
+    {
+      "path": "public/assets/sprites/0094/Pain-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Pain-Offsets.png",
+      "bytes": 1418,
+      "sha256": "ec6c39545ce51f0f8aa70e3b265c8d1df91bfbf62d6c376a6e5f40e7e8416c3d"
+    },
+    {
+      "path": "public/assets/sprites/0094/Pain-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Pain-Shadow.png",
+      "bytes": 1651,
+      "sha256": "e604125e71049af5590a17ece1006186dc0e59e62eca0b2084315a2287cdf7ce"
+    },
+    {
+      "path": "public/assets/sprites/0094/Pose-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Pose-Anim.png",
+      "bytes": 4718,
+      "sha256": "f1bc1618e008f499765cf039bd75e0fbc45b4f1c1958cbbd57688ce039cfa5f1"
+    },
+    {
+      "path": "public/assets/sprites/0094/Pose-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Pose-Offsets.png",
+      "bytes": 526,
+      "sha256": "fd9bf53900a4f500767aa7c47c5f7694fb504ac52f8539a0b58c481cef2e3000"
+    },
+    {
+      "path": "public/assets/sprites/0094/Pose-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Pose-Shadow.png",
+      "bytes": 514,
+      "sha256": "68c83e91a9a39ef3355b8f1a3bb474180faa46ef443a58acac567a6b54127560"
+    },
+    {
+      "path": "public/assets/sprites/0094/Pull-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Pull-Anim.png",
+      "bytes": 1103,
+      "sha256": "68c0cb0b6b1333ebab3545fb109983982e7ae4fd1c87ff87ff099781de27b8ba"
+    },
+    {
+      "path": "public/assets/sprites/0094/Pull-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Pull-Offsets.png",
+      "bytes": 175,
+      "sha256": "f26926bbb884e652050c8703d214a6341e29a05bd86de418b2014092f903f777"
+    },
+    {
+      "path": "public/assets/sprites/0094/Pull-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Pull-Shadow.png",
+      "bytes": 234,
+      "sha256": "2bef0b1ecdf823eb55c9934c91560977cc0ad5171fa4ade394570938a221cd7c"
+    },
+    {
+      "path": "public/assets/sprites/0094/Rotate-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Rotate-Anim.png",
+      "bytes": 21191,
+      "sha256": "52e5df42d6b851343cdbc9dbae42386c791062e9e98186474daa7f647f7b95aa"
+    },
+    {
+      "path": "public/assets/sprites/0094/Rotate-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Rotate-Offsets.png",
+      "bytes": 1196,
+      "sha256": "86aa18ad0aa5feda5ffc7e43b838030dcfd8493e56800dafe991c07a71fc21c3"
+    },
+    {
+      "path": "public/assets/sprites/0094/Rotate-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Rotate-Shadow.png",
+      "bytes": 1223,
+      "sha256": "269c21eac13bbd401c92d60d5b907d3e446000839828f93ef34d0312984342d5"
+    },
+    {
+      "path": "public/assets/sprites/0094/Shoot-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Shoot-Anim.png",
+      "bytes": 19627,
+      "sha256": "ec5a691407e63d6f415584b5a59acd29bf4458b2ecddcf2571f3d4b1eef897bb"
+    },
+    {
+      "path": "public/assets/sprites/0094/Shoot-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Shoot-Offsets.png",
+      "bytes": 2389,
+      "sha256": "d334bbb113f702e2128aaa5f008b62e63484c4645a8c94155d7c24b6a080bb81"
+    },
+    {
+      "path": "public/assets/sprites/0094/Shoot-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Shoot-Shadow.png",
+      "bytes": 4699,
+      "sha256": "9e61a1c2a753fe0b9f7299e260c87c7ec30d7290f399a4e0637d74c381b29905"
+    },
+    {
+      "path": "public/assets/sprites/0094/Sink-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Sink-Anim.png",
+      "bytes": 1451,
+      "sha256": "73ebcb2d1b02f3d426d76d53c098cdf665c96e63eec625558f53039cde5dc8ff"
+    },
+    {
+      "path": "public/assets/sprites/0094/Sink-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Sink-Offsets.png",
+      "bytes": 251,
+      "sha256": "cb5db41c9017e31f8633e061feaf4b706a7c6e4252846b3cade195ba94378343"
+    },
+    {
+      "path": "public/assets/sprites/0094/Sink-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Sink-Shadow.png",
+      "bytes": 231,
+      "sha256": "867f3257f7369a6d5fe2dea721eef71be86f013c2e0f0ae95ac3663777673c40"
+    },
+    {
+      "path": "public/assets/sprites/0094/Sit-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Sit-Anim.png",
+      "bytes": 850,
+      "sha256": "c19177ea74066742e2f067fea0f104c88f81a1aec7bb56c6e7873fa330e9a525"
+    },
+    {
+      "path": "public/assets/sprites/0094/Sit-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Sit-Offsets.png",
+      "bytes": 126,
+      "sha256": "e05746a84e67d773f4750e42133b6a19b34a3585f30a1c4a5af499cf96aa6e22"
+    },
+    {
+      "path": "public/assets/sprites/0094/Sit-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Sit-Shadow.png",
+      "bytes": 165,
+      "sha256": "ab5134544837a60c494888e933857aae2a17de476e9cbb9f209cce26951fe3b4"
+    },
+    {
+      "path": "public/assets/sprites/0094/Sleep-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Sleep-Anim.png",
+      "bytes": 840,
+      "sha256": "c74113d42eb4f8122bf535e2fa496e2a0a56cf1531f26e88b6a94e049a98cf19"
+    },
+    {
+      "path": "public/assets/sprites/0094/Sleep-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Sleep-Offsets.png",
+      "bytes": 122,
+      "sha256": "99500c0f32d700e7afeb540c0ad794eaadacb8d3ec02842dff2521d3acd95a11"
+    },
+    {
+      "path": "public/assets/sprites/0094/Sleep-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Sleep-Shadow.png",
+      "bytes": 179,
+      "sha256": "da3904f46e7ee94af1fa14a2e232c610d01587803bf6830c9f78230b05e4d19d"
+    },
+    {
+      "path": "public/assets/sprites/0094/Strike-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Strike-Anim.png",
+      "bytes": 24169,
+      "sha256": "e79dfe328b520c3ae7d41ce928695d1b78904f7a92de6101ef4c61fe8e9f8fdf"
+    },
+    {
+      "path": "public/assets/sprites/0094/Strike-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Strike-Offsets.png",
+      "bytes": 2609,
+      "sha256": "1256ce0a45461abe208079d099ff9fc2d1c02eac3217054732bf62bc682bf146"
+    },
+    {
+      "path": "public/assets/sprites/0094/Strike-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Strike-Shadow.png",
+      "bytes": 4695,
+      "sha256": "02a8a04bc37cfb0e22bf03c487fd2a8006e216e659b77bede7df4a3f560c7f14"
+    },
+    {
+      "path": "public/assets/sprites/0094/Swing-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Swing-Anim.png",
+      "bytes": 28596,
+      "sha256": "e1d3c9271a1d4ca3139f901d07d149e9e870d6f8589df92f577375c870c78079"
+    },
+    {
+      "path": "public/assets/sprites/0094/Swing-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Swing-Offsets.png",
+      "bytes": 2558,
+      "sha256": "1b80a21a4f755d82c093a0162807f34c858b5f8568932b1a35e47da3f60f2cee"
+    },
+    {
+      "path": "public/assets/sprites/0094/Swing-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Swing-Shadow.png",
+      "bytes": 4715,
+      "sha256": "b220be381ebf62c21990bdb06071cec65ce1eb621e8867e4e175c341aa02f3ca"
+    },
+    {
+      "path": "public/assets/sprites/0094/Trip-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Trip-Anim.png",
+      "bytes": 4551,
+      "sha256": "79f20f8c2692f5f18ce7235d718396777dfdd2349f48c1736298373fedee3ba6"
+    },
+    {
+      "path": "public/assets/sprites/0094/Trip-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Trip-Offsets.png",
+      "bytes": 581,
+      "sha256": "9588c51a2aa85df69be471c2bf7dee62831c14d1531e8e5521cedc3487048589"
+    },
+    {
+      "path": "public/assets/sprites/0094/Trip-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Trip-Shadow.png",
+      "bytes": 615,
+      "sha256": "fa358321aa96bb7446838d3f5ecf781626f1a3c77143070ea38393408f1c43e5"
+    },
+    {
+      "path": "public/assets/sprites/0094/Tumble-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Tumble-Anim.png",
+      "bytes": 1636,
+      "sha256": "d35e8ff1544c9ed87ac403653b8bc88c532d0ca8383770de05449df14859b45f"
+    },
+    {
+      "path": "public/assets/sprites/0094/Tumble-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Tumble-Offsets.png",
+      "bytes": 191,
+      "sha256": "093192e5a8181b572e744758225ee54da0bced3bb4e8cebb595cccd80354ef5d"
+    },
+    {
+      "path": "public/assets/sprites/0094/Tumble-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Tumble-Shadow.png",
+      "bytes": 350,
+      "sha256": "3f725141758a312a77fc50549b98b6f08dcea1ce035cb2dde813b0a09f33a038"
+    },
+    {
+      "path": "public/assets/sprites/0094/TumbleBack-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/TumbleBack-Anim.png",
+      "bytes": 1976,
+      "sha256": "a665ad9ff0d0efdde87a25c684bc026c3be68d1710748cd9c16ae57bf0ad8fba"
+    },
+    {
+      "path": "public/assets/sprites/0094/TumbleBack-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/TumbleBack-Offsets.png",
+      "bytes": 205,
+      "sha256": "7f3208958cb0a7e05c2c2cdde7e415e1aea24c3552f84f73b9856cb57f3b14e3"
+    },
+    {
+      "path": "public/assets/sprites/0094/TumbleBack-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/TumbleBack-Shadow.png",
+      "bytes": 395,
+      "sha256": "5947a2bf016a656896df3137b1543ac6022354397cc076be54027dde9afc614c"
+    },
+    {
+      "path": "public/assets/sprites/0094/Wake-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Wake-Anim.png",
+      "bytes": 5722,
+      "sha256": "34bc9699f4f7924812be8325b2773dc7fd2f08759dce49607636fe1bd9c7410d"
+    },
+    {
+      "path": "public/assets/sprites/0094/Wake-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Wake-Offsets.png",
+      "bytes": 641,
+      "sha256": "24ca09c625df9fe5de2aa649cc00bebeb69a2e8a963c72a81795bee58ba3d96e"
+    },
+    {
+      "path": "public/assets/sprites/0094/Wake-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Wake-Shadow.png",
+      "bytes": 615,
+      "sha256": "fa358321aa96bb7446838d3f5ecf781626f1a3c77143070ea38393408f1c43e5"
+    },
+    {
+      "path": "public/assets/sprites/0094/Walk-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Walk-Anim.png",
+      "bytes": 8403,
+      "sha256": "be39dae12dae3715a3328628c4c6bc542fc9805d483e877d420d8dac31279a0d"
+    },
+    {
+      "path": "public/assets/sprites/0094/Walk-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Walk-Offsets.png",
+      "bytes": 598,
+      "sha256": "f01fef6e4eca535262b4bf470a312905deb30249b1dbb36b609edb50b49e2ad6"
+    },
+    {
+      "path": "public/assets/sprites/0094/Walk-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/Walk-Shadow.png",
+      "bytes": 535,
+      "sha256": "1ec150c932f208ce21ceccbfc72b21ef85a17cd42133734ce2a2e0638c49eed7"
+    },
+    {
+      "path": "public/assets/sprites/0094/credits.txt",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/credits.txt",
+      "bytes": 353,
+      "sha256": "b585d7d7c723801ec276f228f44610d390c42d04f873985d6ffe83303d89ef47"
+    }
+  ],
+  "failures": []
+}

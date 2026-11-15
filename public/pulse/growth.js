@@ -11,13 +11,22 @@ export const ITEMS=Object.freeze({
  chestoberry:{name:'Chesto Berry',price:45,description:'Uma vez: acorda o Pokémon adormecido.'},
  leftovers:{name:'Leftovers',price:450,description:'Recupera 1/16 do HP máximo a cada 6 segundos em campo. Não é consumido.'},
 });
-export const initialGrowth=()=>({pokemon:{},inventory:{moveTicket:2,oranberry:3,sitrusberry:1,lumberry:1,cheriberry:0,pechaberry:0,chestoberry:0,leftovers:0},held:{},inherited:{},specialMoves:{},tmInventory:{},tmSchema:1,retiredTechniques:[],ticketWins:0,processedItems:[],evolutions:[]});
+export const STONE_EVOLUTIONS=Object.freeze({vulpix:{'fire-stone':'ninetales'},eevee:{'water-stone':'vaporeon','thunder-stone':'jolteon','fire-stone':'flareon'},growlithe:{'fire-stone':'arcanine'},clefairy:{'moon-stone':'clefable'},jigglypuff:{'moon-stone':'wigglytuff'},gloom:{'leaf-stone':'vileplume'},exeggcute:{'leaf-stone':'exeggutor'},staryu:{'water-stone':'starmie'},shellder:{'water-stone':'cloyster'},poliwhirl:{'water-stone':'poliwrath'},pikachu:{'thunder-stone':'raichu'}});
+export const STONES=Object.freeze({
+ 'fire-stone':{name:'Fire Stone',price:400,description:'Evolui Vulpix, Eevee e Growlithe.'},
+ 'water-stone':{name:'Water Stone',price:400,description:'Evolui Eevee, Staryu, Shellder e Poliwhirl.'},
+ 'thunder-stone':{name:'Thunder Stone',price:400,description:'Evolui Pikachu e Eevee.'},
+ 'leaf-stone':{name:'Leaf Stone',price:400,description:'Evolui Gloom e Exeggcute.'},
+ 'moon-stone':{name:'Moon Stone',price:600,description:'Evolui Clefairy e Jigglypuff.'},
+});
+export const initialGrowth=()=>({pokemon:{},inventory:{moveTicket:2,oranberry:3,sitrusberry:1,lumberry:1,cheriberry:0,pechaberry:0,chestoberry:0,leftovers:0},held:{},inherited:{},specialMoves:{},tmInventory:{},stoneInventory:{},tmSchema:1,retiredTechniques:[],ticketWins:0,processedItems:[],suppressedAuto:{},pendingAuto:null,evolutions:[]});
 export const levelOf=xp=>{let level=Math.min(100,Math.max(1,Math.floor(Math.cbrt(xp))));while(level<100&&(level+1)**3<=xp)level++;return level;};
 export const xpAt=level=>level**3;
+export const koXpFor=level=>{const foe=Math.min(100,Math.max(1,Math.round(level)||5));return (foe+1)**3-foe**3;};
 export function ensureGrowth(save,catalog){
  if(!save.growth&&save.profileMode!=='journey'&&!save.journey?.starter)return;
  save.growth||=initialGrowth();save.growth.inherited||={};
- const g=save.growth;g.tmInventory||={};g.retiredTechniques||=[];
+ const g=save.growth;g.tmInventory||={};g.stoneInventory||={};g.retiredTechniques||=[];g.suppressedAuto||={};if(g.pendingAuto===undefined)g.pendingAuto=null;
  if(g.tmSchema!==1){
   for(const [key,ids]of Object.entries(g.specialMoves)){const allowed=new Set(LEARNSETS[key]?.specialMoves||[]);g.specialMoves[key]=ids.filter(id=>{if(allowed.has(id))return true;g.retiredTechniques.push({mon:key,id});g.inventory.moveTicket++;return false;});}
   for(const [key,ids]of Object.entries(g.inherited)){g.inherited[key]=ids.filter(id=>{if(LEARNSETS[key]?.levelMoves[id]!==undefined||LEARNSETS[key]?.specialMoves.includes(id))return true;g.retiredTechniques.push({mon:key,id});g.inventory.moveTicket++;return false;});}
@@ -53,10 +62,13 @@ export function addXP(save,keys,amount){
  return changes;
 }
 export function validateGrowth(save){
- const g=save.growth;if(g===undefined)return;g.inherited??={};
+ const g=save.growth;if(g===undefined)return;g.inherited??={};g.suppressedAuto??={};g.stoneInventory??={};if(g.pendingAuto===undefined)g.pendingAuto=null;
  const integer=(n,min=0,max=Number.MAX_SAFE_INTEGER)=>Number.isSafeInteger(n)&&n>=min&&n<=max;
  const obj=x=>!!x&&typeof x==='object'&&!Array.isArray(x);
  if(!obj(g)||!obj(g.pokemon)||!obj(g.inventory)||!obj(g.held)||!obj(g.specialMoves)||!integer(g.ticketWins,0,2)||!Array.isArray(g.processedItems)||g.processedItems.some(x=>typeof x!=='string'||x.length>240)||!Array.isArray(g.evolutions)||g.evolutions.some(x=>typeof x!=='string'||x.length>160))throw Error('Progressão de níveis inválida.');
+ if(!obj(g.suppressedAuto)||Object.entries(g.suppressedAuto).some(([k,v])=>!save.unlocked.includes(k)||!integer(v,1,100)))throw Error('Evolução automática suprimida inválida.');
+ if(g.pendingAuto!==null&&(!obj(g.pendingAuto)||!save.unlocked.includes(g.pendingAuto.mon)||!integer(g.pendingAuto.level,1,100)))throw Error('Evolução automática pendente inválida.');
+ if(!obj(g.stoneInventory)||Object.entries(g.stoneInventory).some(([k,v])=>!STONES[k]||!integer(v,0,999)))throw Error('Inventário de pedras inválido.');
  if(Object.entries(g.pokemon).some(([key,v])=>!save.unlocked.includes(key)||!obj(v)||!integer(v.xp,1,1000000)))throw Error('XP inválida.');
  if(Object.entries(g.inventory).some(([id,n])=>!['moveTicket',...Object.keys(ITEMS)].includes(id)||!integer(n))||!integer(g.inventory.moveTicket))throw Error('Inventário inválido.');
  if(Object.entries(g.held).some(([key,id])=>!save.unlocked.includes(key)||!ITEMS[id]))throw Error('Item equipado inválido.');

@@ -1,6 +1,6 @@
 import {bindGamepad} from './gamepad.js';
 import {createManagementUI} from './management-ui.js';
-import {ITEMS,EVOLUTIONS,levelOf,xpAt,moveRequirement,specialPool} from './growth.js';
+import {ITEMS,STONES,EVOLUTIONS,levelOf,xpAt,moveRequirement,specialPool} from './growth.js';
 import {mountAccount} from './account.js';
 import {bindBattleControls} from './controls.js';
 import {installAudioControls,setMenuAmbient,rewardSound,playPulseSound} from './ui-audio.js';
@@ -133,6 +133,7 @@ function refresh() {
   const bannerMeter=selectedBanner==="route"?s.gacha:(s.gacha.banners?.[selectedBanner]||{pity:0});
   $("banner-description").textContent=SUMMON_BANNERS.find(b=>b.id===selectedBanner).description;
   $("trainer-name").textContent = s.trainerName;
+  $("account-summary").textContent = s.trainer?`Treinador Nv. ${levelOf(s.trainer.xp||0)} · no aparelho`:`Seu progresso, no aparelho`;
   $("coin-balance").textContent = s.coins.toLocaleString("pt-BR");
   $("diamond-balance").textContent = s.diamonds.toLocaleString("pt-BR");
   currencyPulse("coin-balance", s.coins);
@@ -217,7 +218,7 @@ function renderShop() {
   $("buy-pokeballs").hidden=shopFilter!=="items";
   $("shop-balance").textContent=shopFilter==="items"?`${s.coins} moedas`:`${s.diamonds} diamantes`;
   if(shopFilter==="items"){
-    $("shop-grid").innerHTML=Object.entries(ITEMS).map(([id,item])=>`<article class="shop-consumable"><img src="/pulse/assets/items/${id}.png" alt=""><div><h2>${item.name}</h2><p>${item.description}</p></div><button data-buy-item="${id}" class="primary-button" ${s.coins<item.price?'disabled':''}>${item.price} moedas</button></article>`).join('');return;
+    $("shop-grid").innerHTML=[...Object.entries(ITEMS).map(([id,item])=>[id,item,'item']),...Object.entries(STONES).map(([id,item])=>[id,item,'stone'])].map(([id,item,kind])=>`<article class="shop-consumable"><img src="/pulse/assets/items/${id}.png" alt=""><div><h2>${item.name}</h2><p>${item.description}</p></div><button data-buy-${kind}="${id}" class="primary-button" ${s.coins<item.price?'disabled':''}>${item.price} moedas</button></article>`).join('');return;
   }
   const list =
     shopFilter === "shiny"
@@ -412,7 +413,7 @@ async function battleGrowth(opponentLevel){
  const state=save();if(!state.growth)return undefined;
  itemIconsPromise||=Promise.all(Object.keys(ITEMS).map(async id=>{const image=new Image();image.src=`/pulse/assets/items/${id}.png`;try{await image.decode();return [id,image];}catch{return [id,null];}})).then(Object.fromEntries);
  const levels=Object.fromEntries(Object.entries(state.growth.pokemon).map(([key,pokemon])=>[key,levelOf(pokemon.xp)]));
- return {levels,opponentLevel:opponentLevel||Math.max(...state.team.mons.map(k=>levels[k]||5)),selected:p.getTeam().moves,held:state.growth.held,icons:await itemIconsPromise,preview:key=>p.previewEvolution(key),onConsume:event=>p.consumeHeld({...event,battleId:battle.id}).ok,onEvolve:(from,to)=>{const result=p.evolvePokemon(from,to);refresh();if(!result.ok)notify(result.error);},onEvent:event=>playPulseSound(event.kind)};
+ return {levels,opponentLevel:opponentLevel||Math.max(...state.team.mons.map(k=>levels[k]||5)),selected:p.getTeam().moves,held:state.growth.held,icons:await itemIconsPromise,preview:key=>p.previewEvolution(key),onConsume:event=>p.consumeHeld({...event,battleId:battle.id}).ok,onEvolve:(from,to)=>{const result=p.evolvePokemon(from,to);refresh();if(!result.ok)notify(result.error);},onEvent:event=>playPulseSound(event.kind),onKnockout:event=>p.awardKnockoutXP(event),onSuppress:(mon,level)=>p.suppressAutoEvolution(mon,level),onPendingResolved:()=>p.clearPendingAuto(),pendingAuto:state.growth.pendingAuto||null,suppressedAuto:state.growth.suppressedAuto||{}};
 }
 function renderBag(){management?.renderBag();}
 function drawTechnique(){
@@ -484,6 +485,9 @@ function updateBattle(s) {
   $("battle-choose").hidden = !s.choosing;
   $("battle-mega").hidden = !s.canMega&&!s.canEvolve;
   $("battle-mega").textContent=s.canEvolve?"EVOLUIR":"MEGA";
+  const prompt=s.evolutionPrompt;
+  $("battle-evolve").hidden=!prompt;
+  if(prompt){const from=mon(prompt.from),to=mon(prompt.target);$("battle-evolve-text").textContent=`${from?from.name:prompt.from} vai evoluir para ${to?to.name:prompt.target}!`; $("battle-evolve-count").textContent=`${prompt.secondsLeft}s`;}
   $("battle-guard").disabled = !s.guardReady;
   $("battle-dodge").disabled = !s.dodgeReady;
   const moveKey = s.moves.map((m) => m.name).join("|");
@@ -535,9 +539,10 @@ function endBattle(result) {
   wildBattle=false;
   $("pause-dialog").close();
   const reward = activeStage ? (result.reason==="surrender" ? p.abandonStage() : p.completeStage(result)) : p.recordBattle(result);
+  if(snapshot?.evolutionPrompt)p.deferAutoEvolution(snapshot.evolutionPrompt.from,snapshot.evolutionPrompt.level);
   refresh();
   $("result-content").innerHTML =
-    `<div class="result-symbol">${icon(result.won ? "star" : "shield")}</div><h2>${result.won ? "Vitória na arena!" : result.reason === "surrender" ? "Batalha encerrada" : "O próximo duelo é seu"}</h2><p>${result.reason === "surrender" ? "Desistências não concedem moedas." : "Sua equipe volta pronta para uma nova estratégia."}</p><div class="result-coins">${icon("coin")} +${reward.coins || 0}</div>${reward.growth?.length?`<p>+${reward.growth[0].xp} XP por parceiro${reward.growth.some(x=>x.to>x.from)?" · Sua equipe subiu de nível!":""}</p>`:""}${reward.tickets?`<p>+${reward.tickets} ticket${reward.tickets>1?"s":""} de técnica</p>`:""}<button id="result-lobby" class="primary-button">Voltar ao lobby</button><button id="result-retry" class="secondary-button">Jogar novamente</button>`;
+    `<div class="result-symbol">${icon(result.won ? "star" : "shield")}</div><h2>${result.won ? "Vitória na arena!" : result.reason === "surrender" ? "Batalha encerrada" : "O próximo duelo é seu"}</h2><p>${result.reason === "surrender" ? "Desistências não concedem moedas." : "Sua equipe volta pronta para uma nova estratégia."}</p><div class="result-coins">${icon("coin")} +${reward.coins || 0}</div>${reward.trainerXp?`<p>+${reward.trainerXp.xp} XP de treinador${reward.trainerXp.to>reward.trainerXp.from?` · Você subiu para o nível ${reward.trainerXp.to}!`:""}</p>`:""}${result.koXp?`<p>+${result.koXp} XP de nocaute na batalha</p>`:""}${reward.tickets?`<p>+${reward.tickets} ticket${reward.tickets>1?"s":""} de técnica</p>`:""}<button id="result-lobby" class="primary-button">Voltar ao lobby</button><button id="result-retry" class="secondary-button">Jogar novamente</button>`;
   showDialog("result-dialog");
   $("result-lobby").onclick = exitBattle;
   const retryStage=activeStage;
@@ -659,6 +664,8 @@ function wire() {
     if(b.dataset.selectBanner){$("banner-select").value=b.dataset.selectBanner;$("banner-select").dispatchEvent(new Event('change'));}
 
     if(b.dataset.buyItem&&apply(p.buyItem(b.dataset.buyItem)))notify("Item comprado.");
+    if(b.dataset.buyStone&&apply(p.buyStone(b.dataset.buyStone)))notify("Pedra comprada.");
+    if(b.dataset.useStone){const [stone,key]=b.dataset.useStone.split(':');const r=p.useStone(key,stone);if(apply(r)){notify(`${mon(r.target).name}!`);management?.openPartner?.(r.target,'evolution');}}
     if(b.dataset.equipItem&&apply(p.equipItem($("bag-owner-"+b.dataset.equipItem).value,b.dataset.equipItem)))notify("Item equipado.");
     if(b.dataset.unequip&&apply(p.equipItem(b.dataset.unequip,null)))notify("Item devolvido à mochila.");
     if (b.dataset.route) {

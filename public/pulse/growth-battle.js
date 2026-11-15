@@ -1,9 +1,11 @@
 import {planCPU} from './tactical-ai.js';
 import {EVOLUTIONS,ITEMS,selectedMoves,xpAt} from './growth.js';
 export function evolutionAssets(keys){const result=new Set(keys);for(const key of result){const next=EVOLUTIONS[key]?.[0];if(next)result.add(next);}return [...result];}
-export function configureGrowthBattle(b,engine,{levels={},opponentLevel=5,selected={},held={},onConsume=()=>true,onEvolve=()=>true,preview=()=>null,onEvent=()=>{},icons={}}={}){
+export function configureGrowthBattle(b,engine,{levels={},opponentLevel=5,selected={},held={},onConsume=()=>true,onEvolve=()=>true,preview=()=>null,onEvent=()=>{},icons={},onKnockout=()=>null,onSuppress=()=>{},onPendingResolved=()=>{},pendingAuto=null,suppressedAuto={}}={}){
   b.speciesTable={...b.speciesTable};
-  let wanted=false,pending=null;
+  let wanted=false,pending=null,auto=null,deferredTried=!pendingAuto;
+  const participants=new Set(),countedKO=new Set();
+  let koXpTotal=0;
   const items=new Map(),lastHeal=new Map();
   for(const team of b.teams)for(const actor of team.mons){
     const key=actor.rkKey,level=team.side===0?levels[key]||5:opponentLevel;
@@ -19,6 +21,23 @@ export function configureGrowthBattle(b,engine,{levels={},opponentLevel=5,select
     return text(x,y,message,options);
   };
   const canEvolve=()=>{const actor=b.fighters[0];return !!(actor&&!actor.hidden&&!actor.fainted&&!b.cinematic&&preview(actor.rkKey));};
+  const maybeAutoPrompt=(key,level)=>{
+    if(auto||suppressedAuto[key]===level)return false;
+    const plan=preview(key);if(!plan)return false;
+    auto={key,target:plan.target,level,remaining:300,fromPending:false};return true;
+  };
+  const resolveAuto=()=>{if(!auto)return;auto=null;onPendingResolved();};
+  const tryEvolve=()=>{
+    const actor=b.fighters[0];if(!actor||actor.fainted)return 'abort';
+    const plan=preview(actor.rkKey);if(!plan)return 'abort';
+    if(actor.action||b.teams[0].ctl)return 'retry';
+    const oldKey=actor.rkKey,cooldowns={...actor.lastUsed};
+    if(!engine.pulseEvolve(b,actor,plan.target,plan.moves))return 'retry';
+    // Reuse the engine cinematic and HP ratio, with learned moves and no cooldown reset.
+    const target=actor.spec.evolveTo;b.speciesTable[target]={...b.speciesTable[target],level:actor.level,moves:plan.moves.map(engine.moveObj).filter(Boolean)};
+    pending={actor,plan,oldKey,cooldowns,startedTick:b.tick};onEvent({kind:'evolution',from:oldKey,target:plan.target});
+    return 'done';
+  };
   const iconEffect=(actor,item)=>{
     const image=icons[item];
     b.text(actor.x,actor.y-actor.bodyH-35,ITEMS[item].name,{kind:'status',color:'#a5ede0',life:70});
@@ -31,6 +50,9 @@ export function configureGrowthBattle(b,engine,{levels={},opponentLevel=5,select
   return {
     canEvolve,
     requestEvolution(){if(!canEvolve())return false;wanted=true;return true;},
+    cancelAutoEvolution(){if(!auto)return false;const {key,level}=auto;auto=null;onSuppress(key,level);onPendingResolved();return true;},
+    evolutionPrompt(){return auto?{from:auto.key,target:auto.target,level:auto.level,secondsLeft:Math.max(0,Math.ceil(auto.remaining/60))}:null;},
+    koXpTotal(){return koXpTotal;},
     before(){
       for(const team of b.teams)for(const actor of team.mons){
         if(actor.pulseTeleport!==undefined&&!actor.action){const to=actor.pulseTeleport;if(engine.pulseSwitch(b,actor,to))delete actor.pulseTeleport;}
@@ -38,15 +60,18 @@ export function configureGrowthBattle(b,engine,{levels={},opponentLevel=5,select
       }
       if(b.phase==='fight'&&!b.cinematic&&!b.done){const actor=b.fighters[1],opponent=b.fighters[0];if(actor?.ai&&!actor.action&&!actor.fainted&&!actor.hidden&&b.tick%36===0){const move=planCPU(actor,opponent,engine.moveStatus(b,1),b.teams[1].mons);if(move)actor.ai.plan=actor.moves.find(m=>m.name===move);}}
 
-      if(!wanted||b.phase!=='fight'||b.cinematic)return;
-      const actor=b.fighters[0],plan=preview(actor.rkKey);if(!plan||actor.fainted){wanted=false;return;}
-      if(actor.action||b.teams[0].ctl)return;
-      const oldKey=actor.rkKey,cooldowns={...actor.lastUsed};
-      if(engine.pulseEvolve(b,actor,plan.target,plan.moves)){
-        // Reuse the engine cinematic and HP ratio, with learned moves and no cooldown reset.
-        const target=actor.spec.evolveTo;b.speciesTable[target]={...b.speciesTable[target],level:actor.level,moves:plan.moves.map(engine.moveObj).filter(Boolean)};
-        pending={actor,plan,oldKey,cooldowns,startedTick:b.tick};wanted=false;onEvent({kind:'evolution',from:oldKey,target:plan.target});
+      if(pendingAuto&&!auto&&!deferredTried&&b.phase==='fight'&&!b.cinematic&&!b.done){
+        deferredTried=true;
+        const actor=b.fighters[0];
+        if(actor&&actor.rkKey===pendingAuto.mon&&!actor.fainted&&suppressedAuto[pendingAuto.mon]!==pendingAuto.level)maybeAutoPrompt(pendingAuto.mon,pendingAuto.level);
+        if(!auto)onPendingResolved();
       }
+      if(auto&&b.phase==='fight'&&!b.cinematic&&!b.done){
+        if(!b.fighters[0]||b.fighters[0].rkKey!==auto.key||b.fighters[0].fainted)resolveAuto();
+        else if(--auto.remaining<=0){const result=tryEvolve();if(result!=='retry')resolveAuto();}
+      }
+      if(!wanted||b.phase!=='fight'||b.cinematic)return;
+      if(tryEvolve()!=='retry'){wanted=false;if(auto)resolveAuto();}
     },
     after(){
       for(const team of b.teams)for(const actor of team.mons)if(actor.pulseTransform&&b.fighters[actor.side]!==actor){
@@ -56,6 +81,23 @@ export function configureGrowthBattle(b,engine,{levels={},opponentLevel=5,select
       if(pending&&!b.pulseEvolving){
         const {actor,plan,oldKey,cooldowns,startedTick}=pending;pending=null;
         if(actor.rkKey===plan.target&&!actor.fainted){actor.lastUsed=Object.fromEntries(Object.entries(cooldowns).map(([name,at])=>[name,at<0?at:at+b.tick-startedTick]));onEvolve(oldKey,plan.target);onEvent({kind:'evolved',from:oldKey,target:plan.target});}
+      }
+      if(b.fighters[0]?.rkKey)participants.add(b.fighters[0].rkKey);
+      for(const foe of b.teams[1].mons){
+        if(!foe||countedKO.has(foe)||(!foe.fainted&&foe.hp>0))continue;
+        countedKO.add(foe);
+        const killer=b.fighters[0]?.rkKey||null;
+        const result=onKnockout({foeKey:foe.rkKey,foeLevel:foe.level||opponentLevel,participants:[...participants],killer});
+        if(result?.ok){
+          koXpTotal+=result.total||0;
+          const actor=b.fighters[0];
+          if(actor&&!actor.fainted)b.text(actor.x,actor.y-actor.bodyH-35,`+${result.total} XP`,{kind:'status',color:'#f9e0a1',life:70});
+          onEvent({kind:'ko-xp',total:result.total,changes:result.changes});
+          for(const change of result.changes||[]){
+            const edge=EVOLUTIONS[change.key];
+            if(edge&&change.from<edge[1]&&change.to>=edge[1])maybeAutoPrompt(change.key,edge[1]);
+          }
+        }
       }
       if(b.phase!=='fight'||b.cinematic||b.done)return;
       for(const actor of b.fighters){

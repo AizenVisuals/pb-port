@@ -2,7 +2,7 @@
 from pathlib import Path
 import json,urllib.request,hashlib,xml.etree.ElementTree as ET,concurrent.futures,struct
 import argparse
-args=argparse.ArgumentParser();args.add_argument("--growth",action="store_true");args.add_argument("--kanto",action="store_true");options=args.parse_args()
+args=argparse.ArgumentParser();args.add_argument("--growth",action="store_true");args.add_argument("--kanto",action="store_true");args.add_argument("--dex",nargs="+",default=[]);options=args.parse_args()
 ROOT=Path(__file__).resolve().parents[1]
 revision=json.loads((ROOT/'research/shiny-assets-manifest.json').read_text())['revision']
 base=f'https://raw.githubusercontent.com/PMDCollab/SpriteCollab/{revision}/'
@@ -10,6 +10,7 @@ species={'bulbasaur':'0001','charmander':'0004','squirtle':'0007','pidgey':'0016
 if options.growth:species=dict(ivysaur='0002',charmeleon='0005',wartortle='0008',chikorita='0152',bayleef='0153',meganium='0154',cyndaquil='0155',quilava='0156',totodile='0158',croconaw='0159')
 if options.kanto:
  roster=json.loads((ROOT/'public/roster.json').read_text());have={int(m['dex'])for m in roster if m['dex'].isdigit() and len(m['dex'])==4};species={str(i):str(i).zfill(4)for i in range(1,152)if i not in have}
+if options.dex:species={dex:dex.zfill(4) for dex in options.dex}
 records=[];metadata={};failures=[]
 def fetch(job):
  source,target=job;dest=ROOT/target;dest.parent.mkdir(parents=True,exist_ok=True)
@@ -29,7 +30,8 @@ for key,dex in species.items():
     anims.append({'name':name,'w':w,'h':h,'durations':dur})
     for kind in ['Anim','Offsets','Shadow']:jobs.append((f'sprite/{dex}/{name}-{kind}.png',f'public/assets/sprites/{dex}/{name}-{kind}.png'))
   metadata[key]={'dex':dex,'animations':anims}
-  jobs.extend([(f'sprite/{dex}/credits.txt',f'public/assets/sprites/{dex}/credits.txt'),(f'portrait/{dex}/Normal.png',f'public/assets/portraits/{dex}_Normal.png'),(f'portrait/{dex}/credits.txt',f'public/assets/portraits/{dex}_credits.txt')])
+  jobs.append((f'sprite/{dex}/credits.txt',f'public/assets/sprites/{dex}/credits.txt'))
+  if not options.dex:jobs.extend([(f'portrait/{dex}/Normal.png',f'public/assets/portraits/{dex}_Normal.png'),(f'portrait/{dex}/credits.txt',f'public/assets/portraits/{dex}_credits.txt')])
  except Exception as e:failures.append({'species':key,'error':str(e)})
 with concurrent.futures.ThreadPoolExecutor(max_workers=10) as pool:
  futures={pool.submit(fetch,j):j for j in jobs}
@@ -43,6 +45,6 @@ for key,entry in metadata.items():
    w,h=struct.unpack('>II',p.read_bytes()[16:24])
    if w%a['w'] or h%a['h'] or w//a['w']!=len(a['durations']):failures.append({'species':key,'animation':a['name'],'error':'Sheet geometry does not match metadata'})
 report={'revision':revision,'origin':'https://github.com/PMDCollab/SpriteCollab','scope':'Canonical animation assets only; combat definitions and runtime tests still required. Original artist credits preserved.','species':metadata,'files':sorted(records,key=lambda r:r['path']),'failures':failures}
-(ROOT/('research/campaign/kanto-sprite-import.json' if options.kanto else 'research/campaign/growth-sprite-import.json' if options.growth else 'research/campaign/sprite-import.json')).write_text(json.dumps(report,indent=2)+'\n')
+(ROOT/('research/campaign/dex-sprite-import.json' if options.dex else 'research/campaign/kanto-sprite-import.json' if options.kanto else 'research/campaign/growth-sprite-import.json' if options.growth else 'research/campaign/sprite-import.json')).write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps({'species':len(metadata),'files':len(records),'failures':failures}))
 raise SystemExit(bool(failures))

@@ -76,3 +76,86 @@ test('invalid diamond and shiny imports preserve previous save',()=>{
 test('duplicate diamond amounts follow rarity and never refund coins',()=>{
  for(const [roll,rarity]of [[0,'common'],[.7,'rare'],[.95,'epic']]){const values=[roll,0],disk=storage(),p=fixture({storage:disk,rng:()=>values.shift()});const rich=JSON.parse(p.exportSave());rich.unlocked=roster.map(m=>m.key);p.importSave(JSON.stringify(rich));const result=p.summon();assert.equal(result.pulls[0].duplicate,true);assert.equal(result.diamonds,ECONOMY.duplicateDiamonds[rarity]);assert.equal(p.getSave().coins,500);const q=fixture({storage:disk});assert.equal(q.getSave().diamonds,result.diamonds);}
 });
+
+function journeyFixture(disk){const p=createProgression({storage:disk||storage(),profileMode:'journey',now:()=>Date.UTC(2026,10,15)});assert.equal(p.setCatalog(roster).ok,true);return p;}
+test('trade evolutions unlock at level 36 and manual evolution clears suppression',()=>{
+ const p=journeyFixture();assert.equal(p.chooseStarter('charmander').ok,true);
+ const rich=JSON.parse(p.exportSave());
+ for(const key of ['haunter','kadabra','machoke','graveler'])rich.unlocked.push(key);
+ rich.growth.pokemon={...rich.growth.pokemon,haunter:{xp:42875},kadabra:{xp:42875},machoke:{xp:42875},graveler:{xp:42875}};
+ assert.equal(p.importSave(JSON.stringify(rich)).ok,true);
+ assert.equal(p.previewEvolution('haunter'),null);assert.equal(p.previewEvolution('kadabra'),null);
+ for(const key of ['haunter','kadabra','machoke','graveler'])rich.growth.pokemon[key]={xp:46656};
+ assert.equal(p.importSave(JSON.stringify(rich)).ok,true);
+ assert.equal(p.previewEvolution('haunter')?.target,'gengar');
+ assert.equal(p.previewEvolution('kadabra')?.target,'alakazam');
+ assert.equal(p.previewEvolution('machoke')?.target,'machamp');
+ assert.equal(p.previewEvolution('graveler')?.target,'golem');
+ assert.equal(p.suppressAutoEvolution('haunter',36).ok,true);
+ assert.equal(p.evolvePokemon('haunter','gengar').ok,true);
+ assert.ok(p.getSave().unlocked.includes('gengar'));assert.ok(!p.getSave().unlocked.includes('haunter'));
+ assert.equal(p.getSave().growth.suppressedAuto.haunter,undefined);
+});
+test('knockout XP splits among participants and the killer takes the remainder',()=>{
+ const p=journeyFixture();assert.equal(p.chooseStarter('charmander').ok,true);
+ const rich=JSON.parse(p.exportSave());
+ rich.unlocked.push('bulbasaur');
+ assert.equal(p.importSave(JSON.stringify(rich)).ok,true);
+ const before=p.getSave().growth.pokemon;
+ const result=p.awardKnockoutXP({foeLevel:5,participants:['charmander','bulbasaur'],killer:'bulbasaur'});
+ assert.equal(result.ok,true);assert.equal(result.total,91);
+ assert.equal(result.changes.find(c=>c.key==='charmander').xp,45);
+ assert.equal(result.changes.find(c=>c.key==='bulbasaur').xp,46);
+ assert.equal(p.getSave().growth.pokemon.charmander.xp,before.charmander.xp+45);
+ assert.equal(p.getSave().growth.pokemon.bulbasaur.xp,before.bulbasaur.xp+46);
+ assert.equal(p.awardKnockoutXP({foeLevel:5,participants:[],killer:null}).ok,false);
+ assert.equal(p.awardKnockoutXP({foeLevel:5,participants:['charmander'],killer:'charmander'}).total,91);
+});
+test('battle-end XP goes to the trainer, not the Pokémon',()=>{
+ const p=journeyFixture();assert.equal(p.chooseStarter('charmander').ok,true);
+ const before=p.getSave();
+ const reward=p.recordBattle(battle());
+ assert.equal(reward.trainerXp.xp,285);assert.equal(reward.trainerXp.from,1);assert.equal(reward.trainerXp.to,6);
+ assert.equal(p.getSave().trainer.xp,285);assert.equal(reward.growth,undefined);
+ assert.equal(p.getSave().growth.pokemon.charmander.xp,before.growth.pokemon.charmander.xp);
+ const q=journeyFixture();assert.equal(q.chooseStarter('charmander').ok,true);
+ const defeat=q.recordBattle(battle({won:false,reason:'loss'}));
+ assert.equal(defeat.trainerXp.xp,60);assert.equal(q.getSave().trainer.xp,60);
+ assert.equal(q.getSave().growth.pokemon.charmander.xp,125);
+});
+test('legacy saves gain trainer XP without losing progress',()=>{
+ const disk=storage(),p=fixture({storage:disk});const old=JSON.parse(p.exportSave());delete old.trainer;old.trainerName='Legado';disk.setItem(SAVE_KEY,JSON.stringify(old));const q=fixture({storage:disk});assert.equal(q.getSave().trainerName,'Legado');assert.deepEqual(q.getSave().trainer,{xp:0});assert.equal(q.status().recovered,false);
+});
+test('auto-evolution suppression and deferral persist across loads',()=>{
+ const disk=storage(),p=journeyFixture(disk);assert.equal(p.chooseStarter('charmander').ok,true);
+ const rich=JSON.parse(p.exportSave());rich.unlocked.push('haunter');assert.equal(p.importSave(JSON.stringify(rich)).ok,true);
+ assert.equal(p.deferAutoEvolution('haunter',36).ok,true);
+ assert.deepEqual(p.getSave().growth.pendingAuto,{mon:'haunter',level:36});
+ assert.equal(p.suppressAutoEvolution('haunter',36).ok,true);
+ assert.deepEqual(p.getSave().growth.suppressedAuto,{haunter:36});
+ assert.equal(p.getSave().growth.pendingAuto,null);
+ const q=journeyFixture(disk);assert.deepEqual(q.getSave().growth.suppressedAuto,{haunter:36});assert.equal(q.getSave().growth.pendingAuto,null);
+ assert.equal(q.clearPendingAuto().ok,true);
+ const bad=JSON.parse(q.exportSave());bad.growth.suppressedAuto={unknown:36};assert.equal(q.importSave(JSON.stringify(bad)).ok,false);
+ const badPending=JSON.parse(q.exportSave());badPending.growth.pendingAuto={mon:'unknown',level:36};assert.equal(q.importSave(JSON.stringify(badPending)).ok,false);
+});
+
+test('stone evolutions are manual, cost coins and consume exactly one stone',()=>{
+ const disk=storage(),p=journeyFixture(disk);assert.equal(p.chooseStarter('charmander').ok,true);
+ const rich=JSON.parse(p.exportSave());rich.unlocked.push('vulpix','eevee','pikachu');rich.coins=2000;
+ assert.equal(p.importSave(JSON.stringify(rich)).ok,true);
+ assert.equal(p.useStone('vulpix','fire-stone').ok,false);
+ const bought=p.buyStone('fire-stone');assert.equal(bought.ok,true);assert.equal(bought.spent,400);assert.equal(p.getSave().coins,1600);assert.equal(p.getSave().growth.stoneInventory['fire-stone'],1);
+ assert.equal(p.useStone('pikachu','fire-stone').ok,false);
+ assert.equal(p.getSave().growth.stoneInventory['fire-stone'],1);
+ const r=p.useStone('vulpix','fire-stone');assert.equal(r.ok,true);assert.equal(r.target,'ninetales');
+ assert.equal(p.getSave().growth.stoneInventory['fire-stone'],0);
+ assert.ok(p.getSave().unlocked.includes('ninetales'));assert.ok(!p.getSave().unlocked.includes('vulpix'));
+ assert.equal(p.buyStone('thunder-stone').ok,true);
+ assert.equal(p.useStone('eevee','thunder-stone').target,'jolteon');
+ assert.equal(p.buyStone('moon-stone').spent,600);
+ assert.equal(p.buyStone('unknown').ok,false);
+ const poor=JSON.parse(p.exportSave());poor.coins=10;assert.equal(p.importSave(JSON.stringify(poor)).ok,true);
+ assert.equal(p.buyStone('fire-stone').ok,false);
+ const bad=JSON.parse(p.exportSave());bad.growth.stoneInventory={unknown:1};assert.equal(p.importSave(JSON.stringify(bad)).ok,false);
+});
