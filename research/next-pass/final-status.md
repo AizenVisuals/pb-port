@@ -11,3 +11,5 @@
 - PB/meta: superfíciepública comparada empb-comparison.md; dados públicos28dias porformato emmeta-observed.md/usage-28days.json. Popularidade não foi convertida em estatísticas/poder/custo. Recursosonline deprodução não foram anunciados comoimplementados.
 - Validação:63/63testes;20capturas844×390/1280×720 semerros/overflow;TMadquirir→mochila→ensinar→reload;controlepadrão simulado menus+combate+pausa;smokerealTeleport/Transform/Harden/Ember. Não são certificação de todas animações/combinações nembalanceamentohumano de10fases ouperformanceprolongada.
 - APK0.4.0-test.1/versionCode4 compilado;preservarprogresso naatualização. Backupprivado pré-instalação fora doGit.
+
+Release0.4.0 confirmada na API: digest a3630d03bafa6b3ac70a96b40dc8f45ebf3af667e954b4fd7e0a41f9976b6787; sprites/mapas com proveniência no source. O pedido seguinte passou a ser apenas novas criaturas noPBpúblico; nenhum novo APK da expansão de criaturas solicitado.
