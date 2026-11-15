@@ -162,6 +162,7 @@ export class OfflineBattle {
       const maxHp = Math.max(1, actor?.maxHp || 1), hp = Math.max(0, actor?.hp || 0);
       return {key, dex: actor?.spec?.dex || info?.dex, name: actor?.name || info?.name || key || '', index,
         level:actor?.level||50,hp, maxHp, hpRatio: hp / maxHp, types: [...(actor?.types || info?.types || [])], status: actor?.status || null,
+        frozen: (actor?.frozen || 0) > 0, confused: (actor?.confusedT || 0) > 0, toxic: !!actor?.toxic,
         fainted: !!actor?.fainted, hidden: !!actor?.hidden, active: actor === activeActor,
         mega: !!actor?.spec?.megaForm || /^MEGA /i.test(actor?.name || ''),
         portrait: info?.dex ? `assets/portraits/${info.dex}_Normal.png` : null};

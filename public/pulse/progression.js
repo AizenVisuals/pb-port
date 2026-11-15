@@ -1,11 +1,11 @@
 import {LEARNSETS} from './learnsets.js';
 const moveRequirementAvailable=(key,id)=>LEARNSETS[key]?.levelMoves[id]!==undefined||LEARNSETS[key]?.specialMoves.includes(id);
 import {initialGrowth,ensureGrowth,validateGrowth,learnedMoves,selectedMoves,levelOf,xpAt,addXP,koXpFor,ITEMS,STONES,STONE_EVOLUTIONS,EVOLUTIONS,specialPool,awardTicketWin} from './growth.js';
-import {bannerPool} from './banners.js';
-import {INITIAL_PARTNERS,CHAPTER_ONE,newJourney,validateJourney} from './campaign.js';
+import {bannerPool,isSummonable} from './banners.js';
+import {INITIAL_PARTNERS,ALL_STAGES,newJourney,validateJourney} from './campaign.js';
 /** PULSE ARENA local-only progression. Acquisition rarity never modifies combat stats. */
 export const SAVE_KEY='pulse-arena.save.v1';
-export const ECONOMY=Object.freeze({summonCost:100,dailyCoins:150,duplicateDiamonds:Object.freeze({common:10,rare:30,epic:100}),prices:Object.freeze({common:60,rare:180,epic:600}),shinyPrice:300,rates:Object.freeze({common:.70,rare:.25,epic:.05}),pityAt:10});
+export const ECONOMY=Object.freeze({summonDiamondCost:100,dailyCoins:150,duplicateDiamonds:Object.freeze({C:10,R:30,SR:60,UR:300,SSS:150}),prices:Object.freeze({C:60,R:180,SR:360,UR:1800,SSS:900}),shinyPrice:300,rates:Object.freeze({C:.70,R:.21,SR:.078,UR:.005,SSS:.007}),pityAt:10,ticketDropRate:.10});
 export const STARTERS=Object.freeze(['marshadow','lucario','gengar','charizard','blastoise','venusaur']);
 const clone=value=>JSON.parse(JSON.stringify(value));
 const freeze=value=>{if(value&&typeof value==='object'){Object.freeze(value);for(const item of Object.values(value))freeze(item);}return value;};
@@ -15,10 +15,10 @@ const unique=items=>new Set(items).size===items.length;
 const utcDay=timestamp=>new Date(timestamp).toISOString().slice(0,10);
 const success=(save,extra={})=>({ok:true,...extra,save:freeze(clone(save))});
 const failure=error=>({ok:false,error});
-const defaultSave=timestamp=>({version:1,trainerName:'Treinador',trainer:{xp:0},coins:600,diamonds:0,shinies:[],shinyEquipped:[],unlocked:[...STARTERS],favorite:'marshadow',team:{mons:STARTERS.slice(0,3),moves:{},gimmick:null},records:{battles:0,wins:0,losses:0},gacha:{pulls:0,pity:0},dailyClaimedAt:null,claimedBattles:[],lastRewardAt:null,createdAt:timestamp,updatedAt:timestamp});
+const defaultSave=timestamp=>({version:1,trainerName:'Treinador',trainer:{xp:0},coins:600,diamonds:0,tickets:0,starterTicketsClaimed:false,shinies:[],shinyEquipped:[],unlocked:[...STARTERS],favorite:'marshadow',team:{mons:STARTERS.slice(0,3),moves:{},gimmick:null},records:{battles:0,wins:0,losses:0},gacha:{pulls:0,pity:0},dailyClaimedAt:null,claimedBattles:[],lastRewardAt:null,createdAt:timestamp,updatedAt:timestamp});
 function validateSave(value){
  if(value?.journey)validateJourney(value.journey);
- if(value?.version===1){value={...value,diamonds:value.diamonds??0,shinies:value.shinies??[],shinyEquipped:value.shinyEquipped??[],trainer:value.trainer??{xp:0}};}
+ if(value?.version===1){value={...value,diamonds:value.diamonds??0,tickets:value.tickets??0,starterTicketsClaimed:value.starterTicketsClaimed??false,shinies:value.shinies??[],shinyEquipped:value.shinyEquipped??[],trainer:value.trainer??{xp:0}};}
  validateGrowth(value);
  if(!value||value.version!==1)throw Error('Versão de progresso não suportada.');
  if(typeof value.trainerName!=='string'||!validName(value.trainerName))throw Error('Nome de treinador inválido.');
@@ -26,6 +26,7 @@ function validateSave(value){
  if(!integer(value.coins)||!Array.isArray(value.unlocked)||(!value.unlocked.length&&!(value.profileMode==='journey'&&value.journey?.starter===null))||!value.unlocked.every(key)||!unique(value.unlocked))throw Error('Coleção ou saldo inválido.');
  if(!(value.favorite===null&&value.profileMode==='journey'&&value.journey?.starter===null)&&(!key(value.favorite)||!value.unlocked.includes(value.favorite)))throw Error('Favorito inválido.');
  if(!integer(value.diamonds)||!Array.isArray(value.shinies)||!unique(value.shinies)||!value.shinies.every(m=>key(m)&&value.unlocked.includes(m))||!Array.isArray(value.shinyEquipped)||!unique(value.shinyEquipped)||!value.shinyEquipped.every(m=>value.shinies.includes(m)))throw Error('Diamantes ou versões shiny inválidos.');
+ if(!integer(value.tickets)||typeof value.starterTicketsClaimed!=='boolean')throw Error('Tickets de invocação inválidos.');
  const t=value.team;if(!t||!Array.isArray(t.mons)||!(value.growth||value.profileMode==='journey'?integer(t.mons.length,value.journey?.starter===null?0:1,6):[3,6].includes(t.mons.length))||!unique(t.mons)||!t.mons.every(m=>value.unlocked.includes(m)))throw Error('Equipe inválida.');
  if(!t.moves||typeof t.moves!=='object'||Array.isArray(t.moves))throw Error('Lista de golpes inválida.');
  for(const [mon,moves] of Object.entries(t.moves))if(!key(mon)||!Array.isArray(moves)||moves.length>4||!moves.every(m=>typeof m==='string'&&m.length<160)||!unique(moves))throw Error('Golpes inválidos.');
@@ -40,11 +41,15 @@ function validateSave(value){
  return clone(value);
 }
 function validName(name){return typeof name==='string'&&/^[\p{L}\p{N} ._'-]{2,16}$/u.test(name.trim());}
+const SUMMON_SR=Object.freeze(['dratini','eevee','omanyte','kabuto']);
+// R explicito por especie: o hash antigo deixava a Batalha sem R (nenhum dos 10 C sorteava raro) e a Noite com um so.
+const SUMMON_R=Object.freeze(['staryu','slowpoke','gastly','vulpix','meowth','ekans','jigglypuff','zubat','weedle','rhyhorn','spiritomb']);
 function acquisitionRarity(mon){
- if(['articuno','zapdos','moltres','mewtwo','mew','dragonite','marshadow','gardevoir','metagross','dragoniteL','garchomp','greninja','tyranitar','salamence'].includes(mon.key))return 'epic';
- // Stable catalog grouping, unrelated to base stats or battle modifiers.
- let hash=0;for(const c of mon.key)hash=(hash*31+c.charCodeAt(0))>>>0;
- return hash%10<3?'rare':'common';
+ if(['mew','marshadow'].includes(mon.key))return 'SSS';
+ if(['articuno','zapdos','moltres','mewtwo'].includes(mon.key))return 'UR';
+ if(SUMMON_SR.includes(mon.key))return 'SR';
+ if(SUMMON_R.includes(mon.key))return 'R';
+ return 'C';
 }
 function randomFloat(){
  if(globalThis.crypto?.getRandomValues){const bytes=new Uint32Array(1);globalThis.crypto.getRandomValues(bytes);return bytes[0]/4294967296;}
@@ -105,8 +110,8 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
    persist();return success(save);
   },
   beginStage(stage,id){
-   const j=save.journey,s=CHAPTER_ONE.find(x=>x.id===stage);
-   if(!j?.starter||!s||CHAPTER_ONE.indexOf(s)>j.cleared.length||typeof id!=='string'||!id.length||id.length>160)return failure('Fase indisponível.');
+   const j=save.journey,s=ALL_STAGES.find(x=>x.id===stage);
+   if(!j?.starter||!s||ALL_STAGES.indexOf(s)>j.cleared.length||typeof id!=='string'||!id.length||id.length>160)return failure('Fase indisponível.');
    if(j.resolvedBattles.includes(id))return failure('Essa tentativa já foi encerrada.');
    if(j.active)return failure('Conclua ou abandone a fase em andamento primeiro.');
    j.active={id,stage,encounter:s.wild?{key:s.wild,state:'pending',attempts:0}:null};persist();return success(save);
@@ -127,10 +132,11 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
    const j=save.journey;
    if(!j?.active||result?.id!==j.active.id||typeof result.won!=='boolean'||!integer(result.frames,60))return failure('Resultado de fase inválido.');
    if(j.active.encounter?.state==='pending')return failure('Resolva o encontro selvagem primeiro.');
-   const stage=CHAPTER_ONE.find(x=>x.id===j.active.stage);let coins=0;const first=result.won&&!j.cleared.includes(stage.id);
-   const trainerXp=addTrainerXP(result.won?(first?300+CHAPTER_ONE.indexOf(stage)*180:150+CHAPTER_ONE.indexOf(stage)*30):60);let tickets=awardTicketWin(save,result.won);if(first&&save.growth){save.growth.inventory.moveTicket++;tickets++;}
+   const stage=ALL_STAGES.find(x=>x.id===j.active.stage);let coins=0;const first=result.won&&!j.cleared.includes(stage.id);
+   const trainerXp=addTrainerXP(result.won?(first?300+ALL_STAGES.indexOf(stage)*180:150+ALL_STAGES.indexOf(stage)*30):60);let tickets=awardTicketWin(save,result.won);if(first&&save.growth){save.growth.inventory.moveTicket++;tickets++;}
+   let gachaTickets=0;if(first){const dropRoll=Number(rng());if(Number.isFinite(dropRoll)&&dropRoll<ECONOMY.ticketDropRate){save.tickets=(save.tickets||0)+1;gachaTickets=1;}}
    if(result.won&&!j.cleared.includes(stage.id)){j.cleared.push(stage.id);coins=stage.firstClearCoins;save.coins+=coins;if(stage.badge)j.badges.push(stage.badge);}
-   save.records.battles++;save.records[result.won?'wins':'losses']++;j.resolvedBattles.push(j.active.id);j.active=null;persist();return success(save,{coins,trainerXp,tickets});
+   save.records.battles++;save.records[result.won?'wins':'losses']++;j.resolvedBattles.push(j.active.id);j.active=null;persist();return success(save,{coins,trainerXp,tickets,gachaTickets});
   },
   getMoves(mon){const item=entry(mon);return item?clone(learnedMoves(save,item)):[];},
   getTeam(){const team=clone(save.team);if(save.growth)for(const key of team.mons)team.moves[key]=selectedMoves(save,entry(key));return team;},
@@ -181,25 +187,31 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
   setMoves(mon,ids){if(!entry(mon)||!save.unlocked.includes(mon)||!legalMoves(mon,ids))return failure('Escolha quatro golpes diferentes da lista desse Pokémon.');save.team.moves[mon]=[...ids];persist();return success(save);},
   setMega(mon){if(mon===null){save.team.gimmick=null;}else{if(!integer(mon,0,save.team.mons.length-1)||!entry(save.team.mons[mon])?.mega)return failure('Esse Pokémon não possui Mega Evolução.');save.team.gimmick={kind:'mega',mon};}persist();return success(save);},
   claimDaily(){const day=utcDay(time());if(save.dailyClaimedAt&&save.dailyClaimedAt>=day)return failure('A recompensa de hoje já foi recebida.');save.dailyClaimedAt=day;save.coins+=ECONOMY.dailyCoins;const tickets=save.growth?2:0;if(save.growth)save.growth.inventory.moveTicket+=tickets;persist();return success(save,{coins:ECONOMY.dailyCoins,tickets});},
+  claimStarterTickets(){if(save.starterTicketsClaimed)return failure('Recompensa inicial já resgatada.');save.starterTicketsClaimed=true;save.tickets=(save.tickets||0)+10;persist();return success(save,{tickets:10});},
   summon(count=1,bannerId='route'){
    if(!integer(count,1,10))return failure('Escolha de 1 a 10 invocações.');if(!monsters.size)return failure('A coleção ainda está carregando.');
    const selection=bannerPool([...monsters.values()],bannerId);if(!selection)return failure('Banner indisponível.');
-   const spent=count*ECONOMY.summonCost;if(save.coins<spent)return failure('Moedas insuficientes.');
-   const pools={common:[],rare:[],epic:[]};for(const mon of selection)pools[mon.rarity].push(mon);
-   if(!pools.common.length||!pools.rare.length||!pools.epic.length)return failure('Catálogo de invocação incompleto.');
+   const useTickets=Math.min(count,save.tickets||0),diamondPulls=count-useTickets,spentDiamonds=diamondPulls*ECONOMY.summonDiamondCost;if(save.diamonds<spentDiamonds)return failure('Tickets e diamantes insuficientes.');
+   const pools={C:[],R:[],SR:[],UR:[],SSS:[]};for(const mon of selection)pools[mon.rarity].push(mon);
+   if(!pools.C.length)return failure('Catálogo de invocação incompleto.');
+   const tierOrder=['UR','SSS','SR','R','C'];
+   const pickTier=wanted=>{let i=tierOrder.indexOf(wanted);for(;i<tierOrder.length;i++)if(pools[tierOrder[i]].length)return tierOrder[i];return null;};
+   const rollTier=roll=>roll<.70?'C':roll<.91?'R':roll<.988?'SR':roll<.993?'UR':'SSS';
+   const pityTiers=['R','SR','SSS','UR'],pityWeights={R:.70,SR:.26,UR:.0167,SSS:.0233};
+   const pickPityTier=roll=>{const available=pityTiers.filter(t=>pools[t].length);if(!available.length)return null;const total=available.reduce((sum,t)=>sum+pityWeights[t],0);let acc=0;const scaled=roll*total;for(const t of available){acc+=pityWeights[t];if(scaled<acc)return t;}return available[available.length-1];};
    const next=clone(save),pulls=[];let diamonds=0;next.gacha.banners||={};const meter=bannerId==='route'?{pulls:next.gacha.pulls,pity:next.gacha.pity}:(next.gacha.banners[bannerId]||{pulls:0,pity:0});
    try{for(let i=0;i<count;i++){
     const roll=Number(rng()),choice=Number(rng());if(!Number.isFinite(roll)||roll<0||roll>=1||!Number.isFinite(choice)||choice<0||choice>=1)throw Error('A invocação não pôde ser sorteada. Tente novamente.');
     const guaranteed=meter.pity>=ECONOMY.pityAt-1;
-    const rarity=guaranteed?(roll<.95?'rare':'epic'):(roll<.70?'common':roll<.95?'rare':'epic');
+    const rarity=guaranteed?pickPityTier(roll):pickTier(rollTier(roll));if(!rarity)throw Error('Catálogo de invocação incompleto.');
     const mon=pools[rarity][Math.floor(choice*pools[rarity].length)],duplicate=next.unlocked.includes(mon.key),rebate=duplicate?ECONOMY.duplicateDiamonds[rarity]:0;
-    if(!duplicate)next.unlocked.push(mon.key);diamonds+=rebate;meter.pulls++;meter.pity=rarity==='common'?meter.pity+1:0;
+    if(!duplicate)next.unlocked.push(mon.key);diamonds+=rebate;meter.pulls++;meter.pity=rarity==='C'?meter.pity+1:0;
     pulls.push({key:mon.key,name:mon.name,rarity,duplicate,diamonds:rebate,guaranteed});
    }}catch(error){return failure(error.message);}
    if(bannerId==='route'){next.gacha.pulls=meter.pulls;next.gacha.pity=meter.pity;}else next.gacha.banners[bannerId]=meter;
-   next.coins-=spent;next.diamonds+=diamonds;save=next;ensureGrowth(save,monsters);persist();return success(save,{pulls,spent,diamonds});
+   next.tickets=(next.tickets||0)-useTickets;next.diamonds+=diamonds-spentDiamonds;save=next;ensureGrowth(save,monsters);persist();return success(save,{pulls,spentTickets:useTickets,spentDiamonds,diamonds});
   },
-  buyPokemon(mon){const item=entry(mon);if(!item)return failure('Pokémon indisponível.');if(save.unlocked.includes(mon))return failure('Esse Pokémon já está na sua coleção.');const spent=ECONOMY.prices[item.rarity];if(save.diamonds<spent)return failure('Diamantes insuficientes.');save.diamonds-=spent;save.unlocked.push(mon);ensureGrowth(save,monsters);persist();return success(save,{key:mon,spent});},
+  buyPokemon(mon){const item=entry(mon);if(!item||!isSummonable(mon))return failure('Esse Pokémon só pode ser obtido por evolução.');if(save.unlocked.includes(mon))return failure('Esse Pokémon já está na sua coleção.');const spent=ECONOMY.prices[item.rarity];if(save.diamonds<spent)return failure('Diamantes insuficientes.');save.diamonds-=spent;save.unlocked.push(mon);ensureGrowth(save,monsters);persist();return success(save,{key:mon,spent});},
   buyShiny(mon){if(!entry(mon)||!shinyCatalog.has(mon))return failure('Versão shiny indisponível nesta edição.');if(!save.unlocked.includes(mon))return failure('Desbloqueie o Pokémon primeiro.');if(save.shinies.includes(mon))return failure('Você já possui essa versão shiny.');if(save.diamonds<ECONOMY.shinyPrice)return failure('Diamantes insuficientes.');save.diamonds-=ECONOMY.shinyPrice;save.shinies.push(mon);save.shinyEquipped.push(mon);persist();return success(save,{spent:ECONOMY.shinyPrice});},
   equipShiny(mon,on){if(!save.shinies.includes(mon))return failure('Adquira essa versão shiny primeiro.');save.shinyEquipped=save.shinyEquipped.filter(k=>k!==mon);if(on)save.shinyEquipped.push(mon);persist();return success(save);},
   recordBattle(result){
@@ -230,6 +242,7 @@ export const setTeam=(...args)=>local.setTeam(...args);
 export const setMoves=(...args)=>local.setMoves(...args);
 export const setMega=(...args)=>local.setMega(...args);
 export const claimDaily=(...args)=>local.claimDaily(...args);
+export const claimStarterTickets=(...args)=>local.claimStarterTickets(...args);
 export const summon=(...args)=>local.summon(...args);
 export const buyPokemon=(...args)=>local.buyPokemon(...args);
 export const recordBattle=(...args)=>local.recordBattle(...args);

@@ -2,9 +2,10 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createProgression,ECONOMY,SAVE_KEY,STARTERS} from '../public/pulse/progression.js';
+import {isSummonable} from '../public/pulse/banners.js';
 const roster=JSON.parse(await readFile(new URL('../public/roster.json',import.meta.url),'utf8'));
 const storage=()=>{const values=new Map;return {values,getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value)};};
-function fixture(options={}){const p=createProgression({storage:storage(),now:()=>Date.UTC(2026,10,15),...options});assert.equal(p.setCatalog(roster).ok,true);return p;}
+function fixture(options={}){const p=createProgression({storage:storage(),now:()=>Date.UTC(2026,10,15),...options});assert.equal(p.setCatalog(roster).ok,true);if(!p.getSave().starterTicketsClaimed)assert.equal(p.claimStarterTickets().ok,true);return p;}
 const battle=(extra={})=>({id:'battle-1',won:true,reason:'win',frames:600,difficulty:3,format:'3v3',...extra});
 test('starter collection includes playable 3v3 and 6v6 without spending',()=>{
  const p=fixture(),s=p.getSave();assert.equal(s.coins,600);assert.ok(STARTERS.every(k=>s.unlocked.includes(k)));assert.equal(s.team.mons.length,3);
@@ -34,21 +35,21 @@ test('battle rewards are persistent and idempotent, exclude surrender/short runs
  assert.equal(p.getSave().records.battles,5);assert.equal(p.recordBattle(battle({id:'bad',reason:'win',won:false})).ok,false);
 });
 test('gacha applies normal probability boundaries, charges coins and awards diamonds for duplicates',()=>{
- for(const [roll,rarity]of [[0,'common'],[.699999,'common'],[.7,'rare'],[.94999,'rare'],[.95,'epic'],[.999999,'epic']]){
-  const values=[roll,0];const p=fixture({rng:()=>values.shift()});const before=p.getSave();const result=p.summon();assert.equal(result.ok,true);assert.equal(result.pulls[0].rarity,rarity);assert.equal(result.spent,100);assert.equal(p.getSave().coins,before.coins-100);
+ for(const [roll,rarity]of [[0,'C'],[.699999,'C'],[.7,'R'],[.909999,'R'],[.91,'SR'],[.987999,'SR'],[.988,'UR'],[.992999,'UR'],[.993,'SSS'],[.999999,'SSS']]){
+  const values=[roll,0];const p=fixture({rng:()=>values.shift()});const before=p.getSave();const result=p.summon();assert.equal(result.ok,true);assert.equal(result.pulls[0].rarity,rarity);assert.equal(result.spentTickets,1);assert.equal(result.spentDiamonds,0);assert.equal(p.getSave().tickets,before.tickets-1);assert.equal(p.getSave().coins,before.coins);
  }
- const p=fixture({rng:()=>0});const first=p.summon(),second=p.summon();assert.equal(second.pulls[0].duplicate,true);assert.equal(second.diamonds,ECONOMY.duplicateDiamonds.common);assert.equal(p.getSave().diamonds,first.diamonds+second.diamonds);assert.equal(second.pulls[0].key,first.pulls[0].key);
+ const p=fixture({rng:()=>0});const first=p.summon(),second=p.summon();assert.equal(second.pulls[0].duplicate,true);assert.equal(second.diamonds,ECONOMY.duplicateDiamonds.C);assert.equal(p.getSave().diamonds,first.diamonds+second.diamonds);assert.equal(second.pulls[0].key,first.pulls[0].key);
 });
-test('tenth consecutive common pull guarantees rare or better and persists pity across loads',()=>{
+test('tenth consecutive C pull guarantees R or better and persists pity across loads',()=>{
  const disk=storage();const p=fixture({storage:disk,rng:()=>0});const rich=JSON.parse(p.exportSave());rich.coins=3000;assert.equal(p.importSave(JSON.stringify(rich)).ok,true);
- const nine=p.summon(9);assert.equal(nine.ok,true);assert.equal(p.getSave().gacha.pity,9);assert.ok(nine.pulls.every(m=>m.rarity==='common'));
- const q=fixture({storage:disk,rng:()=>0});const tenth=q.summon();assert.equal(tenth.pulls[0].guaranteed,true);assert.equal(tenth.pulls[0].rarity,'rare');assert.equal(q.getSave().gacha.pity,0);
+ const nine=p.summon(9);assert.equal(nine.ok,true);assert.equal(p.getSave().gacha.pity,9);assert.ok(nine.pulls.every(m=>m.rarity==='C'));
+ const q=fixture({storage:disk,rng:()=>0});const tenth=q.summon();assert.equal(tenth.pulls[0].guaranteed,true);assert.equal(tenth.pulls[0].rarity,'R');assert.equal(q.getSave().gacha.pity,0);
 });
 test('bad RNG, insufficient balance and invalid counts are transactional',()=>{
  const p=fixture({rng:()=>1});const before=p.exportSave();assert.equal(p.summon().ok,false);assert.equal(p.exportSave(),before);assert.equal(p.summon(0).ok,false);assert.equal(p.summon(11).ok,false);assert.equal(p.summon(10).ok,false);
 });
 test('direct unlock is an alternative with explicit price and no duplicate charges',()=>{
- const p=fixture();const mon=p.getCatalog().find(m=>!m.owned&&m.rarity==='common');const rich=JSON.parse(p.exportSave());rich.diamonds=1000;assert.equal(p.importSave(JSON.stringify(rich)).ok,true);const before=p.getSave().diamonds;assert.equal(p.buyPokemon(mon.key).ok,true);assert.equal(p.getSave().diamonds,before-mon.price);assert.ok(p.getSave().unlocked.includes(mon.key));assert.equal(p.buyPokemon(mon.key).ok,false);assert.equal(p.getSave().diamonds,before-mon.price);
+ const p=fixture();const mon=p.getCatalog().find(m=>!m.owned&&m.rarity==='C'&&isSummonable(m.key));const rich=JSON.parse(p.exportSave());rich.diamonds=1000;assert.equal(p.importSave(JSON.stringify(rich)).ok,true);const before=p.getSave().diamonds;assert.equal(p.buyPokemon(mon.key).ok,true);assert.equal(p.getSave().diamonds,before-mon.price);assert.ok(p.getSave().unlocked.includes(mon.key));assert.equal(p.buyPokemon(mon.key).ok,false);assert.equal(p.getSave().diamonds,before-mon.price);
 });
 test('corrupt saves are backed up and recovery is visible; storage failures keep a usable session',()=>{
  const disk=storage();disk.setItem(SAVE_KEY,'broken json');const p=fixture({storage:disk});assert.equal(p.status().recovered,true);assert.match(p.status().message,/cópia/);assert.ok([...disk.values.entries()].some(([k,v])=>k.includes('.recovery.')&&v==='broken json'));
@@ -74,7 +75,7 @@ test('invalid diamond and shiny imports preserve previous save',()=>{
 });
 
 test('duplicate diamond amounts follow rarity and never refund coins',()=>{
- for(const [roll,rarity]of [[0,'common'],[.7,'rare'],[.95,'epic']]){const values=[roll,0],disk=storage(),p=fixture({storage:disk,rng:()=>values.shift()});const rich=JSON.parse(p.exportSave());rich.unlocked=roster.map(m=>m.key);p.importSave(JSON.stringify(rich));const result=p.summon();assert.equal(result.pulls[0].duplicate,true);assert.equal(result.diamonds,ECONOMY.duplicateDiamonds[rarity]);assert.equal(p.getSave().coins,500);const q=fixture({storage:disk});assert.equal(q.getSave().diamonds,result.diamonds);}
+ for(const [roll,rarity]of [[0,'C'],[.7,'R'],[.91,'SR'],[.988,'UR'],[.993,'SSS']]){const values=[roll,0],disk=storage(),p=fixture({storage:disk,rng:()=>values.shift()});const rich=JSON.parse(p.exportSave());rich.unlocked=roster.map(m=>m.key);p.importSave(JSON.stringify(rich));const result=p.summon();assert.equal(result.pulls[0].duplicate,true);assert.equal(result.diamonds,ECONOMY.duplicateDiamonds[rarity]);assert.equal(p.getSave().coins,600);assert.equal(p.getSave().tickets,9);const q=fixture({storage:disk});assert.equal(q.getSave().diamonds,result.diamonds);}
 });
 
 function journeyFixture(disk){const p=createProgression({storage:disk||storage(),profileMode:'journey',now:()=>Date.UTC(2026,10,15)});assert.equal(p.setCatalog(roster).ok,true);return p;}
@@ -158,4 +159,103 @@ test('stone evolutions are manual, cost coins and consume exactly one stone',()=
  const poor=JSON.parse(p.exportSave());poor.coins=10;assert.equal(p.importSave(JSON.stringify(poor)).ok,true);
  assert.equal(p.buyStone('fire-stone').ok,false);
  const bad=JSON.parse(p.exportSave());bad.growth.stoneInventory={unknown:1};assert.equal(p.importSave(JSON.stringify(bad)).ok,false);
+});
+
+test('gacha economy uses C/R/SR/UR/SSS rates, prices and refunds',()=>{assert.deepEqual(ECONOMY.rates,{C:.70,R:.21,SR:.078,UR:.005,SSS:.007});assert.deepEqual(ECONOMY.prices,{C:60,R:180,SR:360,UR:1800,SSS:900});assert.deepEqual(ECONOMY.duplicateDiamonds,{C:10,R:30,SR:60,UR:300,SSS:150});assert.equal(ECONOMY.pityAt,10);});
+test('empty tiers fall back instead of failing the summon',()=>{const values=[.9,0];const p=fixture({rng:()=>values.shift()});const r=p.summon(1,'night');assert.equal(r.ok,true);assert.equal(r.pulls[0].rarity,'R');assert.equal(r.pulls[0].key,'spiritomb');});
+
+test('pity renormalizes over the available R-or-better tiers',()=>{
+  for(const [roll,key]of [[.9,'spiritomb'],[.97,'marshadow']]){
+    const disk=storage();
+    const seed=fixture({storage:disk,rng:()=>0});
+    const s=JSON.parse(seed.exportSave());s.gacha.banners={night:{pulls:0,pity:9}};assert.equal(seed.importSave(JSON.stringify(s)).ok,true);
+    const values=[roll,0];const q=fixture({storage:disk,rng:()=>values.shift()});
+    const r=q.summon(1,'night');assert.equal(r.ok,true);assert.equal(r.pulls[0].guaranteed,true);assert.equal(r.pulls[0].key,key);
+  }
+});
+
+test('battle pity draws rare and super rare before the mythical and UR stays rarer than SSS',()=>{
+  assert.ok(ECONOMY.rates.UR<ECONOMY.rates.SSS);
+  assert.ok(ECONOMY.prices.UR>ECONOMY.prices.SSS);
+  assert.ok(ECONOMY.duplicateDiamonds.UR>ECONOMY.duplicateDiamonds.SSS);
+  for(const [roll,key]of [[.5,'rhyhorn'],[.9,'omanyte'],[.99,'marshadow']]){
+    const disk=storage();
+    const seed=fixture({storage:disk,rng:()=>0});
+    const s=JSON.parse(seed.exportSave());s.gacha.banners={battle:{pulls:0,pity:9}};assert.equal(seed.importSave(JSON.stringify(s)).ok,true);
+    const values=[roll,0];const q=fixture({storage:disk,rng:()=>values.shift()});
+    const r=q.summon(1,'battle');assert.equal(r.ok,true);assert.equal(r.pulls[0].guaranteed,true);assert.equal(r.pulls[0].key,key);
+  }
+});
+
+test('summon costs tickets first and diamonds as fallback, mixing on ten pulls',()=>{
+  const p=fixture();
+  const before=p.getSave();
+  const r1=p.summon();
+  assert.equal(r1.ok,true);assert.equal(r1.spentTickets,1);assert.equal(r1.spentDiamonds,0);
+  assert.equal(p.getSave().tickets,before.tickets-1);assert.equal(p.getSave().coins,before.coins);
+  assert.equal(p.getSave().diamonds,before.diamonds+r1.diamonds);
+  const s=JSON.parse(p.exportSave());s.tickets=0;s.diamonds=500;p.importSave(JSON.stringify(s));
+  const r2=p.summon();
+  assert.equal(r2.ok,true);assert.equal(r2.spentTickets,0);assert.equal(r2.spentDiamonds,100);
+  assert.equal(p.getSave().diamonds,500-100+r2.diamonds);
+  const s2=JSON.parse(p.exportSave());s2.tickets=3;s2.diamonds=1000;p.importSave(JSON.stringify(s2));
+  const r3=p.summon(10);
+  assert.equal(r3.ok,true);assert.equal(r3.spentTickets,3);assert.equal(r3.spentDiamonds,700);
+  assert.equal(p.getSave().tickets,0);assert.equal(p.getSave().diamonds,1000-700+r3.diamonds);
+  const s3=JSON.parse(p.exportSave());s3.tickets=5;s3.diamonds=400;p.importSave(JSON.stringify(s3));
+  const before3=p.exportSave();
+  assert.equal(p.summon(10).ok,false);assert.equal(p.exportSave(),before3);
+  const s4=JSON.parse(p.exportSave());s4.tickets=0;s4.diamonds=50;p.importSave(JSON.stringify(s4));
+  assert.equal(p.summon().ok,false);
+});
+test('pity counts diamond-paid summons the same way',()=>{
+  const p=fixture({rng:()=>0});
+  const s=JSON.parse(p.exportSave());s.tickets=0;s.diamonds=1000;p.importSave(JSON.stringify(s));
+  const nine=p.summon(9);
+  assert.equal(nine.ok,true);assert.ok(nine.pulls.every(m=>m.rarity==='C'));assert.equal(p.getSave().gacha.pity,9);
+  const tenth=p.summon();
+  assert.equal(tenth.pulls[0].guaranteed,true);assert.notEqual(tenth.pulls[0].rarity,'C');
+  assert.equal(p.getSave().gacha.pity,0);
+});
+test('starter tickets are claimed once from rewards and persist',()=>{
+  const disk=storage();
+  const p=createProgression({storage:disk,now:()=>Date.UTC(2026,10,15)});
+  assert.equal(p.setCatalog(roster).ok,true);
+  assert.equal(p.getSave().tickets,0);
+  assert.equal(p.getSave().starterTicketsClaimed,false);
+  assert.equal(p.claimStarterTickets().ok,true);
+  assert.equal(p.getSave().tickets,10);
+  assert.equal(p.getSave().starterTicketsClaimed,true);
+  assert.equal(p.claimStarterTickets().ok,false);
+  assert.equal(p.getSave().tickets,10);
+  const q=createProgression({storage:disk,now:()=>Date.UTC(2026,10,15)});
+  assert.equal(q.setCatalog(roster).ok,true);
+  assert.equal(q.getSave().tickets,10);
+  assert.equal(q.getSave().starterTicketsClaimed,true);
+  assert.equal(q.claimStarterTickets().ok,false);
+});
+test('legacy saves gain gacha tickets without losing progress',()=>{
+  const disk=storage(),p=fixture({storage:disk});
+  const old=JSON.parse(p.exportSave());delete old.tickets;delete old.starterTicketsClaimed;old.trainerName='Legado';disk.setItem(SAVE_KEY,JSON.stringify(old));
+  const q=createProgression({storage:disk,now:()=>Date.UTC(2026,10,15)});
+  assert.equal(q.setCatalog(roster).ok,true);
+  assert.equal(q.getSave().trainerName,'Legado');assert.equal(q.getSave().tickets,0);assert.equal(q.getSave().starterTicketsClaimed,false);assert.equal(q.status().recovered,false);
+});
+test('campaign first wins can drop a gacha ticket and repeats never do',()=>{
+  const mk=(rng)=>{const p=createProgression({storage:storage(),profileMode:'journey',now:()=>Date.UTC(2026,10,15),rng});assert.equal(p.setCatalog(roster).ok,true);assert.equal(p.chooseStarter('charmander').ok,true);return p;};
+  const p=mk(()=>0.05);
+  assert.equal(p.beginStage('1-1','drop-1').ok,true);
+  const r=p.completeStage({id:'drop-1',won:true,frames:600});
+  assert.equal(r.ok,true);assert.equal(r.gachaTickets,1);assert.equal(p.getSave().tickets,1);
+  assert.equal(p.beginStage('1-1','drop-2').ok,true);
+  const r2=p.completeStage({id:'drop-2',won:true,frames:600});
+  assert.equal(r2.ok,true);assert.equal(r2.gachaTickets,0);assert.equal(p.getSave().tickets,1);
+  const q=mk(()=>0.5);
+  assert.equal(q.beginStage('1-1','nodrop-1').ok,true);
+  const r3=q.completeStage({id:'nodrop-1',won:true,frames:600});
+  assert.equal(r3.ok,true);assert.equal(r3.gachaTickets,0);assert.equal(q.getSave().tickets,0);
+  const z=mk(()=>0.01);
+  assert.equal(z.beginStage('1-1','loss-1').ok,true);
+  const r4=z.completeStage({id:'loss-1',won:false,frames:600});
+  assert.equal(r4.ok,true);assert.equal(r4.gachaTickets,0);assert.equal(z.getSave().tickets,0);
 });

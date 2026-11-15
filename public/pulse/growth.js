@@ -12,6 +12,8 @@ export const ITEMS=Object.freeze({
  leftovers:{name:'Leftovers',price:450,description:'Recupera 1/16 do HP máximo a cada 6 segundos em campo. Não é consumido.'},
 });
 export const STONE_EVOLUTIONS=Object.freeze({vulpix:{'fire-stone':'ninetales'},eevee:{'water-stone':'vaporeon','thunder-stone':'jolteon','fire-stone':'flareon'},growlithe:{'fire-stone':'arcanine'},clefairy:{'moon-stone':'clefable'},jigglypuff:{'moon-stone':'wigglytuff'},gloom:{'leaf-stone':'vileplume'},exeggcute:{'leaf-stone':'exeggutor'},staryu:{'water-stone':'starmie'},shellder:{'water-stone':'cloyster'},poliwhirl:{'water-stone':'poliwrath'},pikachu:{'thunder-stone':'raichu'}});
+const EVOLUTION_TARGETS=new Set([...Object.values(EVOLUTIONS).map(([target])=>target),...Object.values(STONE_EVOLUTIONS).flatMap(targets=>Object.values(targets))]);
+export const BASE_FORM_KEYS=Object.freeze(new Set([...Object.keys(EVOLUTIONS),...Object.keys(STONE_EVOLUTIONS)].filter(key=>!EVOLUTION_TARGETS.has(key))));
 export const STONES=Object.freeze({
  'fire-stone':{name:'Fire Stone',price:400,description:'Evolui Vulpix, Eevee e Growlithe.'},
  'water-stone':{name:'Water Stone',price:400,description:'Evolui Eevee, Staryu, Shellder e Poliwhirl.'},

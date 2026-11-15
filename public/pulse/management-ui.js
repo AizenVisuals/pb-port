@@ -1,11 +1,11 @@
 import {animatePartner} from './sprites.js';
 import {ITEMS,EVOLUTIONS,STONES,STONE_EVOLUTIONS,xpAt,specialPool,moveRequirement} from './growth.js';
 import {LEARNSETS} from './learnsets.js';
-import {CHAPTER_ONE} from './campaign.js';
+import {CHAPTER_ONE,CHAPTER_TWO,ALL_STAGES} from './campaign.js';
 import {icon} from './icons.js';
 export function createManagementUI({p,save,mon,portrait,tags,esc,navigate,notify,apply,movePicker,launchStage,drawTechnique,goBack}){
  const $=id=>document.getElementById(id);
- let partner=null,tab='attributes',slot=0,bagItem='oranberry',selectedStage=null,stops=[],partnerStop,worldToken=0,invocation='pokemon';
+ let partner=null,tab='attributes',slot=0,bagItem='oranberry',selectedStage=null,selectedChapter=1,stops=[],partnerStop,worldToken=0,invocation='pokemon';
  const stopSprites=()=>{worldToken++;for(const stop of stops)stop?.();stops=[];partnerStop?.();partnerStop=null;};
  const animate=async(canvas,key)=>{const token=worldToken;try{const stop=await animatePartner(canvas,mon(key),{reduced:matchMedia('(prefers-reduced-motion:reduce)').matches});if(canvas.isConnected&&token===worldToken)stops.push(stop);else stop();}catch{}};
  const openPartner=(key,section='attributes')=>{partner=key;tab=section;navigate('partner');};
@@ -68,13 +68,21 @@ export function createManagementUI({p,save,mon,portrait,tags,esc,navigate,notify
   detail.innerHTML=`<img class="inventory-item-hero" src="/pulse/assets/items/${bagItem}.png" alt=""><h2>${item.name}</h2><p>${item.description}</p><p class="inventory-count">${g.inventory[bagItem]} na mochila</p><label class="inventory-owner-label">Equipar em<select id="inventory-owner">${s.unlocked.map(key=>`<option value="${key}" ${key===owner?'selected':''}>${esc(mon(key).name)} · Nv. ${mon(key).level}</option>`).join('')}</select></label><button id="inventory-equip" class="primary-button" ${g.inventory[bagItem]<1?'disabled':''}>Equipar item</button><button data-route="shop" class="text-button">Obter mais itens na loja</button>`;
   $('inventory-equip').onclick=()=>{if(apply(p.equipItem($('inventory-owner').value,bagItem))){notify('Item equipado.');renderBag();}};
  }
- const positions=[[20,75.56],[28.75,66.67],[37.5,66.67],[46.25,60],[57.5,57.78],[67.5,62.22],[76.25,57.78],[82.5,44.44],[90,28.89],[90,15.56]];
+ const positionsOne=[[20,75.56],[28.75,66.67],[37.5,66.67],[46.25,60],[57.5,57.78],[67.5,62.22],[76.25,57.78],[82.5,44.44],[90,28.89],[90,15.56]];
+ const positionsTwo=[[10,84.44],[20,75.56],[30,66.67],[40,57.78],[50,48.89],[60,53.33],[70,44.44],[77.5,33.33],[85,22.22],[90,13.33]];
  function renderCampaign(){
-  const s=save(),j=s.journey;selectedStage||=j?.active?.stage||CHAPTER_ONE[Math.min(j?.cleared.length||0,9)].id;
-  $('chapter-list').innerHTML=CHAPTER_ONE.map((stage,i)=>{const cleared=j?.cleared.includes(stage.id),locked=!j?.starter||i>j.cleared.length;return `<button class="map-stage ${stage.badge?'gym-node':''} ${cleared?'cleared':''} ${locked?'locked':''} ${selectedStage===stage.id?'selected':''}" style="--x:${positions[i][0]}%;--y:${positions[i][1]}%" data-map-stage="${stage.id}" ${locked?'disabled':''} aria-label="Fase ${stage.id}, ${cleared?'concluída':locked?'bloqueada':stage.title}"><span>${stage.badge?`<img src="/pulse/assets/badges/kanto-1.png" alt="Insígnia Rocha" width="22" height="22">`:cleared?icon('check'):stage.id}</span><b>${stage.id}</b></button>`;}).join('');
+  const s=save(),j=s.journey;selectedStage||=j?.active?.stage||ALL_STAGES[Math.min(j?.cleared.length||0,19)].id;
+  selectedChapter=selectedStage.startsWith('2-')?2:1;
+  const stages=selectedChapter===2?CHAPTER_TWO:CHAPTER_ONE,positions=selectedChapter===2?positionsTwo:positionsOne,list=$('chapter-list');
+  list.className='chapter-map'+(selectedChapter===2?' chapter-two':'');
+  $('campaign-subtitle').textContent=selectedChapter===2?'Capítulo 2 · Caminho para Cerulean':'Capítulo 1 · Arraste o mapa para explorar.';
+  let tabs=document.getElementById('chapter-tabs');
+  if(!tabs){tabs=document.createElement('div');tabs.id='chapter-tabs';tabs.className='chapter-tabs';tabs.innerHTML='<button data-chapter="1">Capítulo 1</button><button data-chapter="2">Capítulo 2 · Caminho para Cerulean</button>';list.parentElement.parentElement.before(tabs);}
+  tabs.querySelectorAll('[data-chapter]').forEach(b=>{b.setAttribute('aria-selected',String(Number(b.dataset.chapter)===selectedChapter));if(Number(b.dataset.chapter)===2)b.disabled=!j?.cleared.includes('1-10');});
+  list.innerHTML=stages.map((stage,i)=>{const cleared=j?.cleared.includes(stage.id),locked=!j?.starter||ALL_STAGES.indexOf(stage)>j.cleared.length;return `<button class="map-stage ${stage.badge?'gym-node':''} ${cleared?'cleared':''} ${locked?'locked':''} ${selectedStage===stage.id?'selected':''}" style="--x:${positions[i][0]}%;--y:${positions[i][1]}%" data-map-stage="${stage.id}" ${locked?'disabled':''} aria-label="Fase ${stage.id}, ${cleared?'concluída':locked?'bloqueada':stage.title}"><span>${stage.badge?`<img src="/pulse/assets/badges/${stage.badge==='cascade'?'kanto-2':'kanto-1'}.png" alt="Insígnia ${stage.badge==='cascade'?'Cascata':'Rocha'}" width="22" height="22">`:cleared?icon('check'):stage.id}</span><b>${stage.id}</b></button>`;}).join('');
   requestAnimationFrame(()=>{const node=$('chapter-list').querySelector('.map-stage.selected'),view=$('chapter-list').parentElement;if(node){view.scrollLeft=node.offsetLeft-view.clientWidth/2;view.scrollTop=node.offsetTop-view.clientHeight/2;}});
-  const stage=CHAPTER_ONE.find(x=>x.id===selectedStage);$('campaign-progress').textContent=`${j?.cleared.length||0} / 10 fases concluídas`;
-  $('stage-detail').innerHTML=`<div class="stage-summary"><div class="stage-trainer"><img src="/pulse/assets/trainers/${stage.trainer}.png" alt=""><span>Fase ${stage.id}</span></div><h2>${stage.title}</h2><div class="stage-reward">${j?.cleared.includes(stage.id)?'Repetição: XP de treinador e progresso para tickets':`${stage.firstClearCoins} moedas · 1 ticket · ${300+CHAPTER_ONE.indexOf(stage)*180} XP de treinador`}</div><div class="stage-opponents">${stage.opponents.map(key=>portrait(mon(key))).join('')}</div><p>Adversários · Nv. ${5+CHAPTER_ONE.indexOf(stage)*2}${stage.wild?' · Encontro selvagem no caminho':''}</p>${stage.badge?'<p>Primeira vitória: Insígnia Rocha.</p>':''}</div><button id="campaign-enter" class="primary-button">${j?.active?.stage===stage.id?'Retomar fase':j?.cleared.includes(stage.id)?'Jogar novamente':'Entrar na fase'} ${icon('dash')}</button>`;
+  const stage=ALL_STAGES.find(x=>x.id===selectedStage),gi=ALL_STAGES.indexOf(stage);$('campaign-progress').textContent=`${j?.cleared.length||0} / 20 fases concluídas`;
+  $('stage-detail').innerHTML=`<div class="stage-summary"><div class="stage-trainer"><img src="/pulse/assets/trainers/${stage.trainer}.png" alt=""><span>Fase ${stage.id}</span></div><h2>${stage.title}</h2><div class="stage-reward">${j?.cleared.includes(stage.id)?'Repetição: XP de treinador e progresso para tickets':`${stage.firstClearCoins} moedas · 1 ticket · ${300+gi*180} XP de treinador`}</div><div class="stage-opponents">${stage.opponents.map(key=>portrait(mon(key))).join('')}</div><p>Adversários · Nv. ${5+gi*2}${stage.wild?' · Encontro selvagem no caminho':''}</p>${stage.badge?`<p>Primeira vitória: Insígnia ${stage.badge==='cascade'?'Cascata':'Rocha'}.</p>`:''}</div><button id="campaign-enter" class="primary-button">${j?.active?.stage===stage.id?'Retomar fase':j?.cleared.includes(stage.id)?'Jogar novamente':'Entrar na fase'} ${icon('dash')}</button>`;
   $('campaign-enter').onclick=()=>launchStage(stage.id);
  }
  function renderTechniques(){
@@ -98,6 +106,7 @@ export function createManagementUI({p,save,mon,portrait,tags,esc,navigate,notify
   if(b.dataset.techniqueFor){partner=b.dataset.techniqueFor;navigate('summon');setInvocation('techniques');$('technique-mon').value=partner;renderTechniques();}
   if(b.dataset.invocationMode)setInvocation(b.dataset.invocationMode);
   if(b.dataset.mapStage){selectedStage=b.dataset.mapStage;renderCampaign();}
+  if(b.dataset.chapter){const ch=Number(b.dataset.chapter);if(ch===2&&!save().journey?.cleared.includes('1-10'))return;const chStages=ch===2?CHAPTER_TWO:CHAPTER_ONE,j=save().journey;selectedChapter=ch;selectedStage=j?.active?.stage&&j.active.stage.startsWith(ch+'-')?j.active.stage:chStages[Math.max(0,Math.min((j?.cleared.length||0)-(ch===2?10:0),9))].id;renderCampaign();}
   if(b.dataset.formationSlot!==undefined){const i=Number(b.dataset.formationSlot);slot=Math.min(i,save().team.mons.length);renderTeam();}
   if(b.dataset.rosterAdd){const team=p.getTeam(),key=b.dataset.rosterAdd,prior=team.mons.indexOf(key);if(prior>=0&&slot<team.mons.length)[team.mons[slot],team.mons[prior]]=[team.mons[prior],team.mons[slot]];else if(prior<0){if(slot<team.mons.length)team.mons[slot]=key;else if(team.mons.length<6)team.mons.push(key);}team.gimmick=null;apply(p.setTeam(team));}
   if(b.dataset.formationLead!==undefined){const team=p.getTeam(),i=Number(b.dataset.formationLead);[team.mons[0],team.mons[i]]=[team.mons[i],team.mons[0]];team.gimmick=null;slot=0;apply(p.setTeam(team));}

@@ -5,8 +5,8 @@ import {mountAccount} from './account.js';
 import {bindBattleControls} from './controls.js';
 import {installAudioControls,setMenuAmbient,rewardSound,playPulseSound} from './ui-audio.js';
 import {animatePartner} from './sprites.js';
-import {SUMMON_BANNERS} from './banners.js';
-import {CHAPTER_ONE} from './campaign.js';
+import {SUMMON_BANNERS,isSummonable} from './banners.js';
+import {ALL_STAGES} from './campaign.js';
 import { createProgression, ECONOMY } from "./progression.js";
 import { icon } from "./icons.js";
 const $ = (id) => document.getElementById(id),
@@ -39,7 +39,62 @@ const types = {
   steel: "Aço",
   fairy: "Fada",
 };
-const rarity = { common: "Comum", rare: "Raro", epic: "Épico" };
+const TYPE_COLORS = {
+  normal: "#A8A77A", fire: "#EE8130", water: "#6390F0", electric: "#F7D02C",
+  grass: "#7AC74C", ice: "#96D9D6", fighting: "#C22E28", poison: "#A33EA1",
+  ground: "#E2BF65", flying: "#A98FF3", psychic: "#F95587", bug: "#A6B91A",
+  rock: "#B6A136", ghost: "#735797", dragon: "#6F35FC", dark: "#705746",
+  steel: "#B7B7CE", fairy: "#D685AD",
+};
+const STATUS_META = {
+  brn: { label: "QUEIMADO", cls: "st-brn" },
+  par: { label: "PARALISADO", cls: "st-par" },
+  psn: { label: "ENVENENADO", cls: "st-psn" },
+  slp: { label: "DORMINDO", cls: "st-slp" },
+  frz: { label: "CONGELADO", cls: "st-frz" },
+  toxic: { label: "ENVENENADO", cls: "st-tox" },
+  confused: { label: "CONFUSO", cls: "st-cnf" },
+};
+const TIER_META = {
+  C: { code: "C", label: "Comum", cls: "tier-c" },
+  R: { code: "R", label: "Raro", cls: "tier-r" },
+  SR: { code: "SR", label: "Super Raro", cls: "tier-sr" },
+  SSS: { code: "SSS", label: "Mítico", cls: "tier-sss" },
+  UR: { code: "UR", label: "Lendário", cls: "tier-ur" },
+};
+const UR_KEYS = new Set(["articuno", "zapdos", "moltres", "mewtwo"]);
+const SSS_KEYS = new Set(["mew", "marshadow"]);
+const rarityTier = (m) => {
+  const r = m?.rarity;
+  if (TIER_META[r]) return TIER_META[r];
+  if (SSS_KEYS.has(m?.key)) return TIER_META.SSS;
+  if (UR_KEYS.has(m?.key)) return TIER_META.UR;
+  if (r === "epic") return TIER_META.SR;
+  if (r === "rare") return TIER_META.R;
+  return TIER_META.C;
+};
+const tierOf = (m) =>
+  typeof m === "string" ? TIER_META[m] || TIER_META.C : rarityTier(m);
+const tierBadge = (m) => {
+  const t = tierOf(m);
+  return `<span class="tier-badge ${t.cls}">${t.code}</span>`;
+};
+const effectLabel = (eff) =>
+  eff === null || eff === undefined || eff === 1
+    ? ""
+    : eff === 0
+      ? "SEM EFEITO"
+      : eff >= 2
+        ? "SUPER EFETIVO"
+        : "POUCO EFETIVO";
+const effectClass = (eff) =>
+  eff === null || eff === undefined || eff === 1
+    ? ""
+    : eff === 0
+      ? "eff-none"
+      : eff >= 2
+        ? "eff-super"
+        : "eff-weak";
 const p = createProgression({profileMode:"journey"});
 let management,routeHistory=[];
 let catalog = [],
@@ -84,7 +139,10 @@ const portrait = (m, extra = "") =>
   `<img src="${esc(face(m))}" alt="${esc(m.name)}" ${extra}>`;
 const tags = (m) =>
   m.types
-    .map((t) => `<span class="type-tag">${types[t] || esc(t)}</span>`)
+    .map(
+      (t) =>
+        `<span class="type-tag" style="--type:${TYPE_COLORS[t] || "#8fa8b3"}">${types[t] || esc(t)}</span>`,
+    )
     .join("");
 function notify(message) {
   clearTimeout(toastTimer);
@@ -170,10 +228,31 @@ function refresh() {
   $("home-daily").textContent = daily
     ? "Bônus resgatado"
     : "Resgatar bônus diário";
-  $("summon-one").disabled = summonBusy || s.coins < 100;
-  $("summon-ten").disabled = summonBusy || s.coins < 1000;
+  const summonCostFor = (count) => {
+    const tickets = Math.min(count, s.tickets || 0);
+    const diamonds = (count - tickets) * ECONOMY.summonDiamondCost;
+    return { tickets, diamonds, affordable: s.diamonds >= diamonds };
+  };
+  const summonCostLabel = (count) => {
+    const cost = summonCostFor(count);
+    const parts = [];
+    if (cost.tickets) parts.push(`${cost.tickets} ticket${cost.tickets > 1 ? "s" : ""}`);
+    if (cost.diamonds) parts.push(`${cost.diamonds.toLocaleString("pt-BR")} diamantes`);
+    return parts.join(" + ");
+  };
+  $("summon-one").disabled = summonBusy || !summonCostFor(1).affordable;
+  $("summon-ten").disabled = summonBusy || !summonCostFor(10).affordable;
+  $("summon-one").querySelector("span").textContent = summonCostLabel(1);
+  $("summon-ten").querySelector("span").textContent = summonCostLabel(10);
   $("summon-budget").textContent =
-    `${s.coins.toLocaleString("pt-BR")} moedas disponíveis`;
+    `${s.tickets || 0} ticket${(s.tickets || 0) === 1 ? "" : "s"} de invocação · ${s.diamonds.toLocaleString("pt-BR")} diamantes`;
+  const starterBtn = $("starter-tickets-claim");
+  if (starterBtn) {
+    starterBtn.disabled = !!s.starterTicketsClaimed;
+    starterBtn.textContent = s.starterTicketsClaimed
+      ? "Recompensa inicial resgatada"
+      : "Resgatar 10 tickets de invocação";
+  }
   const status = p.status();
   $("save-status").hidden = !status.message;
   $("save-status").textContent = status.message;
@@ -209,7 +288,7 @@ function renderCollection() {
   $("collection-grid").innerHTML = matches
     .map(
       (m) =>
-        `<button data-detail="${m.key}" class="pokemon-card rarity-${m.rarity} ${m.owned ? "" : "is-locked"}" aria-label="${esc(m.name)}, ${m.owned ? "na coleção" : "não desbloqueado"}">${m.owned ? `<span class="owned-mark">${icon("check")}</span>` : ""}${portrait(m)}<span class="card-level">${m.owned?`Nv. ${m.level}`:"A descobrir"}</span><h3>${esc(m.name)}</h3><small>${rarity[m.rarity]}${save().shinies.includes(m.key) ? " · Shiny" : ""}</small></button>`,
+        `<button data-detail="${m.key}" class="pokemon-card rarity-${rarityTier(m).code} ${m.owned ? "" : "is-locked"}" aria-label="${esc(m.name)}, ${m.owned ? "na coleção" : "não desbloqueado"}">${m.owned ? `<span class="owned-mark">${icon("check")}</span>` : ""}${portrait(m)}<span class="card-level">${m.owned?`Nv. ${m.level}`:"A descobrir"}</span><h3>${esc(m.name)}</h3><small>${tierBadge(m)} ${rarityTier(m).label}${save().shinies.includes(m.key) ? " · Shiny" : ""}</small></button>`,
     )
     .join("");
 }
@@ -230,7 +309,7 @@ function renderShop() {
         const cosmetic = shopFilter === "shiny",
           bought = cosmetic && s.shinies.includes(m.key),
           price = cosmetic ? ECONOMY.shinyPrice : m.price;
-        return `<button class="shop-item rarity-${m.rarity}" data-shop-detail="${m.key}" data-cosmetic="${cosmetic}"><img src="${esc(face(m, cosmetic))}" alt=""><span><b>${esc(m.name)}${cosmetic ? " Shiny" : ""}</b><small>${bought ? "Na sua coleção" : cosmetic ? "Visual alternativo · mesmos atributos" : rarity[m.rarity]}</small></span><strong>${bought ? icon("check") : `${icon("diamond")} ${price}`}</strong></button>`;
+        return `<button class="shop-item rarity-${rarityTier(m).code}" data-shop-detail="${m.key}" data-cosmetic="${cosmetic}"><img src="${esc(face(m, cosmetic))}" alt=""><span><b>${esc(m.name)}${cosmetic ? " Shiny" : ""}</b><small>${bought ? "Na sua coleção" : cosmetic ? "Visual alternativo · mesmos atributos" : `${tierBadge(m)} ${rarityTier(m).label}`}</small></span><strong>${bought ? icon("check") : (cosmetic || isSummonable(m.key)) ? `${icon("diamond")} ${price}` : "Evolução"}</strong></button>`;
       })
       .join("") ||
     '<p class="empty-state">Você já desbloqueou todos os Pokémon desta edição.</p>';
@@ -254,7 +333,7 @@ function detail(key, cosmetic = false) {
   }
   if(m.owned&&!cosmetic){management.openPartner(key);return;}
   $("detail-content").innerHTML =
-    `<div class="dialog-heading"><h2>${cosmetic ? "Versão shiny" : "Conheça seu parceiro"}</h2><button data-close class="icon-button" aria-label="Fechar">${icon("close")}</button></div><div class="detail-hero"><img src="${esc(face(m, cosmetic))}" alt="${esc(m.name)}"><div><h2>${esc(m.name)}${cosmetic ? " Shiny" : ""}</h2><span class="type-list">${tags(m)}</span><p>${rarity[m.rarity]} · ${m.owned ? "Desbloqueado" : "A descobrir"}</p></div></div><div class="detail-stats">${Object.entries(
+    `<div class="dialog-heading"><h2>${cosmetic ? "Versão shiny" : "Conheça seu parceiro"}</h2><button data-close class="icon-button" aria-label="Fechar">${icon("close")}</button></div><div class="detail-hero"><img src="${esc(face(m, cosmetic))}" alt="${esc(m.name)}"><div><h2>${esc(m.name)}${cosmetic ? " Shiny" : ""}</h2><span class="type-list">${tags(m)}</span><p>${tierBadge(m)} ${rarityTier(m).label} · ${m.owned ? "Desbloqueado" : "A descobrir"}</p></div></div><div class="detail-stats">${Object.entries(
       m.stats,
     )
       .map(
@@ -263,7 +342,7 @@ function detail(key, cosmetic = false) {
       )
       .join(
         "",
-      )}</div><p class="support-copy">${cosmetic ? "Uma nova cor para o mesmo parceiro. Não altera atributos ou golpes." : m.owned ? "Disponível para a jornada e suas equipes de batalha." : "Desbloqueie na loja ou encontre este Pokémon nas invocações."}</p><div class="detail-actions">${cosmetic ? (s.shinies.includes(key) ? `<button data-shiny-toggle="${key}" class="primary-button">${isShiny(key) ? "Usar visual original" : "Equipar shiny"}</button>` : `<button data-buy-shiny="${key}" class="primary-button" ${!m.owned || s.diamonds < 300 ? "disabled" : ""}>${!m.owned ? "Desbloqueie o Pokémon primeiro" : `Comprar por ${300} diamantes`}</button>`) : m.owned ? `<button data-favorite="${key}" class="primary-button">${s.favorite === key ? "Seu favorito" : "Destacar no lobby"}</button><button data-moves="${key}" class="secondary-button">Escolher golpes</button>${shiny[key] ? `<button data-view-shiny="${key}" class="secondary-button">Ver shiny</button>` : ""}` : `<button data-buy="${key}" class="primary-button" ${s.diamonds < m.price ? "disabled" : ""}>Desbloquear · ${m.price} diamantes</button><button data-go-summon class="secondary-button">Ir às invocações</button>`}</div>`;
+      )}</div><p class="support-copy">${cosmetic ? "Uma nova cor para o mesmo parceiro. Não altera atributos ou golpes." : m.owned ? "Disponível para a jornada e suas equipes de batalha." : isSummonable(key) ? "Desbloqueie na loja ou encontre este Pokémon nas invocações." : "Evolua este Pokémon a partir de sua forma base."}</p><div class="detail-actions">${cosmetic ? (s.shinies.includes(key) ? `<button data-shiny-toggle="${key}" class="primary-button">${isShiny(key) ? "Usar visual original" : "Equipar shiny"}</button>` : `<button data-buy-shiny="${key}" class="primary-button" ${!m.owned || s.diamonds < 300 ? "disabled" : ""}>${!m.owned ? "Desbloqueie o Pokémon primeiro" : `Comprar por ${300} diamantes`}</button>`) : m.owned ? `<button data-favorite="${key}" class="primary-button">${s.favorite === key ? "Seu favorito" : "Destacar no lobby"}</button><button data-moves="${key}" class="secondary-button">Escolher golpes</button>${shiny[key] ? `<button data-view-shiny="${key}" class="secondary-button">Ver shiny</button>` : ""}` : isSummonable(key) ? `<button data-buy="${key}" class="primary-button" ${s.diamonds < m.price ? "disabled" : ""}>Desbloquear · ${m.price} diamantes</button><button data-go-summon class="secondary-button">Ir às invocações</button>` : ``}</div>`;
   if (!$("detail-dialog").open) showDialog("detail-dialog");
 }
 function movePicker(key){management.openPartner(key,'moves');}
@@ -343,6 +422,12 @@ async function drawHero() {
   };
   requestAnimationFrame(loop);
 }
+function summonSpentLabel(result) {
+  const parts = [];
+  if (result.spentTickets) parts.push(`${result.spentTickets} ticket${result.spentTickets > 1 ? "s" : ""}`);
+  if (result.spentDiamonds) parts.push(`${result.spentDiamonds.toLocaleString("pt-BR")} diamantes`);
+  return parts.length ? `${parts.join(" + ")} usados` : "Nenhum custo";
+}
 function startPulls(count) {
   if (summonBusy) return;
   const result = p.summon(count,selectedBanner);
@@ -360,7 +445,7 @@ function startPulls(count) {
     const pull = result.pulls[index],
       m = mon(pull.key);
     $("pull-content").innerHTML =
-      `<div class="pull-top"><span>Invocação ${index + 1} de ${result.pulls.length}</span><button id="skip-reveal" class="text-button">Pular revelação</button></div><div class="pull-scene rarity-${pull.rarity} ${revealed ? "revealed" : "charging"}">${!revealed && !matchMedia("(prefers-reduced-motion:reduce)").matches ? '<video class="portal-film" src="/pulse/assets/motion/portal.mp4" autoplay muted playsinline preload="auto" aria-hidden="true"></video>' : ""}<div class="reveal-orbit"></div><img class="reveal-pokemon" src="${esc(face(m))}" alt="${revealed ? esc(m.name) : "Revelando Pokémon"}"><div class="reveal-caption" ${revealed ? "" : "hidden"}><span class="rarity-label">${rarity[pull.rarity]}${pull.guaranteed ? " · Garantido" : ""}</span><h2>${esc(m.name)}</h2><p>${pull.duplicate ? `Repetido convertido em <b>${pull.diamonds} diamantes</b>` : "Novo parceiro na sua coleção!"}</p></div></div><button id="next-reveal" class="primary-button" ${revealed ? "" : "disabled"}>${index + 1 === result.pulls.length ? "Ver resultados" : "Próximo Pokémon"}</button>`;
+      `<div class="pull-top"><span>Invocação ${index + 1} de ${result.pulls.length}</span><button id="skip-reveal" class="text-button">Pular revelação</button></div><div class="pull-scene rarity-${pull.rarity} ${revealed ? "revealed" : "charging"}">${!revealed && !matchMedia("(prefers-reduced-motion:reduce)").matches ? '<video class="portal-film" src="/pulse/assets/motion/portal.mp4" autoplay muted playsinline preload="auto" aria-hidden="true"></video>' : ""}<div class="reveal-orbit"></div><img class="reveal-pokemon" src="${esc(face(m))}" alt="${revealed ? esc(m.name) : "Revelando Pokémon"}"><div class="reveal-caption" ${revealed ? "" : "hidden"}><span class="rarity-label">${tierBadge(pull.rarity)} ${tierOf(pull.rarity).label}${pull.guaranteed ? " · Garantido" : ""}</span><h2>${esc(m.name)}</h2><p>${pull.duplicate ? `Repetido convertido em <b>${pull.diamonds} diamantes</b>` : "Novo parceiro na sua coleção!"}</p></div></div><button id="next-reveal" class="primary-button" ${revealed ? "" : "disabled"}>${index + 1 === result.pulls.length ? "Ver resultados" : "Próximo Pokémon"}</button>`;
     $("skip-reveal").onclick = () => {
       skipped = true;
       summary();
@@ -388,7 +473,7 @@ function startPulls(count) {
   const summary = () => {
     clearTimeout(revealTimer);
     $("pull-content").innerHTML =
-      `<div class="dialog-heading"><h2>Suas novas conexões</h2></div><div class="pull-results">${result.pulls.map((x) => `<div class="pull-result rarity-${x.rarity} ${x.duplicate ? "" : "is-new"}">${portrait(mon(x.key))}<b>${esc(x.name)}</b><span class="rarity-label">${rarity[x.rarity]}</span><small>${x.duplicate ? `+${x.diamonds} diamantes` : "Novo Pokémon"}</small></div>`).join("")}</div><p class="pull-receipt">${result.spent} moedas usadas${result.diamonds ? ` · +${result.diamonds} diamantes por repetidos` : ""}</p><button class="primary-button" id="close-pulls">Continuar</button>`;
+      `<div class="dialog-heading"><h2>Suas novas conexões</h2></div><div class="pull-results">${result.pulls.map((x) => `<div class="pull-result rarity-${x.rarity} ${x.duplicate ? "" : "is-new"}">${portrait(mon(x.key))}<b>${esc(x.name)}</b><span class="rarity-label">${tierBadge(x.rarity)} ${tierOf(x.rarity).label}</span><small>${x.duplicate ? `+${x.diamonds} diamantes` : "Novo Pokémon"}</small></div>`).join("")}</div><p class="pull-receipt">${summonSpentLabel(result)}${result.diamonds ? ` · +${result.diamonds} diamantes por repetidos` : ""}</p><button class="primary-button" id="close-pulls">Continuar</button>`;
     $("close-pulls").onclick = () => {
       $("pull-dialog").close();
     };
@@ -457,17 +542,52 @@ async function startBattle(options={}) {
 }
 function updateBattle(s) {
   snapshot = s;
-  $("battle-capture").hidden=!wildBattle;
+  $("battle-capture").hidden = !wildBattle;
   $("battle-loading").hidden = s.state !== "loading";
   if (!s.player) return;
   $("battle-clock").textContent =
     `${Math.floor(s.secondsLeft / 60)}:${String(Math.floor(s.secondsLeft % 60)).padStart(2, "0")}`;
+  const scale = save().growth ? 9 : 1;
+  const statusOf = (a) => {
+    if (a.status) return STATUS_META[a.status];
+    if (a.frozen) return STATUS_META.frz;
+    if (a.toxic) return STATUS_META.toxic;
+    if (a.confused) return STATUS_META.confused;
+    return null;
+  };
+  const ballsKey = (bench) =>
+    (bench || []).map((m) => `${m.key}:${m.fainted ? 0 : 1}`).join("|");
+  const renderBalls = (el, bench) => {
+    el.innerHTML = (bench || [])
+      .map(
+        (m) =>
+          `<span class="pokeball${m.fainted ? " fainted" : ""}" title="${esc(m.name)}"></span>`,
+      )
+      .join("");
+  };
   for (const side of ["player", "opponent"]) {
     const a = s[side];
     $(side + "-name").textContent = a.name;
+    $(side + "-level").textContent = `Nv. ${a.level}`;
     $(side + "-hp").textContent =
-      `${Math.ceil(a.hp/(save().growth?9:1))} / ${Math.ceil(a.maxHp/(save().growth?9:1))} HP · Nv. ${a.level}`;
-    $(side + "-hp-bar").style.width = `${a.hpRatio * 100}%`;
+      `${Math.ceil(a.hp / scale)} / ${Math.ceil(a.maxHp / scale)}`;
+    const bar = $(side + "-hp-bar");
+    bar.style.width = `${a.hpRatio * 100}%`;
+    bar.className =
+      a.hpRatio > 0.5 ? "hp-high" : a.hpRatio > 0.25 ? "hp-mid" : "hp-low";
+    const chip = $(side + "-status");
+    const st = statusOf(a);
+    chip.hidden = !st;
+    if (st) {
+      chip.textContent = st.label;
+      chip.className = `status-chip ${st.cls}`;
+    }
+    const ballsEl = $(side + "-balls");
+    const bench = side === "player" ? s.bench : s.opponentBench;
+    if (ballsEl.dataset.key !== ballsKey(bench)) {
+      ballsEl.dataset.key = ballsKey(bench);
+      renderBalls(ballsEl, bench);
+    }
     const m = mon(a.key);
     if (m) {
       const path =
@@ -483,11 +603,15 @@ function updateBattle(s) {
     ? "Mova para desviar"
     : "Movimento automático";
   $("battle-choose").hidden = !s.choosing;
-  $("battle-mega").hidden = !s.canMega&&!s.canEvolve;
-  $("battle-mega").textContent=s.canEvolve?"EVOLUIR":"MEGA";
-  const prompt=s.evolutionPrompt;
-  $("battle-evolve").hidden=!prompt;
-  if(prompt){const from=mon(prompt.from),to=mon(prompt.target);$("battle-evolve-text").textContent=`${from?from.name:prompt.from} vai evoluir para ${to?to.name:prompt.target}!`; $("battle-evolve-count").textContent=`${prompt.secondsLeft}s`;}
+  $("battle-mega").hidden = !s.canMega && !s.canEvolve;
+  $("battle-mega").textContent = s.canEvolve ? "EVOLUIR" : "MEGA";
+  const prompt = s.evolutionPrompt;
+  $("battle-evolve").hidden = !prompt;
+  if (prompt) {
+    const from = mon(prompt.from), to = mon(prompt.target);
+    $("battle-evolve-text").textContent = `${from ? from.name : prompt.from} vai evoluir para ${to ? to.name : prompt.target}!`;
+    $("battle-evolve-count").textContent = `${prompt.secondsLeft}s`;
+  }
   $("battle-guard").disabled = !s.guardReady;
   $("battle-dodge").disabled = !s.dodgeReady;
   const moveKey = s.moves.map((m) => m.name).join("|");
@@ -496,16 +620,22 @@ function updateBattle(s) {
     $("battle-moves").innerHTML = s.moves
       .map(
         (m, i) =>
-          `<button data-move="${i}" class="move-button"><b>${esc(m.name)}</b><small></small></button>`,
+          `<button data-move="${i}" class="move-button"><span class="move-type"></span><b>${esc(m.name)}</b><span class="move-power"></span><span class="move-eff"></span><small></small></button>`,
       )
       .join("");
   }
   all("#battle-moves button").forEach((button, i) => {
     const m = s.moves[i];
     button.style.setProperty("--charge", m.charge);
+    button.style.setProperty("--move-color", TYPE_COLORS[m.type] || "#8fe1de");
     button.classList.toggle("is-ready", m.charge >= 1 && !m.locked);
     button.classList.toggle("is-called", m.called);
     button.disabled = m.locked;
+    button.querySelector(".move-type").textContent = types[m.type] || m.type;
+    button.querySelector(".move-power").textContent = m.power ? m.power : "—";
+    const effEl = button.querySelector(".move-eff");
+    effEl.textContent = effectLabel(m.eff);
+    effEl.className = `move-eff ${effectClass(m.eff)}`;
     button.querySelector("small").textContent = m.locked
       ? "Indisponível"
       : m.charge < 1
@@ -528,13 +658,16 @@ function updateBattle(s) {
     const m = s.bench[i];
     button.disabled = m.fainted || m.active;
     button.classList.toggle("active", m.active);
-    button.querySelector("i").style.width = `${m.hpRatio * 100}%`;
+    const bar = button.querySelector("i");
+    bar.style.width = `${m.hpRatio * 100}%`;
+    bar.className =
+      m.hpRatio > 0.5 ? "hp-high" : m.hpRatio > 0.25 ? "hp-mid" : "hp-low";
   });
   if (s.state === "paused" && !$("pause-dialog").open && !s.result)
     showDialog("pause-dialog");
 }
 function endBattle(result) {
-  if(wildBattle&&result.won){wildBattle=false;p.resolveEncounter('defeated');const active=save().journey.active;runTrainerStage(CHAPTER_ONE.find(s=>s.id===active.stage),active.id);return;}
+  if(wildBattle&&result.won){wildBattle=false;p.resolveEncounter('defeated');const active=save().journey.active;runTrainerStage(ALL_STAGES.find(s=>s.id===active.stage),active.id);return;}
   if(wildBattle&&!result.won&&save().journey?.active?.encounter?.state==='pending')p.resolveEncounter('fled');
   wildBattle=false;
   $("pause-dialog").close();
@@ -542,7 +675,7 @@ function endBattle(result) {
   if(snapshot?.evolutionPrompt)p.deferAutoEvolution(snapshot.evolutionPrompt.from,snapshot.evolutionPrompt.level);
   refresh();
   $("result-content").innerHTML =
-    `<div class="result-symbol">${icon(result.won ? "star" : "shield")}</div><h2>${result.won ? "Vitória na arena!" : result.reason === "surrender" ? "Batalha encerrada" : "O próximo duelo é seu"}</h2><p>${result.reason === "surrender" ? "Desistências não concedem moedas." : "Sua equipe volta pronta para uma nova estratégia."}</p><div class="result-coins">${icon("coin")} +${reward.coins || 0}</div>${reward.trainerXp?`<p>+${reward.trainerXp.xp} XP de treinador${reward.trainerXp.to>reward.trainerXp.from?` · Você subiu para o nível ${reward.trainerXp.to}!`:""}</p>`:""}${result.koXp?`<p>+${result.koXp} XP de nocaute na batalha</p>`:""}${reward.tickets?`<p>+${reward.tickets} ticket${reward.tickets>1?"s":""} de técnica</p>`:""}<button id="result-lobby" class="primary-button">Voltar ao lobby</button><button id="result-retry" class="secondary-button">Jogar novamente</button>`;
+    `<div class="result-symbol">${icon(result.won ? "star" : "shield")}</div><h2>${result.won ? "Vitória na arena!" : result.reason === "surrender" ? "Batalha encerrada" : "O próximo duelo é seu"}</h2><p>${result.reason === "surrender" ? "Desistências não concedem moedas." : "Sua equipe volta pronta para uma nova estratégia."}</p><div class="result-coins">${icon("coin")} +${reward.coins || 0}</div>${reward.trainerXp?`<p>+${reward.trainerXp.xp} XP de treinador${reward.trainerXp.to>reward.trainerXp.from?` · Você subiu para o nível ${reward.trainerXp.to}!`:""}</p>`:""}${result.koXp?`<p>+${result.koXp} XP de nocaute na batalha</p>`:""}${reward.tickets?`<p>+${reward.tickets} ticket${reward.tickets>1?"s":""} de técnica</p>`:""}${reward.gachaTickets?`<p>+${reward.gachaTickets} ticket de invocação</p>`:""}<button id="result-lobby" class="primary-button">Voltar ao lobby</button><button id="result-retry" class="secondary-button">Jogar novamente</button>`;
   showDialog("result-dialog");
   $("result-lobby").onclick = exitBattle;
   const retryStage=activeStage;
@@ -595,7 +728,7 @@ function changeFormat(n) {
 function renderCampaign(){management?.renderCampaign();}
 async function runTrainerStage(stage,battleId){
  wildBattle=false;activeStage=stage.id;
- await startBattle({battleId,team:p.getTeam(),botTeam:{mons:[...stage.opponents],moves:{},gimmick:null},format:`${save().team.mons.length}v${stage.opponents.length}`,difficulty:stage.difficulty,opponentLevel:5+CHAPTER_ONE.indexOf(stage)*2});
+ await startBattle({battleId,team:p.getTeam(),botTeam:{mons:[...stage.opponents],moves:{},gimmick:null},format:`${save().team.mons.length}v${stage.opponents.length}`,difficulty:stage.difficulty,opponentLevel:5+ALL_STAGES.indexOf(stage)*2});
 }
 async function captureEncounter(){
  const active=save().journey?.active;if(!active)return;
@@ -603,16 +736,16 @@ async function captureEncounter(){
  const result=p.captureWild({id:active.id,hpRatio:wildBattle?snapshot?.opponent.hpRatio:1,status:wildBattle?!!snapshot?.opponent.status:false});
  if(!result.ok){notify(result.error);if(wildBattle)battle.resume();return;}
  refresh();notify(result.captured?`${mon(result.key).name} entrou na sua coleção!`:'O Pokémon escapou da Poké Ball.');
- if(result.captured){wildBattle=false;await runTrainerStage(CHAPTER_ONE.find(s=>s.id===active.stage),active.id);}else if(wildBattle)battle.resume();else showWildEncounter(CHAPTER_ONE.find(s=>s.id===active.stage),active.id);
+ if(result.captured){wildBattle=false;await runTrainerStage(ALL_STAGES.find(s=>s.id===active.stage),active.id);}else if(wildBattle)battle.resume();else showWildEncounter(ALL_STAGES.find(s=>s.id===active.stage),active.id);
 }
 function showWildEncounter(stage,battleId){
  const m=mon(stage.wild);$('detail-content').innerHTML=`<div class="dialog-heading"><h2>Um ${esc(m.name)} selvagem apareceu!</h2></div><div class="detail-hero">${portrait(m)}<div><span class="type-list">${tags(m)}</span><p>${save().journey.inventory.pokeball} Poké Balls na mochila</p></div></div><p>Enfraqueça o Pokémon em batalha para aumentar sua chance de captura. Derrotá-lo encerra a oportunidade.</p><div class="detail-actions"><button id="wild-fight" class="primary-button">Ficar e lutar</button><button id="wild-capture" class="secondary-button">Tentar capturar</button><button id="wild-flee" class="text-button">Fugir e seguir a rota</button></div>`;
  if(!$('detail-dialog').open)showDialog('detail-dialog');
- $('wild-fight').onclick=()=>{wildBattle=true;activeStage=stage.id;startBattle({battleId,team:p.getTeam(),botTeam:{mons:[stage.wild],moves:{},gimmick:null},format:`${save().team.mons.length}v1`,difficulty:1,opponentLevel:7+CHAPTER_ONE.indexOf(stage)});};
+ $('wild-fight').onclick=()=>{wildBattle=true;activeStage=stage.id;startBattle({battleId,team:p.getTeam(),botTeam:{mons:[stage.wild],moves:{},gimmick:null},format:`${save().team.mons.length}v1`,difficulty:1,opponentLevel:7+ALL_STAGES.indexOf(stage)});};
  $('wild-capture').onclick=captureEncounter;$('wild-flee').onclick=()=>{p.resolveEncounter('fled');runTrainerStage(stage,battleId);};
 }
 async function launchStage(id){
- const stage=CHAPTER_ONE.find(s=>s.id===id);if(!stage)return;
+ const stage=ALL_STAGES.find(s=>s.id===id);if(!stage)return;
  const current=save().journey?.active;
  if(current&&current.stage!==id){notify(`Você tem uma tentativa em ${current.stage}. Retome essa fase primeiro.`);return;}
  const battleId=current?.id||crypto.randomUUID();if(!current&&!apply(p.beginStage(id,battleId)))return;
@@ -773,6 +906,12 @@ function wire() {
     if (apply(p.claimDaily())) notify("Bônus diário: +150 moedas.");
   };
   $("daily-claim").onclick = $("home-daily").onclick;
+  const starterClaimBtn = $("starter-tickets-claim");
+  if (starterClaimBtn)
+    starterClaimBtn.onclick = () => {
+      if (apply(p.claimStarterTickets()))
+        notify("Recompensa inicial: +10 tickets de invocação.");
+    };
   for (const id of ["collection-summon", "rewards-summon", "home-summon"])
     $(id).onclick = () => navigate("summon");
   $("summon-back").onclick = () => navigate("home");
@@ -882,3 +1021,4 @@ async function boot() {
   }
 }
 boot();
+

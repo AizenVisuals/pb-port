@@ -21,7 +21,7 @@ body{background:#c4ded9;color:var(--ink)}button{font-weight:700}button:disabled{
 /* Dialogs are reserved for account, capture choices and results. */
 .sheet-dialog,.pull-dialog,.result-dialog,.pause-dialog{background:#fff9e9;color:#294a56;border:1px solid #c3c7ac;border-radius:18px;box-shadow:0 14px 40px #163b4955}.sheet-dialog::backdrop,.pull-dialog::backdrop,.result-dialog::backdrop,.pause-dialog::backdrop{background:#193e4b99}.dialog-heading h2,.pull-dialog h2{color:#294a56}.dialog-heading{margin-bottom:16px}.dialog-heading .icon-button{background:#e5ecd8;border-color:#bbc9ad}.detail-stats>div{background:#e8edda;color:#34545d;border-color:#cad0b7}.detail-stats small{color:#526b6f}.pull-results{gap:10px}.pull-result{background:#edf0de;border-color:#c4ccaf;color:#354f57}.pull-result.rarity-rare{background:#dceddf}.pull-result.rarity-epic{background:#f7e5ba}.rarity-label{color:#776238}.result-symbol{background:#e6ecd5;color:#478e7b}.result-coins{color:#a57520}.profile-form label{color:#3d5a65}.profile-form .sound-preference{color:#3d5a65}.account-panel{border-color:#c8cdb8}.starter-dialog{max-width:min(100vw - 24px,850px)}.starter-dialog h1{color:#294a56}.starter-options{display:flex;gap:12px;overflow-x:auto;padding:10px 3px 18px;scroll-snap-type:x proximity}.starter-option{min-width:180px;background:#edf1df;border:1px solid #b9c7b0;border-radius:14px;box-shadow:0 4px 6px #2b4b3c19;color:#2f535d;padding:12px;scroll-snap-align:start}.starter-option[aria-pressed=true]{border:2px solid #df7560;background:#fff0d8}.starter-option canvas{height:125px;width:140px}.starter-option strong{font-size:18px}.starter-option small{font-size:12px;color:#59716a}.starter-dialog>.primary-button{margin-top:8px}
 /* Combat remains the PB real-time surface; light menu tokens must not lower HUD contrast. */
-.battle-screen{color:#f6f3ea;--ink:#f6f3ea;--muted:#abc5cf;--cyan:#7de5e0;--coral:#ff7b65;--line:#314552}.battle-screen h1,.battle-screen h2,.battle-screen h3{color:#f6f3ea}.battle-screen .fighter-panel b,.battle-screen .move-button b{color:#f6f3ea}.battle-screen .mega-action{color:#fff1bc}.battle-screen .utility-action{color:#fff8e9}.battle-screen .bench-button{border:0}.battle-screen button:focus-visible{outline-color:#9affed}.battle-pill{border:1px solid #73c3c673}.battle-icon-button{border:1px solid #75a8b24a}.battle-screen button.is-pressed:not(:disabled){filter:brightness(1.18)}
+.battle-screen{color:#f6f3ea;--ink:#f6f3ea;--muted:#abc5cf;--cyan:#7de5e0;--coral:#ff7b65;--line:#314552}.battle-screen h1,.battle-screen h2,.battle-screen h3{color:#f6f3ea}.battle-screen .move-button b{color:#f6f3ea}.battle-screen .mega-action{color:#fff1bc}.battle-screen .utility-action{color:#fff8e9}.battle-screen .bench-button{border:0}.battle-screen button:focus-visible{outline-color:#9affed}.battle-pill{border:1px solid #73c3c673}.battle-icon-button{border:1px solid #75a8b24a}.battle-screen button.is-pressed:not(:disabled){filter:brightness(1.18)}
 @media(min-width:1100px) and (min-height:600px){.app-header{height:65px;min-height:65px;padding-inline:28px}.main-nav{height:83px;min-height:83px;padding-inline:7%;gap:20px}.main-nav button{height:70px}.main-nav button span{height:38px;width:40px}.main-nav button svg{width:35px;height:35px}.main-nav button small{font-size:14px}.content-screen{padding:20px 30px}.screen-title{min-height:50px;margin-bottom:18px}.screen-title h1{font-size:34px}.formation-roster-bar{min-height:110px}.roster-thumb img{width:55px;height:55px}.roster-thumb{min-width:115px;padding:7px}.roster-thumb span{font-size:14px}.roster-thumb small{font-size:11px}.formation-slot>b{font-size:17px}.formation-slot>small{font-size:13px}.slot-number{font-size:12px;top:8px;left:12px}.formation-field>.team-list{padding:10px 30px}.game-side-panel{padding:24px}.formation-selected>img{width:85px;height:85px}.formation-selected h2{font-size:28px}.formation-command-list button{font-size:15px;min-height:48px}.partner-stage{padding:22px}.partner-panel{padding:20px 8px}.partner-panel h2{font-size:27px}.partner-panel p{font-size:15px}.partner-tabs button{font-size:16px;min-height:48px}.partner-stats span{font-size:15px}.partner-stats b{font-size:18px}.partner-stats{gap:18px 30px;margin:20px 0}.evolution-path img{width:100px;height:100px}.inventory-layout{grid-template-columns:1.9fr 1fr}.inventory-layout>.bag-items{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));grid-auto-rows:145px;gap:15px}.inventory-slot>img{width:65px;height:65px}.inventory-slot>b{font-size:16px}.inventory-slot>small{font-size:14px}.inventory-item-hero{width:100px;height:100px}.game-side-panel>h2{font-size:28px}.game-side-panel>p{font-size:15px}.campaign-layout{grid-template-columns:1fr 300px}.chapter-map{height:100%;min-height:420px}.map-stage{width:66px;height:75px}.map-stage>span{width:55px;height:55px;font-size:15px}.map-stage>b{font-size:13px}.stage-trainer img{width:75px;height:75px}.stage-opponents img{width:65px;height:65px}.stage-reward{font-size:15px}.invocation-tabs{top:20px;right:95px;width:280px}.pokemon-invocation{grid-template-columns:210px minmax(0,1fr) minmax(260px,.65fr);gap:18px 24px}.banner-nav button{min-height:80px;font-size:18px;padding:17px}.summon-actions{margin-top:45px}.summon-actions button{min-height:74px}.summon-actions button b{font-size:23px}.summon-actions button span{font-size:15px}#summon-banner-title{font-size:34px;bottom:20px}.pity-box>div{font-size:15px}.summon-budget{font-size:17px}.odds-details summary{font-size:14px}.hero-stage{left:25%;width:36%}.home-heading{left:35px;top:35px}.home-heading .wordmark{font-size:56px}.home-heading .wordmark b{font-size:19px}.hero-name h2{font-size:43px}.battle-launch{width:28%;padding:20px;right:30px}.journey-cta{font-size:35px;min-height:84px}.battle-choice select{font-size:14px;min-height:48px}.battle-choice label{font-size:13px}.battle-cta{min-height:64px}.battle-cta b{font-size:17px}.battle-cta small{font-size:13px}.lobby-shortcuts{left:30px;bottom:30px;width:20%;gap:12px}.daily-shortcut{font-size:16px;padding:14px}.summon-shortcut{padding:16px}.summon-shortcut b{font-size:22px}.summon-shortcut small,.summon-shortcut>span{font-size:14px}.formation-field>p{font-size:13px;bottom:5px}}
 @media(orientation:landscape) and (max-height:440px){.app-header{height:50px;min-height:50px;padding-block:4px}.trainer-button>img{width:39px;height:39px}.main-nav{height:62px;min-height:62px;padding-top:2px;gap:5px}.main-nav button{height:56px;padding:2px 3px}.main-nav button span{height:29px;width:29px}.main-nav button svg{width:26px;height:26px}.main-nav button small{font-size:11px}.content-screen{padding:9px 14px}.screen-title{gap:9px;min-height:40px;margin-bottom:8px}.screen-title>.section-back{width:40px;min-width:40px;height:40px;min-height:40px}.screen-title h1{font-size:25px}.screen-title p{font-size:11px}.screen-title>span{font-size:11px}.screen-title>button:not(.section-back){min-height:40px;font-size:12px}.formation-roster-bar{min-height:71px;margin-top:5px;gap:6px}.formation-layout{gap:10px;grid-template-columns:minmax(0,1.8fr) minmax(215px,1fr)}.game-side-panel{padding:12px}.formation-selected>img{width:45px;height:45px}.formation-selected h2{font-size:19px}.formation-command-list{margin-top:7px;gap:5px}.formation-command-list button{min-height:39px;font-size:11px}.formation-command-list+.support-copy{display:none}.formation-field>.team-list{padding:1px 6px;gap:2px}.formation-slot>b{font-size:10px}.formation-slot>small{font-size:9px}.formation-slot canvas{height:calc(100% - 22px)}.formation-field>p{font-size:9px;bottom:1px}.slot-number{font-size:8px;top:1px;left:4px}.formation-roster-bar .roster-thumb{min-width:81px}.roster-thumb img{width:32px;height:32px}.partner-layout{gap:13px;grid-template-columns:minmax(180px,.8fr) minmax(0,1.4fr)}.partner-tabs button{font-size:12px;min-height:39px;padding:4px 6px}.partner-panel{padding-top:9px}.partner-panel h2{font-size:20px}.partner-panel p{font-size:12px;margin-bottom:9px}.partner-stats{gap:9px 16px;margin:10px 0}.partner-panel .move-save{bottom:-8px}.partner-panel .move-option{min-height:49px;padding:7px}.partner-panel .mega-label{font-size:11px}.partner-actions button{font-size:11px;min-height:44px}.partner-stage>canvas{height:calc(100% - 54px)}.campaign-layout{grid-template-columns:minmax(0,1fr) 230px;gap:10px}.campaign-screen .screen-title h1{font-size:23px}.campaign-screen .screen-title p{display:none}.stage-trainer{margin-bottom:5px}.stage-trainer img{width:36px;height:36px}.game-side-panel>h2{font-size:20px}.stage-opponents{margin-bottom:5px}.stage-opponents img{width:34px;height:34px}.game-side-panel>p{font-size:11px}.stage-reward{font-size:11px;padding:7px;margin:7px 0}.stage-trainer span{font-size:11px}.inventory-layout{grid-template-columns:minmax(0,1.8fr) minmax(235px,1fr);gap:13px}.inventory-layout>.bag-items{grid-template-columns:repeat(auto-fill,minmax(98px,1fr));grid-auto-rows:98px;gap:8px}.inventory-slot>img{width:37px;height:37px}.inventory-slot>b{font-size:11px}.inventory-slot>small{font-size:11px}.inventory-item-hero{width:50px;height:50px;margin-bottom:5px}.inventory-item-hero svg{width:48px;height:48px}.inventory-owner-label{margin-top:7px;font-size:11px;gap:4px}.inventory-owner-label select{min-height:43px;font-size:12px}.game-side-panel>button{min-height:43px;font-size:12px;margin-top:8px}.inventory-count{font-size:12px;margin:7px 0}.collection-toolbar{margin-bottom:8px}.collection-toolbar input,.collection-toolbar select{min-height:40px;font-size:12px}.collection-grid{grid-template-columns:repeat(auto-fill,minmax(103px,1fr));gap:8px}.pokemon-card{min-height:111px;padding:7px}.pokemon-card>img{width:58px;height:58px}.pokemon-card h3{font-size:12px}.pokemon-card>small{font-size:10px;margin-top:4px}.home-heading{left:16px;top:14px;gap:10px}.home-heading .wordmark{font-size:33px}.home-heading .wordmark b{font-size:11px}.hero-name h2{font-size:27px}.hero-stage{left:24%;width:37%;top:0;height:98%}.hero-name .type-tag{font-size:10px;padding:2px 6px}.hero-info{right:-3px;bottom:5px;width:30px;height:30px}.battle-launch{right:14px;width:31%;padding:10px}.journey-cta{font-size:23px;min-height:51px;margin-bottom:7px}.battle-choice{gap:6px;margin-bottom:6px}.battle-choice select{font-size:10px;min-height:35px;padding:4px}.battle-choice label{font-size:10px}.battle-cta{min-height:44px;padding:6px}.battle-cta b{font-size:11px}.battle-cta small{font-size:10px}.lobby-shortcuts{left:14px;bottom:11px;width:21%;gap:6px}.daily-shortcut{font-size:11px;min-height:43px}.summon-shortcut{padding:8px}.summon-shortcut b{font-size:13px}.summon-shortcut>span,.summon-shortcut small{font-size:10px}.invocation-tabs{top:9px;right:70px;width:200px;padding:3px}.invocation-tabs button{min-height:32px;font-size:11px}.pokemon-invocation{grid-template-columns:130px minmax(0,1fr) minmax(185px,.7fr);gap:6px 12px}.banner-nav{gap:7px}.banner-nav button{min-height:50px;padding:7px 10px;font-size:11px}.banner-picker>p{font-size:10px;margin-top:7px}.summon-actions{margin-top:24px;gap:7px}.summon-actions button{min-height:47px;padding:6px}.summon-actions button b{font-size:14px}.summon-actions button span{font-size:11px}.summon-budget{font-size:11px}.pity-box{padding-bottom:2px}.pity-box>div{font-size:10px}.odds-details summary{font-size:10px;min-height:24px}#summon-banner-title{font-size:20px;bottom:8px}.technique-invocation{gap:16px;grid-template-columns:.8fr 1.2fr}.technique-partner img{width:125px;height:125px}.technique-controls h2{font-size:21px}.technique-controls>p{font-size:11px;margin-bottom:7px}.technique-controls select{min-height:43px;font-size:12px}.technique-controls>button{min-height:45px}.technique-controls .support-copy{font-size:10px}.technique-controls details summary{min-height:32px}.shop-toolbar{margin-bottom:8px}.shop-toolbar p{font-size:11px}.shop-toolbar .segmented button{min-height:38px;font-size:12px}.shop-item{min-height:73px;padding:9px}.shop-item>img{width:50px;height:50px}.shop-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}.shop-consumable h2{font-size:17px}.shop-consumable p{font-size:11px}.toast{bottom:72px;font-size:12px}.sheet-dialog{max-height:92svh}.screen-partner .screen-title{margin-bottom:7px}}
 @media(max-width:639px) and (orientation:portrait){.formation-layout,.partner-layout,.inventory-layout,.campaign-layout{grid-template-columns:1fr;min-height:500px;overflow:auto}.content-screen{overflow:auto}.formation-roster-bar{min-height:90px}.partner-stage{min-height:230px}.formation-field{min-height:280px}.partner-workspace{min-height:320px}.inventory-layout .bag-items{min-height:230px}.campaign-viewport{min-height:300px}.pokemon-invocation{grid-template-columns:1fr;overflow:auto}.banner-picker{grid-column:1;grid-row:auto}.banner-nav{grid-template-columns:repeat(3,1fr)}.summon-display{grid-column:1;grid-row:auto;min-height:250px!important}.summon-budget,.summon-actions,.pity-box,.odds-details{grid-column:1;grid-row:auto;margin-top:0}.invocation-tabs{position:static;margin-bottom:12px;width:100%}.summon-screen{overflow:auto}.technique-invocation{grid-template-columns:1fr}.technique-partner{min-height:190px}.main-nav{padding-inline:5px;gap:1px}.main-nav button small{font-size:10px}}
@@ -283,6 +283,8 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid 
 #inventory-detail>p:first-of-type{margin-left:50px;min-height:24px}
 
 .chapter-map{image-rendering:pixelated}
+.chapter-map.chapter-two{background-image:url('/pulse/assets/chapter-two-tiles.webp')}
+.chapter-tabs{display:flex;gap:8px;margin:0 0 10px}.chapter-tabs button{padding:8px 14px;border-radius:10px;border:2px solid #adc6ad;background:#e8edda;font-weight:700;cursor:pointer}.chapter-tabs button[aria-selected="true"]{background:#264e50;color:#fff9df;border-color:#264e50}.chapter-tabs button:disabled{opacity:.5;cursor:not-allowed}
 
 .map-stage:not(.cleared):not(.gym-node)>b{display:none}
 
@@ -332,3 +334,197 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid 
 }
 @media(max-width:639px) and (orientation:portrait){.bonus-layout{grid-template-columns:1fr;min-height:450px}.bonus-prizes{min-height:140px}.bonus-side{padding-bottom:10px}}
 .formation-command-list button:disabled{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+
+/* ===== Sword & Shield theme — overrides the light x7game theme above ===== */
+:root{color-scheme:dark;--bg:#0f1c26;--surface:#ffffff;--raised:#f2f5f7;--ink:#16283a;--muted:#5a7280;--cyan:#2b7de9;--coral:#e60012;--gold:#f5b301;--line:#d7e0e6;--good:#2e9e5b;--bad:#d43d3d}
+body{background:#0f1c26;color:#fff}
+#app{background:#0f1c26}
+.app-header{background:#16283a;border-bottom:3px solid #e60012;color:#fff;box-shadow:0 3px 8px #0006}
+.trainer-button{color:#fff}
+.trainer-button>img{background:#fff;border:2px solid #e60012}
+.trainer-button small{color:#b7d2df}
+.wallet{background:#fff;color:#16283a;border:1px solid #d7e0e6}
+.wallet svg{color:#f5b301}
+.diamond-wallet{color:#2b7de9}
+.diamond-wallet svg{color:#2b7de9}
+.content-screen{background:#0f1c26}
+#app:not([data-route="home"]) .content-screen{background:#0f1c26}
+.screen-title h1{color:#fff}
+.screen-title p{color:#b7d2df}
+.screen-title>span{color:#b7d2df}
+h1,h2,h3{color:#fff}
+p{color:#b7d2df}
+input,select{background:#fff;color:#16283a;border-color:#d7e0e6}
+input::placeholder{color:#8a9ba8}
+progress,progress::-webkit-progress-bar{background:#d7e0e6}
+progress::-webkit-progress-value{background:#e60012}
+.primary-button{background:#e60012;color:#fff;border:1px solid #b3000e;border-radius:10px;box-shadow:0 3px 6px #0005}
+.secondary-button{background:#fff;color:#16283a;border:1px solid #d7e0e6;border-radius:10px;box-shadow:0 2px 4px #0004}
+.text-button{color:#2b7de9}
+.icon-button,.section-back{background:#fff;border:1px solid #d7e0e6;color:#16283a;box-shadow:0 2px 4px #0004}
+.count-mark,.level-badge{background:#fff;color:#16283a;border:1px solid #d7e0e6}
+.type-tag{background:var(--type,#2b414a);color:#fff;border-color:transparent}
+.hero-name .type-tag{background:var(--type,#2b414a);color:#fff;border-color:transparent;box-shadow:0 2px 4px #0006}
+.segmented{background:#16283a;padding:3px;border:1px solid #2b3e46}
+.segmented button{color:#b7d2df}
+.segmented button[aria-pressed=true]{background:#e60012;color:#fff;box-shadow:0 2px 3px #0005}
+.main-nav{background:#16283a;border-top:2px solid #e60012;box-shadow:0 -4px 10px #0006}
+.main-nav button{color:#b7d2df;background:transparent;border-color:transparent}
+.main-nav button span{filter:none}
+.main-nav button[aria-current]{background:#e60012;border-color:#b3000e;color:#fff;box-shadow:0 2px 6px #0006}
+.main-nav button[data-route=team] span,.main-nav button[data-route=collection] span,.main-nav button[data-route=summon] span,.main-nav button[data-route=shop] span,.main-nav button[data-route=bag] span,.main-nav button[data-route=rewards] span{color:inherit}
+.toast{background:#16283a;color:#fff;border:1px solid #2b3e46}
+.save-status{background:#f5b301;color:#16283a}
+/* Lobby */
+.home-screen{background:#0f1c26}
+.home-heading .wordmark{color:#fff}
+.home-heading .wordmark b{color:#ffd23f}
+.hero-name h2{color:#fff}
+.battle-launch{background:#fff;border:1px solid #d7e0e6;box-shadow:0 7px 14px #0006}
+.journey-cta{background:#e60012;color:#fff;border:1px solid #b3000e;box-shadow:0 4px 5px #0005}
+.battle-choice label{color:#5a7280}
+.battle-choice select{background:#fff;border-color:#d7e0e6}
+.battle-cta{background:#16283a;color:#fff;border:1px solid #2b3e46}
+.battle-cta small{color:#b7d2df}
+.daily-shortcut,.summon-shortcut{background:#fff;border:1px solid #d7e0e6;color:#16283a;box-shadow:0 4px 9px #0005}
+.daily-shortcut{color:#b8860b}
+.summon-shortcut>span{color:#e60012}
+.summon-shortcut b{color:#16283a}
+.summon-shortcut small{color:#5a7280}
+.home-progress>div>span{color:#fff}
+.home-progress small{color:#b7d2df}
+.home-progress button{color:#fff}
+/* Collection cards + rarity tiers */
+.pokemon-card{background:#fff;border:1px solid #d7e0e6;box-shadow:0 3px 5px #0004;color:#16283a}
+.pokemon-card h3{color:#16283a}
+.pokemon-card>small{color:#5a7280}
+.pokemon-card.rarity-C{border-top:3px solid #8a9ba8}
+.pokemon-card.rarity-R{border-top:3px solid #3b82f6}
+.pokemon-card.rarity-SR{border-top:3px solid #a855f7}
+.pokemon-card.rarity-UR{border-top:3px solid #f59e0b}
+.pokemon-card.rarity-SSS{border-top:3px solid #ec4899}
+.pokemon-card.is-locked{background:#e8ecf0;border-color:#d7e0e6}
+.owned-mark{background:#2e9e5b;color:#fff}
+.card-level{background:#16283a;color:#fff}
+.search-field{background:#fff;border-color:#d7e0e6}
+.collection-filters select{background:#fff;color:#16283a}
+/* Shop */
+.shop-item{background:#fff;border:1px solid #d7e0e6;color:#16283a;box-shadow:0 3px 5px #0004}
+.shop-item small{color:#5a7280}
+.shop-item strong{color:#2b7de9}
+.shop-item.rarity-C{border-top:3px solid #8a9ba8}
+.shop-item.rarity-R{border-top:3px solid #3b82f6}
+.shop-item.rarity-SR{border-top:3px solid #a855f7}
+.shop-item.rarity-UR{border-top:3px solid #f59e0b}
+.shop-item.rarity-SSS{border-top:3px solid #ec4899}
+.shop-consumable{background:#fff;border:1px solid #d7e0e6}
+.shop-consumable h2{color:#16283a}
+.reward-card,.collection-summary{background:#fff;border-color:#d7e0e6;color:#16283a}
+.reward-card p,.collection-summary p{color:#5a7280}
+.record-grid>div{background:#f2f5f7;color:#16283a;border:1px solid #d7e0e6}
+.backup-tools{background:#f2f5f7;border-color:#d7e0e6}
+.screen-rewards h3{color:#fff}
+.bonus-prize{background:#fff;border:1px solid #d7e0e6}
+.bonus-prize strong{color:#16283a}
+.bonus-prize span{color:#5a7280}
+/* Panels: formation, partner, bag, campaign */
+.game-side-panel{background:#fff;border:1px solid #d7e0e6;color:#16283a;box-shadow:0 3px 6px #0004}
+.game-side-panel h2{color:#16283a}
+.game-side-panel>p{color:#5a7280}
+.formation-field{background:radial-gradient(ellipse at 50% 60%,#ffffff 0 45%,#e8eef2 46% 52%,#f2f5f7 53% 67%,#d7e0e6 68%);border:1px solid #d7e0e6}
+.formation-field>p{color:#5a7280}
+.formation-slot.selected{background:#fff;border-color:#e60012}
+.slot-number{color:#5a7280}
+.roster-thumb{background:#fff;border:1px solid #d7e0e6;color:#16283a}
+.roster-thumb.in-team{background:#e8f4ff;border-color:#2b7de9}
+.formation-roster-bar>b{color:#fff}
+.formation-selected h2{color:#16283a}
+.formation-selected p{color:#5a7280}
+.partner-tabs,.invocation-tabs{background:#16283a;border:1px solid #2b3e46}
+.partner-tabs button,.invocation-tabs button{color:#b7d2df}
+.partner-tabs button[aria-selected=true],.invocation-tabs button[aria-selected=true]{background:#e60012;color:#fff;box-shadow:0 2px 4px #0005;border:1px solid #b3000e}
+.partner-panel h2{color:#fff}
+.partner-panel p{color:#b7d2df}
+.partner-stats b{color:#fff}
+.partner-stats small{color:#b7d2df}
+.partner-xp{color:#b7d2df}
+.move-option{background:#fff;border:1px solid #d7e0e6;color:#16283a}
+.move-option b{color:#16283a}
+.move-option small{color:#5a7280}
+.mega-label{background:#6f35fc;color:#fff}
+.inventory-slot{background:#fff;border:1px solid #d7e0e6;color:#16283a;box-shadow:0 3px 5px #0004}
+.inventory-slot.selected{border:2px solid #e60012;background:#fff}
+.inventory-slot>small{color:#5a7280}
+.inventory-count{color:#b7d2df}
+.inventory-owner-label{color:#b7d2df}
+.map-stage{color:#16283a}
+.map-stage>span{background:linear-gradient(#fff,#f5b301);border:2px solid #b8860b;box-shadow:0 4px 5px #0005,inset 0 2px #fff8d2}
+.map-stage>b{background:#16283a;color:#fff;border:1px solid #2b3e46}
+.map-stage.selected>span{background:linear-gradient(#fff,#ff6b6b);border-color:#e60012;box-shadow:0 0 0 3px #ffd23f88,0 4px 6px #0005}
+.map-stage.cleared>span{background:linear-gradient(#fff,#57d977);border-color:#2e9e5b}
+.map-stage.locked>span{background:#9aa7b0;border-color:#5a7280}
+.stage-opponents img{border-color:#d7e0e6}
+.stage-reward{background:#e8f4ff;color:#16283a;border:1px solid #2b7de9}
+.stage-trainer span{color:#5a7280}
+/* Summon */
+.banner-nav button{background:#fff;border:1px solid #d7e0e6;color:#16283a;box-shadow:0 2px 4px #0004}
+.banner-nav button[aria-selected=true]{background:#e60012;border-color:#b3000e;color:#fff}
+.banner-picker>p{color:#b7d2df}
+.banner-picker>label{color:#fff}
+.summon-display{border:1px solid #2b3e46}
+.summon-budget{color:#f5b301}
+.ticket-balance{color:#f5b301;font-size:14px;text-align:center;margin:12px 0;font-weight:700}
+.ticket-balance b{color:#fff}
+.summon-budget .ticket-count{color:#fff}
+.pity-box>div{color:#fff}
+.pity-box p{color:#b7d2df}
+.odds-details{color:#b7d2df}
+.odds-details summary{color:#fff}
+.odds-details p{color:#b7d2df}
+.odds-details[open]{background:#16283a;border:1px solid #2b3e46}
+.partner-panel .move-save{background:#0f1c26}
+.summon-screen #summon-back{background:#fff}
+.hero-info{background:#fff}
+.technique-controls h2{color:#fff}
+.technique-controls>p{color:#b7d2df}
+.technique-controls label{color:#fff}
+.pull-scene.rarity-C{--rarity:#8a9ba8}
+.pull-scene.rarity-R{--rarity:#3b82f6}
+.pull-scene.rarity-SR{--rarity:#a855f7}
+.pull-scene.rarity-UR{--rarity:#f59e0b}
+.pull-scene.rarity-SSS{--rarity:#ec4899}
+.rarity-label{color:#16283a}
+.pull-result{background:#fff;border-color:#d7e0e6;color:#16283a}
+.pull-result b{color:#16283a}
+.pull-result small{color:#5a7280}
+.pull-result.rarity-C{border-top:3px solid #8a9ba8}
+.pull-result.rarity-R{border-top:3px solid #3b82f6}
+.pull-result.rarity-SR{border-top:3px solid #a855f7}
+.pull-result.rarity-UR{border-top:3px solid #f59e0b}
+.pull-result.rarity-SSS{border-top:3px solid #ec4899}
+.pull-receipt{color:#b7d2df}
+.pull-top{color:#5a7280}
+.pull-dialog p{color:#5a7280}
+.reveal-caption h2{color:#16283a}
+.result-dialog h2{color:#16283a}
+/* Dialogs */
+.sheet-dialog,.pull-dialog,.result-dialog,.pause-dialog{background:#fff;color:#16283a;border:1px solid #d7e0e6;box-shadow:0 14px 40px #0008}
+.sheet-dialog::backdrop,.pull-dialog::backdrop,.result-dialog::backdrop,.pause-dialog::backdrop{background:#0f1c26cc}
+.dialog-heading h2,.pull-dialog h2{color:#16283a}
+.dialog-heading .icon-button{background:#f2f5f7;border-color:#d7e0e6;color:#16283a}
+.detail-stats>div{background:#f2f5f7;color:#16283a;border-color:#d7e0e6}
+.detail-stats small{color:#5a7280}
+.detail-hero h2{color:#16283a}
+.detail-hero p{color:#5a7280}
+.result-symbol{background:#e8f4ff;color:#2b7de9}
+.result-coins{color:#b8860b}
+.result-dialog p{color:#5a7280}
+.profile-form label{color:#16283a}
+.profile-form .sound-preference{color:#16283a}
+.account-panel{border-color:#d7e0e6}
+.account-note{color:#5a7280}
+.starter-dialog h1{color:#16283a}
+.starter-option{background:#fff;border:1px solid #d7e0e6;color:#16283a;box-shadow:0 4px 6px #0004}
+.starter-option[aria-pressed=true]{border:2px solid #e60012;background:#fff5f5}
+.starter-option small{color:#5a7280}
+.starter-option strong{color:#16283a}
