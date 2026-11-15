@@ -1,4 +1,19 @@
 {
-  "prompt": "Sourced game graphics: Pokémon FireRed tiles from pret/pokefirered revision ce6406d8c2eaf46d543c8a2606de0c3cb1951982. Original PULSE training-plaza tile arrangement by scripts/build-firered-lobby.py; source hashes research/next-pass/firered/sources.json. Graphics remain property of their respective rights holders; not AI-generated art.",
-  "createdAt": "2026-11-15T05:15:25.265Z"
+  "asset": "public/pulse/assets/lobby-tiles.webp",
+  "width": 1280,
+  "height": 720,
+  "format": "lossless WebP",
+  "source": "https://github.com/pret/pokefirered/tree/ce6406d8c2eaf46d543c8a2606de0c3cb1951982/data/tilesets",
+  "upstream": "https://github.com/pret/pokefirered",
+  "revision": "ce6406d8c2eaf46d543c8a2606de0c3cb1951982",
+  "sourceManifest": "research/next-pass/firered/sources.json",
+  "script": "scripts/build-firered-lobby.py",
+  "composition": "Original PULSE arrangement of authentic FireRed tiles: town back strip, training hall, stone training courtyard, quiet center and right reserved for animated favorite and campaign controls. No UI or creatures baked into art.",
+  "ownership": "Original Pok\u00e9mon FireRed graphics belong to their respective rights holders. This is sourced game art, not AI-generated or original PULSE pixel art.",
+  "sha256": "491be73b0829a61557b9e8015d9f5db71e8297be6fa71de897f485167fd50193",
+  "limitations": [
+    "Static backdrop; collision/exploration is not implied.",
+    "No animated water, NPCs, UI or fake creature illustrations."
+  ],
+  "prompt": "Sourced FireRed game graphics from https://github.com/pret/pokefirered/tree/ce6406d8c2eaf46d543c8a2606de0c3cb1951982/data/tilesets; original PULSE tile arrangement by scripts/build-firered-lobby.py. Source hashes: research/next-pass/firered/sources.json. Not AI-generated art."
 }

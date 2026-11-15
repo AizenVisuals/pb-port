@@ -1,4 +1,63 @@
 {
-  "prompt": "Sourced game graphics: Pokémon FireRed tiles from pret/pokefirered revision ce6406d8c2eaf46d543c8a2606de0c3cb1951982. Original PULSE campaign-road tile arrangement by scripts/build-firered-map.py; source hashes research/next-pass/firered/sources.json. Graphics remain property of their respective rights holders; not AI-generated art.",
-  "createdAt": "2026-11-15T05:15:25.288Z"
+  "asset": "public/pulse/assets/chapter-one-tiles.webp",
+  "width": 1280,
+  "height": 720,
+  "format": "lossless WebP",
+  "tiles": "FireRed original 8px tiles / 16px metatiles, nearest neighbor",
+  "composition": "Original PULSE campaign arrangement; not a screenshot of Pallet Town. Village, grass routes, stream/bridge, disused research outpost and gym.",
+  "source": "https://github.com/pret/pokefirered/tree/ce6406d8c2eaf46d543c8a2606de0c3cb1951982/data/tilesets",
+  "upstream": "https://github.com/pret/pokefirered",
+  "revision": "ce6406d8c2eaf46d543c8a2606de0c3cb1951982",
+  "ownership": "Original Pok\u00e9mon FireRed graphics belong to their respective rights holders. pret is a decompilation source, not evidence of asset ownership transfer.",
+  "sourceManifest": "research/next-pass/firered/sources.json",
+  "script": "scripts/build-firered-map.py",
+  "sha256": "4767bb900b182b0f64227ed5f74fdcbfec346a06ef826d424f8d32cec17978d7",
+  "nodesPercent": [
+    [
+      20.0,
+      75.56
+    ],
+    [
+      28.75,
+      66.67
+    ],
+    [
+      37.5,
+      66.67
+    ],
+    [
+      46.25,
+      60.0
+    ],
+    [
+      57.5,
+      57.78
+    ],
+    [
+      67.5,
+      62.22
+    ],
+    [
+      76.25,
+      57.78
+    ],
+    [
+      82.5,
+      44.44
+    ],
+    [
+      90.0,
+      28.89
+    ],
+    [
+      90.0,
+      15.56
+    ]
+  ],
+  "limitations": [
+    "Static campaign scene only; no exploration/collision engine implied.",
+    "Original tiles are not original PULSE artwork.",
+    "No NPC or story labels baked in; actual stage controls stay in UI."
+  ],
+  "prompt": "Sourced FireRed game graphics from https://github.com/pret/pokefirered/tree/ce6406d8c2eaf46d543c8a2606de0c3cb1951982/data/tilesets; original PULSE tile arrangement by scripts/build-firered-map.py. Source hashes: research/next-pass/firered/sources.json. Not AI-generated art."
 }
