@@ -8,3 +8,6 @@ body[data-screen="battle"] .port-note{display:none}
 /* Touch controls must not trigger Android's text selection/search overlay. */
 body,body *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 body input,body textarea,body [contenteditable]:not([contenteditable="false"]),body [contenteditable]:not([contenteditable="false"]) *{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+
+/* Each battle finger keeps its own pointer; disable browser pan/zoom cancellation. */
+#battle .stage,#battle #controls,#battle button,#pad{touch-action:none;overscroll-behavior:contain}

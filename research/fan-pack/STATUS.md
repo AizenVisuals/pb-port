@@ -2,7 +2,7 @@
 
 Scope: PB combat website only. No APK, main or Render updates. User corrected Mega Marshadow Z; no change remains to existing Marshadow/Mega.
 
-Live release: /home/bloody/.local/share/pb-selfhost/releases/20261115-fan-pack-v2 on port3015. Existing Cloudflare tunnel preserved. Public URL: https://exclusion-raise-antarctica-statement.trycloudflare.com/ . Profiles preserved in external DATA_DIR; private backups and previous releases retained outside Git.
+Live release: /home/bloody/.local/share/pb-selfhost/releases/20261115-controls-portraits-rooms on port3015. Existing Cloudflare tunnel preserved. Public URL: https://exclusion-raise-antarctica-statement.trycloudflare.com/ . Profiles preserved in external DATA_DIR; private backups and previous releases retained outside Git.
 
 Playable: Ferunoga, Hawajaku, Kyasupada, Eereon; Mega Absol Z through Absol + Mega gimmick. Four final forms, not all earlier evolution stages. New cards grouped as Convidados / Fan-made; concepts credited in credits.html.
 
@@ -21,3 +21,5 @@ Verification:
 Reproduction: node scripts/package-pb-fan.mjs ORIGINAL_PB_RELEASE NEW_RELEASE . This overlays only fan pack onto original combat release, avoiding PULSE growth and UI. Do not copy root PULSE engine bundle to public combat server. deploy-local.py refuses a restart while clients/matches are present and retains rollback path.
 
 Source branch: fan-pack-public. See DESIGN.md, RESEARCH.md, art-manifest.json, balance-finals.json and balance-ferunoga.json.
+
+Follow-up: head portraits, controls and private rooms shipped; see ../pb-controls/STATUS.md.

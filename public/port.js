@@ -1,5 +1,5 @@
 const startup=import('./app.js');
-const unavailable = ['towerBtn','ticketsBtn','friendBtn','cupBtn','gridBtn','friendsBtn','voteBtn','myStatsBtn','trophyBtn','usageBtn','reportBtn','royaleBtn','discordBtn','endShareBtn','endReplayBtn'];
+const unavailable = ['towerBtn','ticketsBtn','cupBtn','gridBtn','friendsBtn','voteBtn','myStatsBtn','trophyBtn','usageBtn','reportBtn','royaleBtn','discordBtn','endShareBtn','endReplayBtn'];
 for (const id of unavailable) {
   const el=document.getElementById(id);
   if(!el)continue;

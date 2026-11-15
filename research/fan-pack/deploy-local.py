@@ -1,7 +1,7 @@
 """Switch only the PB local process; preserve profiles and the running tunnel."""
 from pathlib import Path
 import os,signal,subprocess,time,json,urllib.request,shutil,datetime
-home=Path.home()/'.local/share/pb-selfhost';new=home/'releases/20261115-fan-pack-v2'
+home=Path.home()/'.local/share/pb-selfhost';new=home/'releases/20261115-controls-portraits-rooms'
 def health():
  with urllib.request.urlopen('http://127.0.0.1:3015/api/health',timeout=3) as r:return json.load(r)
 h=health()

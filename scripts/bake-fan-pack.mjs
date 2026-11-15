@@ -19,7 +19,7 @@ for(const asset of manifest.assets){
    offs[row][col]={head:{x:32,y:24},center:{x:32,y:40},lh:{x:22,y:40},rh:{x:42,y:40},centroid:{x:32,y:40}};shad[row][col]={centroid:{x:32,y:58},center:{x:32,y:58}};
   }}
   const stem=name;anims[name]={...animation,w:64,h:64,file:stem+'-Anim.png'};baked[stem]={offs,shad};const bytes=sheet.toBuffer('image/png');await writeFile('public/baked2/'+dex+'/'+stem+'.png',bytes);await writeFile('public/assets/sprites/'+dex+'/'+stem+'-Anim.png',bytes);
-  if(name==='Idle'){const portrait=createCanvas(40,40),pc=portrait.getContext('2d');pc.imageSmoothingEnabled=false;pc.drawImage(sheet,0,0,64,64,0,0,40,40);await writeFile('public/assets/portraits/'+dex+'_Normal.png',portrait.toBuffer('image/png'));}
+  if(name==='Idle'&&!asset.portrait){const portrait=createCanvas(40,40),pc=portrait.getContext('2d');pc.imageSmoothingEnabled=false;pc.drawImage(sheet,0,0,64,64,0,0,40,40);await writeFile('public/assets/portraits/'+dex+'_Normal.png',portrait.toBuffer('image/png'));}
  }
  metadata[dex]={shadowSize:1,anims};await writeFile('public/baked2/'+dex+'.json',JSON.stringify(baked));console.log('Baked',asset.key,Object.keys(anims).length,'animations');
 }

@@ -1,3 +1,4 @@
+import{createRooms}from'./rooms.mjs';
 import http from 'node:http';
 import { readFile, writeFile, mkdir, rename } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
@@ -25,7 +26,7 @@ const server = http.createServer(async (req, res) => {
     if (pathname === '/api/usage') return json(res,200,{formats:{}});
     if (pathname.startsWith('/api/replay/')) return json(res,410,{gone:true});
     if (pathname === '/port-status.json') return json(res,200,{supported:['3v3','6v6'],features:['practice','pvp','leaderboard','local-profiles','saved-teams']});
-    const file = resolve(root, pathname === '/' ? 'index.html' : pathname.replace(/^\//,''));
+    const file = resolve(root, (pathname === '/' || /^\/room\/[A-Z0-9]{6}\/?$/i.test(pathname)) ? 'index.html' : pathname.replace(/^\//,''));
     if(!file.startsWith(root+sep)) return json(res,403,{error:'Forbidden'});
     const bytes = await readFile(file);
     res.writeHead(200,{'content-type':mime[extname(file)]||'application/octet-stream','cache-control':'no-cache','x-content-type-options':'nosniff'}); res.end(req.method==='HEAD'?undefined:bytes);
@@ -34,6 +35,7 @@ const server = http.createServer(async (req, res) => {
 const wss = new WebSocketServer({server,maxPayload:64*1024});
 const send = (c, value) => { if(c?.ws.readyState===1)c.ws.send(JSON.stringify(value)); };
 const rating = (p, format) => { const s=p.ladder[format]||{pts:0,streak:0,wins:0,losses:0,games:0}; const r=rankOf(s.pts); return {...s,tier:r.tier,rank:r.rank,rankName:r.name,lo:r.lo,hi:r.hi,next:r.next,season:seasonOf(),allWins:s.wins,allLosses:s.losses}; };
+const rooms=createRooms({send,validateTeam,startMatch,removeQueue});
 function removeQueue(c) { const at=queue.findIndex(q=>q.c===c); if(at>=0)queue.splice(at,1); }
 function validateTeam(team, count) {
   if(!team||!Array.isArray(team.mons)||team.mons.length!==count||new Set(team.mons).size!==count||team.mons.some(m=>!engine.INFO[m]))throw Error(`Escolha ${count} Pokémon diferentes.`);
@@ -41,7 +43,7 @@ function validateTeam(team, count) {
 }
 const randomTeam = n => { const keys=[...engine.ROSTER]; for(let i=keys.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[keys[i],keys[j]]=[keys[j],keys[i]];}return validateTeam({mons:keys.slice(0,n)},n); };
 function finish(m,winner,surrender) {
-  if(m.ended)return; m.ended=true; clearInterval(m.timer); clearTimeout(m.loadTimeout);
+  if(m.ended)return; m.ended=true; rooms.finish(m,winner); clearInterval(m.timer); clearTimeout(m.loadTimeout);
   m.clients.forEach((c,side)=>{ if(!c)return; c.match=null; const ranked=m.mode==='ranked'; let result=rating(c.player,m.format);
     if(ranked){const won=side===winner; const s=score(result,won,m.teams.some(t=>t.bot));result={...result,...s,wins:result.wins+Number(won),losses:result.losses+Number(!won),games:result.games+1};c.player.ladder[m.format]=result;result=rating(c.player,m.format);}
     c.player.played++; (c.player.history||=[]).unshift({num:m.id,opp:m.teams[1-side].name,oppTrainer:m.teams[1-side].trainer,won:side===winner,started:m.started,format:m.format,mode:m.mode,replay:false});c.player.history=c.player.history.slice(0,50);
@@ -90,13 +92,14 @@ wss.on('connection',(ws,req)=>{
         c.player=p;save();send(c,{t:'welcome',token:p.token,name:p.name,trainer:p.trainer,ladder:Object.fromEntries(['3v3','6v6'].map(f=>[f,rating(p,f)])),played:p.played,teams:p.teams});send(c,{t:'activity',online:clients.size,f:{}});return;
       }
       if(!c.player)throw Error('Entre com seu nome primeiro.');
+      if(await rooms.handle(c,e))return;
       if(e.t==='champ')return;
       if(e.t==='teams'){c.player.teams={teams:e.teams,saved:e.saved,at:e.at};save();return;}
       if(e.t==='profile'){if(!/^[\p{L}\p{N} ._'-]{2,16}$/u.test(e.name))throw Error('Nome inválido.');c.player.name=e.name;c.player.trainer=/^[a-z0-9_-]{1,30}$/.test(e.trainer)?e.trainer:'red';save();send(c,{t:'profile',name:e.name,trainer:c.player.trainer});return;}
       if(e.t==='cancel'){removeQueue(c);send(c,{t:'unqueued'});return;}
       if(e.t==='queue'){
         if(c.match)throw Error('Você já está em uma partida.');if(!['3v3','6v6'].includes(e.format))throw Error('Este port suporta 3v3 e 6v6 por enquanto.');if(!['practice','ranked','casual'].includes(e.mode))throw Error('Modo inválido.');
-        removeQueue(c);const team=e.random?randomTeam(e.format==='6v6'?6:3):validateTeam(e.team,e.format==='6v6'?6:3);const entry={c,team,format:e.format,mode:e.mode};
+        if(c.room)throw Error('Saia da sala antes de entrar na fila.');removeQueue(c);const team=e.random?randomTeam(e.format==='6v6'?6:3):validateTeam(e.team,e.format==='6v6'?6:3);const entry={c,team,format:e.format,mode:e.mode};
         if(e.mode==='practice'){await startMatch([entry,null],e);return;}
         const i=queue.findIndex(q=>q.format===e.format&&q.mode===e.mode);if(i>=0){const opp=queue.splice(i,1)[0];await startMatch([opp,entry],e);}else{queue.push(entry);send(c,{t:'queued'});}return;
       }
@@ -109,7 +112,7 @@ wss.on('connection',(ws,req)=>{
       send(c,{t:'error',msg:'Este recurso ainda não está implementado no servidor próprio.'});
     }catch(error){send(c,{t:'error',msg:error.message});}
   });
-  ws.on('close',()=>{clients.delete(c);removeQueue(c);if(c.match&&!c.match.ended)finish(c.match,1-c.match.clients.indexOf(c),c.match.clients.indexOf(c));});
+  ws.on('close',()=>{clients.delete(c);removeQueue(c);rooms.leave(c);if(c.match&&!c.match.ended)finish(c.match,1-c.match.clients.indexOf(c),c.match.clients.indexOf(c));});
 });
 const argValue = flag => { const at=process.argv.indexOf(flag); return at>=0?process.argv[at+1]:undefined; };
 const port=Number(process.env.PORT ?? argValue('--port') ?? 3000);

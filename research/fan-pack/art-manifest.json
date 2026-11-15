@@ -58,7 +58,11 @@
         "inspection": "Six distinct coil/head positions, lateral body-wave progression. Eight directions inspected; loop contact poses reviewed in exported native-size preview.",
         "promptFile": "research/fan-pack/art/ferunoga-walk-prompt.txt"
       },
-      "conceptCredit": "E/ (@Loca_ruchem), confirmed by user; independently recovered water-line post"
+      "conceptCredit": "E/ (@Loca_ruchem), confirmed by user; independently recovered water-line post",
+      "portrait": {
+        "path": "public/assets/fx/fan-pack/ferunoga-portrait.png",
+        "source": "Native ImageGen, identity-conditioned head portrait, converted to40px"
+      }
     },
     {
       "key": "hawajaku",
@@ -83,7 +87,11 @@
         "inspection": "Visible alternating bird-leg support, bent knees and lifted feet; preserved eye-spotted fan. Eight directions inspected. Loop contact poses reviewed in exported native-size preview.",
         "promptFile": "research/fan-pack/art/hawajaku-walk-prompt.txt"
       },
-      "conceptCredit": "E/ (@Loca_ruchem), confirmed by user; independently recovered water-line post"
+      "conceptCredit": "E/ (@Loca_ruchem), confirmed by user; independently recovered water-line post",
+      "portrait": {
+        "path": "public/assets/fx/fan-pack/hawajaku-portrait.png",
+        "source": "Native ImageGen, identity-conditioned head portrait, converted to40px"
+      }
     },
     {
       "key": "kyasupada",
@@ -108,7 +116,11 @@
         "inspection": "Bent knees, alternating support leg and lifted feet, cloud tail follows; all 8 directions inspected. Loop contact poses reviewed in exported native-size preview.",
         "promptFile": "research/fan-pack/art/kyasupada-walk-prompt.txt"
       },
-      "conceptCredit": "E/ (@Loca_ruchem), confirmed by user; independently recovered water-line post"
+      "conceptCredit": "E/ (@Loca_ruchem), confirmed by user; independently recovered water-line post",
+      "portrait": {
+        "path": "public/assets/fx/fan-pack/kyasupada-portrait.png",
+        "source": "Native ImageGen, identity-conditioned head portrait, converted to40px"
+      }
     },
     {
       "key": "eereon",
@@ -134,7 +146,11 @@
         "inspection": "Alternating lifted and planted paws, preserved ghost fur and seal. All 8 directions and 4 poses inspected. Loop contact poses reviewed in exported native-size preview.",
         "promptFile": "research/fan-pack/art/eereon-walk-prompt.txt"
       },
-      "conceptCredit": "Harlequinwaffles (@hwaffuru)"
+      "conceptCredit": "Harlequinwaffles (@hwaffuru)",
+      "portrait": {
+        "path": "public/assets/fx/fan-pack/eereon-portrait.png",
+        "source": "Native ImageGen, identity-conditioned head portrait, converted to40px"
+      }
     },
     {
       "key": "absolmegaz",
@@ -160,7 +176,11 @@
         "inspection": "Four visibly distinct alternating paw poses in eight directions; loop contact poses reviewed in exported native-size preview.",
         "promptFile": "research/fan-pack/art/absolmegaz-walk-prompt.txt"
       },
-      "conceptCredit": "The Pok\u00e9mon Company, official Mega Absol Z"
+      "conceptCredit": "The Pokémon Company, official Mega Absol Z",
+      "portrait": {
+        "path": "public/assets/fx/fan-pack/absolmegaz-portrait.png",
+        "source": "Native ImageGen, identity-conditioned head portrait, converted to40px"
+      }
     }
   ],
   "pending": []
