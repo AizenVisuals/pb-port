@@ -1,0 +1,39 @@
+import{test}from'node:test';import assert from'node:assert/strict';import{readFile,access}from'node:fs/promises';
+import{createProgression,SAVE_KEY}from'../public/pulse/progression.js';import{EVOLUTIONS,levelOf,xpAt,ITEMS}from'../public/pulse/growth.js';import{CHAPTER_ONE}from'../public/pulse/campaign.js';
+const roster=JSON.parse(await readFile(new URL('../public/roster.json',import.meta.url)));const disk=()=>{const m=new Map();return{getItem:k=>m.get(k)??null,setItem:(k,v)=>m.set(k,v)}};
+const make=(storage=disk(),rng=()=>0)=>{const p=createProgression({storage,profileMode:'journey',rng});assert(p.setCatalog(roster).ok);return p};
+function setXP(p,key,level){const fixture=JSON.parse(p.exportSave());fixture.growth.pokemon[key].xp=xpAt(level);assert(p.importSave(JSON.stringify(fixture)).ok);}
+test('all six starters begin at level five with legal basic moves, not advanced default kits',()=>{
+ for(const key of ['bulbasaur','charmander','squirtle','chikorita','cyndaquil','totodile']){const p=make();assert(p.chooseStarter(key).ok);assert.equal(p.getCatalog().find(m=>m.key===key).level,5);const known=p.getMoves(key);assert(known.length);assert(!known.some(m=>['Flamethrower','Hydro Pump','Solar Beam'].includes(m.name)));assert(p.getTeam().moves[key].length>=1);}
+});
+test('first-clear XP, ticket cadence and daily tickets persist without duplicate rewards',()=>{
+ const storage=disk(),p=make(storage);p.chooseStarter('chikorita');let xp=125,tickets=2;
+ for(const [index,stage]of CHAPTER_ONE.slice(0,3).entries()){p.beginStage(stage.id,'growth-'+stage.id);if(stage.wild)p.resolveEncounter('fled');const result=p.completeStage({id:'growth-'+stage.id,won:true,frames:600});assert(result.ok);xp+=300+index*180;tickets+=1+(index===2?1:0);assert.equal(p.completeStage({id:'growth-'+stage.id,won:true,frames:600}).ok,false);}
+ assert.equal(p.getSave().growth.pokemon.chikorita.xp,xp);assert.equal(p.getSave().growth.inventory.moveTicket,tickets);
+ assert.equal(p.claimDaily().tickets,2);assert.equal(p.claimDaily().ok,false);assert.equal(make(storage).getSave().growth.inventory.moveTicket,tickets+2);
+});
+test('special gacha consumes exactly one inventory ticket, teaches compatible unique moves and rejects bad RNG',()=>{
+ const p=make();p.chooseStarter('charmander');const before=p.getSave();const first=p.summonMove('charmander');assert(first.ok);assert.equal(p.getSave().growth.inventory.moveTicket,before.growth.inventory.moveTicket-1);assert(p.getMoves('charmander').some(x=>x.id===first.move.id));const second=p.summonMove('charmander');assert(second.ok);assert.notEqual(first.move.id,second.move.id);const snapshot=p.exportSave();assert(!p.summonMove('charmander').ok);assert.equal(p.exportSave(),snapshot);
+ const q=make(disk(),()=>1);q.chooseStarter('bulbasaur');const initial=q.exportSave();assert(!q.summonMove('bulbasaur').ok);assert.equal(q.exportSave(),initial);
+});
+test('level locks are enforced when selecting and importing moves',()=>{
+ const p=make();p.chooseStarter('charmander');const flamethrower=roster.find(x=>x.key==='charmander').pool.find(x=>x.name==='Flamethrower');assert(!p.setMoves('charmander',[flamethrower.id]).ok);
+ const bad=JSON.parse(p.exportSave());bad.team.moves.charmander=[flamethrower.id];const before=p.exportSave();assert(!p.importSave(JSON.stringify(bad)).ok);assert.equal(p.exportSave(),before);
+ setXP(p,'charmander',50);assert(p.setMoves('charmander',[flamethrower.id]).ok);assert.deepEqual(p.getTeam().moves.charmander,[flamethrower.id]);
+});
+test('permanent evolution retains XP, compatible learned techniques, held item and selected team across reload',()=>{
+ const storage=disk(),p=make(storage);p.chooseStarter('bulbasaur');const draw=p.summonMove('bulbasaur');assert(draw.ok);p.equipItem('bulbasaur','sitrusberry');assert.equal(p.previewEvolution('bulbasaur'),null);setXP(p,'bulbasaur',16);const plan=p.previewEvolution('bulbasaur');assert.equal(plan.target,'ivysaur');assert(!p.evolvePokemon('bulbasaur','venusaur').ok);assert(p.evolvePokemon('bulbasaur','ivysaur').ok);const q=make(storage);assert.deepEqual(q.getSave().team.mons,['ivysaur']);assert.equal(q.getSave().favorite,'ivysaur');assert.equal(q.getSave().growth.held.ivysaur,'sitrusberry');assert.equal(q.getSave().growth.pokemon.ivysaur.xp,xpAt(16));assert(q.getMoves('ivysaur').some(x=>x.name===draw.move.name));assert(!q.getSave().unlocked.includes('bulbasaur'));
+});
+test('held items reserve inventory, return on unequip and consume once when activated',()=>{
+ const p=make();p.chooseStarter('squirtle');const before=p.getSave().growth.inventory.oranberry;assert(p.equipItem('squirtle','oranberry').ok);assert.equal(p.getSave().growth.inventory.oranberry,before-1);assert(p.equipItem('squirtle',null).ok);assert.equal(p.getSave().growth.inventory.oranberry,before);p.equipItem('squirtle','oranberry');assert(p.consumeHeld({battleId:'item-test',mon:'squirtle',item:'oranberry'}).ok);assert(!p.consumeHeld({battleId:'item-test',mon:'squirtle',item:'oranberry'}).ok);assert.equal(p.getSave().growth.held.squirtle,undefined);
+ const coins=p.getSave().coins;assert(p.buyItem('cheriberry',2).ok);assert.equal(p.getSave().coins,coins-ITEMS.cheriberry.price*2);assert(!p.buyItem('unknown').ok);
+});
+test('old journey saves migrate without losing collection, currencies or cleared stages, and invalid growth imports preserve save',()=>{
+ const storage=disk(),p=make(storage);p.chooseStarter('totodile');const old=JSON.parse(p.exportSave());delete old.growth;storage.setItem(SAVE_KEY,JSON.stringify(old));const q=make(storage);assert.deepEqual(q.getSave().unlocked,old.unlocked);assert.equal(q.getSave().coins,old.coins);assert(storage.getItem(SAVE_KEY+'.before-growth'));
+ for(const mutate of [g=>g.pokemon.totodile.xp=-1,g=>g.inventory.moveTicket=-1,g=>g.held.totodile='unknown',g=>g.specialMoves.totodile=['unknown']]){const current=q.exportSave(),bad=JSON.parse(current);mutate(bad.growth);assert(!q.importSave(JSON.stringify(bad)).ok);assert.equal(q.exportSave(),current);}
+});
+test('level boundaries and all evolution/icon assets are complete',async()=>{
+ for(let level=1;level<=100;level++)assert.equal(levelOf(xpAt(level)),level);
+ for(const [key,[target]]of Object.entries(EVOLUTIONS))for(const k of [key,target]){const m=roster.find(m=>m.key===k);assert(m,k);await access(new URL('../public/'+m.icon.file,import.meta.url));await access(new URL('../public/assets/portraits/'+m.dex+'_Normal.png',import.meta.url));}
+ for(const key of Object.keys(ITEMS))await access(new URL('../public/pulse/assets/items/'+key+'.png',import.meta.url));
+});

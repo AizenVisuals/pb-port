@@ -1,0 +1,11 @@
+{
+  "pass": true,
+  "scope": "Isolated Chromium; two owned partners added as explicit fixture; no device save changed.",
+  "checks": [
+    "add partner to empty slot",
+    "change lead",
+    "replace position",
+    "remove reserve",
+    "buy item once with coins"
+  ]
+}

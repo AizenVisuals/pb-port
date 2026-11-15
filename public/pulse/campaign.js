@@ -1,5 +1,5 @@
 /** Offline chapter definitions. Completion is applied through progression transactions. */
-export const INITIAL_PARTNERS=Object.freeze(['bulbasaur','charmander','squirtle']);
+export const INITIAL_PARTNERS=Object.freeze(['bulbasaur','charmander','squirtle','chikorita','cyndaquil','totodile']);
 export const CHAPTER_ONE=Object.freeze([
  ['Primeiro duelo','youngster',['rattata'],1],['Passos na rota','lass',['pidgey'],1],['Uma nova amizade','youngster',['rattata'],1],['Entre folhas e asas','bugcatcher',['caterpie','weedle'],2],['Uma sombra na estrada','rocketgrunt',['ekans'],2],['Travessia da mata','lass',['pidgey','rattata'],2],['O plano dos Rocket','rocketgruntf',['zubat','koffing'],3],['Um passo à frente','blue',['charmander','squirtle'],3],['Às portas do ginásio','youngster',['geodude'],3],['A primeira insígnia','brock',['geodude','onix'],3],
 ].map(([title,trainer,opponents,difficulty],i)=>Object.freeze({id:`1-${i+1}`,title,trainer,opponents:Object.freeze(opponents),difficulty,firstClearCoins:80+i*20,badge:i===9?'boulder':null,wild:i===2?'pidgey':i===5?'caterpie':null})));

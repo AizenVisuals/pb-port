@@ -1,0 +1,75 @@
+npm notice run pb-self-hosted-port@0.1.0 test
+npm notice run node --test test/*.test.mjs
+(node:411283) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ four- and five-member journey teams survive catalog load and reload intact (345.674904ms)
+✔ full chapter can fail, resume and clear with exactly one badge and first-clear rewards (871.213036ms)
+✔ new journey selects one initial exactly once and reloads without bonus team (88.367948ms)
+✔ legacy profile keeps its collection, balance and team when choosing a journey starter (56.858786ms)
+✔ chapter locks, result validation and first-clear rewards survive reloading (87.292679ms)
+✔ invalid journey imports are transactional (49.784612ms)
+✔ wild encounters, ball spending and capture are persistent and transactional (103.08885ms)
+✔ invalid RNG never consumes a ball, and ball purchases charge once (66.15215ms)
+✔ campaign starters have independent species, sprites and four PB moves (47.578132ms)
+✔ bulbasaur completes a real local PB battle and uses its moves (4231.022648ms)
+✔ charmander completes a real local PB battle and uses its moves (2169.159252ms)
+✔ squirtle completes a real local PB battle and uses its moves (2448.653654ms)
+✔ all chapter opponents are registered with usable PB animations and moves (4490.380777ms)
+✔ delivered client includes every static module dependency and stylesheet font (208.967212ms)
+✔ local canvas adapter produces deterministic battle state (5001.146447ms)
+✔ complete 3v3 and 6v6 simulations end with valid winners (10009.38463ms)
+✔ Marshadow registers independent sprites, canonical typing and expanded legal moves (3727.952229ms)
+✔ Spectral Thief transfers only positive boosts, capped at two stages total (1.131002ms)
+✔ fan-made Mega transforms once, retains four selected moves and does not heal (2017.845963ms)
+✔ native image augmented with getContext remains an image when drawn (23.261593ms)
+✔ Google identity and logout never replace local progression (16.117439ms)
+✔ double presses cannot open two auth requests; cancelled login stays usable (7.555586ms)
+✔ failed SDK loading permits retry without changing save (8.974751ms)
+(node:411308) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ three banners have distinct real pools with every advertised rarity (205.966711ms)
+✔ banner pity is independent and invalid banners never charge (71.814632ms)
+✔ six starters run the native PB evolution cinematic without Mega and keep HP proportion (16585.592921ms)
+✔ Sitrus triggers exactly once, heals quarter HP and calls the inventory transaction (1506.578338ms)
+✔ Oran restores ten canonical HP; berries cure only their status and failed inventory transactions cannot heal (10029.486822ms)
+✔ Leftovers stays equipped and heals once per six-second interval; fainted Pokémon cannot consume berries (3267.116811ms)
+✔ Lum cures confusion and resets persistent ailment counters (1300.045364ms)
+(node:411320) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ all six starters begin at level five with legal basic moves, not advanced default kits (1047.087445ms)
+✔ first-clear XP, ticket cadence and daily tickets persist without duplicate rewards (103.405997ms)
+✔ special gacha consumes exactly one inventory ticket, teaches compatible unique moves and rejects bad RNG (86.893189ms)
+✔ level locks are enforced when selecting and importing moves (50.125225ms)
+✔ permanent evolution retains XP, compatible learned techniques, held item and selected team across reload (91.253839ms)
+✔ held items reserve inventory, return on unequip and consume once when activated (53.955434ms)
+✔ old journey saves migrate without losing collection, currencies or cleared stages, and invalid growth imports preserve save (96.634863ms)
+✔ level boundaries and all evolution/icon assets are complete (81.44463ms)
+(node:411327) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ starter collection includes playable 3v3 and 6v6 without spending (71.87714ms)
+✔ local profile, teams, moves, Mega and favorites survive reloading (114.16134ms)
+✔ locked species, duplicate team members, invalid moves and unavailable Mega are rejected (160.66944ms)
+✔ daily reward can be claimed once per UTC day and cannot be reclaimed by rolling clock back (74.945176ms)
+✔ battle rewards are persistent and idempotent, exclude surrender/short runs and obey pacing (104.629747ms)
+✔ gacha applies normal probability boundaries, charges coins and awards diamonds for duplicates (404.644139ms)
+✔ tenth consecutive common pull guarantees rare or better and persists pity across loads (93.335304ms)
+✔ bad RNG, insufficient balance and invalid counts are transactional (41.093135ms)
+✔ direct unlock is an alternative with explicit price and no duplicate charges (114.76637ms)
+✔ corrupt saves are backed up and recovery is visible; storage failures keep a usable session (150.91792ms)
+✔ export/import validates data and preserves old state on bad imports (92.254797ms)
+✔ legacy saves gain diamond and shiny fields without losing progress (88.416278ms)
+✔ shiny purchases require ownership, supported art and diamonds; persist without modifying stats (241.487319ms)
+✔ invalid diamond and shiny imports preserve previous save (41.622598ms)
+✔ duplicate diamond amounts follow rarity and never refund coins (273.593341ms)
+✔ HTTP serves local client and disables production sign-in (2709.002868ms)
+✔ profiles issue independent tokens and invalid teams are rejected (104.604046ms)
+✔ practice loads the actual engine, ticks, accepts input, and surrenders (3934.229245ms)
+✔ two clients share seed, commands and ranked result; cancellation removes queue (1737.5551ms)
+ℹ tests 57
+ℹ suites 0
+ℹ pass 57
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35432.763287

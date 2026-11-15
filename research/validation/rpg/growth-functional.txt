@@ -1,0 +1,3 @@
+before ticket
+after ticket
+{"pass":true,"checks":["Johto starter selection","level lock on Ember","ticket consumption and compatible technique","equip item from inventory","Sitrus consumption and effect during real engine battle","level-14 evolution uses original cinematic","permanent Quilava without Mega flag","reload preserves evolution"],"errors":[],"scope":"Isolated Chromium profile; deliberate level-14 fixture and deterministic frame stepping for visuals; no existing player save touched."}

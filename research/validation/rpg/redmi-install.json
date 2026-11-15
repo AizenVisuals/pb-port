@@ -1,0 +1,19 @@
+{
+  "device": "Redmi Note 10S / M2101K7BI",
+  "package": "app.pulsearena.game",
+  "versionCode": 3,
+  "versionName": "0.3.0-test.1",
+  "adbInstall": "Success",
+  "userRequestedReset": true,
+  "pmClear": "Success",
+  "observed": "Native app opened, initial selection appeared, user navigated inventory; read-only screenshot captured.",
+  "webviewCSSViewport": [
+    839,
+    392
+  ],
+  "logScope": "Last 2000 logcat lines, no matching app ANR/fatal/console error. Not a performance or battery test.",
+  "certificateSha1": "5A:55:45:EF:2B:5B:DA:F2:82:CF:CE:C1:75:6D:B3:DA:D1:B0:D9:72",
+  "finalUpdateInstall": "Success",
+  "finalObserved": "Final APK reopened natively; lobby shows existing Charmander level9 and830coins after update, preserving post-reset progress.",
+  "apkSha256": "c90ddf201db35fdf7511d85d803e73f0a1d9c1ab9e41b8a33cb4081e7422089c"
+}

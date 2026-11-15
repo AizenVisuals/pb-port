@@ -1,0 +1,26 @@
+{
+  "page": "https://www.x7game.com/game/app/17168",
+  "purpose": "Visual reference only, not packaged game artwork",
+  "images": [
+    {
+      "file": "reference-1.jpg",
+      "url": "https://image.x7sy.com/x7sy/game/atlas_img/113148059_202605067383.jpg"
+    },
+    {
+      "file": "reference-2.jpg",
+      "url": "https://image.x7sy.com/x7sy/game/atlas_img/113148064_202605069955.jpg"
+    },
+    {
+      "file": "reference-3.jpg",
+      "url": "https://image.x7sy.com/x7sy/game/atlas_img/113148066_202605060577.jpg"
+    },
+    {
+      "file": "reference-4.jpg",
+      "url": "https://image.x7sy.com/x7sy/game/atlas_img/113148069_202605065638.jpg"
+    },
+    {
+      "file": "reference-5.jpg",
+      "url": "https://image.x7sy.com/x7sy/game/atlas_img/113148073_202605067710.jpg"
+    }
+  ]
+}

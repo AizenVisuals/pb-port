@@ -1,0 +1,2 @@
+{"afterMove":{"commands":[{"kind":"steer","dir":1},{"kind":"move","index":0}],"knob":"translate(27px, 0px)"},"events":[["pointerdown",2,"joystick","joystick"],["pointerdown",3,"","move-button is-ready is-pressed"],["pointerup",3,"","move-button"],["lostpointercapture",3,"","move-button"]]}
+{"pass":true,"environment":"Chromium touch emulation / CDP","checks":["stick + move simultaneously","stick + guard","one command per touch","secondary stick finger ignored","cancel resets movement","gesture after cancel","keyboard activation"],"errors":[]}

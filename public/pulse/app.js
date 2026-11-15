@@ -1,6 +1,8 @@
+import {createManagementUI} from './management-ui.js';
+import {ITEMS,EVOLUTIONS,levelOf,xpAt,moveRequirement,specialPool} from './growth.js';
 import {mountAccount} from './account.js';
 import {bindBattleControls} from './controls.js';
-import {installAudioControls,setMenuAmbient,rewardSound} from './ui-audio.js';
+import {installAudioControls,setMenuAmbient,rewardSound,playPulseSound} from './ui-audio.js';
 import {animatePartner} from './sprites.js';
 import {SUMMON_BANNERS} from './banners.js';
 import {CHAPTER_ONE} from './campaign.js';
@@ -38,6 +40,7 @@ const types = {
 };
 const rarity = { common: "Comum", rare: "Raro", epic: "Épico" };
 const p = createProgression({profileMode:"journey"});
+let management,routeHistory=[];
 let catalog = [],
   shiny = {},
   route = "home",
@@ -102,8 +105,12 @@ function showDialog(id) {
 function closeDialogs() {
   all("dialog[open]").forEach((d) => d.close());
 }
-function navigate(next) {
+function goBack(){navigate(routeHistory.pop()||"home",true);}
+function navigate(next,fromBack=false) {
   if (battle && !["ended", "error", "destroyed"].includes(battle.state)) return;
+  if(next==="home")routeHistory=[];else if(!fromBack&&next!==route)routeHistory.push(route);
+  if(next!==route)management?.stopSprites();
+  $("app").dataset.route=next;
   route = next;
   all("#screens>.screen").forEach(
     (s) => (s.hidden = s.id !== `screen-${next}`),
@@ -155,7 +162,7 @@ function refresh() {
   $("daily-claim").disabled = !!daily;
   $("daily-claim").textContent = daily
     ? "Resgatado hoje"
-    : "Resgatar 150 moedas";
+    : `Resgatar 150 moedas${s.growth?" + 2 tickets":""}`;
   $("home-daily").textContent = daily
     ? "Bônus resgatado"
     : "Resgatar bônus diário";
@@ -169,23 +176,11 @@ function refresh() {
   if (route === "team") renderTeam();
   if (route === "collection") renderCollection();
   if (route === "shop") renderShop();
+  if(route==="partner")management?.renderPartner();
+  if(route==="summon")management?.renderTechniques();
+  if(route==="bag")renderBag();
 }
-function renderTeam() {
-  const s = save();
-  $("team-count").textContent = `${s.team.mons.length} / ${s.team.mons.length}`;
-  all("[data-size]").forEach((b) =>
-    b.setAttribute(
-      "aria-pressed",
-      String(Number(b.dataset.size) === s.team.mons.length),
-    ),
-  );
-  $("team-list").innerHTML = s.team.mons
-    .map((k, i) => {
-      const m = mon(k);
-      return `<article class="team-member"><div class="team-member-heading">${portrait(m)}<div><h2>${esc(m.name)}</h2><span class="type-list">${tags(m)}</span></div><span class="member-order">${i === 0 ? "Líder" : `Reserva ${i}`}</span></div><div class="member-moves">${(s.team.moves[k] || m.defaults).map((id) => `<span>${esc(m.pool.find((x) => x.id === id)?.name || id)}</span>`).join("")}</div><div class="member-actions"><button data-moves="${k}">Escolher golpes</button><button data-replace="${i}">Trocar</button>${i ? `<button data-leader="${i}">Ser líder</button>` : ""}${m.mega ? `<label class="mega-label"><input data-mega="${i}" type="checkbox" ${s.team.gimmick?.mon === i ? "checked" : ""}>Mega</label>` : ""}</div></article>`;
-    })
-    .join("");
-}
+function renderTeam(){management?.renderTeam();}
 function renderCollection() {
   all("[data-owned]").forEach((x) =>
     x.setAttribute("aria-pressed", String(x.dataset.owned === ownedFilter)),
@@ -210,13 +205,17 @@ function renderCollection() {
   $("collection-grid").innerHTML = matches
     .map(
       (m) =>
-        `<button data-detail="${m.key}" class="pokemon-card rarity-${m.rarity} ${m.owned ? "" : "is-locked"}" aria-label="${esc(m.name)}, ${m.owned ? "na coleção" : "não desbloqueado"}">${m.owned ? `<span class="owned-mark">${icon("check")}</span>` : ""}${portrait(m)}<h3>${esc(m.name)}</h3><small>${rarity[m.rarity]}${save().shinies.includes(m.key) ? " · Shiny" : ""}</small></button>`,
+        `<button data-detail="${m.key}" class="pokemon-card rarity-${m.rarity} ${m.owned ? "" : "is-locked"}" aria-label="${esc(m.name)}, ${m.owned ? "na coleção" : "não desbloqueado"}">${m.owned ? `<span class="owned-mark">${icon("check")}</span>` : ""}${portrait(m)}<span class="card-level">${m.owned?`Nv. ${m.level}`:"A descobrir"}</span><h3>${esc(m.name)}</h3><small>${rarity[m.rarity]}${save().shinies.includes(m.key) ? " · Shiny" : ""}</small></button>`,
     )
     .join("");
 }
 function renderShop() {
   const s = save();
-  $("shop-balance").textContent = `${s.diamonds} diamantes`;
+  $("buy-pokeballs").hidden=shopFilter!=="items";
+  $("shop-balance").textContent=shopFilter==="items"?`${s.coins} moedas`:`${s.diamonds} diamantes`;
+  if(shopFilter==="items"){
+    $("shop-grid").innerHTML=Object.entries(ITEMS).map(([id,item])=>`<article class="shop-consumable"><img src="/pulse/assets/items/${id}.png" alt=""><div><h2>${item.name}</h2><p>${item.description}</p></div><button data-buy-item="${id}" class="primary-button" ${s.coins<item.price?'disabled':''}>${item.price} moedas</button></article>`).join('');return;
+  }
   const list =
     shopFilter === "shiny"
       ? catalog.filter((m) => shiny[m.key])
@@ -249,6 +248,7 @@ function detail(key, cosmetic = false) {
     }
     return;
   }
+  if(m.owned&&!cosmetic){management.openPartner(key);return;}
   $("detail-content").innerHTML =
     `<div class="dialog-heading"><h2>${cosmetic ? "Versão shiny" : "Conheça seu parceiro"}</h2><button data-close class="icon-button" aria-label="Fechar">${icon("close")}</button></div><div class="detail-hero"><img src="${esc(face(m, cosmetic))}" alt="${esc(m.name)}"><div><h2>${esc(m.name)}${cosmetic ? " Shiny" : ""}</h2><span class="type-list">${tags(m)}</span><p>${rarity[m.rarity]} · ${m.owned ? "Desbloqueado" : "A descobrir"}</p></div></div><div class="detail-stats">${Object.entries(
       m.stats,
@@ -262,18 +262,12 @@ function detail(key, cosmetic = false) {
       )}</div><p class="support-copy">${cosmetic ? "Uma nova cor para o mesmo parceiro. Não altera atributos ou golpes." : m.owned ? "Disponível para a jornada e suas equipes de batalha." : "Desbloqueie na loja ou encontre este Pokémon nas invocações."}</p><div class="detail-actions">${cosmetic ? (s.shinies.includes(key) ? `<button data-shiny-toggle="${key}" class="primary-button">${isShiny(key) ? "Usar visual original" : "Equipar shiny"}</button>` : `<button data-buy-shiny="${key}" class="primary-button" ${!m.owned || s.diamonds < 300 ? "disabled" : ""}>${!m.owned ? "Desbloqueie o Pokémon primeiro" : `Comprar por ${300} diamantes`}</button>`) : m.owned ? `<button data-favorite="${key}" class="primary-button">${s.favorite === key ? "Seu favorito" : "Destacar no lobby"}</button><button data-moves="${key}" class="secondary-button">Escolher golpes</button>${shiny[key] ? `<button data-view-shiny="${key}" class="secondary-button">Ver shiny</button>` : ""}` : `<button data-buy="${key}" class="primary-button" ${s.diamonds < m.price ? "disabled" : ""}>Desbloquear · ${m.price} diamantes</button><button data-go-summon class="secondary-button">Ir às invocações</button>`}</div>`;
   if (!$("detail-dialog").open) showDialog("detail-dialog");
 }
-function movePicker(key) {
-  const m = mon(key),
-    selected = save().team.moves[key] || m.defaults;
-  $("detail-content").innerHTML =
-    `<div class="dialog-heading"><h2>Golpes de ${esc(m.name)}</h2><button data-close class="icon-button" aria-label="Fechar">${icon("close")}</button></div><p>Escolha ${Math.min(4,m.pool.length)} golpe${m.pool.length>1?'s':''} diferente${m.pool.length>1?'s':''}.</p><form id="moves-form" data-mon="${key}"><div class="move-list">${m.pool.map((x) => `<label class="move-option"><input type="checkbox" name="move" value="${esc(x.id)}" ${selected.includes(x.id) ? "checked" : ""}><span><b>${esc(x.name)}</b><small>${types[x.type]} · ${x.cat === "status" ? "Efeito" : x.cat === "phys" ? "Físico" : "Especial"} · ${x.cd / 60}s</small></span><strong>${x.power || "—"}</strong></label>`).join("")}</div><div class="move-save"><button class="primary-button">Salvar golpes</button></div></form>`;
-  if (!$("detail-dialog").open) showDialog("detail-dialog");
-}
+function movePicker(key){management.openPartner(key,'moves');}
 async function drawHero() {
   const token = ++heroToken,
     m = mon(save().favorite);
   if (!m) return;
-  $("hero-name").textContent = m.name;
+  $("hero-name").textContent = `${m.name} · Nv. ${m.level}`;
   $("hero-types").innerHTML = tags(m);
   $("hero-subtitle").textContent = isShiny(m.key)
     ? "Versão shiny · Seu parceiro de arena"
@@ -410,6 +404,19 @@ function startPulls(count) {
   showDialog("pull-dialog");
   render();
 }
+let itemIconsPromise;
+async function battleGrowth(opponentLevel){
+ const state=save();if(!state.growth)return undefined;
+ itemIconsPromise||=Promise.all(Object.keys(ITEMS).map(async id=>{const image=new Image();image.src=`/pulse/assets/items/${id}.png`;try{await image.decode();return [id,image];}catch{return [id,null];}})).then(Object.fromEntries);
+ const levels=Object.fromEntries(Object.entries(state.growth.pokemon).map(([key,pokemon])=>[key,levelOf(pokemon.xp)]));
+ return {levels,opponentLevel:opponentLevel||Math.max(...state.team.mons.map(k=>levels[k]||5)),selected:p.getTeam().moves,held:state.growth.held,icons:await itemIconsPromise,preview:key=>p.previewEvolution(key),onConsume:event=>p.consumeHeld({...event,battleId:battle.id}).ok,onEvolve:(from,to)=>{const result=p.evolvePokemon(from,to);refresh();if(!result.ok)notify(result.error);},onEvent:event=>playPulseSound(event.kind)};
+}
+function renderBag(){management?.renderBag();}
+function drawTechnique(){
+ const key=$('technique-mon').value,result=p.summonMove(key);if(!apply(result))return;
+ rewardSound();$('pull-content').innerHTML=`<div class="dialog-heading"><h2>Nova técnica aprendida!</h2></div><div class="technique-reveal">${portrait(mon(key))}<h2>${esc(result.move.name)}</h2><p>${esc(mon(key).name)} já pode equipar esse golpe.</p><span class="type-list">${types[result.move.type]}</span></div><button id="technique-equip" class="primary-button">Escolher golpes</button><button id="technique-close" class="text-button">Voltar à mochila</button>`;
+ $('pull-dialog').onclose=()=>refresh();$('technique-equip').onclick=()=>{$('pull-dialog').close();movePicker(key);};$('technique-close').onclick=()=>$('pull-dialog').close();showDialog('pull-dialog');
+}
 async function startBattle(options={}) {
   setMenuAmbient(false);
   if(options?.type)options={};
@@ -431,11 +438,12 @@ async function startBattle(options={}) {
       },
     });
     await battle.start({
-      team: save().team,
+      team: p.getTeam(),
       difficulty: Number($("difficulty-select").value),
       format: $("format-select").value,
       shinies: save().shinyEquipped,
       shinyCatalog: shiny,
+      growth: await battleGrowth(options.opponentLevel),
       ...options,
     });
   } catch (error) {
@@ -454,7 +462,7 @@ function updateBattle(s) {
     const a = s[side];
     $(side + "-name").textContent = a.name;
     $(side + "-hp").textContent =
-      `${Math.ceil(a.hp)} / ${Math.ceil(a.maxHp)} HP`;
+      `${Math.ceil(a.hp/(save().growth?9:1))} / ${Math.ceil(a.maxHp/(save().growth?9:1))} HP · Nv. ${a.level}`;
     $(side + "-hp-bar").style.width = `${a.hpRatio * 100}%`;
     const m = mon(a.key);
     if (m) {
@@ -471,7 +479,8 @@ function updateBattle(s) {
     ? "Mova para desviar"
     : "Movimento automático";
   $("battle-choose").hidden = !s.choosing;
-  $("battle-mega").hidden = !s.canMega;
+  $("battle-mega").hidden = !s.canMega&&!s.canEvolve;
+  $("battle-mega").textContent=s.canEvolve?"EVOLUIR":"MEGA";
   $("battle-guard").disabled = !s.guardReady;
   $("battle-dodge").disabled = !s.dodgeReady;
   const moveKey = s.moves.map((m) => m.name).join("|");
@@ -525,7 +534,7 @@ function endBattle(result) {
   const reward = activeStage ? (result.reason==="surrender" ? p.abandonStage() : p.completeStage(result)) : p.recordBattle(result);
   refresh();
   $("result-content").innerHTML =
-    `<div class="result-symbol">${icon(result.won ? "star" : "shield")}</div><h2>${result.won ? "Vitória na arena!" : result.reason === "surrender" ? "Batalha encerrada" : "O próximo duelo é seu"}</h2><p>${result.reason === "surrender" ? "Desistências não concedem moedas." : "Sua equipe volta pronta para uma nova estratégia."}</p><div class="result-coins">${icon("coin")} +${reward.coins || 0}</div><button id="result-lobby" class="primary-button">Voltar ao lobby</button><button id="result-retry" class="secondary-button">Jogar novamente</button>`;
+    `<div class="result-symbol">${icon(result.won ? "star" : "shield")}</div><h2>${result.won ? "Vitória na arena!" : result.reason === "surrender" ? "Batalha encerrada" : "O próximo duelo é seu"}</h2><p>${result.reason === "surrender" ? "Desistências não concedem moedas." : "Sua equipe volta pronta para uma nova estratégia."}</p><div class="result-coins">${icon("coin")} +${reward.coins || 0}</div>${reward.growth?.length?`<p>+${reward.growth[0].xp} XP por parceiro${reward.growth.some(x=>x.to>x.from)?" · Sua equipe subiu de nível!":""}</p>`:""}${reward.tickets?`<p>+${reward.tickets} ticket${reward.tickets>1?"s":""} de técnica</p>`:""}<button id="result-lobby" class="primary-button">Voltar ao lobby</button><button id="result-retry" class="secondary-button">Jogar novamente</button>`;
   showDialog("result-dialog");
   $("result-lobby").onclick = exitBattle;
   const retryStage=activeStage;
@@ -565,7 +574,7 @@ function back() {
   }
   teamPick = null;
   if (route === "home" && window.PulseNative?.isNative) window.PulseNative.exitApp();
-  else navigate("home");
+  else goBack();
 }
 function changeFormat(n) {
   if(save().unlocked.length<n){notify(`Você precisa de ${n} Pokémon para esse formato.`);return;}
@@ -575,13 +584,10 @@ function changeFormat(n) {
     if (mons.length < n && !mons.includes(k)) mons.push(k);
   if (apply(p.setTeam({ ...s.team, mons, gimmick: null }))) refresh();
 }
-function renderCampaign(){
- const j=save().journey;
- $("chapter-list").innerHTML=CHAPTER_ONE.map((stage,i)=>{const cleared=j?.cleared.includes(stage.id),locked=!j?.starter||i>j.cleared.length;return `<button class="chapter-stage ${cleared?'cleared':''}" data-stage="${stage.id}" ${locked?'disabled':''}><img src="/pulse/assets/trainers/${stage.trainer}.png" alt=""><span><strong>${stage.id} · ${stage.title}</strong><small>${locked?'Conclua a fase anterior':cleared?'Concluída · Jogar novamente':stage.badge?'Desafie Brock pela primeira insígnia':stage.wild?'Encontro selvagem nesta rota':'Duelo contra treinador'}</small></span><b>${cleared?'✓':locked?'—':'→'}</b></button>`;}).join('');
-}
+function renderCampaign(){management?.renderCampaign();}
 async function runTrainerStage(stage,battleId){
  wildBattle=false;activeStage=stage.id;
- await startBattle({battleId,team:save().team,botTeam:{mons:[...stage.opponents],moves:{},gimmick:null},format:`${save().team.mons.length}v${stage.opponents.length}`,difficulty:stage.difficulty});
+ await startBattle({battleId,team:p.getTeam(),botTeam:{mons:[...stage.opponents],moves:{},gimmick:null},format:`${save().team.mons.length}v${stage.opponents.length}`,difficulty:stage.difficulty,opponentLevel:5+CHAPTER_ONE.indexOf(stage)*2});
 }
 async function captureEncounter(){
  const active=save().journey?.active;if(!active)return;
@@ -594,7 +600,7 @@ async function captureEncounter(){
 function showWildEncounter(stage,battleId){
  const m=mon(stage.wild);$('detail-content').innerHTML=`<div class="dialog-heading"><h2>Um ${esc(m.name)} selvagem apareceu!</h2></div><div class="detail-hero">${portrait(m)}<div><span class="type-list">${tags(m)}</span><p>${save().journey.inventory.pokeball} Poké Balls na mochila</p></div></div><p>Enfraqueça o Pokémon em batalha para aumentar sua chance de captura. Derrotá-lo encerra a oportunidade.</p><div class="detail-actions"><button id="wild-fight" class="primary-button">Ficar e lutar</button><button id="wild-capture" class="secondary-button">Tentar capturar</button><button id="wild-flee" class="text-button">Fugir e seguir a rota</button></div>`;
  if(!$('detail-dialog').open)showDialog('detail-dialog');
- $('wild-fight').onclick=()=>{wildBattle=true;activeStage=stage.id;startBattle({battleId,team:save().team,botTeam:{mons:[stage.wild],moves:{},gimmick:null},format:`${save().team.mons.length}v1`,difficulty:1});};
+ $('wild-fight').onclick=()=>{wildBattle=true;activeStage=stage.id;startBattle({battleId,team:p.getTeam(),botTeam:{mons:[stage.wild],moves:{},gimmick:null},format:`${save().team.mons.length}v1`,difficulty:1,opponentLevel:7+CHAPTER_ONE.indexOf(stage)});};
  $('wild-capture').onclick=captureEncounter;$('wild-flee').onclick=()=>{p.resolveEncounter('fled');runTrainerStage(stage,battleId);};
 }
 async function launchStage(id){
@@ -608,12 +614,18 @@ async function launchStage(id){
 async function drawBanner(){
  stopBannerSprite?.();const token=selectedBanner;
  $('summon-display').dataset.banner=selectedBanner;
+ all('[data-select-banner]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.selectBanner===selectedBanner)));
  $('summon-banner-title').textContent=SUMMON_BANNERS.find(b=>b.id===selectedBanner).name;
  const key={route:'bulbasaur',battle:'lucario',night:'marshadow'}[selectedBanner];
  const stop=await animatePartner($('summon-partner'),mon(key),{reduced:reducedMotion()});
  if(token!==selectedBanner||route!=='summon')stop();else stopBannerSprite=stop;
 }
 function wire() {
+  management=createManagementUI({p,save,mon,portrait,tags,esc,navigate,notify,apply,movePicker,launchStage,drawTechnique,goBack});
+  for(const title of all('#screens>.screen:not(#screen-home) .screen-title')){const back=document.createElement('button');back.className='section-back';back.type='button';back.dataset.menuBack='true';back.setAttribute('aria-label','Voltar');back.innerHTML=icon('back');title.prepend(back);}
+
+  $("technique-mon").onchange=()=>management.renderTechniques();
+  $("technique-spin").onclick=drawTechnique;
   installAudioControls();
   $("banner-select").innerHTML=SUMMON_BANNERS.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
   $("banner-select").onchange=e=>{selectedBanner=e.target.value;refresh();drawBanner();};
@@ -641,6 +653,11 @@ function wire() {
   document.addEventListener("click", (e) => {
     const b = e.target.closest("button");
     if (!b) return;
+    if(b.dataset.selectBanner){$("banner-select").value=b.dataset.selectBanner;$("banner-select").dispatchEvent(new Event('change'));}
+
+    if(b.dataset.buyItem&&apply(p.buyItem(b.dataset.buyItem)))notify("Item comprado.");
+    if(b.dataset.equipItem&&apply(p.equipItem($("bag-owner-"+b.dataset.equipItem).value,b.dataset.equipItem)))notify("Item equipado.");
+    if(b.dataset.unequip&&apply(p.equipItem(b.dataset.unequip,null)))notify("Item devolvido à mochila.");
     if (b.dataset.route) {
       teamPick = null;
       navigate(b.dataset.route);
@@ -749,10 +766,7 @@ function wire() {
   for (const id of ["collection-summon", "rewards-summon", "home-summon"])
     $(id).onclick = () => navigate("summon");
   $("summon-back").onclick = () => navigate("home");
-  $("team-add").onclick = () => {
-    if(save().profileMode==="journey"&&save().team.mons.length<6){teamPick=save().team.mons.length;ownedFilter="owned";navigate("collection");notify("Escolha um parceiro para adicionar à equipe.");return;}
-    teamPick=null;ownedFilter="owned";navigate("collection");notify("Use Trocar para substituir um parceiro da equipe.");
-  };
+  $("team-add").onclick=()=>management.addSlot();
   $("collection-search").oninput = renderCollection;
   $("type-filter").onchange = renderCollection;
   $("format-select").onchange = (e) =>
@@ -806,7 +820,7 @@ function wire() {
   bindBattleControls({
     surface: $("battle-screen"), stick: $("joystick"), knob: $("joystick-knob"),
     getSnapshot: () => snapshot,
-    command: input => battle?.command(input),
+    command: input => battle?.command(input.kind==="mega"&&snapshot?.canEvolve?{kind:"evolve"}:input),
   });
   window.addEventListener("resize", () => {
     if (route === "home") drawHero();

@@ -128,3 +128,19 @@ Versão Android da entrega: versionCode 2, versionName 0.2.0-test.1. Instalar co
 
 Entrega publicada e lida de volta pela API GitHub: https://github.com/AizenVisuals/pb-port/releases/tag/pulse-arena-v0.2.0-test.1
 Código: `a28c5809d860caf7eb7c2fd89f8c4eb0d4bc8d76`; assets APK e SHA-256 com estado uploaded. APK SHA-256 `61c3ed20f099f8697b8ddcdfe2c41ffbada2793c6cafeb6cd2d725b2fc0462c6`, tamanho 95609131 bytes. Release de pré-teste em repositório privado; instalar autenticado no GitHub. Não houve teste no telefone do proprietário.
+
+## Progressão e interface organizada — 15/11/2026
+
+- Branch permanece `pulse-arena-offline`; main/Render e a cópia PB self-host separada não foram alterados.
+- Seis iniciais Kanto/Johto com suas linhas evolutivas; nível 5 inicial, XP cúbica até 100, golpes por learnset legítimo. Novos golpes básicos importados/adaptados por nome canônico, não por IDs numéricos entre fontes. Fontes e revisão fixadas em `research/campaign/growth-data-sources.json`, sprites em `growth-sprite-import.json`.
+- Evoluções permanentes no combate usam a cinematic nativa de evolução PB, sem emblema de Mega, com áudio original próprio. Preservam proporção de HP, XP e golpes compatíveis; disponibilidade depende do nível. Mega Marshadow continua independente.
+- Gacha de técnicas separado, consome 1 ticket de inventário, compatível e sem repetidos. Tickets: dois iniciais, dois na diária, um por primeira vitória de fase e um por três vitórias recompensadas.
+- Mochila e loja com Oran/Sitrus/Lum/Cheri/Pecha/Chesto/Leftovers; reserva de item ao equipar, consumo transacional ao ativar; ícone acima do ator e áudio plim. Lum também cura confusão. Oran10HP canônicos =90HP internos no PB.
+- XP: primeira vitória de fase300+180×índice, repetição150+30×índice, derrota60; arena vitória180+35×dificuldade. CPU usa nível e golpes legais. Batalha válida de campanha exige ao menos60frames para permitir vitórias rápidas legítimas. Balanceamento da campanha inteira ainda não certificado por percurso humano.
+- Interface substituída por painéis claros aprovados, formação visual, ficha de parceiro com abas, mochila em grade/detalhe, invocações Pokémon/técnicas separadas, três banners e mapa ilustrado de dez fases. Referência e direitos preservados em `research/ui-reference/x7/`; imagens promocionais são somente pesquisa, não arte do jogo. Mapa original gerado e com prompt/proveniência.
+- Validação:57/57 testes (`growth-tests-current.txt`); Chromium844×390 e1280×720 sem erros/overflow nas dez telas; cenários reais de item/evolução no motor, ticket, bloqueio de golpes, persistência, formação e compra, três banners e controles simultâneos em emulação CDP. Fixtures de XP/coleção são explicitadas nos relatórios e não alteram save do dono.
+- Revisão Impeccable resolveu sete achados em dois lotes; escopo/limites em `research/validation/rpg/review-result.md`. Sistema visual documentado a partir do artefato final.
+- Redmi Note10S conectado por ADB Wi-Fi, APK0.3.0-test.1/versionCode3 instalado com sucesso; dados anteriores apagados com `pm clear` por pedido explícito do usuário. Usuário já navegou na nova versão. Captura nativa de mochila e relatório em `research/validation/rpg/`. Não zerar novamente sem pedido; progresso posterior ao reset deve permanecer. Backup anterior ficou só em armazenamento local privado, fora do repo.
+- Certificado real do APK mantém SHA1 5A:55:45:EF:2B:5B:DA:F2:82:CF:CE:C1:75:6D:B3:DA:D1:B0:D9:72. Firebase Google já configurado; login real do usuário, nuvem e amigos continuam sem validação/implementação adicional nesta rodada. Não confundir instalação com performance física, controle de dois dedos ou login real validados.
+
+- Atualização final instalada e aberta no Redmi: captura `redmi-final-lobby.png` mostra CharmanderNv.9 e830moedas preservados após o novo APK. SHA256 final `c90ddf201db35fdf7511d85d803e73f0a1d9c1ab9e41b8a33cb4081e7422089c`.

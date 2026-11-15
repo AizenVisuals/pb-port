@@ -1,0 +1,23 @@
+[
+  {
+    "file": "public/pulse/assets/audio/item-plim.wav",
+    "source": "Original additive synthesis, 48kHz mono PCM16",
+    "sha256": "722336046780297ab535607b3102e121f36000654174e25d61c61517c2872b19",
+    "seconds": 0.48,
+    "peakDBFS": -11.70053304058364
+  },
+  {
+    "file": "public/pulse/assets/audio/evolution.wav",
+    "source": "Original additive synthesis, 48kHz mono PCM16",
+    "sha256": "2a47a059d34ecbecce8ce615b27d8252b6c3e8d44a806307ddfe09c91e7286c1",
+    "seconds": 2.0,
+    "peakDBFS": -11.70053304058364
+  },
+  {
+    "file": "public/pulse/assets/audio/evolution-end.wav",
+    "source": "Original additive synthesis, 48kHz mono PCM16",
+    "sha256": "96344b82250a1fcf68bf050c666cf6d2d53ed5171545450da496dc037ccdd844",
+    "seconds": 0.85,
+    "peakDBFS": -11.70053304058364
+  }
+]

@@ -1,4 +1,8 @@
 const paths={
+ pokeball:'M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM3 12h6m6 0h6M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z',
+ ticket:'M3 5h18v5a2 2 0 0 0 0 4v5H3v-5a2 2 0 0 0 0-4V5Zm11 0v3m0 3v2m0 3v3',
+ badge:'m12 2 4 5 6 1-3 6 1 7-8-3-8 3 1-7L2 8l6-1 4-5Z',
+ bag:'M8 6V4h8v2M5 7h14l2 14H3L5 7Zm3 5h8v5H8z',
  diamond:'M3 8 7 3h10l4 5-9 13L3 8Zm0 0h18M7 3l5 18 5-18',
  home:'M3 11 12 3l9 8M5 10v11h5v-6h4v6h5V10',
  team:'M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM2 21v-2a6 6 0 0 1 12 0v2M17 4a4 4 0 0 1 0 8m0 3a6 6 0 0 1 5 6',

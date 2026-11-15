@@ -16,7 +16,7 @@ The owner plays on an Android phone and wants a polished, purpose-built mobile b
 
 ## Product Purpose
 
-A mobile real-time creature battle game with team building, collection and meaningful progression beyond a leaderboard. Core loop: prepare team, battle bot, receive earned rewards, unlock or summon collection options, adjust team.
+A mobile real-time creature battle game with team building, collection and meaningful progression beyond a leaderboard. Core loop: choose an initial partner, prepare a team, clear campaign stages 1-1 through 1-10 with trainers, wild encounters, Rocket and a gym leader, receive XP and rewards, capture or summon Pokémon and adjust the formation.
 
 ## Operating Context
 
@@ -24,11 +24,11 @@ Landscape orientation throughout, including menus and combat. The user explicitl
 
 ## Capabilities and Constraints
 
-Preserve the existing engine's Auto/manual control, guard, dodge, switching, four selected moves, 3v3/6v6 bot battles and five difficulty settings. Keep Marshadow and its fan-made Mega with expanded moves. Local saved trainer profile, coins, owned collection, favorite, teams and results. Provide rewards, direct unlock and gacha with visible odds, pity and useful duplicates. No paid currency or purchases. Duplicates award diamonds, used for specific Pokémon in the shop and shiny cosmetic versions. Acquisition rarity must not directly increase battle stats. Player starts with a usable team, including Marshadow. Precise reward values are implementation choices delegated by the user and must be documented/tested. Export/import is included to protect local progress across test versions.
+Preserve the existing engine's Auto/manual control, guard, dodge, switching, four selected moves, 3v3/6v6 bot battles and five difficulty settings. Keep Marshadow and its fan-made Mega with expanded moves. Local saved trainer profile, coins, owned collection, favorite, teams and results. Provide rewards, direct unlock and gacha with visible odds, pity and useful duplicates. No paid currency or purchases. Duplicates award diamonds, used for specific Pokémon in the shop and shiny cosmetic versions. Acquisition rarity must not directly increase battle stats. New trainers choose one of six Kanto/Johto starters at level 5. Marshadow remains obtainable in the collection, not a free starting teammate. Kanto/Johto evolutions are permanent and triggered during real-time battle at their canonical level. Moves unlock by level, while compatible special techniques consume earned inventory tickets. Held berries activate in battle, show their icon and play a short original sound. Precise reward values are implementation choices delegated by the user and must be documented/tested. Export/import is included to protect local progress across test versions.
 
 ## Brand Commitments
 
-User chose PULSE ARENA. They approved the direction: “grafite, branco quente e ciano, com coral nos comandos principais”, “lobby com seu favorito em destaque”, short navigation and an app that feels like a finished mobile game. References to Pokémon Unite/Masters establish a craft bar and mobile organization, not permission to copy their visual assets/UI. This approval supplies both visual identity and opening experience; no new direction interview is needed.
+User chose PULSE ARENA. They approved the direction: “grafite, branco quente e ciano, com coral nos comandos principais”, “lobby com seu favorito em destaque”, short navigation and an app that feels like a finished mobile game. The latest pinned interface reference is Pokémon: Champion at https://www.x7game.com/game/app/17168. The user explicitly approved light game panels, large collection cards, spatial formation, a numbered campaign map and separate partner, inventory, shop and invocation tasks. References establish composition and craft, not permission to copy promotional art. This approval supplies both visual identity and opening experience; no new direction interview is needed.
 
 ## Evidence on Hand
 

@@ -1,0 +1,1114 @@
+{
+  "learnsets": "PrismaDex pinned PokeAPI 2bf639e5572812a67d2b94903fdcb9d095f5aeb2; methods 1/level-up and 2/3/4 egg/tutor/machine; Scarlet-Violet preferred",
+  "records": [
+    {
+      "key": "venusaur",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/3.json",
+      "sha256": "6c54b835e35e27c6d4828e14221ee8ce70f69c778b77e4bcbf4fa593909e196c",
+      "game": 23
+    },
+    {
+      "key": "charizard",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/6.json",
+      "sha256": "a334f2299e5a7833eca0dc1a366a3c8cbc4d70d7c3715be7f6f442d4bdbf3745",
+      "game": 23
+    },
+    {
+      "key": "blastoise",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/9.json",
+      "sha256": "abc5e7fc13f4b8c7e7c5e483b0f7fe4fbe37ecc632ef16f2da45d8243218382c",
+      "game": 23
+    },
+    {
+      "key": "pidgeot",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/18.json",
+      "sha256": "ac350debdb679fdb279c68d88035cbec749e7ff103720f9f24db29776b9add94",
+      "game": 16
+    },
+    {
+      "key": "pikachu",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/25.json",
+      "sha256": "1a01aa647ec7aa2484c2fd1913787601ae21d11e319bfb82c6ac345dee011bd7",
+      "game": 23
+    },
+    {
+      "key": "sandslashA",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/28.json",
+      "sha256": "4479fa8d3e33aa52fff61f1947db06168ba6f6c425de5f445d6de644ec5292a4",
+      "game": 23
+    },
+    {
+      "key": "nidoqueenAG",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/31.json",
+      "sha256": "ca1dfe7c13820667c1253ed4104af70c0085e748cf695875a6b8a0a8c3a97f2e",
+      "game": 20
+    },
+    {
+      "key": "nidoking",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/34.json",
+      "sha256": "3251df9f1156b7d4168f07b720cde69cec3c8515890abcc948bd5e457d7ad8dc",
+      "game": 20
+    },
+    {
+      "key": "clefable",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/36.json",
+      "sha256": "9f46b7fed0ec742cc9ef009fc53baf1c938e61886f9501b5f139e2adcca6a8d5",
+      "game": 23
+    },
+    {
+      "key": "ninetalesA",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/38.json",
+      "sha256": "c33557bb757c46745542c08dca25a9e221fbd0f5a456573f6b5c6d98755fef03",
+      "game": 23
+    },
+    {
+      "key": "dugtrio",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/51.json",
+      "sha256": "c3f18f4a804dfd164504ee72a8b89b830648cc3a4a9394b07d9116efca7d40aa",
+      "game": 23
+    },
+    {
+      "key": "persian",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/53.json",
+      "sha256": "db03920b863af7335b894b1bde5ccea96af3a55f8ec20de2f9855ccad73cbf6e",
+      "game": 23
+    },
+    {
+      "key": "arcanine",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/59.json",
+      "sha256": "c229eb04e2d47155348066590acf21a933b571f095ff6ebe6b4a2496e2ef1bfe",
+      "game": 23
+    },
+    {
+      "key": "alakazam",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/65.json",
+      "sha256": "b906928409d56e134978cdde714207402dfd850d5fc00d6e6ebe29c4a00d68d5",
+      "game": 20
+    },
+    {
+      "key": "tentacruelH",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/73.json",
+      "sha256": "5911c5989d8a97514fdd386b33003208871ad68aea30747898033bb64b1cc2b6",
+      "game": 23
+    },
+    {
+      "key": "golemAG",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/76.json",
+      "sha256": "89d4e2111086029286e49d07e04ed85ad1116f9194cc4c4f0244311a77e583c4",
+      "game": 23
+    },
+    {
+      "key": "dodrio",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/85.json",
+      "sha256": "8443cc068ac81c9170fa135727e7418c5aee106395097682344e9e6b44e2efca",
+      "game": 23
+    },
+    {
+      "key": "mukH",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/89.json",
+      "sha256": "4ef6f98df45b60214cd8faf8f5bff8337fdd42849540627d249d9872fa46f9e2",
+      "game": 23
+    },
+    {
+      "key": "gengar",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/94.json",
+      "sha256": "d54af86de2abbef9bab469e6a730c56d1d9c564b80087247632133976725e2c0",
+      "game": 23
+    },
+    {
+      "key": "exeggutor",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/103.json",
+      "sha256": "ed23d8486b37efad6b1fa8ac97001e1edf9e55d901be5f560f22f19eacffc582",
+      "game": 23
+    },
+    {
+      "key": "weezingH",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/110.json",
+      "sha256": "a4a60cc2b5eeafbf66b4595e0c92728397b368572c6c5d2c18c9db836da71faf",
+      "game": 23
+    },
+    {
+      "key": "rhydon",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/112.json",
+      "sha256": "724ebca77b866ca9635f85f056100fffe50012c5bc7675547436641053ed2133",
+      "game": 23
+    },
+    {
+      "key": "scyther",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/123.json",
+      "sha256": "8b7fb1effb5088c9a4d9f46e3fc13ee4141fdce223d8498ce975d45eb231ea7a",
+      "game": 23
+    },
+    {
+      "key": "tauros",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/128.json",
+      "sha256": "c6d85c750e7900fd1fbaa09d65994d17048f00c184f28135f01ba2c5b449252c",
+      "game": 23
+    },
+    {
+      "key": "gyarados",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/130.json",
+      "sha256": "2d05527e02fbe59f8751e4ba0985fb8f6ba66c2e973f49f789bee509f7fd2cf4",
+      "game": 23
+    },
+    {
+      "key": "lapras",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/131.json",
+      "sha256": "dc9d6a8736060fe2248afdbdb9f6760e4dafed65fc57651291df31fa109f393a",
+      "game": 23
+    },
+    {
+      "key": "jolteon",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/135.json",
+      "sha256": "78597b21b26c4e4023e9757fb4dac1f898491d6e06fd3c82aeb7817159e514bc",
+      "game": 23
+    },
+    {
+      "key": "aerodactylM8",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/142.json",
+      "sha256": "577ac43306940790ceeffac347dd5accf88121ae49fd3de7d0e62696a7dc24de",
+      "game": 20
+    },
+    {
+      "key": "snorlax",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/143.json",
+      "sha256": "ce2a48e0e7f0c5fa3fb16b1c4f8ab04020fcb85b7cf833a1ec4d3cf09ae0faa4",
+      "game": 23
+    },
+    {
+      "key": "dragoniteL",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/149.json",
+      "sha256": "140a3c74335ef92b4f15938c812617a4a47f2af83ba781c3dcbec29de65b46dd",
+      "game": 23
+    },
+    {
+      "key": "typhlosion",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/157.json",
+      "sha256": "802bfb65315d6f0c404d430fe6b1bc38fe5ab9aee3a5c3b2a75ec6ee10168b80",
+      "game": 23
+    },
+    {
+      "key": "feraligatrD",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/160.json",
+      "sha256": "48fcd4bd6f383d5edbafd8936a2bb4d00ae13b76e56ef4ba20279bacaa3a8bcd",
+      "game": 23
+    },
+    {
+      "key": "crobat",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/169.json",
+      "sha256": "95532fc178b47d339536c9cf5c3861da1c516cac483d331b90136b4af29e71de",
+      "game": 20
+    },
+    {
+      "key": "ampharos",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/181.json",
+      "sha256": "c649d4b2d16d93485c38383c692f253490c6f5708933eef25e480a3fce6e5ed6",
+      "game": 23
+    },
+    {
+      "key": "espeon",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/196.json",
+      "sha256": "ea8c52150d6fe031612e3c42bf7c08fc030f8614667131463d5f7046e3fef977",
+      "game": 23
+    },
+    {
+      "key": "umbreon",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/197.json",
+      "sha256": "dde475b89d7901d1fe7425d09bc5f4f5b591d4936a45ee9ad2a3a47b3b312d8c",
+      "game": 23
+    },
+    {
+      "key": "steelixD",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/208.json",
+      "sha256": "12edcad4a7f2ce23f2b50c43f53d2d67b615fc27f937e4fc51d5b09e5b63cd36",
+      "game": 20
+    },
+    {
+      "key": "scizorJJ",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/212.json",
+      "sha256": "7b31aa76ee4bbec1c3ef3ed0a95b7ae47992051ab2596f6e540ebf06eb59dbb8",
+      "game": 23
+    },
+    {
+      "key": "heracross",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/214.json",
+      "sha256": "fa79d1dabd50a844482134b92d6a4aecdcd738aaf4ccace649a8a77112d9bd75",
+      "game": 23
+    },
+    {
+      "key": "skarmory",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/227.json",
+      "sha256": "a6f6136455264281ee4db6f50f3e5833fed9c77b7cf0eeff67333e0eda20f597",
+      "game": 23
+    },
+    {
+      "key": "houndoomSP",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/229.json",
+      "sha256": "5a578be6a20301a43bd3ccfded085483bc85000c49f2cf46a3dc1b4d30a43b97",
+      "game": 23
+    },
+    {
+      "key": "kingdraD",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/230.json",
+      "sha256": "ab9ce7df83b2a2b2ec4f70b3c56d7a46f7dd09dfb99dcc9888e32ff3725bed1d",
+      "game": 23
+    },
+    {
+      "key": "tyranitar",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/248.json",
+      "sha256": "fb69d8ffd6356adb169a4e5c59f6a3a14f98655381925b5ba1ba19b203f0e5b4",
+      "game": 23
+    },
+    {
+      "key": "sceptile",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/254.json",
+      "sha256": "41a972ba35b48cb69797b812393997634563b04ecb4233072260772034302ab2",
+      "game": 23
+    },
+    {
+      "key": "blazikenNM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/257.json",
+      "sha256": "2280af1924834a32f250d20774a41b6b11c42d996edc3d82f531f00c8ce9bd7f",
+      "game": 23
+    },
+    {
+      "key": "swampertNM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/260.json",
+      "sha256": "c04a7fb77853e1347a5d0b07cc759a321c2930f64452a5512505511d5d7692c3",
+      "game": 23
+    },
+    {
+      "key": "mightyenaH",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/262.json",
+      "sha256": "2a1e57db421d2d469cc9e6e8bbb51d5a367cd5882c8a97e716c6f5cbf444ee72",
+      "game": 23
+    },
+    {
+      "key": "ludicoloNM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/272.json",
+      "sha256": "d9f802805bc09f6f92d837b5008474d2fc03d0dfa0c44254e4a660231d400bde",
+      "game": 23
+    },
+    {
+      "key": "shiftryNM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/275.json",
+      "sha256": "7cd70b61e9854699e1bff4badbae046ce6bae1398e903a5dc1a786ac88d91aa3",
+      "game": 23
+    },
+    {
+      "key": "swellow",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/277.json",
+      "sha256": "2a47464f1f11a9bb16028763989b25847f19b42bfa6d1ce4ded199b435cd2027",
+      "game": 16
+    },
+    {
+      "key": "pelipperNM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/279.json",
+      "sha256": "8be6b133042b2dbc1dbdcab60cfbdcc910dbe0aab97d3f19fc2c243e3782e25f",
+      "game": 23
+    },
+    {
+      "key": "gardevoir",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/282.json",
+      "sha256": "656bea046db321158e9fdfbac0de7459306347356555053ec69f18db99e935ba",
+      "game": 23
+    },
+    {
+      "key": "breloomNM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/286.json",
+      "sha256": "ead03453ae511225edc22424110699adef12baff6a27474406ee2322b8ca7afd",
+      "game": 23
+    },
+    {
+      "key": "slakingNM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/289.json",
+      "sha256": "6ba7959e7ac41d2ded54eb04d7be00156eaa9cd1adef34b2e15bbdff910f53a7",
+      "game": 23
+    },
+    {
+      "key": "ninjaskAP",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/291.json",
+      "sha256": "eb7de0b950f5f197b101e18b1712cae1861ddf67c71959d2f46abb9fcbc71617",
+      "game": 20
+    },
+    {
+      "key": "shedinjaNM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/292.json",
+      "sha256": "bbb51e992e2cd1cae05a3a97a6b5753a3fecea8baba09a6ef1e5693724c70a5c",
+      "game": 20
+    },
+    {
+      "key": "exploudNM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/295.json",
+      "sha256": "29bfd8709a20117a1877b7ef0c5b314d8a477b6da730360d3638a81c9b2dd41f",
+      "game": 20
+    },
+    {
+      "key": "aggron",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/306.json",
+      "sha256": "4c82003e0704f7777d8f2452475e81382f405681ca8ab76c302b7f5e5d17ef18",
+      "game": 20
+    },
+    {
+      "key": "manectric",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/310.json",
+      "sha256": "c5989dc68cfb9229cacad6e96184f487f51b8ff84f8c3bbbbadce806f2785062",
+      "game": 20
+    },
+    {
+      "key": "sharpedoH",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/319.json",
+      "sha256": "3fe5e73e6eb103640f8183d98828614eaf441fa559b5513324abee26f0d18315",
+      "game": 20
+    },
+    {
+      "key": "wailord",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/321.json",
+      "sha256": "36b61f2f3f6c569a13301191a585ae64030c04595cca22c44fe8c52b56849a4f",
+      "game": 20
+    },
+    {
+      "key": "cameruptH",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/323.json",
+      "sha256": "aa336de50c147cb286941142a6823c26f45b811ab073e54719520af64eb340ed",
+      "game": 23
+    },
+    {
+      "key": "torkoal",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/324.json",
+      "sha256": "29d49332ca5158d11e1af8ad137bfa7ae4f8dabc8840469129557cbcddd02b48",
+      "game": 23
+    },
+    {
+      "key": "flygonNM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/330.json",
+      "sha256": "1b2d04abe1a26ccfb65224f7a09fbb90df11a56a5246322a7327de150af2b560",
+      "game": 23
+    },
+    {
+      "key": "altariaL",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/334.json",
+      "sha256": "79330664fc5037c6e6052474aa43afaf0185f1cdc9462a3585ae79ddbede6c4f",
+      "game": 23
+    },
+    {
+      "key": "crawdauntH",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/342.json",
+      "sha256": "a5cc10caea97a21e5fd77eeab49e5b19ac7f66c7fc9160727113c55a2d3f87b8",
+      "game": 23
+    },
+    {
+      "key": "claydol",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/344.json",
+      "sha256": "06b6f7e66efb6058d840281765129d4df8cdf2cd2b3bda70739d92cdd5ed8ffb",
+      "game": 20
+    },
+    {
+      "key": "cradily",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/346.json",
+      "sha256": "72ec0bb2da154a6c807d70a98b7c206641b6e6d136b87d8d72d2e83eaf37d458",
+      "game": 20
+    },
+    {
+      "key": "armaldo",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/348.json",
+      "sha256": "d2f885ad5c7fc42cb81f8bc1037709b12c3b77744ddf3e1db2d446cce88a0bc1",
+      "game": 20
+    },
+    {
+      "key": "milotic",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/350.json",
+      "sha256": "f4208ab5e8e012e3548cda874ec1999c7c0c61c1a53f6d784e2aba4e29ef4324",
+      "game": 23
+    },
+    {
+      "key": "absolNM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/359.json",
+      "sha256": "2e84a284f48646f2890e8d41c9d5c872ad0407c57e38925ef559c28e2b53e938",
+      "game": 20
+    },
+    {
+      "key": "glalieNM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/362.json",
+      "sha256": "75f4f79a4e81ab430b9412044e3c3e55ffe554c35eb65d061771884e3aaacaf1",
+      "game": 23
+    },
+    {
+      "key": "walreinH",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/365.json",
+      "sha256": "8196e9da861dcbe68dca3cf60fc629fe78b31599275bccd2bb60f98c1bbe1c92",
+      "game": 20
+    },
+    {
+      "key": "salamence",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/373.json",
+      "sha256": "7c20cb0de4a5d8dc59be20ca9b412bf935bc3aa98803c2ea7d4e03396616db47",
+      "game": 23
+    },
+    {
+      "key": "metagross",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/376.json",
+      "sha256": "5dc7a3d1c4ff7575f34e6b88913aa4dfca9aeec9f37094716de6dab16eb0f40e",
+      "game": 23
+    },
+    {
+      "key": "torterra",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/389.json",
+      "sha256": "2d9c3aed9ca69648d7cf1d45b991343c04139a818d1fea7b9236bfaba1b42af5",
+      "game": 23
+    },
+    {
+      "key": "infernape",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/392.json",
+      "sha256": "a313fcd4949e3d53bca1923aea1886ae34791769d56343202e29f104241c364e",
+      "game": 23
+    },
+    {
+      "key": "empoleon",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/395.json",
+      "sha256": "2347cdcd5e6028b757bff0d472ea72cea1c8e866d77c69b6e7a240da74d52dd3",
+      "game": 23
+    },
+    {
+      "key": "staraptor",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/398.json",
+      "sha256": "5fa51396eaa1445a5592d7f3e79b5ef08a851a4d250a4ff1f6c763db05d3e9b1",
+      "game": 23
+    },
+    {
+      "key": "luxrayM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/405.json",
+      "sha256": "9f5b2a0a395dbf2290c27a27953377344d9b3f45facec904351a345d5ead1545",
+      "game": 23
+    },
+    {
+      "key": "roserade",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/407.json",
+      "sha256": "e2708fdfd6c0bc63d675dc8ae606c0917bc90ba5a92f601cffb135df6d02d444",
+      "game": 20
+    },
+    {
+      "key": "gastrodonAP",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/423.json",
+      "sha256": "9926221d18b6bb94cf46756ecc725978b07e087433e8209dd526f1be898268e0",
+      "game": 23
+    },
+    {
+      "key": "lopunny",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/428.json",
+      "sha256": "23e5b3cba6fe5e45e33da3688cda754a596931e829cd748025b91c260d4f52ad",
+      "game": 20
+    },
+    {
+      "key": "honchkrowSP",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/430.json",
+      "sha256": "886aec8726d04c038328e07131bd7043593e0f0493a1a2312084e2854ca12f3e",
+      "game": 23
+    },
+    {
+      "key": "bronzongSP",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/437.json",
+      "sha256": "0c21c1c3bc2b9b4cc92cecd152296c4868400b3ed50a86300d7f89b3c1d9c609",
+      "game": 23
+    },
+    {
+      "key": "spiritomb",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/442.json",
+      "sha256": "ffeacddab4feaeb5a012f09e6e40c724cb6873239c48d78815776868e0ab0db3",
+      "game": 23
+    },
+    {
+      "key": "garchomp",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/445.json",
+      "sha256": "7367fb330e93a9e82a50f61f66d3b746b884725df0ce6120ba744fbded99d9a2",
+      "game": 23
+    },
+    {
+      "key": "lucario",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/448.json",
+      "sha256": "e61cfd10bca65ff9eec59d09686585f4763296ad3ce17aacb1177dbbe8b891f3",
+      "game": 23
+    },
+    {
+      "key": "drapionAP",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/452.json",
+      "sha256": "08ff63706754d2f21ffc61b4a85311fb8c509ebd72a4afddc4e02bc2fe5b7943",
+      "game": 20
+    },
+    {
+      "key": "toxicroak",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/454.json",
+      "sha256": "3b8e6980df27f41ceb912dbd0548fccb784e39152cc5a4bf459a86001e083fb8",
+      "game": 23
+    },
+    {
+      "key": "weavile",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/461.json",
+      "sha256": "5cbb6ad3e3f116c4ce10c7d580883f7ed0f63a06655af672b1caf4700923c18a",
+      "game": 23
+    },
+    {
+      "key": "magnezoneD",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/462.json",
+      "sha256": "7f4981445d58b1344a9ecd2d910091cf1f2d6c39a43d2642e514094761f20566",
+      "game": 23
+    },
+    {
+      "key": "rhyperior",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/464.json",
+      "sha256": "99bfeac42761230755d6eb2f5c0916552c55bf224e82731a580e5b2bc4df02a4",
+      "game": 23
+    },
+    {
+      "key": "electivireAP",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/466.json",
+      "sha256": "90b764f4c3cfc6581c2eb9985e0fc1cd182ecb6b030262f243f3564fb893a03c",
+      "game": 23
+    },
+    {
+      "key": "togekiss",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/468.json",
+      "sha256": "41039423d94034bbfefcd117c7232aec7aa026eb40be479925f9cfe2dcc6a022",
+      "game": 20
+    },
+    {
+      "key": "gliscorAP",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/472.json",
+      "sha256": "de113bc1712d893b0282406e96de8a1aacdfdc5bf8dd20f7ec54be2efa7bbd00",
+      "game": 23
+    },
+    {
+      "key": "mamoswine",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/473.json",
+      "sha256": "56dea567213da42fa768b2d2aab4bcdfb4f8cefdee2cb5295efcd57d0b2b4e1a",
+      "game": 23
+    },
+    {
+      "key": "galladeSP",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/475.json",
+      "sha256": "65096acc7b38817a6fd7931cf6303c3b6b442b399d97d1640628319427c3376c",
+      "game": 23
+    },
+    {
+      "key": "froslassAP",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/478.json",
+      "sha256": "f06bb1cda223c900816361957fd34fbf412bd4dc05bdd4225a32e298775e5b3f",
+      "game": 23
+    },
+    {
+      "key": "unfezant",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/521.json",
+      "sha256": "f0991a368a0fc801b0bf708d75dcfeca0692971a550e0432cdfb2ea685113845",
+      "game": 20
+    },
+    {
+      "key": "excadrillM8I",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/530.json",
+      "sha256": "1c375389a954c50f5045e814f8357a3003493411b6c09c2585bc0a92b018f3c2",
+      "game": 23
+    },
+    {
+      "key": "darmanitan",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/555.json",
+      "sha256": "fe7e992222d4f2af6dc8db321b2c4801306161937d1a0f97836eef34c98bf5a7",
+      "game": 20
+    },
+    {
+      "key": "sigilyph",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/561.json",
+      "sha256": "7d34aa9232dc8696c84427561fe1b48571c6b8dcc92f47f4a812238d2a2dd2d1",
+      "game": 20
+    },
+    {
+      "key": "cofagrigus",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/563.json",
+      "sha256": "81cf622b5fc57429caea55f9825a5302b95e2a96384cc75b75c0e530e5a53be2",
+      "game": 20
+    },
+    {
+      "key": "archeops",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/567.json",
+      "sha256": "a2193c48856847c30e156ddd975c35c9baf3c5b45792979a8c6944c4acd389c2",
+      "game": 20
+    },
+    {
+      "key": "zoroark",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/571.json",
+      "sha256": "1fa97fa1102a28044ead8f2d4c877e8a5c63a9f7a433b3c28ec895aacf689631",
+      "game": 23
+    },
+    {
+      "key": "vanilluxe",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/584.json",
+      "sha256": "8cdf30d525877e0be8a8f3c3b56438833dd87b3e383561d5960312d6f1537a7e",
+      "game": 20
+    },
+    {
+      "key": "klinklang",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/601.json",
+      "sha256": "e9505fa95c8a59fa700859db600b4fafcba0dc44e2d0d47dfe377b58a1766315",
+      "game": 20
+    },
+    {
+      "key": "eelektross",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/604.json",
+      "sha256": "7f0f61ba20cb422d061cd84e3eea13700cf245f4bf2f4909ce2b95cc6c3ba34c",
+      "game": 23
+    },
+    {
+      "key": "haxorusI",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/612.json",
+      "sha256": "b5c72a846c381ba7eac16c36fa4adca8e41ed17a9c58af3fecc81a809dc0eb92",
+      "game": 23
+    },
+    {
+      "key": "accelgorJJ",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/617.json",
+      "sha256": "1499b1df3c74415938a8e49c14db6add970042dbb3394a2076eb2baa8a33ffd0",
+      "game": 20
+    },
+    {
+      "key": "mienshaoM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/620.json",
+      "sha256": "2df95d01a7d0723d833a797064710386970ddbc9c63682e3befe37a2ed733825",
+      "game": 23
+    },
+    {
+      "key": "druddigonI",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/621.json",
+      "sha256": "40830195612f893877dbefe433578401ca1d7a2317c5838bb176d2d82ac8d4dd",
+      "game": 20
+    },
+    {
+      "key": "golurk",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/623.json",
+      "sha256": "ef1bad4535272095966d138d293cb12fbbddccfb6ffa6c9f212bb14e5b702132",
+      "game": 23
+    },
+    {
+      "key": "bisharp",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/625.json",
+      "sha256": "105891c0b6fded3cf025758cadd95fc51852605752a308d2b0265b16e55a25cd",
+      "game": 23
+    },
+    {
+      "key": "hydreigon",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/635.json",
+      "sha256": "68676cbf042d5ffddc8fe4ebf6a9dab6725849f79eccc06717e65ca8099838e3",
+      "game": 23
+    },
+    {
+      "key": "chesnaughtM8N",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/652.json",
+      "sha256": "aedc7a11b27513fbd47fc1e6e630a8c8ecc7ddf0708b85138978ad5555f39239",
+      "game": 23
+    },
+    {
+      "key": "greninja",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/658.json",
+      "sha256": "1e5ee9a17c296de79377c4b97c3e5444d0eca8d761901623fff33a54405e1e92",
+      "game": 23
+    },
+    {
+      "key": "talonflame",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/663.json",
+      "sha256": "0fde8552e4247aacc4519eb6a20df17fc1ed45024d069c0a84371eb5f2bbe7ab",
+      "game": 23
+    },
+    {
+      "key": "floette",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/670.json",
+      "sha256": "c72eb0cfff4120741b2fbe772e94ddee8c38fe8e8f8f4ab763918e99129b4e0d",
+      "game": 23
+    },
+    {
+      "key": "aegislash",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/681.json",
+      "sha256": "2b5065481e81fdafc0fece78aca9f570744b5fe2f3d0f3fae1b23b585d0f8fa7",
+      "game": 20
+    },
+    {
+      "key": "malamar",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/687.json",
+      "sha256": "adf00b96c582ca86bb70c2bec5a7a92f062447baf4b3de0b9a88231e8effbcdf",
+      "game": 23
+    },
+    {
+      "key": "tyrantrum",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/697.json",
+      "sha256": "9aabdf423aa750faecfddf18cb96c1edb34699cb2786d2bd40889e5303ae488b",
+      "game": 20
+    },
+    {
+      "key": "aurorus",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/699.json",
+      "sha256": "0752cfe285cb930515ea0bcfd9a21dd9951ba8402683ec9b8d99f238eb046405",
+      "game": 20
+    },
+    {
+      "key": "sylveon",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/700.json",
+      "sha256": "273adf931453bafb73669b5a0c54ce007577c54017a883a852b82cd7daf92892",
+      "game": 23
+    },
+    {
+      "key": "hawlucha",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/701.json",
+      "sha256": "6aefac66b516badd624490c5d2b1b5c0755914eadadd28f083274ab121572aaa",
+      "game": 23
+    },
+    {
+      "key": "goodra",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/706.json",
+      "sha256": "3f7d0708082fe27dc03bfacad1a3080adf8d72c915f8851fabab05e02fd4b187",
+      "game": 23
+    },
+    {
+      "key": "gourgeist",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/711.json",
+      "sha256": "392152d688faccfdeaadbd6f4c819a1e846b03b0ebf07dbaf29d60b82429811d",
+      "game": 20
+    },
+    {
+      "key": "noivern",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/715.json",
+      "sha256": "3d6ce664617761a3ffeac4b5520bb2eed9af6db90f5c7ec9c4404161a8f51d66",
+      "game": 23
+    },
+    {
+      "key": "ribombee",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/743.json",
+      "sha256": "c6f1818a0c16cbf15dd8e6432f8f139be1d865b14968f701950f35409fb0766d",
+      "game": 23
+    },
+    {
+      "key": "lycanrocM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/745.json",
+      "sha256": "3ea31231b539f6fce78e45eb23a4d7e4985cd07b93bde2049ce2750521cbb93d",
+      "game": 23
+    },
+    {
+      "key": "comfey",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/764.json",
+      "sha256": "1e2f60c8baebf8d6eb8b2cf5ceff7a6a7f09e27a27ba968374f89bc011ba8b2a",
+      "game": 23
+    },
+    {
+      "key": "golisopodJJ",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/768.json",
+      "sha256": "2ac951f526c837ad4c7db55c8d882ebdd16302caf1646f76620dc4d5646aa0b2",
+      "game": 20
+    },
+    {
+      "key": "kommooM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/784.json",
+      "sha256": "b5b8a649b3cea93daaca39b4b5535ce7f12162e9fdc659a9d0da7d5d34e22186",
+      "game": 23
+    },
+    {
+      "key": "buzzwoleJJ",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/794.json",
+      "sha256": "122dfe5499986bd6b3f6dd784a855f403c4daf6a55f8e903db10db1d296e9020",
+      "game": 20
+    },
+    {
+      "key": "pheromosaJJ",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/795.json",
+      "sha256": "c66450a5ebce5c02f719d2e1d1948f601f8992f577874cb6e0461e10dc2f7b19",
+      "game": 20
+    },
+    {
+      "key": "rillaboomL",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/812.json",
+      "sha256": "cdfec09ec582894ff1607743b9a65dd2b5c339875c29e1c96da0e903bc6379f3",
+      "game": 23
+    },
+    {
+      "key": "inteleonM8",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/818.json",
+      "sha256": "8f2db643d982aace147817332b7012007907f94e4f2ca25bc445bd591fe61aaa",
+      "game": 23
+    },
+    {
+      "key": "corviknightM",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/823.json",
+      "sha256": "33d51940c011cd00fe0e2e2a4539269c28aae0271077e061e73a79235db23763",
+      "game": 23
+    },
+    {
+      "key": "dragapultL",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/887.json",
+      "sha256": "608540aea9fc3a182053b88ef6eeb9d296f9d6a8f9dd2cef425661f49f1b1049",
+      "game": 23
+    },
+    {
+      "key": "kingambitJJ",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/983.json",
+      "sha256": "c4248304fdbdc5c514fd51f8a0f9e2f8df42cbc4d9b07af7c3e6681ff39c03dc",
+      "game": 23
+    },
+    {
+      "key": "screamTail",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/985.json",
+      "sha256": "3b14215790381e71334923cda42bd1137d8c44323f41ec0cbe0e47f80cc12c00",
+      "game": 23
+    },
+    {
+      "key": "bruteBonnet",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/986.json",
+      "sha256": "37f3171ef1740995a4138963f9475c0688ea74aecdbcb672f70e5d9f76c1e79a",
+      "game": 23
+    },
+    {
+      "key": "flutterMane",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/987.json",
+      "sha256": "4049e8a004daca03fbf167c11cbaafbd913999cd698f0acd0c0e5f8d3ac968d0",
+      "game": 23
+    },
+    {
+      "key": "slitherWing",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/988.json",
+      "sha256": "3e805d10e46ec4e903a6efc7d1979e41cf3745c21079d24521f3ce518702a535",
+      "game": 23
+    },
+    {
+      "key": "sandyShocks",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/989.json",
+      "sha256": "651ea1d1c0449258eee9844dbb76669af19e275338a3588f2ce23e1eec8df2c9",
+      "game": 23
+    },
+    {
+      "key": "ironBundle",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/991.json",
+      "sha256": "bb7d5648f34bf58275023fbc785326345eb0fd513b0bfb5bb6e9d2aa0534fe75",
+      "game": 23
+    },
+    {
+      "key": "ironHands",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/992.json",
+      "sha256": "72315d20a3fdfc9440614b772be2fdbc65310edc5eaf2d376768f5487130a9a0",
+      "game": 23
+    },
+    {
+      "key": "ironJugulis",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/993.json",
+      "sha256": "f91ea771a4205323828985feb6b81610b40afde5a4f75973db0c9c41e7a67909",
+      "game": 23
+    },
+    {
+      "key": "ironMoth",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/994.json",
+      "sha256": "b0d628b4ea7b8709d17783e0cdeb8247ad9e7c40b4d4e5166a0c682f6bc33a02",
+      "game": 23
+    },
+    {
+      "key": "ironThorns",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/995.json",
+      "sha256": "288dc36bb040ef3d190855eea6722e90968649e5614461a88f4db3bfdea8ef73",
+      "game": 23
+    },
+    {
+      "key": "roaringMoon",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/1005.json",
+      "sha256": "b2bed075e8713a2834be0514fc72cffaa189e51f2220e14c4b5ab0051bf75197",
+      "game": 23
+    },
+    {
+      "key": "ironValiant",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/1006.json",
+      "sha256": "9ac61f8a77deec20f03bb07ee540542eb79e29690d0996709df937585be50e76",
+      "game": 23
+    },
+    {
+      "key": "marshadow",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/802.json",
+      "sha256": "1d83eaad66f3ba40fcea0e2a417f73f2496e3fa99ed87c08a25b943e1d4beeb0",
+      "game": 20
+    },
+    {
+      "key": "bulbasaur",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/1.json",
+      "sha256": "b9cb65bdb90c0a52748d52f936c5c9a69a102ee537448f144f9df4269fdc8dc5",
+      "game": 23
+    },
+    {
+      "key": "charmander",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/4.json",
+      "sha256": "2db01e92c647b19bf15b52db8743e4e907ea2405758856245c2f0e992ab506e4",
+      "game": 23
+    },
+    {
+      "key": "squirtle",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/7.json",
+      "sha256": "ddf94669610b7107500a21ce8cf647a6c1f6d644d8d943a873106bb04f311b5a",
+      "game": 23
+    },
+    {
+      "key": "pidgey",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/16.json",
+      "sha256": "902a7c830176654424ecaec2ae7c6ee5156b88ed645f8685d07c90922174e516",
+      "game": 16
+    },
+    {
+      "key": "rattata",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/19.json",
+      "sha256": "f792b72e682e809f661dba99cfca2e79539c3403ad52d54ff7dbff86829724c8",
+      "game": 16
+    },
+    {
+      "key": "caterpie",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/10.json",
+      "sha256": "5888a53f2835e4f3e014e80dd3f779fbc8f46daa264cd278591bfa9d4ce4ee8a",
+      "game": 20
+    },
+    {
+      "key": "weedle",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/13.json",
+      "sha256": "a209228078f999b602542af513a61bd6c2a8cfabde26a5de396d181b4394f97f",
+      "game": 16
+    },
+    {
+      "key": "zubat",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/41.json",
+      "sha256": "0bb8736bba511f10c25ad0098ccd5b87ac04424d293207339795fc1065686c69",
+      "game": 20
+    },
+    {
+      "key": "ekans",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/23.json",
+      "sha256": "384be62661eab4f2b39cee0c7749de6dbac786ac0d64e05a8f090557668c9f31",
+      "game": 23
+    },
+    {
+      "key": "koffing",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/109.json",
+      "sha256": "c628dd798055eee902ec5b356f5437d4cd428f3df61295b83ec627e5d510c7b7",
+      "game": 23
+    },
+    {
+      "key": "geodude",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/74.json",
+      "sha256": "83872280bb82c1cbda799d0eca072707b96fc68b2f0d846564826bf36f600d01",
+      "game": 23
+    },
+    {
+      "key": "onix",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/95.json",
+      "sha256": "a662407e106e6c96a05df21efef680e7d083e48b83506b1fa9145c19a4ffd9a3",
+      "game": 20
+    },
+    {
+      "key": "ivysaur",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/2.json",
+      "sha256": "b19858342ca64fd997201c99700459dface8f91851e12e27962ba273a7119319",
+      "game": 23
+    },
+    {
+      "key": "charmeleon",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/5.json",
+      "sha256": "03e4d0e13b582a5e164a37d2930b399e9515e9fa91707d7dfb75cdd80ef11779",
+      "game": 23
+    },
+    {
+      "key": "wartortle",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/8.json",
+      "sha256": "ff96e26aac8bb2e8f5b6b6a043326b312fec89bb3b41261210c315310868203a",
+      "game": 23
+    },
+    {
+      "key": "chikorita",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/152.json",
+      "sha256": "ec2238d2d0beecce8448d687ccc3c1db1e20dc25b4e0dcd5676fc42f0f0f1b37",
+      "game": 23
+    },
+    {
+      "key": "bayleef",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/153.json",
+      "sha256": "cf46ffb562554616998debdfe4c6b07b32543a8019851e2ebf461561415e5e32",
+      "game": 23
+    },
+    {
+      "key": "meganium",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/154.json",
+      "sha256": "bae1cebc695dfc7f0125cc3a30c2729b3f285709a5320fdc86e11b1516e92ef9",
+      "game": 23
+    },
+    {
+      "key": "cyndaquil",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/155.json",
+      "sha256": "4445f6003e5b715052a8ff3855bb5e9585b9e652d6236e6f2abf49e10a12dbcb",
+      "game": 23
+    },
+    {
+      "key": "quilava",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/156.json",
+      "sha256": "4acd91faaab02289a8c9bf135ca5f43e64eab46e2bd51dd8f59fa0565be85672",
+      "game": 23
+    },
+    {
+      "key": "totodile",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/158.json",
+      "sha256": "6115d180927b752f4116ebaf41458b75fd0786662bcd5cf30403062c3392c9ea",
+      "game": 23
+    },
+    {
+      "key": "croconaw",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/159.json",
+      "sha256": "2b0d3c1f7a9cb5ded7be4b0052663dacf45ec141979a2458defb31fde08d8c97",
+      "game": 23
+    },
+    {
+      "key": "feraligatr",
+      "path": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/learnsets/160.json",
+      "sha256": "48fcd4bd6f383d5edbafd8936a2bb4d00ae13b76e56ef4ba20279bacaa3a8bcd",
+      "game": 23
+    }
+  ],
+  "items": [
+    {
+      "item": "oranberry",
+      "source": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/item-art/132.png",
+      "sha256": "4d4d31e7c29a4540d5f438b87bb1762bf3cd7b0920e523fc9020f6c0bace1c1a",
+      "upstream": "Pokemon Showdown Champions, pinned commit 1242c1e2"
+    },
+    {
+      "item": "sitrusberry",
+      "source": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/item-art/135.png",
+      "sha256": "934d9dcfdc189fd01987f1e0356e079cf32d4d3aafac89ca3e77158c8f44c10e",
+      "upstream": "Pokemon Showdown Champions, pinned commit 1242c1e2"
+    },
+    {
+      "item": "lumberry",
+      "source": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/item-art/134.png",
+      "sha256": "eab0124365d18b7439b553edd5cf02e17297b72495a79e37114ee5398d0e3996",
+      "upstream": "Pokemon Showdown Champions, pinned commit 1242c1e2"
+    },
+    {
+      "item": "cheriberry",
+      "source": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/item-art/126.png",
+      "sha256": "949f8cb36532f09ff97ca41f97db3104abc16c209496181fea38839d79c5ce00",
+      "upstream": "Pokemon Showdown Champions, pinned commit 1242c1e2"
+    },
+    {
+      "item": "pechaberry",
+      "source": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/item-art/128.png",
+      "sha256": "9efb16dc703ef654ce0532329613d51150dcc3c9a77f0101f33d54b15a00028a",
+      "upstream": "Pokemon Showdown Champions, pinned commit 1242c1e2"
+    },
+    {
+      "item": "chestoberry",
+      "source": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/item-art/127.png",
+      "sha256": "6620e6507a3bc28c08f5f264e5b461cad0db9dce647d3cab0a4f5421e36abafd",
+      "upstream": "Pokemon Showdown Champions, pinned commit 1242c1e2"
+    },
+    {
+      "item": "leftovers",
+      "source": "/home/bloody/Documents/Pok\u00e9mon/android/app/src/main/assets/item-art/211.png",
+      "sha256": "3ea874aaa17bbcb682131876763ca2f9a896644f7a2b5d9c51ea234f7aace558",
+      "upstream": "Pokemon Showdown Champions, pinned commit 1242c1e2"
+    }
+  ],
+  "basicMoves": "PB behavior adaptations explicitly marked in definitions; Growl/Leer/Tail Whip/Withdraw implement canonical stat stages.",
+  "statsSource": "https://raw.githubusercontent.com/smogon/pokemon-showdown/master/data/pokedex.ts",
+  "statsSha256": "5e572601f4700f99835845eee5cd3e53362e43d885e2753fcc32418f636b83ed"
+}

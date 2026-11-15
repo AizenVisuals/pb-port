@@ -1,0 +1,452 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-15T04:30:09.574703+00:00",
+  "title": "Design System: PULSE ARENA",
+  "extensions": {
+    "colorMeta": {
+      "bg": {
+        "role": "neutral",
+        "displayName": "Bg",
+        "canonical": "#d7e8e4",
+        "tonalRamp": [
+          "oklch(15.0% 0.0063 180.2)",
+          "oklch(27.0% 0.0138 180.2)",
+          "oklch(39.0% 0.0188 180.2)",
+          "oklch(51.0% 0.0188 180.2)",
+          "oklch(63.0% 0.0188 180.2)",
+          "oklch(75.0% 0.0188 180.2)",
+          "oklch(87.0% 0.0122 180.2)",
+          "oklch(95.0% 0.0047 180.2)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#fff9eb",
+        "tonalRamp": [
+          "oklch(15.0% 0.0065 87.5)",
+          "oklch(27.0% 0.0143 87.5)",
+          "oklch(39.0% 0.0195 87.5)",
+          "oklch(51.0% 0.0195 87.5)",
+          "oklch(63.0% 0.0195 87.5)",
+          "oklch(75.0% 0.0195 87.5)",
+          "oklch(87.0% 0.0127 87.5)",
+          "oklch(95.0% 0.0049 87.5)"
+        ]
+      },
+      "raised": {
+        "role": "neutral",
+        "displayName": "Raised",
+        "canonical": "#f2ead7",
+        "tonalRamp": [
+          "oklch(15.0% 0.0089 87.9)",
+          "oklch(27.0% 0.0195 87.9)",
+          "oklch(39.0% 0.0266 87.9)",
+          "oklch(51.0% 0.0266 87.9)",
+          "oklch(63.0% 0.0266 87.9)",
+          "oklch(75.0% 0.0266 87.9)",
+          "oklch(87.0% 0.0173 87.9)",
+          "oklch(95.0% 0.0067 87.9)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#263f4d",
+        "tonalRamp": [
+          "oklch(15.0% 0.0131 234.0)",
+          "oklch(27.0% 0.0289 234.0)",
+          "oklch(39.0% 0.0393 234.0)",
+          "oklch(51.0% 0.0393 234.0)",
+          "oklch(63.0% 0.0393 234.0)",
+          "oklch(75.0% 0.0393 234.0)",
+          "oklch(87.0% 0.0256 234.0)",
+          "oklch(95.0% 0.0098 234.0)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "canonical": "#526c75",
+        "tonalRamp": [
+          "oklch(15.0% 0.0112 221.1)",
+          "oklch(27.0% 0.0247 221.1)",
+          "oklch(39.0% 0.0337 221.1)",
+          "oklch(51.0% 0.0337 221.1)",
+          "oklch(63.0% 0.0337 221.1)",
+          "oklch(75.0% 0.0337 221.1)",
+          "oklch(87.0% 0.0219 221.1)",
+          "oklch(95.0% 0.0084 221.1)"
+        ]
+      },
+      "cyan": {
+        "role": "primary",
+        "displayName": "Cyan",
+        "canonical": "#2b9f9f",
+        "tonalRamp": [
+          "oklch(15.0% 0.0329 195.0)",
+          "oklch(27.0% 0.0724 195.0)",
+          "oklch(39.0% 0.0988 195.0)",
+          "oklch(51.0% 0.0988 195.0)",
+          "oklch(63.0% 0.0988 195.0)",
+          "oklch(75.0% 0.0988 195.0)",
+          "oklch(87.0% 0.0642 195.0)",
+          "oklch(95.0% 0.0247 195.0)"
+        ]
+      },
+      "coral": {
+        "role": "primary",
+        "displayName": "Coral",
+        "canonical": "#e96758",
+        "tonalRamp": [
+          "oklch(15.0% 0.0548 28.8)",
+          "oklch(27.0% 0.1205 28.8)",
+          "oklch(39.0% 0.1644 28.8)",
+          "oklch(51.0% 0.1644 28.8)",
+          "oklch(63.0% 0.1644 28.8)",
+          "oklch(75.0% 0.1644 28.8)",
+          "oklch(87.0% 0.1068 28.8)",
+          "oklch(95.0% 0.0411 28.8)"
+        ]
+      },
+      "gold": {
+        "role": "secondary",
+        "displayName": "Gold",
+        "canonical": "#9a6812",
+        "tonalRamp": [
+          "oklch(15.0% 0.0374 74.1)",
+          "oklch(27.0% 0.0823 74.1)",
+          "oklch(39.0% 0.1122 74.1)",
+          "oklch(51.0% 0.1122 74.1)",
+          "oklch(63.0% 0.1122 74.1)",
+          "oklch(75.0% 0.1122 74.1)",
+          "oklch(87.0% 0.0729 74.1)",
+          "oklch(95.0% 0.0280 74.1)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "canonical": "#c8c5ae",
+        "tonalRamp": [
+          "oklch(15.0% 0.0105 101.0)",
+          "oklch(27.0% 0.0231 101.0)",
+          "oklch(39.0% 0.0315 101.0)",
+          "oklch(51.0% 0.0315 101.0)",
+          "oklch(63.0% 0.0315 101.0)",
+          "oklch(75.0% 0.0315 101.0)",
+          "oklch(87.0% 0.0205 101.0)",
+          "oklch(95.0% 0.0079 101.0)"
+        ]
+      },
+      "good": {
+        "role": "secondary",
+        "displayName": "Good",
+        "canonical": "#28734e",
+        "tonalRamp": [
+          "oklch(15.0% 0.0317 158.4)",
+          "oklch(27.0% 0.0698 158.4)",
+          "oklch(39.0% 0.0951 158.4)",
+          "oklch(51.0% 0.0951 158.4)",
+          "oklch(63.0% 0.0951 158.4)",
+          "oklch(75.0% 0.0951 158.4)",
+          "oklch(87.0% 0.0618 158.4)",
+          "oklch(95.0% 0.0238 158.4)"
+        ]
+      },
+      "bad": {
+        "role": "secondary",
+        "displayName": "Bad",
+        "canonical": "#ae3943",
+        "tonalRamp": [
+          "oklch(15.0% 0.0506 19.4)",
+          "oklch(27.0% 0.1114 19.4)",
+          "oklch(39.0% 0.1519 19.4)",
+          "oklch(51.0% 0.1519 19.4)",
+          "oklch(63.0% 0.1519 19.4)",
+          "oklch(75.0% 0.1519 19.4)",
+          "oklch(87.0% 0.0988 19.4)",
+          "oklch(95.0% 0.0380 19.4)"
+        ]
+      },
+      "header": {
+        "role": "neutral",
+        "displayName": "Header",
+        "canonical": "#284a58",
+        "tonalRamp": [
+          "oklch(15.0% 0.0154 226.6)",
+          "oklch(27.0% 0.0339 226.6)",
+          "oklch(39.0% 0.0462 226.6)",
+          "oklch(51.0% 0.0462 226.6)",
+          "oklch(63.0% 0.0462 226.6)",
+          "oklch(75.0% 0.0462 226.6)",
+          "oklch(87.0% 0.0300 226.6)",
+          "oklch(95.0% 0.0115 226.6)"
+        ]
+      },
+      "content": {
+        "role": "neutral",
+        "displayName": "Content",
+        "canonical": "#f7f2e3",
+        "tonalRamp": [
+          "oklch(15.0% 0.0068 91.6)",
+          "oklch(27.0% 0.0150 91.6)",
+          "oklch(39.0% 0.0205 91.6)",
+          "oklch(51.0% 0.0205 91.6)",
+          "oklch(63.0% 0.0205 91.6)",
+          "oklch(75.0% 0.0205 91.6)",
+          "oklch(87.0% 0.0133 91.6)",
+          "oklch(95.0% 0.0051 91.6)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Panel",
+        "canonical": "#fffbef",
+        "tonalRamp": [
+          "oklch(15.0% 0.0054 91.5)",
+          "oklch(27.0% 0.0120 91.5)",
+          "oklch(39.0% 0.0163 91.5)",
+          "oklch(51.0% 0.0163 91.5)",
+          "oklch(63.0% 0.0163 91.5)",
+          "oklch(75.0% 0.0163 91.5)",
+          "oklch(87.0% 0.0106 91.5)",
+          "oklch(95.0% 0.0041 91.5)"
+        ]
+      },
+      "on-primary": {
+        "role": "neutral",
+        "displayName": "On Primary",
+        "canonical": "#49251f",
+        "tonalRamp": [
+          "oklch(15.0% 0.0187 30.5)",
+          "oklch(27.0% 0.0410 30.5)",
+          "oklch(39.0% 0.0560 30.5)",
+          "oklch(51.0% 0.0560 30.5)",
+          "oklch(63.0% 0.0560 30.5)",
+          "oklch(75.0% 0.0560 30.5)",
+          "oklch(87.0% 0.0364 30.5)",
+          "oklch(95.0% 0.0140 30.5)"
+        ]
+      },
+      "battle-ink": {
+        "role": "neutral",
+        "displayName": "Battle Ink",
+        "canonical": "#f6f3ea",
+        "tonalRamp": [
+          "oklch(15.0% 0.0041 91.5)",
+          "oklch(27.0% 0.0091 91.5)",
+          "oklch(39.0% 0.0123 91.5)",
+          "oklch(51.0% 0.0123 91.5)",
+          "oklch(63.0% 0.0123 91.5)",
+          "oklch(75.0% 0.0123 91.5)",
+          "oklch(87.0% 0.0080 91.5)",
+          "oklch(95.0% 0.0031 91.5)"
+        ]
+      },
+      "battle-cyan": {
+        "role": "neutral",
+        "displayName": "Battle Cyan",
+        "canonical": "#7de5e0",
+        "tonalRamp": [
+          "oklch(15.0% 0.0325 191.4)",
+          "oklch(27.0% 0.0715 191.4)",
+          "oklch(39.0% 0.0975 191.4)",
+          "oklch(51.0% 0.0975 191.4)",
+          "oklch(63.0% 0.0975 191.4)",
+          "oklch(75.0% 0.0975 191.4)",
+          "oklch(87.0% 0.0634 191.4)",
+          "oklch(95.0% 0.0244 191.4)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Wordmark; responsive size variants remain in source."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Contextual task headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Panel headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default readable UI text."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Navigation and compact labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "command-bevel",
+        "value": "inset 0 1px #ffd9b7,inset 0 -3px #b94c442e,0 3px 6px #45514b22",
+        "purpose": "Coral action depth."
+      },
+      {
+        "name": "panel",
+        "value": "0 3px 6px #2c4e4b13",
+        "purpose": "Light task panel separation."
+      },
+      {
+        "name": "dialog",
+        "value": "0 14px 40px #163b4955",
+        "purpose": "Interrupting dialog depth."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control",
+        "value": "transform .12s, filter .12s",
+        "purpose": "Immediate enabled button response."
+      },
+      {
+        "name": "title-arrival",
+        "value": ".2s cubic-bezier(.16,1,.3,1)",
+        "purpose": "5px rise and opacity .65 to 1."
+      },
+      {
+        "name": "map-current",
+        "value": "1.8s ease-in-out infinite",
+        "purpose": "Selected node emphasis; reduced motion suppresses CSS animation."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-landscape",
+        "value": "(orientation:landscape) and (max-height:440px)"
+      },
+      {
+        "name": "expanded",
+        "value": "(min-width:1100px) and (min-height:600px)"
+      },
+      {
+        "name": "portrait-fallback",
+        "value": "(max-width:639px) and (orientation:portrait)"
+      }
+    ],
+    "provenance": {
+      "styles": [
+        "public/pulse/style.css",
+        "public/pulse/rpg.css"
+      ],
+      "surface": ".impeccable/surfaces/pulse-light-game.md",
+      "rampNote": "Synthesized OKLCH strips for panel visualization only; not additional implemented palette tokens."
+    }
+  },
+  "components": [
+    {
+      "name": "Primary command",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Coral task action with the final dark foreground.",
+      "html": "<button class=\"ds-control ds-primary\">Equipar item</button>",
+      "css": ".ds-primary{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;padding:12px 18px;background:linear-gradient(#f27b67,#e76558);color:#49251f;border:1px solid #c24e46;border-radius:11px;box-shadow:inset 0 1px #ffd9b7,inset 0 -3px #b94c442e,0 3px 6px #45514b22}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:2px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
+    },
+    {
+      "name": "Secondary command",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Cream alternate action.",
+      "html": "<button class=\"ds-control ds-secondary\">Colocar como inicial</button>",
+      "css": ".ds-secondary{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;padding:12px 18px;background:linear-gradient(#fffdf5,#eae8d6);color:#304a54;border:1px solid #b8bba7;border-radius:10px;box-shadow:inset 0 1px #fff,inset 0 -2px #2e514b12}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:2px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
+    },
+    {
+      "name": "Search field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Editable search on a light panel.",
+      "html": "<input class=\"ds-control ds-input\" aria-label=\"Buscar Pokémon\" placeholder=\"Buscar Pokémon\">",
+      "css": ".ds-input{font:16px Barlow,sans-serif;min-height:48px;padding:12px;background:#fffdf6;color:var(--ink,#263f4d);border:1px solid #9eafa9;border-radius:9px}.ds-input::placeholder{color:#637981}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:2px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
+    },
+    {
+      "name": "Type tag",
+      "kind": "chip",
+      "refersTo": "type-tag",
+      "description": "Noninteractive creature type label.",
+      "html": "<span class=\"ds-tag\">Planta</span>",
+      "css": ".ds-tag{display:inline-block;font:12px Barlow,sans-serif;padding:3px 7px;background:#e3eee5;color:#264b4b;border:1px solid #b8cec3;border-radius:6px}"
+    },
+    {
+      "name": "Hub navigation item",
+      "kind": "nav",
+      "refersTo": "navigation-item",
+      "description": "The active hub tile; routing is supplied by the app.",
+      "html": "<nav aria-label=\"Principal\"><button class=\"ds-control ds-nav\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" aria-hidden=\"true\"><path d=\"M3 10 12 3l9 7M5 9v12h5v-7h4v7h5V9\"/></svg><small>Início</small></button></nav>",
+      "css": ".ds-nav{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:100px;height:58px;padding:3px 5px;background:transparent;color:#38535f;border:1px solid transparent;border-radius:12px}.ds-nav svg{width:28px;height:28px}.ds-nav small{font-size:12px}.ds-nav[aria-current]{background:linear-gradient(#ffdfb9,#ffd19b);border-color:#d99c5a;color:#7b3c29;box-shadow:inset 0 1px #fff4cf,inset 0 -2px #d68a4426}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:2px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
+    },
+    {
+      "name": "Collection card frame",
+      "kind": "card",
+      "refersTo": "collection-card",
+      "description": "Extracted card frame and text; pixel art remains a bundled app asset and is omitted from this isolated specimen.",
+      "html": "<button class=\"ds-control ds-card\"><strong>Bulbasaur</strong><small>Nv. 5 · Na coleção</small></button>",
+      "css": ".ds-card{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;display:grid;align-content:end;gap:5px;min-height:126px;min-width:135px;padding:8px;text-align:center;background:linear-gradient(#f9f9e9,#e8efd5);border:1px solid #b6c2a2;border-radius:13px;color:#304b51;box-shadow:inset 0 1px #fff,0 3px 5px #3b4b3b20}.ds-card strong{font-size:14px;line-height:1.1}.ds-card small{font-size:11px;color:#59716b}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:2px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
+    },
+    {
+      "name": "Selected inventory slot",
+      "kind": "card",
+      "refersTo": "inventory-slot",
+      "description": "Item frame and selected state; app supplies the pixel item image.",
+      "html": "<button class=\"ds-control ds-slot\" aria-pressed=\"true\"><b>Oran Berry</b><small>× 3</small></button>",
+      "css": ".ds-slot{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:105px;height:105px;padding:8px;background:linear-gradient(#fffdf5,#ede4c8);color:var(--ink,#263f4d);border:1px solid #c1bb99;border-radius:12px;box-shadow:inset 0 1px #fff,0 3px 5px #334d4420}.ds-slot[aria-pressed=true]{border:2px solid #4eaaa1;background:linear-gradient(#faffef,#d8eee0)}.ds-slot b,.ds-slot small{font-size:12px}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:2px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
+    },
+    {
+      "name": "Task side panel",
+      "kind": "card",
+      "refersTo": "side-panel",
+      "description": "Persistent task detail without dialog interruption.",
+      "html": "<section class=\"ds-panel\"><h2>Oran Berry</h2><p>Uma vez: recupera 10 HP ao chegar à metade do HP.</p></section>",
+      "css": ".ds-panel{font:16px/1.4 Barlow,sans-serif;background:#fffbef;color:#263f4d;border:1px solid #c9c7ac;border-radius:14px;padding:16px;box-shadow:0 3px 6px #2c4e4b13}.ds-panel h2{font-size:23px;line-height:1.12;margin:0 0 8px}.ds-panel p{font-size:13px;line-height:1.4;color:#526c75;margin:0}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Light game panels around a living pixel partner",
+    "overview": "PULSE ARENA uses warm ivory panels, navy graphite text and structural frames around colorful pixel creatures and original world art. Coral commands have shallow tactile depth; cyan distinguishes selection and progress. The game remains compact and landscape, with an animated favorite leading the lobby.\n\nThis records the approved light-game replacement, superseding the old dark menu rules while preserving the graphite/cyan/coral identity, bundled Barlow typography, pixel assets and high-contrast real-time battle HUD. Authority is PRODUCT.md and `.impeccable/surfaces/pulse-light-game.md`; the pinned Pokémon: Champion captures establish composition rather than reusable promotional art. No catalog roll, QUALITY BAR card or independently verified FORM seed was recorded.",
+    "keyCharacteristics": [
+      "Warm framed task panels and shallow bevels.",
+      "Pixel creatures carry identity; world artwork carries place.",
+      "Coral actions, cyan selection and explicit text states.",
+      "Landscape workspaces with internal scrolling and persistent navigation."
+    ],
+    "rules": [
+      {
+        "name": "The Action and Selection Rule",
+        "body": "Use coral for primary commands and cyan for selected inventory, formation and progress; keep state text alongside color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Pixel Subject Rule",
+        "body": "Preserve pixel rendering on creature and item assets; UI labels remain normal text.",
+        "section": "typography"
+      },
+      {
+        "name": "The Task Workspace Rule",
+        "body": "Keep partner, formation, inventory, shop and invocation as separate tasks, with contextual Back and retained selection when returning.",
+        "section": "layout"
+      },
+      {
+        "name": "The Combat Contrast Rule",
+        "body": "Keep the dark real-time HUD scoped to battle; light menu tokens must not reduce its control contrast.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the warm light panels and graphite structure of the approved replacement.",
+      "Do show owned, locked, level, quantity and eligibility states in text.",
+      "Do preserve pixel creature animation, with reduced-motion alternatives for interface transitions and reveals.",
+      "Do keep primary commands reachable while task content scrolls."
+    ],
+    "donts": [
+      "Don't restore the superseded dark menu system across management screens.",
+      "Don't copy promotional character art, phone frames or monetization clutter from reference screenshots.",
+      "Don't imply that formation position grants a front/back combat bonus or that acquisition rarity increases stats.",
+      "Don't claim native performance or complete device coverage from browser screenshots."
+    ]
+  }
+}
