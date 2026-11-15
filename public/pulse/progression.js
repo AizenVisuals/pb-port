@@ -56,12 +56,19 @@ const unique=items=>new Set(items).size===items.length;
 const utcDay=timestamp=>new Date(timestamp).toISOString().slice(0,10);
 const success=(save,extra={})=>({ok:true,...extra,save:freeze(clone(save))});
 const failure=error=>({ok:false,error});
-const defaultSave=timestamp=>({version:1,trainerName:'Treinador',trainerKey:'red',trainer:{xp:0},coins:600,diamonds:0,tickets:0,starterTicketsClaimed:false,shinies:[],shinyEquipped:[],unlocked:[...STARTERS],favorite:'marshadow',team:{mons:STARTERS.slice(0,3),moves:{},gimmick:null},records:{battles:0,wins:0,losses:0},gacha:{pulls:0,pity:0},dailyClaimedAt:null,claimedBattles:[],lastRewardAt:null,createdAt:timestamp,updatedAt:timestamp});
+// Conta online: pendingMatches = resultados ranqueados contra bot que o
+// servidor ainda não recebeu (offline-first, fase 2b); ranking = último
+// standing do servidor, para a tela de Ranking abrir mesmo offline.
+const defaultOnline=()=>({provider:null,team:null,userId:null,syncedAt:null,pendingSync:false,pendingMatches:[],ranking:null});
+const validPendingMatch=m=>m&&typeof m==='object'&&!Array.isArray(m)&&['win','loss'].includes(m.result)&&(m.opponent_id===null||typeof m.opponent_id==='string'&&m.opponent_id.length<=80)&&typeof m.vs_bot==='boolean'&&typeof m.battleId==='string'&&m.battleId.length>0&&m.battleId.length<=160&&integer(m.createdAt);
+const validRanking=r=>r===null||(r&&typeof r==='object'&&!Array.isArray(r)&&typeof r.tier==='string'&&r.tier.length<=60&&integer(r.points,0)&&integer(r.cachedAt));
+const defaultSave=timestamp=>({version:1,trainerName:'Treinador',trainerKey:'red',trainer:{xp:0},coins:600,diamonds:0,tickets:0,starterTicketsClaimed:false,shinies:[],shinyEquipped:[],unlocked:[...STARTERS],favorite:'marshadow',team:{mons:STARTERS.slice(0,3),moves:{},gimmick:null},records:{battles:0,wins:0,losses:0},gacha:{pulls:0,pity:0},dailyClaimedAt:null,claimedBattles:[],lastRewardAt:null,createdAt:timestamp,updatedAt:timestamp,online:defaultOnline()});
 function validateSave(value){
  if(value?.journey)validateJourney(value.journey);
- if(value?.version===1){value={...value,diamonds:value.diamonds??0,tickets:value.tickets??0,starterTicketsClaimed:value.starterTicketsClaimed??false,shinies:value.shinies??[],shinyEquipped:value.shinyEquipped??[],trainer:value.trainer??{xp:0},trainerKey:value.trainerKey??'red'};}
+ if(value?.version===1){const priorOnline=value.online&&typeof value.online==='object'&&!Array.isArray(value.online)?value.online:{};value={...value,diamonds:value.diamonds??0,tickets:value.tickets??0,starterTicketsClaimed:value.starterTicketsClaimed??false,shinies:value.shinies??[],shinyEquipped:value.shinyEquipped??[],trainer:value.trainer??{xp:0},trainerKey:value.trainerKey??'red',online:{provider:priorOnline.provider??null,team:priorOnline.team??null,userId:priorOnline.userId??null,syncedAt:priorOnline.syncedAt??null,pendingSync:priorOnline.pendingSync??false,pendingMatches:Array.isArray(priorOnline.pendingMatches)?priorOnline.pendingMatches.filter(validPendingMatch):[],ranking:validRanking(priorOnline.ranking??null)?(priorOnline.ranking??null):null}};}
  validateGrowth(value);
  if(!value||value.version!==1)throw Error('Versão de progresso não suportada.');
+ if(!value.online||typeof value.online!=='object'||Array.isArray(value.online)||![null,'guest','google','local'].includes(value.online.provider)||!(value.online.team===null||['valor','instinct','mystic'].includes(value.online.team))||!(value.online.userId===null||typeof value.online.userId==='string'&&value.online.userId.length<=80)||!(value.online.syncedAt===null||integer(value.online.syncedAt))||typeof value.online.pendingSync!=='boolean'||!Array.isArray(value.online.pendingMatches)||!value.online.pendingMatches.every(validPendingMatch)||!validRanking(value.online.ranking))throw Error('Conta online inválida.');
  if(typeof value.trainerName!=='string'||!validName(value.trainerName))throw Error('Nome de treinador inválido.');
  if(!TRAINER_KEYS.has(value.trainerKey))throw Error('Treinador inválido.');
  if(!value.trainer||!integer(value.trainer.xp,0,1000000))throw Error('Experiência de treinador inválida.');
@@ -218,6 +225,51 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
   status(){return freeze({memoryOnly,recovered,message});},
   setTrainerName(name){if(!validName(name))return failure('Use de 2 a 16 letras, números ou espaços.');save.trainerName=name.trim();persist();return success(save);},
   setTrainerKey(key){if(!TRAINER_KEYS.has(key))return failure('Escolha um treinador da lista.');save.trainerKey=key;persist();return success(save);},
+  // Time do Pokémon GO (Valor / Instinct / Mystic). null = sem time.
+  setGoTeam(team){if(team!==null&&!['valor','instinct','mystic'].includes(team))return failure('Escolha um time: Valor, Instinct ou Mystic.');save.online??=defaultOnline();save.online.team=team;persist();return success(save);},
+  // Conta online (provider 'guest' | 'google' | 'local', sem senha nem token aqui:
+  // o token de sessão vive em localStorage, fora do save exportável).
+  setOnlineAccount(patch={}){
+   if(!patch||typeof patch!=='object'||Array.isArray(patch))return failure('Conta online inválida.');
+   const next={...defaultOnline(),...(save.online??{})};
+   if('provider' in patch){if(![null,'guest','google','local'].includes(patch.provider))return failure('Conta online inválida.');next.provider=patch.provider;}
+   if('team' in patch){if(!(patch.team===null||['valor','instinct','mystic'].includes(patch.team)))return failure('Escolha um time: Valor, Instinct ou Mystic.');next.team=patch.team;}
+   if('userId' in patch){if(!(patch.userId===null||typeof patch.userId==='string'&&patch.userId.length<=80))return failure('Conta online inválida.');next.userId=patch.userId;}
+   if('syncedAt' in patch){if(!(patch.syncedAt===null||integer(patch.syncedAt)))return failure('Conta online inválida.');next.syncedAt=patch.syncedAt;}
+   if('pendingSync' in patch){if(typeof patch.pendingSync!=='boolean')return failure('Conta online inválida.');next.pendingSync=patch.pendingSync;}
+   if('ranking' in patch){if(!validRanking(patch.ranking))return failure('Conta online inválida.');next.ranking=patch.ranking;}
+   save.online=next;persist();return success(save);
+  },
+  // Resultado ranqueado aguardando o servidor (offline-first). Deduplicado
+  // por battleId; no máximo 20 na fila (o mais antigo sai primeiro).
+  queuePendingMatch(match){
+   if(!validPendingMatch(match))return failure('Resultado de batalha inválido.');
+   save.online??=defaultOnline();
+   save.online.pendingMatches??=[];
+   if(save.online.pendingMatches.some(m=>m.battleId===match.battleId))return success(save,{duplicate:true});
+   save.online.pendingMatches.push({...match});
+   while(save.online.pendingMatches.length>20)save.online.pendingMatches.shift();
+   persist();return success(save);
+  },
+  clearPendingMatches(battleIds){
+   save.online??=defaultOnline();
+   save.online.pendingMatches??=[];
+   const before=save.online.pendingMatches.length;
+   if(battleIds===undefined)save.online.pendingMatches=[];
+   else if(Array.isArray(battleIds))save.online.pendingMatches=save.online.pendingMatches.filter(m=>!battleIds.includes(m.battleId));
+   else return failure('Resultado de batalha inválido.');
+   persist();return success(save,{removed:before-save.online.pendingMatches.length});
+  },
+  // Guarda o último standing do servidor para a tela de Ranking offline.
+  // Só os campos conhecidos entram no save; o resto é exibição do servidor.
+  setCachedRanking(standing){
+   if(!standing||typeof standing!=='object'||Array.isArray(standing)||typeof standing.tier!=='string'||!integer(standing.points,0))return failure('Ranking inválido.');
+   const num=(v,fallback=null)=>Number.isFinite(v)?v:fallback;
+   const str=(v,fallback=null)=>typeof v==='string'?v:fallback;
+   const ranking={tier:standing.tier,tier_name:str(standing.tier_name),rank:num(standing.rank),points:standing.points,lo:num(standing.lo),hi:num(standing.hi),next:str(standing.next),floor:num(standing.floor),wins:num(standing.wins,0),losses:num(standing.losses,0),games:num(standing.games,0),streak:num(standing.streak,0),season:str(standing.season),ladder_rank:num(standing.ladder_rank),cachedAt:time()};
+   save.online??=defaultOnline();
+   save.online.ranking=ranking;persist();return success(save,{ranking});
+  },
   setFavorite(mon){if(!save.unlocked.includes(mon)||!entry(mon))return failure('Desbloqueie esse Pokémon primeiro.');save.favorite=mon;persist();return success(save);},
   setTeam(team){
    const candidate=Array.isArray(team)?{mons:team,moves:save.team.moves,gimmick:null}:team;
@@ -287,6 +339,8 @@ export const getSave=(...args)=>local.getSave(...args);
 export const status=(...args)=>local.status(...args);
 export const setTrainerName=(...args)=>local.setTrainerName(...args);
 export const setTrainerKey=(...args)=>local.setTrainerKey(...args);
+export const setGoTeam=(...args)=>local.setGoTeam(...args);
+export const setOnlineAccount=(...args)=>local.setOnlineAccount(...args);
 export const setFavorite=(...args)=>local.setFavorite(...args);
 export const setTeam=(...args)=>local.setTeam(...args);
 export const setMoves=(...args)=>local.setMoves(...args);

@@ -1,0 +1,25 @@
+2026-11-15T19:42:56.961Z OPTIONS /api/auth/guest 200 5ms
+2026-11-15T19:42:56.977Z POST /api/auth/guest 201 12ms
+2026-11-15T19:42:57.443Z OPTIONS /api/friends/heartbeat 200 1ms
+2026-11-15T19:42:57.448Z POST /api/friends/heartbeat 200 3ms
+2026-11-15T19:42:57.982Z OPTIONS /api/arena/rotation 200 0ms
+2026-11-15T19:42:57.991Z GET /api/arena/rotation 200 6ms
+2026-11-15T19:42:57.993Z OPTIONS /api/arena/queue 200 1ms
+2026-11-15T19:42:57.999Z GET /api/arena/queue 200 2ms
+2026-11-15T19:42:58.639Z OPTIONS /api/auth/guest 200 1ms
+2026-11-15T19:42:58.645Z POST /api/auth/guest 201 4ms
+2026-11-15T19:42:59.019Z OPTIONS /api/friends/heartbeat 200 0ms
+2026-11-15T19:42:59.022Z POST /api/friends/heartbeat 200 1ms
+2026-11-15T19:42:59.425Z OPTIONS /api/arena/rotation 200 0ms
+2026-11-15T19:42:59.426Z OPTIONS /api/arena/queue 200 0ms
+2026-11-15T19:42:59.430Z GET /api/arena/rotation 200 1ms
+2026-11-15T19:42:59.432Z GET /api/arena/queue 200 1ms
+2026-11-15T19:42:59.991Z POST /api/arena/queue 200 4ms
+2026-11-15T19:43:00.006Z GET /api/arena/queue 200 2ms
+2026-11-15T19:43:00.058Z POST /api/arena/queue 200 4ms
+2026-11-15T19:43:02.034Z GET /api/arena/queue 200 1ms
+2026-11-15T19:43:25.116Z OPTIONS /api/arena/rotation 200 1ms
+2026-11-15T19:43:25.116Z OPTIONS /api/arena/queue 200 0ms
+2026-11-15T19:43:25.120Z GET /api/arena/rotation 200 2ms
+2026-11-15T19:43:25.123Z GET /api/arena/queue 200 2ms
+PASS complete app Arena flow: selection -> queue -> PvP both sides -> confirmed result -> return; campaign XP/items/currencies unchanged; no page errors

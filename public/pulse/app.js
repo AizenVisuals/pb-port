@@ -1,7 +1,8 @@
+import {mountArena} from './arena-ui.js';
 import {bindGamepad} from './gamepad.js';
 import {createManagementUI} from './management-ui.js';
 import {ITEMS,STONES,EVOLUTIONS,levelOf,xpAt,moveRequirement,specialPool,displayMaxHp} from './growth.js';
-import {mountAccount} from './account.js';
+import {mountAccount, accountError} from './account.js';
 import {bindBattleControls} from './controls.js';
 import {installAudioControls,setMenuAmbient,rewardSound,playPulseSound} from './ui-audio.js';
 import {animatePartner} from './sprites.js';
@@ -9,6 +10,7 @@ import {SUMMON_BANNERS,isSummonable} from './banners.js';
 import {ALL_STAGES} from './campaign.js';
 import { BattleNarrator } from "./battle-log.js";
 import { createProgression, ECONOMY, TRAINERS, resolveTrainerKey, trainerFace, trainerLabel } from "./progression.js";
+import { createOnlineClient, needsLogin, GO_TEAMS, goTeamName, onlineErrorMessage, friendRequestErrorMessage, rankedProgress, localizeTier } from "./online.js";
 import { icon } from "./icons.js";
 const $ = (id) => document.getElementById(id),
   all = (sel) => [...document.querySelectorAll(sel)];
@@ -145,6 +147,11 @@ const effectClass = (eff) =>
         ? "eff-super"
         : "eff-weak";
 const p = createProgression({profileMode:"journey"});
+// Cliente do servidor online (pulse-online). Sessão em localStorage, fora do save.
+const online = createOnlineClient({});
+let account = null,
+  loginScreenActive = false,
+  pendingTeam = null;
 let management,routeHistory=[];
 let catalog = [],
   shiny = {},
@@ -161,7 +168,14 @@ let catalog = [],
   activeStage=null,
   wildBattle=false,
   selectedBanner="route",
-  stopBannerSprite=null;
+  stopBannerSprite=null,
+  // Online fase 2b: caches das telas de Amigos/Ranking (o servidor é a fonte;
+  // o save guarda só o último standing e os resultados pendentes).
+  friendsCache=null,friendsError=null,friendsLoading=false,
+  rankingCache=null,ladderCache=null,rankingHistory=null,rankingError=null,rankingLoading=false,rankingStale=false,
+  pendingRanked=null,pendingFriendBattle=null,
+  battleOpponentLabel=null,
+  heartbeatTimer=0,flushingMatches=false;
 const reducedMotion = () =>
   matchMedia("(prefers-reduced-motion: reduce)").matches;
 function currencyPulse(id, value) {
@@ -233,6 +247,8 @@ function navigate(next,fromBack=false) {
   if(next==="summon")drawBanner();
   if(next==="campaign")renderCampaign();
   if (next === "home") drawHero();
+  if(next==="friends")loadFriends();
+  if(next==="rankings")loadRankings();
 }
 function refresh() {
   catalog = p.getCatalog();
@@ -247,7 +263,8 @@ function refresh() {
     if (trainerFaceEl.getAttribute("src") !== facePath) trainerFaceEl.src = facePath;
     trainerFaceEl.alt = `Treinador ${trainerLabel(s.trainerKey)}`;
   }
-  $("account-summary").textContent = s.trainer?`Treinador Nv. ${levelOf(s.trainer.xp||0)} · no aparelho`:`Seu progresso, no aparelho`;
+  const onlineState = s.online;
+  $("account-summary").textContent = onlineState?.provider === "google" ? "Conta Google conectada" : onlineState?.provider === "guest" ? "Conta de convidado · online" : onlineState?.provider === "local" ? "Conta local · sincroniza depois" : s.trainer?`Treinador Nv. ${levelOf(s.trainer.xp||0)} · no aparelho`:`Seu progresso, no aparelho`;
   $("coin-balance").textContent = s.coins.toLocaleString("pt-BR");
   $("diamond-balance").textContent = s.diamonds.toLocaleString("pt-BR");
   currencyPulse("coin-balance", s.coins);
@@ -338,6 +355,8 @@ function refresh() {
   if(route==="partner")management?.renderPartner();
   if(route==="summon")management?.renderTechniques();
   if(route==="bag")renderBag();
+  if(route==="friends")renderFriends();
+  if(route==="rankings")renderRankings();
 }
 function renderTeam(){management?.renderTeam();}
 function renderCollection() {
@@ -591,11 +610,38 @@ function drawTechnique(){
  rewardSound();$('pull-content').innerHTML=`<div class="dialog-heading"><h2>TM obtida!</h2></div><div class="technique-reveal">${portrait(mon(key))}<h2>${esc(result.move.name)}</h2><p>${esc(mon(key).name)} é compatível com esta TM. Use o item na mochila para ensinar o golpe.</p><span class="type-list">${types[result.move.type]}</span></div><button id="technique-equip" class="primary-button">Abrir mochila</button><button id="technique-close" class="text-button">Fechar</button>`;
  $('pull-dialog').onclose=()=>refresh();$('technique-equip').onclick=()=>{$('pull-dialog').close();navigate('bag');};$('technique-close').onclick=()=>$('pull-dialog').close();showDialog('pull-dialog');
 }
+let arenaUI, arenaSocket=null, activeArena=null;
+async function startArenaMatch(match){
+  activeArena=match;activeStage=null;wildBattle=false;pendingRanked=null;pendingFriendBattle=null;
+  closeDialogs();battle?.destroy();setMenuAmbient(false);narrator=new BattleNarrator(key=>mon(key)?.name||key);clearBattleLog();
+  battleOpponentLabel=match.opponent.nick;
+  $("app").hidden=true;$("battle-screen").hidden=false;$("battle-loading").hidden=false;
+  await window.PulseNative?.setBattleMode(true);
+  try{
+    const {ArenaBattle}=await import('./arena-battle.js');
+    const runtime=battle=new ArenaBattle({canvas:$("battle-canvas"),onUpdate:updateBattle,onEnd:endBattle,
+      send:msg=>{if(arenaSocket?.readyState===1)arenaSocket.send(JSON.stringify(msg));},
+      onError:error=>{exitBattle();notify(error.message);}});
+    arenaSocket=await online.openArenaSocket({onMessage:msg=>runtime.receive(msg),onClose:()=>runtime.disconnected()});
+    const loaded=await runtime.connectMatch(match,save().trainerName,save().trainerKey);
+    if(!loaded)return;
+    arenaSocket.send(JSON.stringify({t:'ready',match_id:match.match_id}));
+  }catch(error){exitBattle();notify(error.message);}
+}
+function endArenaBattle(result){
+  const server=battle?.serverResult;
+  $("pause-dialog").close();
+  $("result-content").innerHTML=`<div class="result-symbol">${icon(result.won?'star':'shield')}</div><h2>${result.won?'Vitória na Arena!':'Batalha encerrada'}</h2><p>${result.reason==='forfeit'?'Partida decidida por desistência ou desconexão.':'Resultado confirmado pelo servidor.'}</p><div class="result-coins">${server?.delta>0?'+':''}${server?.delta??0} pontos de Arena</div><p>${server?.points_after??0} pontos na temporada · a campanha e seus itens foram preservados.</p><button id="arena-result-back" class="primary-button">Voltar à Arena</button>`;
+  showDialog('result-dialog');$('arena-result-back').onclick=()=>{exitBattle();arenaUI.open();};
+}
 async function startBattle(options={}) {
   setMenuAmbient(false);
   narrator = new BattleNarrator((key) => mon(key)?.name || key);
   clearBattleLog();
   if(options?.type)options={};
+  // Nome do adversário na placa da batalha (desafio de amigo / ranqueado).
+  // Treino comum e fases não passam nome: a placa fica sem a linha.
+  battleOpponentLabel=typeof options?.opponentName==="string"&&options.opponentName.trim()?options.opponentName.trim().slice(0,16):null;
   closeDialogs();
   battle?.destroy();
   $("app").hidden = true;
@@ -630,13 +676,30 @@ async function startBattle(options={}) {
 }
 function updateBattle(s) {
   snapshot = s;
+  document.querySelector('.battle-side-label').textContent = s.networked ? `VOCÊ · lado ${s.playerSide===1?'direito':'esquerdo'}${s.state==='waiting'?' · aguardando oponente':s.state==='confirming'?' · confirmando resultado':''}` : 'VOCÊ · lado esquerdo';
+  $('pause-dialog').querySelector('h2').textContent = s.networked ? 'Partida online em andamento' : 'Batalha pausada';
+  $('pause-dialog').querySelector('p').textContent = s.networked ? 'O adversário continua jogando. Volte ao combate ou desista.' : 'Seu tempo também está pausado.';
+  if(s.onlineMenu&&!$('pause-dialog').open)showDialog('pause-dialog');
   $("battle-loading").hidden = s.state !== "loading";
+  const trainerEl=$("opponent-trainer");
+  if(trainerEl){
+    trainerEl.hidden=!battleOpponentLabel;
+    if(battleOpponentLabel)trainerEl.textContent=battleOpponentLabel;
+  }
   if (!s.player) return;
+  $("player-trainer").textContent = save().trainerName;
+  for (const action of s.newActions || []) {
+    const el = $(action.side === 0 ? "player-last-move" : "opponent-last-move");
+    if (el) { el.textContent = action.name; el.dataset.frame = String(s.frame); }
+  }
+  for (const side of ["player", "opponent"]) {
+    const el = $(side + "-last-move");
+    if (el && s.frame - Number(el.dataset.frame || 0) > 180) el.textContent = "";
+  }
   // Narra o que acabou de acontecer (stage, status, Protect) no log do HUD.
   if (narrator) pushBattleMessages(narrator.feed(s));
   $("battle-clock").textContent =
     `${Math.floor(s.secondsLeft / 60)}:${String(Math.floor(s.secondsLeft % 60)).padStart(2, "0")}`;
-  const scale = save().growth ? 9 : 1;
   const statusOf = (a) => {
     if (a.status) return STATUS_META[a.status];
     if (a.frozen) return STATUS_META.frz;
@@ -655,9 +718,16 @@ function updateBattle(s) {
       .join("");
   };
   for (const side of ["player", "opponent"]) {
-    const a = s[side];
+    const a = s[side], scale = a.hpScale || 1;
     $(side + "-name").textContent = a.name;
     $(side + "-level").textContent = `Nv. ${a.level}`;
+    $(side + "-percent").textContent = `${Math.ceil(a.hpRatio * 100)}%`;
+    const typesEl = $(side + "-types");
+    const typeKey = (a.types || []).join("|");
+    if (typesEl.dataset.key !== typeKey) {
+      typesEl.dataset.key = typeKey;
+      typesEl.innerHTML = (a.types || []).map(t => `<span style="--type-color:${TYPE_COLORS[t] || '#72858c'}">${typeIcon(t, 12)}${esc(types[t] || t)}</span>`).join("");
+    }
     $(side + "-hp").textContent =
       `${Math.ceil(a.hp / scale)} / ${Math.ceil(a.maxHp / scale)}`;
     const bar = $(side + "-hp-bar");
@@ -709,11 +779,9 @@ function updateBattle(s) {
   // quando há espaço (menos de 4 golpes); com 4 golpes, fica no botão
   // redondo da área de especiais. CAPTURAR e MEGA/EVOLUIR são ações
   // independentes — uma pode estar no grid e a outra na área de especiais.
-  const gridSpecial = s.moves.length < 4
-    ? (s.canEvolve ? "evolve" : s.canMega ? "mega" : wildBattle ? "capture" : null)
-    : null;
-  $("battle-capture").hidden = !wildBattle || gridSpecial === "capture";
-  $("battle-mega").hidden = gridSpecial === "mega" || gridSpecial === "evolve" || (!s.canMega && !s.canEvolve);
+  const gridSpecial = null;
+  $("battle-capture").hidden = !wildBattle;
+  $("battle-mega").hidden = !s.canMega && !s.canEvolve;
   $("battle-mega").textContent = s.canEvolve ? "EVOLUIR" : "MEGA";
   const prompt = s.evolutionPrompt;
   $("battle-evolve").hidden = !prompt;
@@ -794,24 +862,41 @@ function updateBattle(s) {
     showDialog("pause-dialog");
 }
 function endBattle(result) {
+  if(activeArena){endArenaBattle(result);return;}
   if(wildBattle&&result.won){wildBattle=false;p.resolveEncounter('defeated');const active=save().journey.active;runTrainerStage(ALL_STAGES.find(s=>s.id===active.stage),active.id);return;}
   if(wildBattle&&!result.won&&save().journey?.active?.encounter?.state==='pending')p.resolveEncounter('fled');
   wildBattle=false;
+  // Batalha ranqueada ou desafio de amigo: consome o contexto aqui — a
+  // tela de resultado mostra o delta de pontos e o "Jogar novamente"
+  // repete o MESMO modo, não um treino comum.
+  const rankedBattle=pendingRanked;pendingRanked=null;
+  const friendBattle=pendingFriendBattle;pendingFriendBattle=null;
   $("pause-dialog").close();
   const reward = activeStage ? (result.reason==="surrender" ? p.abandonStage() : p.completeStage(result)) : p.recordBattle(result);
   if(snapshot?.evolutionPrompt)p.deferAutoEvolution(snapshot.evolutionPrompt.from,snapshot.evolutionPrompt.level);
   refresh();
+  const rankedLine=rankedBattle?`<p id="ranked-result-line" class="ranked-result-line">Registrando resultado ranqueado…</p>`:"";
+  const friendLine=friendBattle?`<p class="support-copy">Treino contra o bot com o nome de ${esc(friendBattle.friend.nick)} — o time real dele ainda não é sincronizado.</p>`:"";
+  const surrenderRanked=rankedBattle&&result.reason==="surrender"?`<p class="support-copy">Desistência conta como derrota no ranqueado.</p>`:"";
   $("result-content").innerHTML =
-    `<div class="result-symbol">${icon(result.won ? "star" : "shield")}</div><h2>${result.won ? "Vitória na arena!" : result.reason === "surrender" ? "Batalha encerrada" : "O próximo duelo é seu"}</h2><p>${result.reason === "surrender" ? "Desistências não concedem moedas." : "Sua equipe volta pronta para uma nova estratégia."}</p><div class="result-coins">${icon("coin")} +${reward.coins || 0}</div>${reward.trainerXp?`<p>+${reward.trainerXp.xp} XP de treinador${reward.trainerXp.to>reward.trainerXp.from?` · Você subiu para o nível ${reward.trainerXp.to}!`:""}</p>`:""}${result.koXp?`<p>+${result.koXp} XP de nocaute na batalha</p>`:""}${reward.tickets?`<p>+${reward.tickets} ticket${reward.tickets>1?"s":""} de técnica</p>`:""}${reward.gachaTickets?`<p>+${reward.gachaTickets} ticket de invocação</p>`:""}<button id="result-lobby" class="primary-button">Voltar ao lobby</button><button id="result-retry" class="secondary-button">Jogar novamente</button>`;
+    `<div class="result-symbol">${icon(result.won ? "star" : "shield")}</div><h2>${result.won ? "Vitória na arena!" : result.reason === "surrender" ? "Batalha encerrada" : "O próximo duelo é seu"}</h2><p>${result.reason === "surrender" ? "Desistências não concedem moedas." : "Sua equipe volta pronta para uma nova estratégia."}</p><div class="result-coins">${icon("coin")} +${reward.coins || 0}</div>${reward.trainerXp?`<p>+${reward.trainerXp.xp} XP de treinador${reward.trainerXp.to>reward.trainerXp.from?` · Você subiu para o nível ${reward.trainerXp.to}!`:""}</p>`:""}${result.koXp?`<p>+${result.koXp} XP de nocaute na batalha</p>`:""}${reward.tickets?`<p>+${reward.tickets} ticket${reward.tickets>1?"s":""} de técnica</p>`:""}${reward.gachaTickets?`<p>+${reward.gachaTickets} ticket de invocação</p>`:""}${rankedLine}${friendLine}${surrenderRanked}<button id="result-lobby" class="primary-button">Voltar ao lobby</button><button id="result-retry" class="secondary-button">Jogar novamente</button>`;
   showDialog("result-dialog");
   $("result-lobby").onclick = exitBattle;
   const retryStage=activeStage;
-  $("result-retry").onclick = ()=>retryStage?launchStage(retryStage):startBattle();
+  $("result-retry").onclick = ()=>retryStage?launchStage(retryStage):rankedBattle?startRankedBattle():friendBattle?challengeFriend(friendBattle.friend):startBattle();
+  if(rankedBattle)submitRankedResult(rankedBattle,result);
 }
 function exitBattle() {
+  if(arenaSocket){const socket=arenaSocket;arenaSocket=null;socket.onclose=null;socket.close();}
+  activeArena=null;
   if(activeStage&&save().journey?.active)p.abandonStage();
   activeStage=null;
   wildBattle=false;
+  pendingRanked=null;
+  pendingFriendBattle=null;
+  battleOpponentLabel=null;
+  const trainerEl=$("opponent-trainer");
+  if(trainerEl){trainerEl.hidden=true;trainerEl.textContent="";}
   narrator = null;
   clearBattleLog();
   closeDialogs();
@@ -890,7 +975,419 @@ async function drawBanner(){
  const stop=await animatePartner($('summon-partner'),mon(key),{reduced:reducedMotion()});
  if(token!==selectedBanner||route!=='summon')stop();else stopBannerSprite=stop;
 }
+// ---- Login online (fase 2a) ----
+function buildTrainerPicker(box, selected, onSelect) {
+  if (!box) return;
+  box.replaceChildren(
+    ...TRAINERS.map((t) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "trainer-option";
+      b.setAttribute("aria-pressed", String(t.key === selected));
+      b.dataset.trainerKey = t.key;
+      b.innerHTML = `<img src="/faces/${t.key}.png" alt=""><span>${esc(t.name)}</span>`;
+      b.onclick = () => {
+        box.querySelectorAll(".trainer-option").forEach((el) => el.setAttribute("aria-pressed", String(el === b)));
+        onSelect(t.key);
+      };
+      return b;
+    }),
+  );
+}
+function renderTeamPicker(box, selected, {allowNone=false, onSelect}={}) {
+  if (!box) return;
+  const options = [...GO_TEAMS.map((t) => ({id:t.id, name:t.name, desc:t.short, color:t.color})), ...(allowNone ? [{id:null, name:"Sem time", desc:"Sem time por enquanto", color:"#8fa8b3", none:true}] : [])];
+  box.replaceChildren(
+    ...options.map((opt) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "team-option" + (opt.none ? " team-none" : "");
+      b.style.setProperty("--team", opt.color);
+      b.setAttribute("aria-pressed", String(opt.id === selected));
+      b.dataset.team = opt.id ?? "";
+      b.innerHTML = `<b>${esc(opt.name)}</b><small>${esc(opt.desc)}</small>`;
+      b.onclick = () => {
+        box.querySelectorAll(".team-option").forEach((el) => el.setAttribute("aria-pressed", String(el === b)));
+        onSelect(opt.id);
+      };
+      return b;
+    }),
+  );
+}
+// Sincronização do perfil em segundo plano. Nunca trava o jogo: sem sessão
+// ou sem servidor, só marca pendente e tenta na próxima abertura.
+async function syncOnlineProfile({force=false}={}) {
+  const s = save();
+  const state = s.online;
+  if (!state) return;
+  if (!online.hasSession()) {
+    if (state.provider !== "local") return;
+    const result = await online.guestSignIn({trainer_key: s.trainerKey, nick: s.trainerName, team: state.team});
+    if (result.ok) p.setOnlineAccount({provider:"guest", userId:result.session.userId, syncedAt:Date.now(), pendingSync:false});
+    return;
+  }
+  if (!force && !state.pendingSync) return;
+  const result = await online.updateProfile({trainer_key: s.trainerKey, nick: s.trainerName, team: state.team});
+  if (result.ok) p.setOnlineAccount({syncedAt: Date.now(), pendingSync:false});
+  else if (result.status === 401) p.setOnlineAccount({provider:"local", userId:null, pendingSync:true});
+  else if (result.offline) p.setOnlineAccount({pendingSync:true});
+}
+// ---- Amigos + Ranking (fase 2b) ----
+// Telas de Amigos e Ranking leem do servidor quando há sessão; sem servidor
+// mostram o último dado salvo e nunca travam o jogo. Batalha ranqueada e
+// desafio de amigo reaproveitam o motor local: o adversário é um bot —
+// no desafio, só o NOME é o do amigo (o time real dele não é sincronizado).
+function lastSeenText(value){
+  if(value===undefined||value===null)return "";
+  const ms=typeof value==="number"?value:Date.parse(value);
+  if(!Number.isFinite(ms))return "";
+  return new Date(ms).toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"});
+}
+function currentStanding(){return rankingCache||save().online?.ranking||null;}
+function friendRow(f,mode){
+  const team=GO_TEAMS.find(t=>t.id===f.team);
+  const teamLabel=team?team.name:"Sem time";
+  const teamColor=team?team.color:"#8fa8b3";
+  const seen=f.online?"Online agora":(f.last_seen_at?`Offline · ${lastSeenText(f.last_seen_at)}`:"Offline");
+  const actions=mode==="incoming"
+    ?`<button type="button" class="secondary-button friend-action" data-friend-accept="${esc(f.user_id)}">Aceitar</button><button type="button" class="text-button friend-action" data-friend-decline="${esc(f.user_id)}">Recusar</button>`
+    :mode==="outgoing"
+    ?`<span class="friend-pending">Aguardando…</span>`
+    :`<button type="button" class="secondary-button friend-action" data-friend-challenge="${esc(f.user_id)}">Desafiar</button><button type="button" class="text-button friend-action" data-friend-remove="${esc(f.user_id)}">Remover</button>`;
+  return `<div class="friend-row"><img src="${esc(trainerFace(f.trainer_key))}" alt=""><span class="online-dot${f.online?" on":""}" aria-hidden="true"></span><div class="friend-main"><b>${esc(f.nick||"Treinador")}</b><small><span class="team-chip" style="--team:${teamColor}">${esc(teamLabel)}</span> · ${esc(trainerLabel(f.trainer_key))}</small></div><span class="friend-status">${esc(seen)}</span><div class="friend-actions">${actions}</div></div>`;
+}
+function renderFriends(){
+  const listEl=$("friends-list"),inEl=$("friends-incoming"),outEl=$("friends-outgoing"),statusEl=$("friends-status");
+  if(!listEl||!inEl||!outEl)return;
+  if(statusEl){
+    statusEl.textContent=!online.hasSession()?"Entre com uma conta (Google ou convidado) para ver seus amigos."
+      :friendsLoading?"Carregando amigos…"
+      :friendsError==="not_implemented"?"Amizades ainda não estão ativas no servidor. O jogo continua offline."
+      :friendsError==="offline"?"Sem conexão com o servidor — tente atualizar depois."
+      :friendsError==="error"?"Não foi possível carregar os amigos."
+      :"";
+  }
+  const empty=(msg)=>`<p class="support-copy">${msg}</p>`;
+  if(!friendsCache){
+    const msg=!online.hasSession()?"Faça login para ver seus amigos.":friendsLoading?"Carregando amigos…":"Nenhum dado carregado ainda.";
+    inEl.innerHTML=outEl.innerHTML=listEl.innerHTML=empty(msg);
+    return;
+  }
+  const incoming=friendsCache.incoming||[],outgoing=friendsCache.outgoing||[],friends=friendsCache.friends||[];
+  inEl.innerHTML=incoming.length?incoming.map(f=>friendRow(f,"incoming")).join(""):empty("Nenhum convite recebido.");
+  outEl.innerHTML=outgoing.length?outgoing.map(f=>friendRow(f,"outgoing")).join(""):empty("Nenhum convite enviado.");
+  listEl.innerHTML=friends.length?friends.map(f=>friendRow(f,"friend")).join(""):empty("Você ainda não tem amigos. Adicione alguém pelo apelido.");
+}
+async function loadFriends({force=false}={}){
+  if(!online.hasSession()){friendsCache=null;friendsError="login";if(route==="friends")renderFriends();return;}
+  if(friendsLoading)return;
+  if(!force&&friendsCache)return;
+  friendsLoading=true;friendsError=null;
+  if(route==="friends")renderFriends();
+  online.sendHeartbeat().catch(()=>{});
+  const result=await online.getFriends();
+  friendsLoading=false;
+  if(result.ok){friendsCache=result.data;friendsError=null;}
+  else if(result.status===501||result.error==="not_implemented"){friendsError="not_implemented";}
+  else if(result.offline){friendsError="offline";}
+  else if(result.status===401||result.error==="no_session"){friendsCache=null;friendsError="login";}
+  else{friendsError="error";}
+  if(route==="friends")renderFriends();
+}
+async function sendFriendRequestFromForm(){
+  const input=$("friends-add-nick");
+  const nick=input?.value.trim()||"";
+  if(!nick){notify("Digite o apelido do treinador.");return;}
+  const res=await online.sendFriendRequest(nick);
+  if(res.ok){notify(`Convite enviado para ${nick}.`);if(input)input.value="";loadFriends({force:true});}
+  else notify(friendRequestErrorMessage(res));
+}
+async function respondFriend(userId,accept){
+  const res=await online.respondFriendRequest(userId,accept);
+  if(res.ok){notify(accept?"Convite aceito.":"Convite recusado.");loadFriends({force:true});}
+  else notify(onlineErrorMessage(res));
+}
+async function removeFriend(userId){
+  const res=await online.removeFriend(userId);
+  if(res.ok){notify("Amigo removido.");loadFriends({force:true});}
+  else notify(onlineErrorMessage(res));
+}
+function renderRankings(){
+  const meEl=$("ranking-me"),ladderEl=$("ranking-ladder"),historyEl=$("ranking-history"),statusEl=$("rankings-status"),pendingEl=$("ranked-pending-note");
+  if(!meEl||!ladderEl||!historyEl)return;
+  const pending=save().online?.pendingMatches?.length||0;
+  if(pendingEl){pendingEl.hidden=pending===0;if(pending)pendingEl.textContent=`${pending} resultado${pending>1?"s":""} ranqueado${pending>1?"s":""} aguardando o servidor — sincroniza${pending>1?"m":""} sozinho quando a conexão voltar.`;}
+  if(statusEl){
+    statusEl.textContent=!online.hasSession()?"Entre com uma conta (Google ou convidado) para ver seu ranking."
+      :rankingLoading?"Carregando ranking…"
+      :rankingError==="not_implemented"?"Ranking ainda não está ativo no servidor. As batalhas ranqueadas valem localmente e sincronizam depois."
+      :rankingError==="offline"?(rankingStale?"Sem conexão — mostrando seu último ranking salvo.":"Sem conexão com o servidor — tente atualizar depois.")
+      :rankingError==="error"?"Não foi possível carregar o ranking."
+      :rankingStale?"Mostrando seu último ranking salvo.":"";
+  }
+  const standing=currentStanding();
+  if(!standing){
+    meEl.innerHTML=`<p class="support-copy">${rankingLoading?"Carregando seu ranking…":"Seu ranking aparece aqui depois da primeira batalha ranqueada."}</p>`;
+  }else{
+    const prog=rankedProgress(standing);
+    const wins=standing.wins??0,losses=standing.losses??0,games=standing.games??(wins+losses);
+    const streak=standing.streak??0;
+    meEl.innerHTML=`<div class="ranking-tier"><span class="ranking-tier-name">${esc(prog.tierName)}</span><span class="ranking-points">${prog.points} pts</span></div>
+    <div class="rank-bar" role="progressbar" aria-valuenow="${prog.pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso para o próximo tier"><i style="width:${prog.pct}%"></i></div>
+    <p class="ranking-next">${prog.isTop?"Topo do ranqueado — Campeão é o top 10% dos 600+.":`Faltam ${prog.hi-prog.points} pts para ${esc(prog.nextName)} (${prog.lo}–${prog.hi} pts).`}</p>
+    <p class="ranking-record">${wins}V · ${losses}D · ${games} batalhas${streak>1?` · sequência de ${streak} vitórias`:""}${standing.ladder_rank?` · #${standing.ladder_rank} no ladder`:""}${standing.season?` · ${esc(standing.season)}`:""}</p>`;
+  }
+  const rows=ladderCache?.rows||[];
+  if(!rows.length){
+    ladderEl.innerHTML=`<p class="support-copy">${rankingLoading?"Carregando classificação…":"Classificação indisponível no momento."}</p>`;
+  }else{
+    const myId=save().online?.userId;
+    ladderEl.innerHTML=rows.map(r=>`<div class="ladder-row${r.user_id===myId?" is-me":""}"><span class="ladder-rank">#${r.rank??"–"}</span><img src="${esc(trainerFace(r.trainer_key))}" alt=""><span class="ladder-nick">${esc(r.nick||"Treinador")}</span><span class="ladder-tier">${esc(localizeTier(r.tier_name||r.tier||""))}</span><b class="ladder-points">${r.points??0} pts</b></div>`).join("");
+  }
+  const matches=rankingHistory?.matches||[];
+  if(!matches.length){
+    historyEl.innerHTML=`<p class="support-copy">${rankingLoading?"Carregando histórico…":"Nenhuma batalha ranqueada registrada ainda."}</p>`;
+  }else{
+    historyEl.innerHTML=matches.map(m=>{
+      const won=m.result==="win";
+      const delta=Number.isFinite(m.delta)?`${m.delta>0?"+":""}${m.delta} pts`:"";
+      const when=m.created_at?lastSeenText(m.created_at):"";
+      return `<div class="history-row"><span class="history-result ${won?"win":"loss"}">${won?"Vitória":"Derrota"}</span><span class="history-opp">vs ${esc(m.opponent_nick||(m.vs_bot?"Bot":"—"))}</span><b class="history-delta">${esc(delta)}</b><span class="history-when">${esc(when)}</span></div>`;
+    }).join("");
+  }
+}
+async function loadRankings({force=false}={}){
+  if(!online.hasSession()){rankingCache=null;ladderCache=null;rankingHistory=null;rankingError="login";rankingStale=!!save().online?.ranking;if(route==="rankings")renderRankings();return;}
+  if(rankingLoading)return;
+  if(!force&&rankingCache&&ladderCache)return;
+  rankingLoading=true;rankingError=null;
+  if(route==="rankings")renderRankings();
+  const [me,ladder,history]=await Promise.all([online.getRanking(),online.getLadder(50),online.getRankingHistory(20)]);
+  rankingLoading=false;
+  if(me.ok){rankingCache=me.data;rankingError=null;rankingStale=false;p.setCachedRanking(me.data);}
+  else if(me.status===501||me.error==="not_implemented"){rankingError="not_implemented";rankingStale=!!save().online?.ranking;}
+  else if(me.offline){rankingError="offline";rankingStale=!!save().online?.ranking;}
+  else if(me.status===401||me.error==="no_session"){rankingError="login";rankingStale=!!save().online?.ranking;}
+  else{rankingError="error";rankingStale=!!save().online?.ranking;}
+  if(ladder.ok)ladderCache=ladder.data;
+  if(history.ok)rankingHistory=history.data;
+  if(route==="rankings")renderRankings();
+}
+async function startRankedBattle(){
+  if(battle)return;
+  if(save().team.mons.length<1){notify("Monte sua equipe antes de batalhar.");return;}
+  pendingRanked={battleId:globalThis.crypto?.randomUUID?.()||`ranked-${Date.now()}`,opponentId:null,vsBot:true};
+  await startBattle({battleId:pendingRanked.battleId,opponentName:"Bot Ranqueado"});
+}
+function challengeFriend(friend){
+  if(!friend||battle)return;
+  if(save().team.mons.length<1){notify("Monte sua equipe antes de batalhar.");return;}
+  pendingFriendBattle={battleId:globalThis.crypto?.randomUUID?.()||`friend-${Date.now()}`,friend:{user_id:friend.user_id,nick:friend.nick}};
+  startBattle({battleId:pendingFriendBattle.battleId,opponentName:friend.nick});
+}
+function challengeFriendById(userId){
+  const friend=(friendsCache?.friends||[]).find(f=>f.user_id===userId);
+  if(!friend){notify("Esse amigo não está na lista.");return;}
+  challengeFriend(friend);
+}
+// Registra o resultado ranqueado no servidor; offline (ou 501, ou sessão
+// expirada) ele fica na fila do save e o flush tenta de novo depois.
+async function submitRankedResult(rankedBattle,result){
+  const line=()=>$("ranked-result-line");
+  const outcome=result.won?"win":"loss";
+  const pending={battleId:rankedBattle.battleId,result:outcome,opponent_id:rankedBattle.opponentId||null,vs_bot:true,createdAt:Date.now()};
+  if(!online.hasSession()){
+    p.queuePendingMatch(pending);
+    if(line())line().textContent="Sem sessão online — resultado salvo no aparelho e sincroniza depois.";
+    return;
+  }
+  const res=await online.submitRankedMatch({result:outcome,opponent_id:rankedBattle.opponentId,vs_bot:true});
+  if(res.ok){
+    const standing=res.data?.standing||res.data;
+    if(standing?.tier){p.setCachedRanking(standing);rankingCache=standing;}
+    // O standing, o ladder e o histórico mudaram: invalida o cache para a
+    // tela de Ranking buscar os dados novos (sem isso ela reexibia o vazio).
+    rankingHistory=null;ladderCache=null;
+    if(route==="rankings")loadRankings({force:true});
+    const match=res.data?.match;
+    const delta=Number.isFinite(match?.delta)?match.delta:null;
+    const after=Number.isFinite(match?.points_after)?match.points_after:(Number.isFinite(standing?.points)?standing.points:null);
+    const tierAfter=match?.tier_after||standing?.tier_name||standing?.tier;
+    if(line()){
+      const parts=[];
+      if(delta!==null)parts.push(`${delta>0?"+":""}${delta} pontos`);
+      if(after!==null)parts.push(`${after} pontos`);
+      if(tierAfter)parts.push(String(tierAfter));
+      line().textContent=parts.length?`Ranqueado: ${parts.join(" · ")}.`:"Resultado ranqueado registrado.";
+    }
+    return;
+  }
+  p.queuePendingMatch(pending);
+  if(line())line().textContent=res.status===401?"Sessão expirada — resultado salvo no aparelho; entre novamente para sincronizar.":res.status===501||res.error==="not_implemented"?"Ranking ainda não ativo no servidor — resultado salvo no aparelho.":"Sem conexão — resultado salvo no aparelho e sincroniza depois.";
+}
+async function flushPendingMatches(){
+  if(flushingMatches||!online.hasSession())return;
+  const pending=save().online?.pendingMatches||[];
+  if(!pending.length)return;
+  flushingMatches=true;
+  try{
+    const done=[];
+    for(const m of pending){
+      const res=await online.submitRankedMatch({result:m.result,opponent_id:m.opponent_id,vs_bot:m.vs_bot});
+      if(res.ok){done.push(m.battleId);const standing=res.data?.standing;if(standing?.tier)p.setCachedRanking(standing);}
+      else break; // offline/401/501: tenta na próxima abertura
+    }
+    if(done.length){p.clearPendingMatches(done);rankingCache=null;ladderCache=null;rankingHistory=null;}
+  }finally{flushingMatches=false;}
+}
+// Heartbeat de presença: a cada 60s, só com o jogo aberto e logado.
+// Silencioso — falhar não mostra nada nem trava nada.
+function startOnlineHeartbeat(){
+  if(heartbeatTimer)return;
+  heartbeatTimer=setInterval(()=>{
+    if(document.hidden||!online.hasSession())return;
+    online.sendHeartbeat().catch(()=>{});
+  },60000);
+}
+function beatOnlineOnce(){
+  if(online.hasSession())online.sendHeartbeat().catch(()=>{});
+}
+
+// Entrada Google feita no diálogo de perfil (jogador antigo): vincula a conta
+// no servidor em segundo plano, só quando ainda não há sessão online.
+async function handleFirebaseAuth(user) {
+  if (!user || loginScreenActive || online.hasSession()) return;
+  try {
+    const idToken = await account.getIdToken();
+    if (!idToken) return;
+    const result = await online.googleSignIn(idToken);
+    if (result.ok) {
+      p.setOnlineAccount({provider:"google", userId:result.session.userId, syncedAt:Date.now(), pendingSync:false});
+      await syncOnlineProfile({force:true});
+      refresh();
+    }
+  } catch { /* offline ou erro: segue local, tenta na próxima abertura */ }
+}
+// Tela de login antes do lobby. Resolve com um aviso para exibir (ou null).
+// Offline-first: sem servidor, entra como convidado local e sincroniza depois.
+function runLoginScreen() {
+  return new Promise((resolve) => {
+    const screen = $("login-screen");
+    const statusEl = $("login-status");
+    const setStatus = (msg) => { statusEl.textContent = msg || ""; };
+    let method = null, busy = false, googleUser = null;
+    let loginTrainerKey = resolveTrainerKey(save().trainerKey);
+    let loginTeam = save().online?.team || null;
+    $("boot").hidden = true;
+    screen.hidden = false;
+    const showStep = (profile) => {
+      $("login-step-method").hidden = !!profile;
+      $("login-step-profile").hidden = !profile;
+      setStatus("");
+    };
+    const finish = (note) => {
+      screen.hidden = true;
+      setStatus("");
+      resolve(note || null);
+    };
+    const openProfileStep = () => {
+      const nameInput = $("login-nick");
+      if (!nameInput.value) {
+        const current = save().trainerName;
+        nameInput.value = current && current !== "Treinador" ? current : (googleUser?.name || "");
+      }
+      buildTrainerPicker($("login-trainer-picker"), loginTrainerKey, (key) => { loginTrainerKey = key; });
+      renderTeamPicker($("login-team-picker"), loginTeam, {onSelect: (team) => { loginTeam = team; }});
+      showStep(true);
+    };
+    $("login-google").onclick = async () => {
+      if (busy) return;
+      busy = true;
+      setStatus("Abrindo a entrada do Google…");
+      try {
+        await account.signIn();
+        const idToken = await account.getIdToken();
+        if (!idToken) { setStatus("Não foi possível conectar ao Google. Verifique a conexão ou continue como convidado."); return; }
+        googleUser = account.getUser();
+        method = "google";
+        setStatus("Conectando ao servidor…");
+        const result = await online.googleSignIn(idToken);
+        if (result.ok) {
+          p.setOnlineAccount({provider:"google", userId:result.session.userId, syncedAt:Date.now(), pendingSync:false});
+        } else if (result.offline) {
+          p.setOnlineAccount({provider:"google", pendingSync:true});
+        } else {
+          setStatus(onlineErrorMessage(result));
+          return;
+        }
+        openProfileStep();
+      } catch (error) {
+        setStatus(error?.code ? accountError(error) : (error?.message || "Não foi possível conectar sua conta Google."));
+      } finally {
+        busy = false;
+      }
+    };
+    $("login-guest").onclick = () => {
+      method = "guest";
+      openProfileStep();
+    };
+    $("login-offline").onclick = () => {
+      p.setOnlineAccount({provider:"local", pendingSync:true});
+      finish("Jogando offline. O perfil sincroniza quando a conexão voltar.");
+    };
+    $("login-back").onclick = () => {
+      method = null;
+      showStep(false);
+    };
+    $("login-confirm").onclick = async () => {
+      if (busy) return;
+      if (!loginTeam) { setStatus("Escolha um time para continuar."); return; }
+      const nameResult = p.setTrainerName($("login-nick").value.trim());
+      if (!nameResult.ok) { setStatus(nameResult.error); return; }
+      const keyResult = p.setTrainerKey(loginTrainerKey);
+      if (!keyResult.ok) { setStatus(keyResult.error); return; }
+      p.setGoTeam(loginTeam);
+      busy = true;
+      setStatus(method === "google" ? "Sincronizando perfil…" : "Criando sua conta…");
+      const profile = {trainer_key: loginTrainerKey, nick: save().trainerName, team: loginTeam};
+      if (method === "google") {
+        const result = await online.updateProfile(profile);
+        if (result.ok) {
+          p.setOnlineAccount({syncedAt: Date.now(), pendingSync:false});
+        } else if (result.offline) {
+          p.setOnlineAccount({pendingSync:true});
+          busy = false;
+          finish("Sem conexão com o servidor — jogando offline. O perfil sincroniza depois.");
+          return;
+        } else {
+          setStatus(onlineErrorMessage(result));
+          busy = false;
+          return;
+        }
+      } else {
+        const result = await online.guestSignIn(profile);
+        if (result.ok) {
+          p.setOnlineAccount({provider:"guest", userId:result.session.userId, syncedAt:Date.now(), pendingSync:false});
+        } else if (result.offline) {
+          p.setOnlineAccount({provider:"local", pendingSync:true});
+          busy = false;
+          finish("Sem conexão com o servidor — jogando offline. O perfil sincroniza depois.");
+          return;
+        } else {
+          setStatus(onlineErrorMessage(result));
+          busy = false;
+          return;
+        }
+      }
+      busy = false;
+      finish();
+    };
+    showStep(false);
+  });
+}
 function wire() {
+  arenaUI=mountArena({online,catalog:()=>catalog,esc,portrait,types,onMatch:startArenaMatch,notify});
+  $('rail-arena').onclick=()=>arenaUI.open();
   management=createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,notify,apply,movePicker,launchStage,drawTechnique,goBack});
   for(const title of all('#screens>.screen:not(#screen-home) .screen-title')){const back=document.createElement('button');back.className='section-back';back.type='button';back.dataset.menuBack='true';back.setAttribute('aria-label','Voltar');back.innerHTML=icon('back');title.prepend(back);}
 
@@ -931,6 +1428,10 @@ function wire() {
       teamPick = null;
       navigate(b.dataset.route);
     }
+    if (b.dataset.friendAccept) respondFriend(b.dataset.friendAccept, true);
+    if (b.dataset.friendDecline) respondFriend(b.dataset.friendDecline, false);
+    if (b.dataset.friendRemove) removeFriend(b.dataset.friendRemove);
+    if (b.dataset.friendChallenge) challengeFriendById(b.dataset.friendChallenge);
     if (b.hasAttribute("data-close")) b.closest("dialog").close();
     if (b.dataset.detail) detail(b.dataset.detail);
     if (b.dataset.shopDetail)
@@ -1009,34 +1510,17 @@ function wire() {
       }
     }
   });
-  const account=mountAccount();
 let pendingTrainerKey = "red";
 function renderTrainerPicker() {
-  const box = $("trainer-picker");
-  if (!box) return;
   pendingTrainerKey = resolveTrainerKey(save().trainerKey);
-  box.replaceChildren(
-    ...TRAINERS.map((t) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "trainer-option";
-      b.setAttribute("aria-pressed", String(t.key === pendingTrainerKey));
-      b.dataset.trainerKey = t.key;
-      b.innerHTML = `<img src="/faces/${t.key}.png" alt=""><span>${esc(t.name)}</span>`;
-      b.onclick = () => {
-        pendingTrainerKey = t.key;
-        box
-          .querySelectorAll(".trainer-option")
-          .forEach((el) => el.setAttribute("aria-pressed", String(el === b)));
-      };
-      return b;
-    }),
-  );
+  buildTrainerPicker($("trainer-picker"), pendingTrainerKey, (key) => { pendingTrainerKey = key; });
 }
   const openProfile = () => {
     account.prepare();
     $("profile-name").value = save().trainerName;
     renderTrainerPicker();
+    pendingTeam = save().online?.team ?? null;
+    renderTeamPicker($("profile-team-picker"), pendingTeam, {allowNone:true, onSelect:(team)=>{ pendingTeam = team; }});
     showDialog("profile-dialog");
   };
   $("profile-button").onclick = openProfile;
@@ -1044,8 +1528,10 @@ function renderTrainerPicker() {
   $("profile-form").onsubmit = (e) => {
     e.preventDefault();
     if (!apply(p.setTrainerKey(pendingTrainerKey))) return;
-    if (apply(p.setTrainerName($("profile-name").value)))
-      $("profile-dialog").close();
+    if (!apply(p.setTrainerName($("profile-name").value))) return;
+    if (!apply(p.setGoTeam(pendingTeam))) return;
+    syncOnlineProfile({force:true}).catch(()=>{});
+    $("profile-dialog").close();
   };
   $("wallet-button").onclick = () => navigate("rewards");
   $("diamond-wallet").onclick = () => navigate("shop");
@@ -1073,6 +1559,13 @@ function renderTrainerPicker() {
   $("summon-one").onclick = () => startPulls(1);
   $("summon-ten").onclick = () => startPulls(10);
   $("rail-battle").onclick = startBattle;
+  // Amigos + Ranking (fase 2b): os botões vivem nas telas novas; o
+  // heartbeat de presença começa aqui e roda enquanto o jogo estiver aberto.
+  $("friends-add-btn").onclick = sendFriendRequestFromForm;
+  $("friends-refresh").onclick = () => loadFriends({force:true});
+  $("rankings-refresh").onclick = () => loadRankings({force:true});
+  $("ranked-battle-btn").onclick = startRankedBattle;
+  startOnlineHeartbeat();
   $("battle-pause").onclick = () => battle?.pause();
   $("battle-resume").onclick = () => {
     $("pause-dialog").close();
@@ -1160,11 +1653,24 @@ async function boot() {
         .join(""),
     );
     $("boot").hidden = true;
+    // Conta Google (Firebase) montada antes do login: a tela usa o mesmo
+    // sign-in do diálogo de perfil; quem já tem perfil salvo entra direto.
+    account ??= mountAccount({onAuth: handleFirebaseAuth});
+    let loginNote = null;
+    if (needsLogin(save())) {
+      loginScreenActive = true;
+      loginNote = await runLoginScreen();
+      loginScreenActive = false;
+    }
     const {chooseInitialPartner}=await import("./onboarding.js");
     await chooseInitialPartner(p);
     wire();
     $("app").hidden = false;
     navigate("home");
+    if (loginNote) notify(loginNote);
+    syncOnlineProfile().catch(()=>{});
+    flushPendingMatches().catch(()=>{});
+    beatOnlineOnce();
   } catch (error) {
     $("boot").innerHTML =
       `<div class="wordmark">PULSE ARENA</div><p>Não foi possível carregar o jogo.</p><p>${esc(error.message)}</p><button class="primary-button" onclick="location.reload()">Tentar novamente</button>`;

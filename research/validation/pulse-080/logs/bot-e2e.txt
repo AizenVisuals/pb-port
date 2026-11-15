@@ -1,0 +1,26 @@
+2026-11-15T19:33:20.846Z OPTIONS /api/auth/guest 200 5ms
+2026-11-15T19:33:20.863Z POST /api/auth/guest 201 12ms
+2026-11-15T19:33:20.869Z OPTIONS /api/arena/rotation 200 0ms
+2026-11-15T19:33:20.876Z GET /api/arena/rotation 200 5ms
+2026-11-15T19:33:20.894Z OPTIONS /api/arena/queue 200 0ms
+2026-11-15T19:33:20.900Z POST /api/arena/queue 200 4ms
+2026-11-15T19:33:20.909Z GET /api/arena/queue 200 2ms
+2026-11-15T19:33:20.920Z GET /api/arena/queue 200 3ms
+PASS exact 2min fallback (controlled server clock)
+2026-11-15T19:33:37.832Z OPTIONS /api/arena/me 200 1ms
+2026-11-15T19:33:37.836Z GET /api/arena/me 200 2ms
+PASS bot complete natural battle and Arena score {
+  won: true,
+  reason: 'win',
+  standing: {
+    mode: 'arena',
+    points: 10,
+    wins: 1,
+    losses: 0,
+    games: 1,
+    streak: 1,
+    season: '2026-11',
+    ladder_rank: 1
+  },
+  errors: []
+}

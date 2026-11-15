@@ -1,0 +1,74 @@
+{
+  "roster_size": 296,
+  "scope": "Cross-check of supplied report; not species implementation or usage-stat verification",
+  "species": [
+    {
+      "name": "Sneasler",
+      "existing_keys": []
+    },
+    {
+      "name": "Incineroar",
+      "existing_keys": []
+    },
+    {
+      "name": "Gholdengo",
+      "existing_keys": []
+    },
+    {
+      "name": "Basculegion",
+      "existing_keys": []
+    },
+    {
+      "name": "Archaludon",
+      "existing_keys": []
+    },
+    {
+      "name": "Farigiraf",
+      "existing_keys": []
+    },
+    {
+      "name": "Whimsicott",
+      "existing_keys": []
+    },
+    {
+      "name": "Sinistcha",
+      "existing_keys": []
+    },
+    {
+      "name": "Toxapex",
+      "existing_keys": []
+    },
+    {
+      "name": "Indeedee",
+      "existing_keys": []
+    },
+    {
+      "name": "Primarina",
+      "existing_keys": []
+    },
+    {
+      "name": "Hippowdon",
+      "existing_keys": []
+    },
+    {
+      "name": "Mimikyu",
+      "existing_keys": []
+    },
+    {
+      "name": "Meowscarada",
+      "existing_keys": []
+    },
+    {
+      "name": "Baxcalibur",
+      "existing_keys": []
+    },
+    {
+      "name": "Glimmora",
+      "existing_keys": []
+    },
+    {
+      "name": "Great Tusk",
+      "existing_keys": []
+    }
+  ]
+}

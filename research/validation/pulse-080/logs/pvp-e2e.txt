@@ -1,0 +1,22 @@
+2026-11-15T19:45:56.047Z OPTIONS /api/auth/guest 200 7ms
+2026-11-15T19:45:56.065Z POST /api/auth/guest 201 12ms
+2026-11-15T19:45:56.209Z OPTIONS /api/auth/guest 200 0ms
+2026-11-15T19:45:56.213Z POST /api/auth/guest 201 2ms
+2026-11-15T19:45:56.224Z OPTIONS /api/arena/rotation 200 0ms
+2026-11-15T19:45:56.230Z GET /api/arena/rotation 200 4ms
+2026-11-15T19:45:56.250Z OPTIONS /api/arena/queue 200 1ms
+2026-11-15T19:45:56.256Z POST /api/arena/queue 200 5ms
+2026-11-15T19:45:56.267Z OPTIONS /api/arena/queue 200 0ms
+2026-11-15T19:45:56.274Z POST /api/arena/queue 200 5ms
+2026-11-15T19:45:56.284Z GET /api/arena/queue 200 1ms
+2026-11-15T19:45:56.286Z GET /api/arena/queue 200 1ms
+PASS two browsers: canonical sides [ 0, 1 ] Lv100; synchronized frames 40
+2026-11-15T19:46:12.828Z OPTIONS /api/arena/me 200 1ms
+2026-11-15T19:46:12.829Z OPTIONS /api/arena/me 200 0ms
+2026-11-15T19:46:12.831Z GET /api/arena/me 200 2ms
+2026-11-15T19:46:12.832Z GET /api/arena/me 200 1ms
+PASS complete natural PvP with two matching reports [
+  { won: true, points: 20, reason: 'win', errors: [] },
+  { won: false, points: 0, reason: 'loss', errors: [] }
+]
+pulse-online arena WS socket erro: read ECONNRESET

@@ -1,0 +1,1 @@
+PASS Chromium multi-touch: stick held + move + guard, movement only stops on releasing its own finger.

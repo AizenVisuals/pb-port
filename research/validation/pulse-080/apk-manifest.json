@@ -1,0 +1,12 @@
+{
+  "version": "0.8.0-test.1",
+  "bytes": 196108178,
+  "sha256": "fe3d0926d4d7282178c88295e6d7982f5ac9360f15ed89d13fac142394c87947",
+  "sourcePulseMatchesApk": true,
+  "physicalAndroidTest": false,
+  "preexistingPBWorkingChangesPreserved": [
+    "public/roster.json: ferunoga",
+    "public/custom/fan-pack-data.js",
+    "scripts/build-fan-pack-data.py"
+  ]
+}

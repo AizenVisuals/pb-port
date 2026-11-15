@@ -1,0 +1,1 @@
+PASS native poison rules + Portuguese world text actually painted on canvas { status: 'psn', text: [ 'FOI GRAVEMENTE ENVENENADO!' ] }

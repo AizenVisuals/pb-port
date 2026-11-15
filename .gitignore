@@ -8,3 +8,7 @@ __pycache__/
 
 dist-android/
 artifacts/
+
+# Portal SDK/config are copied from public by the deployment script.
+pulse-online/site/account-sdk.js
+pulse-online/site/firebase-config.json

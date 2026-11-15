@@ -36,7 +36,7 @@ export function bindGamepad({getSnapshot,command,pause,getPads=()=>navigator.get
  const loop=now=>{const s=getSnapshot(),pad=[...getPads()].find(p=>p?.connected&&p.mapping==='standard');
   if(document.hidden||!pad){release();prior=[];activeIndex=null;running=false;frame=raf(loop);return;}
   if(activeIndex!==pad.index){prior=pad.buttons.map(b=>!!b.pressed);activeIndex=pad.index;}
-  if(s?.state!=='running'){release();running=false;menu=menuControls(pad,prior,now,menu);prior=pad.buttons.map(b=>!!b.pressed);frame=raf(loop);return;}
+  if(s?.state!=='running'||document.querySelector('dialog[open]')){release();running=false;menu=menuControls(pad,prior,now,menu);prior=pad.buttons.map(b=>!!b.pressed);frame=raf(loop);return;}
   if(!running){prior=pad.buttons.map(b=>!!b.pressed);running=true;}
   const next=gamepadFrame(pad,prior,direction);prior=next.pressed;direction=next.direction;
   for(const action of next.commands){

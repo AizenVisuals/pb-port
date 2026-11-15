@@ -13,7 +13,7 @@ export function accountError(error) {
 }
 
 /** Account identity is independent of progression. Signing in/out never replaces a save. */
-export function mountAccount({document:doc=document,storage:providedStorage,load=async()=>{
+export function mountAccount({document:doc=document,storage:providedStorage,onAuth,load=async()=>{
   const [sdk,response]=await Promise.all([import('./vendor/account-sdk.js'),fetch('/pulse/firebase-config.json')]);
   if(!response.ok)throw new Error('Configuração da conta indisponível.');
   return sdk.initializeAccount(await response.json());
@@ -40,6 +40,7 @@ export function mountAccount({document:doc=document,storage:providedStorage,load
         user=value;marker(!!value);
         status.textContent=value?`Conectado como ${value.name}${value.email?' · '+value.email:''}. O progresso continua salvo neste aparelho.`:'Conecte sua conta Google. Você também pode continuar offline.';
         render();
+        try{onAuth?.(value);}catch{}
       });
       render();
       return sdk;
@@ -61,5 +62,23 @@ export function mountAccount({document:doc=document,storage:providedStorage,load
   };
   render();
   try{if(storage?.getItem(MARKER))prepare();}catch{}
-  return {prepare};
+  return {
+    prepare,
+    getUser:()=>user,
+    // Entrada via Firebase (popup no navegador, nativa no APK). Resolve sem
+    // erro quando a conta entrou; o ID Token sai por getIdToken().
+    signIn:async()=>{
+      const sdk=await prepare();
+      if(!sdk)return null;
+      await sdk.signIn();
+      return user;
+    },
+    // Firebase ID Token para trocar pelo token de sessão do pulse-online.
+    // Nunca é guardado: usa e descarta na hora da troca.
+    getIdToken:async()=>{
+      const sdk=await prepare();
+      if(!sdk||typeof sdk.getIdToken!=='function')return null;
+      return sdk.getIdToken();
+    },
+  };
 }

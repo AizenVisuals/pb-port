@@ -1,5 +1,7 @@
+import{localizePBText}from'./status-text.js';
 import {LEARNSETS} from './learnsets.js';
 import {configureGrowthBattle,evolutionAssets} from './growth-battle.js';
+import {applyEarnedLevel} from './growth-battle.js';
 import {resolveTrainerKey} from './progression.js';
 /** PULSE ARENA local battle runtime. One simulation, no transport or backend. */
 const STEP_MS = 1000 / 60;
@@ -16,13 +18,16 @@ export class OfflineBattle {
     this.pendingInputs = [];
     this.generation = 0;
     this._visibility = () => {
-      if (document.hidden && this.state === 'running') { this.autoPaused = true; this.pause(); }
+      if (!this.networked && document.hidden && this.state === 'running') { this.autoPaused = true; this.pause(); }
       // Returning to the app leaves the pause sheet in control; never resume behind it.
     };
     document.addEventListener('visibilitychange', this._visibility);
   }
 
-  async start({team, difficulty = 3, format = '3v3', arena = 'stadium', seed, botTeam, shinies = [], shinyCatalog = {}, battleId,growth, trainer = 'red'} = {}) {
+  async start({team, difficulty = 3, format = '3v3', arena = 'stadium', seed, botTeam, shinies = [], shinyCatalog = {}, battleId,growth, trainer = 'red', opponentName, networkMatch} = {}) {
+    this.playerSide = networkMatch?.side === 1 ? 1 : 0;
+    this.networked = !!networkMatch;
+    this._seenAction = this._seenStatus = 0;
     this._stopLoop();
     this.audio?.stop?.();
     const generation = ++this.generation;
@@ -41,20 +46,32 @@ export class OfflineBattle {
       this.team = normalizeTeam(engine, team, count);
       const cpu = botTeam ? normalizeTeam(engine, botTeam, Number(this.format[2])) : buildBotTeam(engine, this.team, count, seed, growth);
       // A bot does not get a Mega unless the player selected one too.
-      if (!this.team.gimmick) cpu.gimmick = null;
-      if (this.team.gimmick && !cpu.gimmick) {
+      if (!networkMatch && !this.team.gimmick) cpu.gimmick = null;
+      if (!networkMatch && this.team.gimmick && !cpu.gimmick) {
         const mon = cpu.mons.findIndex(key => engine.canMega(key));
         if (mon >= 0) cpu.gimmick = {kind: 'mega', mon};
       }
       this.arena = engine.ARENAS.some(a => a.key === arena) ? arena : 'stadium';
       const trainerKey = resolveTrainerKey(trainer);
-      const teams = [
+      // Nome do adversário: o padrão é o título por dificuldade; desafios
+      // (amigo) e ranqueado passam o nome a exibir na placa do oponente.
+      // O time do bot continua sendo um time de bot — o nome não inventa
+      // um time do outro jogador (o time real dele não é sincronizado).
+      const cpuName = typeof opponentName === 'string' && opponentName.trim()
+        ? opponentName.trim().slice(0, 16)
+        : ['Iniciante','Aprendiz','Rival','Veterano','Elite'][this.difficulty - 1];
+      let teams = [
         {...this.team, name: 'Você', trainer: trainerKey, bot: false},
-        {...cpu, name: ['Iniciante','Aprendiz','Rival','Veterano','Elite'][this.difficulty - 1], trainer: 'blue', bot: true, level: this.difficulty},
+        {...cpu, name: cpuName, trainer: 'blue', bot: true, level: this.difficulty},
       ];
+      if (networkMatch) {
+        const mine = {...this.team, name: networkMatch.playerName || 'Você', trainer: trainerKey, bot:false};
+        const other = {...cpu, name:cpuName, trainer:networkMatch.opponent?.trainer_key || 'blue', bot:!!networkMatch.vs_bot, level:this.difficulty};
+        teams = this.playerSide === 0 ? [mine,other] : [other,mine];
+      }
       await Promise.all([
         engine.loadRankedAssets(growth?evolutionAssets(teams.flatMap(t=>t.mons)):teams.flatMap(t=>t.mons)),
-        engine.loadTrainers([trainerKey,'blue']),
+        engine.loadTrainers(teams.map(t=>t.trainer)),
         engine.loadArena(this.arena),
       ]);
       if (generation !== this.generation) return null;
@@ -66,8 +83,10 @@ export class OfflineBattle {
       if (generation !== this.generation) return null;
       this.seed = Number.isInteger(seed) ? seed >>> 0 : randomSeed();
       this.battle = engine.createBattle(assets, this.seed, teams, this.arena);
+      const nativeText=this.battle.text.bind(this.battle);this.battle.text=(x,y,message,options)=>nativeText(x,y,localizePBText(message),options);
+      if (networkMatch) for (const team of this.battle.teams) for (const actor of team.mons) applyEarnedLevel(actor,100);
       this.growth=growth?configureGrowthBattle(this.battle,engine,growth):null;
-      this.render = engine.makeView(this.canvas, this.battle, {scale: 0.65, hud: false});
+      this.render = engine.makeView(this.canvas, this.battle, {scale: 0.65, hud: true, plates: () => false});
       this._bindKeyboard();
       try {
         const audio = await import('../audio.js');
@@ -76,7 +95,7 @@ export class OfflineBattle {
         this.audio.startMusic();
       } catch { /* Sound is optional; a blocked AudioContext must not block battle. */ }
       if (generation !== this.generation) { this.audio?.stop?.(); return null; }
-      this.state = document.hidden ? 'paused' : 'running';
+      this.state = !networkMatch && document.hidden ? 'paused' : 'running';
       this.autoPaused = document.hidden;
       this.accumulator = 0;
       this.lastTime = 0;
@@ -102,15 +121,15 @@ export class OfflineBattle {
     if(input.kind==='cancel-evolution')return this.growth?.cancelAutoEvolution()||false;
     const allowed = new Set(['move','manual','steer','dodge','guard','switch','mega','autoatk','autoguard']);
     if (!allowed.has(input.kind)) return false;
-    const command = {...input, side: 0};
+    const command = {...input, side: this.playerSide || 0};
     if (command.kind === 'move') {
-      if (Number.isInteger(command.index)) command.name = this.battle.fighters[0]?.moves[command.index]?.name;
-      if (typeof command.name !== 'string' || !this.battle.fighters[0]?.moves.some(m => m.name === command.name)) return false;
+      if (Number.isInteger(command.index)) command.name = this.battle.fighters[this.playerSide || 0]?.moves[command.index]?.name;
+      if (typeof command.name !== 'string' || !this.battle.fighters[this.playerSide || 0]?.moves.some(m => m.name === command.name)) return false;
       delete command.index;
     }
     if (command.kind === 'steer') command.dir = Number.isInteger(command.dir) ? clamp(command.dir, 0, 8) : 0;
-    if (command.kind === 'manual' && typeof command.on !== 'boolean') command.on = !this.battle.rk.sides[0].manual;
-    if (command.kind === 'switch' && (!Number.isInteger(command.to) || !this.battle.teams[0].mons[command.to] || this.battle.teams[0].mons[command.to].fainted)) return false;
+    if (command.kind === 'manual' && typeof command.on !== 'boolean') command.on = !this.battle.rk.sides[this.playerSide || 0].manual;
+    if (command.kind === 'switch' && (!Number.isInteger(command.to) || !this.battle.teams[this.playerSide || 0].mons[command.to] || this.battle.teams[this.playerSide || 0].mons[command.to].fainted)) return false;
     this.pendingInputs.push(command);
     return true;
   }
@@ -157,13 +176,14 @@ export class OfflineBattle {
   snapshot() {
     const b = this.battle, e = this.engine;
     if (!b) return {id: this.id, state: this.state, format: this.format, difficulty: this.difficulty};
-    const side = b.rk.sides[0];
-    const active = b.fighters[0];
+    const own = this.playerSide || 0, enemy = 1-own;
+    const side = b.rk.sides[own];
+    const active = b.fighters[own];
     const summary = (actor, index, activeActor) => {
       const key = keyOf(actor), info = e.INFO[key];
       const maxHp = Math.max(1, actor?.maxHp || 1), hp = Math.max(0, actor?.hp || 0);
       return {key, dex: actor?.spec?.dex || info?.dex, name: actor?.name || info?.name || key || '', index,
-        level:actor?.level||50,hp, maxHp, hpRatio: hp / maxHp, types: [...(actor?.types || info?.types || [])], status: actor?.status || null,
+        level:actor?.level||50,hpScale:actor?.st?.hp?maxHp/actor.st.hp:1,hp, maxHp, hpRatio: hp / maxHp, types: [...(actor?.types || info?.types || [])], status: actor?.status || null,
         frozen: (actor?.frozen || 0) > 0, confused: (actor?.confusedT || 0) > 0, toxic: !!actor?.toxic,
         guarding: !!actor?.guarding,
         stages: Object.fromEntries(Object.entries(actor?.stages || {}).filter(([, v]) => v)),
@@ -171,9 +191,9 @@ export class OfflineBattle {
         mega: !!actor?.spec?.megaForm || /^MEGA /i.test(actor?.name || ''),
         portrait: info?.dex ? `assets/portraits/${info.dex}_Normal.png` : null};
     };
-    const playerIndex = b.teams[0].mons.indexOf(active);
-    const opponent = b.fighters[1];
-    const opponentIndex = b.teams[1].mons.indexOf(opponent);
+    const playerIndex = b.teams[own].mons.indexOf(active);
+    const opponent = b.fighters[enemy];
+    const opponentIndex = b.teams[enemy].mons.indexOf(opponent);
     // Eventos novos do engine desde o último snapshot: golpes usados
     // (actionLog, só kind "move") e status aplicados (statusLog). O HUD
     // narra esses eventos no log de batalha; o rastreio é por comprimento
@@ -189,7 +209,7 @@ export class OfflineBattle {
           // guarda os mesmos objetos de golpe que o engine usa.
           const fighter = b.fighters?.[x.side];
           const mv = fighter?.moves?.find((m) => m.name === x.name);
-          return {name: x.name, side: x.side, tick: x.t, cat: mv?.cat || null};
+          return {name: x.name, side: x.side === own ? 0 : 1, tick: x.t, cat: mv?.cat || null};
         });
       this._seenAction = actionLog.length;
       const statusLog = Array.isArray(b.statusLog) ? b.statusLog : [];
@@ -198,20 +218,15 @@ export class OfflineBattle {
       this._seenStatus = statusLog.length;
     } catch { /* logs indisponíveis: snapshot segue sem eventos */ }
     const snapshot = {
-      canEvolve:this.growth?.canEvolve()||false,evolutionPrompt:this.growth?.evolutionPrompt?.()||null,
-      id: this.id, state: this.state, frame: b.frame, phase: b.phase, secondsLeft: e.timeLeft(b),
-      manual: !!side.manual, choosing: !!side.choosing, canMega: !!side.gimmick && !side.megaDone && !b.teams[0].mons[side.gimmick.mon]?.fainted,
-      megaDone: !!side.megaDone, switchCharge: e.switchReady(b, 0), dodgeReady: e.dodgeReadyIn(b, 0) <= 0,
-      guardReady: e.guardReadyIn(b, 0) <= 0, dodgeReadyIn: e.dodgeReadyIn(b,0) / 60, guardReadyIn: e.guardReadyIn(b,0) / 60,
       newActions, newStatuses,
       canEvolve:this.growth?.canEvolve()||false,evolutionPrompt:this.growth?.evolutionPrompt?.()||null,
-      id: this.id, state: this.state, frame: b.frame, phase: b.phase, secondsLeft: e.timeLeft(b),
-      manual: !!side.manual, choosing: !!side.choosing, canMega: !!side.gimmick && !side.megaDone && !b.teams[0].mons[side.gimmick.mon]?.fainted,
-      megaDone: !!side.megaDone, switchCharge: e.switchReady(b, 0), dodgeReady: e.dodgeReadyIn(b, 0) <= 0,
-      guardReady: e.guardReadyIn(b, 0) <= 0, dodgeReadyIn: e.dodgeReadyIn(b,0) / 60, guardReadyIn: e.guardReadyIn(b,0) / 60,
-      moves: e.moveStatus(b, 0), player: summary(active, playerIndex, active), opponent: summary(opponent, opponentIndex, opponent),
-      bench: b.teams[0].mons.map((m,i) => summary(m,i,active)),
-      opponentBench: b.teams[1].mons.map((m,i) => summary(m,i,opponent)),
+      id: this.id, state: this.state, networked:this.networked, playerSide:own, frame: b.frame, phase: b.phase, secondsLeft: e.timeLeft(b),
+      manual: !!side.manual, choosing: !!side.choosing, canMega: !!side.gimmick && !side.megaDone && !b.teams[own].mons[side.gimmick.mon]?.fainted,
+      megaDone: !!side.megaDone, switchCharge: e.switchReady(b, own), dodgeReady: e.dodgeReadyIn(b, own) <= 0,
+      guardReady: e.guardReadyIn(b, own) <= 0, dodgeReadyIn: e.dodgeReadyIn(b,own) / 60, guardReadyIn: e.guardReadyIn(b,own) / 60,
+      moves: e.moveStatus(b, own), player: summary(active, playerIndex, active), opponent: summary(opponent, opponentIndex, opponent),
+      bench: b.teams[own].mons.map((m,i) => summary(m,i,active)),
+      opponentBench: b.teams[enemy].mons.map((m,i) => summary(m,i,opponent)),
       format: this.format, difficulty: this.difficulty, arena: this.arena,
       cinematic: !!b.cinematic, result: this.result || null,
     };
@@ -223,8 +238,8 @@ export class OfflineBattle {
     if (!this.battle || this.result) return this.snapshot();
     const amount = clamp(Math.floor(count), 0, 100000);
     for (let i = 0; i < amount && !this.result; i++) {
-      if (autoChoose && this.battle.rk.sides[0].choosing) {
-        const to = this.battle.teams[0].mons.findIndex(m => !m.fainted && m !== this.battle.fighters[0]);
+      if (autoChoose && this.battle.rk.sides[this.playerSide || 0].choosing) {
+        const to = this.battle.teams[this.playerSide || 0].mons.findIndex(m => !m.fainted && m !== this.battle.fighters[this.playerSide || 0]);
         if (to >= 0) this.pendingInputs.push({kind:'switch',side:0,to});
       }
       this._step();
@@ -242,7 +257,7 @@ export class OfflineBattle {
     this.growth?.before();
     this.engine.stepRanked(this.battle, inputs);
     this.growth?.after();
-    if (this.battle.done) this._finish(this.engine.winnerSide(this.battle), this.engine.winnerSide(this.battle) === 0 ? 'win' : 'loss');
+    if (this.battle.done) this._finish(this.engine.winnerSide(this.battle), this.engine.winnerSide(this.battle) === (this.playerSide || 0) ? 'win' : 'loss');
   }
 
   _startLoop() {
@@ -278,7 +293,7 @@ export class OfflineBattle {
     this._stopLoop();
     this._resetSteering();
     this.state = 'ended';
-    this.result = {id: this.id, won: winner === 0, winner, format: this.format, difficulty: this.difficulty,
+    this.result = {id: this.id, won: winner === (this.playerSide || 0), winner, format: this.format, difficulty: this.difficulty,
       frames: this.battle?.frame || 0, duration: (this.battle?.frame || 0) / 60,
       team: structuredClone(this.team), reason, koXp:this.growth?.koXpTotal?.()||0};
     this.audio?.stop?.();

@@ -1,0 +1,82 @@
+/* Shield-inspired finish, PB spatial layout. Geometry is authored SVG, text stays live. */
+.battle-screen{--battle-red:#e60032;--battle-ink:#202731;--battle-paper:#fffaf0;background:#151c26;color:#fffaf0}
+.battle-screen::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--battle-red);pointer-events:none}
+.battle-screen #battle-auto{background:var(--battle-red);color:#fff;box-shadow:0 3px 8px #0004;border:0;border-radius:3px 3px 14px 3px;min-height:34px;font-family:BarlowCondensed,Barlow,sans-serif;font-size:18px;font-style:italic;letter-spacing:.03em}
+.battle-side-label{color:#c7d4df;font-size:10px;letter-spacing:.04em}
+.battle-screen .battle-hud{background:#fffaf0;border-radius:10px 10px 0 0;padding:5px 7px;box-shadow:0 3px 8px #0003}
+.battle-hud .fighter-plate{color:var(--battle-ink)}
+.battle-hud .plate-name-row b{color:var(--battle-ink);font-family:BarlowCondensed,Barlow,sans-serif;font-style:italic;font-size:clamp(13px,1.5vw,20px);line-height:1}
+.battle-hud .plate-percent{color:#202731;font-size:11px}
+.battle-hud .plate-level,.battle-hud .plate-sub small{color:#4c5b67}
+.battle-hud .plate-trainer{color:#b00029}
+.battle-hud .fighter-plate img{background:#e7eaec;border:1px solid #b9c3ca;width:34px;height:34px}
+.battle-hud .hp-track{height:5px;background:#d3d8dc}
+.battle-hud .hp-track i.hp-high{background:#21b57d}
+.battle-hud .battle-clock{font-family:BarlowCondensed,Barlow,sans-serif;font-size:18px;background:#202731;color:#fff;padding:5px 8px;border-radius:5px;font-variant-numeric:tabular-nums}
+.battle-hud .battle-last-move{color:#b00029;font-style:italic}
+.battle-types>span{font-size:8px;padding:1px 3px;line-height:1.1}
+.battle-controls .move-button{isolation:isolate;background:transparent url('/pulse/assets/hud/move-shell.svg') center/100% 100% no-repeat;border:0;border-radius:0;color:#202731;padding:8px 16px 8px 13px;box-shadow:none;overflow:hidden;filter:none;opacity:1;gap:4px;transition:transform 100ms ease-out,filter 100ms ease-out}
+.battle-controls .move-button::before{content:'';position:absolute;inset:0;z-index:-1;width:auto;height:auto;background:var(--move-color,#9ba8af);opacity:.18;clip-path:polygon(6% 3%,99% 3%,93% 93%,1% 93%);border-radius:0;transform:none}
+.battle-controls .move-button::after{content:'';position:absolute;left:7%;bottom:7px;width:calc(85% * var(--charge,0));height:3px;background:var(--move-color,#748c99);z-index:0;pointer-events:none;opacity:1;transform:none;border-radius:2px}
+.battle-controls .move-line1{padding-right:25px;min-height:21px}
+.battle-controls .move-line1 b{color:#202731;font-family:BarlowCondensed,Barlow,sans-serif;font-style:italic;font-size:clamp(16px,1.9vw,26px);line-height:1.05}
+.battle-controls .move-line1 .move-ico{width:26px;height:26px;align-items:center;justify-content:center;background:var(--move-color,#8998a0);border-radius:50%;flex:none}
+.battle-controls .move-line1 .type-ico{border-radius:50%;width:22px!important;height:22px!important}
+.battle-controls .move-line2{padding-left:32px;min-height:12px;justify-content:flex-start}
+.battle-controls .move-line2 .move-power{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-family:BarlowCondensed,Barlow,sans-serif;font-style:italic;font-size:clamp(22px,2.8vw,35px);color:#202731;line-height:1}
+.battle-controls .move-line2 .move-eff{font-size:10px;color:#3e4e5a;line-height:1;font-weight:700}
+.battle-controls .move-button small{right:19px;top:4px;color:#4e5f6a;font-size:9px}
+.battle-controls .move-button.is-out-of-range{opacity:1;filter:none}
+.battle-controls .move-button:disabled:not(.move-empty){opacity:.55;filter:grayscale(.5)}
+.battle-controls .move-button.move-empty{opacity:.2}
+.battle-controls .move-button.is-called{filter:brightness(1.08);outline:2px solid #e60032;outline-offset:-4px}
+.battle-controls .move-button.is-pressed,.battle-controls .move-button:active:not(:disabled){transform:translateY(2px) scale(.98);filter:brightness(.94)}
+.battle-controls .battle-bench .bench-button{background:#fffaf0;border:0;border-radius:4px 4px 10px 4px;padding:4px 5px 8px;box-shadow:0 3px 6px #0004;opacity:1}
+.battle-controls .battle-bench .bench-button:disabled:not(.active){opacity:.35;filter:grayscale(1)}
+.battle-controls .battle-bench .bench-button.active{background:#fffaf0;box-shadow:inset 0 0 0 2px #e60032,0 3px 6px #0004}
+.battle-bench .bench-button.active:after{background:#e60032;color:white;left:0;top:0;font-size:7px;border-radius:3px 0 4px 0;padding:2px 4px}
+.battle-bench .hp-track{height:4px;background:#cbd4da}
+.battle-controls .utility-action{background:transparent url('/pulse/assets/hud/action-shell.svg') center/100% 100% no-repeat;color:#202731;border:0;border-radius:0;font-family:BarlowCondensed,Barlow,sans-serif;font-size:13px;font-style:italic;font-weight:800;box-shadow:none;padding:8px 12px;gap:5px;transition:transform 100ms ease-out}
+.battle-controls #battle-dodge{background-color:#e60032;background-image:none;clip-path:polygon(19% 0,100% 0,84% 100%,0 100%);color:#fff}
+.battle-controls .utility-action:disabled{opacity:.45}
+.battle-special #battle-pause{background:#fffaf0;color:#202731;border:0;border-radius:4px 4px 10px 4px;box-shadow:none}
+.battle-special .mega-action{background:#e60032;color:white;border:0;border-radius:4px 4px 12px 4px;font-family:BarlowCondensed,Barlow,sans-serif;font-style:italic}
+.battle-screen #joystick{border:2px solid #62717d;background:#ffffff06;box-shadow:inset 0 2px 6px #0004}
+.battle-screen #joystick::before{border-color:#45525f}
+.battle-screen #joystick i{background:#e60032;border:2px solid #fa718e;box-shadow:0 3px 8px #0005}
+.battle-screen #joystick.disabled{opacity:.55}
+.battle-screen button:focus-visible{outline:2px solid #7de5e0;outline-offset:2px}
+@media(max-height:380px){.battle-controls .move-line1 b{font-size:16px}.battle-controls .move-line1 .move-ico{width:23px;height:23px}.battle-controls .move-line2{padding-left:29px}.battle-controls .move-line2 .move-eff{font-size:9px}.battle-hud .plate-name-row b{font-size:12px}.battle-hud .fighter-plate img{width:25px;height:25px}.battle-controls .move-button{gap:1px;padding-block:4px}}
+@media(prefers-reduced-motion:reduce){.battle-controls .move-button,.battle-controls .utility-action{transition:none}}
+.battle-hud .plate-sub{line-height:1;min-height:10px}
+.battle-hud .plate-trainer,.battle-hud .battle-last-move{line-height:1;min-height:8px}
+
+/* Compact alignment pass: fixed 48px vital strip, context uses existing top margin. */
+.battle-screen .battle-hud{height:48px;padding:3px 7px;align-items:center;gap:6px;border-radius:8px 8px 0 0;box-shadow:none}
+.battle-screen .battle-arena{margin-top:48px}
+.battle-hud .fighter-plate{align-items:center;gap:5px;padding:0}
+.battle-hud .fighter-plate img{width:28px;height:28px;flex:none;align-self:center}
+.battle-hud .fighter-plate .plate-body{display:grid;grid-template-rows:12px 10px 4px 9px;gap:1px;min-width:0}
+.battle-hud .plate-name-row{display:flex;flex-wrap:nowrap;align-items:baseline;gap:4px;min-width:0}
+.battle-hud .plate-name-row b{font-size:13px;line-height:12px;min-width:0}
+.battle-hud .plate-level{font-size:9px;line-height:12px}
+.battle-hud .plate-percent{font-size:10px;line-height:12px}
+.battle-hud .plate-meta{display:flex;align-items:center;gap:3px;min-width:0;overflow:hidden;height:10px}
+.battle-hud .battle-types{flex:none;margin:0;gap:2px;height:10px}
+.battle-hud .battle-types>span{font-size:7px;padding:0 3px;gap:2px;line-height:10px;height:10px}
+.battle-hud .battle-types .type-ico{display:none}
+.battle-hud .status-chip,.battle-hud .stage-chip{font-size:7px;padding:0 3px;line-height:10px;height:10px;letter-spacing:0}
+.battle-hud .stage-chips{flex-wrap:nowrap;gap:2px;min-width:0}
+.battle-hud .hp-track{height:4px}
+.battle-hud .plate-sub{min-height:0;height:9px;line-height:9px;align-items:center}
+.battle-hud .plate-sub small{font-size:8px;line-height:9px}
+.battle-hud .pokeballs{gap:2px}
+.battle-hud .pokeball{width:7px;height:7px}
+.battle-hud .battle-clock{font-size:16px;padding:4px 7px;border-radius:4px;box-shadow:none;line-height:20px}
+.battle-context{grid-column:2;grid-row:1;align-self:end;display:flex;justify-content:space-between;gap:8px;padding-bottom:3px;min-width:0;pointer-events:none}
+.battle-context>div{display:flex;gap:6px;align-items:baseline;min-width:0;max-width:48%}
+.battle-context>div:last-child{justify-content:flex-end}
+.battle-context .plate-trainer{color:#b9cad5;font-size:9px;line-height:10px;max-width:100px}
+.battle-context .battle-last-move{color:#fffaf0;font-size:9px;min-height:0;line-height:10px;overflow:hidden;text-overflow:ellipsis}
+.battle-side-label{align-self:start;padding-top:6px}
+@media(max-height:380px){.battle-screen .battle-hud{height:48px}.battle-screen .battle-arena{margin-top:48px}.battle-hud .fighter-plate img{width:25px;height:25px}.battle-hud .plate-name-row b{font-size:12px}.battle-side-label{padding-top:3px}}

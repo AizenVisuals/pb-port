@@ -22,5 +22,11 @@ export function initializeAccount(config) {
       if(window.PulseNative?.isNative)await window.PulseNative.signOutGoogle();
       await signOut(auth);
     },
+    // Firebase ID Token (RS256) para o servidor pulse-online trocar por um
+    // token de sessão. O chamador usa e descarta; nunca é guardado.
+    async getIdToken(){
+      const user=auth.currentUser;
+      return user?user.getIdToken():null;
+    },
   };
 }

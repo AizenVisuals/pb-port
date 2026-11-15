@@ -5,6 +5,14 @@ import {CHAPTER_ONE,CHAPTER_TWO,ALL_STAGES} from './campaign.js';
 import {icon} from './icons.js';
 export function createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,notify,apply,movePicker,launchStage,drawTechnique,goBack}){
  const $=id=>document.getElementById(id);
+ const panels={};
+ for(const [id,title] of [['formation-detail','Formação'],['inventory-detail','Mochila'],['stage-detail','Preparar batalha']]){
+  const panel=$(id),sheet=document.createElement('dialog');sheet.className='sheet-dialog management-sheet';sheet.id=id+'-sheet';
+  const header=document.createElement('header');header.className='dialog-heading';header.innerHTML=`<h2>${title}</h2><button class="icon-button" aria-label="Fechar">×</button>`;
+  header.querySelector('button').onclick=()=>sheet.close();sheet.append(header,panel);document.body.append(sheet);panels[id]=sheet;
+ }
+ const openPanel=id=>{for(const dialog of Object.values(panels))if(dialog.open)dialog.close();panels[id].showModal();};
+ const closePanels=()=>{for(const dialog of Object.values(panels))if(dialog.open)dialog.close();};
  let partner=null,tab='attributes',slot=0,bagItem='oranberry',selectedStage=null,selectedChapter=1,stops=[],partnerStop,worldToken=0,invocation='pokemon',mapHintShown=false;
  // Pílulas de tipo da folha 696 (Pokédex, 19 linhas de 32px) para a tela do
  // parceiro. Linha 9 é um tipo não usado (marcador); não há pílula para ela.
@@ -18,7 +26,7 @@ export function createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,
   $('team-count').textContent=`${team.mons.length} / 6 parceiros`;
   $('team-list').innerHTML=Array.from({length:6},(_,i)=>{const key=team.mons[i],m=key&&mon(key);return `<button class="formation-slot ${m?'team-member':'empty-slot'} ${i===slot?'selected':''}" data-formation-slot="${i}" aria-label="${m?esc(m.name):'Adicionar parceiro'}, posição ${i+1}" aria-pressed="${i===slot}"><span class="slot-number">${i===0?'Inicial':`Reserva ${i}`}</span>${m?`<canvas id="formation-sprite-${i}" width="160" height="140" aria-hidden="true"></canvas><b>${esc(m.name)}</b><small>Nv. ${m.level}${m.heldItem?' · Item equipado':''}</small>`:`<span class="empty-slot-mark">${icon('team')}</span><b>Adicionar</b>`}</button>`;}).join('');
   const key=team.mons[slot],m=key&&mon(key);
-  $('formation-detail').innerHTML=m?`<div class="formation-selected">${portrait(m)}<div><h2>${esc(m.name)}</h2><span class="type-list">${tags(m)}</span><p>Nível ${m.level} · ${slot===0?'Abre a batalha':'Entra como reserva'}</p></div></div><div class="formation-command-list"><button data-partner="${key}" class="primary-button">Ver Pokémon</button><button data-formation-lead="${slot}" class="secondary-button" ${slot===0?'disabled title="Já abre a batalha"':''}>Liderar${slot===0?'<small>Já é o inicial</small>':''}</button><button data-formation-remove="${slot}" class="text-button" ${team.mons.length===1?'disabled title="A equipe precisa de ao menos um Pokémon"':''}>Retirar${team.mons.length===1?'<small>Único parceiro</small>':''}</button></div><p class="support-copy">Toque em um Pokémon abaixo para trocar.</p>`:'<h2>Posição livre</h2><p>Toque em um Pokémon da reserva abaixo.</p>';
+  $('formation-detail').innerHTML=m?`<div class="formation-selected">${portrait(m)}<div><h2>${esc(m.name)}</h2><span class="type-list">${tags(m)}</span><p>Nível ${m.level} · ${slot===0?'Abre a batalha':'Entra como reserva'}</p></div></div><div class="formation-command-list"><button data-partner="${key}" class="primary-button">Ver Pokémon</button><button data-formation-lead="${slot}" class="secondary-button" ${slot===0?'disabled title="Já abre a batalha"':''}>Liderar${slot===0?'<small>Já é o inicial</small>':''}</button><button data-formation-remove="${slot}" class="text-button" ${team.mons.length===1?'disabled title="A equipe precisa de ao menos um Pokémon"':''}>Retirar${team.mons.length===1?'<small>Único parceiro</small>':''}</button></div><button id="formation-swap" class="secondary-button">Escolher outro parceiro</button>`:'<h2>Posição livre</h2><p>Toque em um Pokémon da reserva abaixo.</p>';
   $('formation-roster').innerHTML=s.unlocked.map(key=>{const m=mon(key),position=team.mons.indexOf(key);return `<button class="roster-thumb ${position>=0?'in-team':''}" data-roster-add="${key}" aria-label="Selecionar ${esc(m.name)}">${portrait(m)}<span>${esc(m.name)}</span><small>Nv. ${m.level}${position>=0?' · Na equipe':''}</small></button>`;}).join('');
   team.mons.forEach((key,i)=>animate($('formation-sprite-'+i),key));
  }
@@ -122,19 +130,21 @@ export function createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,
  function setInvocation(mode){invocation=mode;$('pokemon-invocation').hidden=mode!=='pokemon';$('technique-invocation').hidden=mode!=='techniques';document.querySelectorAll('[data-invocation-mode]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.invocationMode===mode)));if(mode==='techniques')renderTechniques();}
  document.addEventListener('click',event=>{
   const b=event.target.closest('button');if(!b||b.disabled)return;
+  if(b.dataset.route)closePanels();
+  if(b.id==='formation-swap'){closePanels();$('formation-roster').scrollIntoView({block:'nearest'});}
   if(b.dataset.menuBack){goBack();return;}
-  if(b.dataset.partner){openPartner(b.dataset.partner);return;}
+  if(b.dataset.partner){closePanels();openPartner(b.dataset.partner);return;}
   if(b.dataset.partnerTab){tab=b.dataset.partnerTab;renderPartner();}
-  if(b.dataset.inventoryItem){bagItem=b.dataset.inventoryItem;renderBag();}
+  if(b.dataset.inventoryItem){bagItem=b.dataset.inventoryItem;renderBag();openPanel('inventory-detail');}
   if(b.dataset.bagFor){partner=b.dataset.bagFor;navigate('bag');}
-  if(b.dataset.techniqueFor){partner=b.dataset.techniqueFor;navigate('summon');setInvocation('techniques');$('technique-mon').value=partner;renderTechniques();}
+  if(b.dataset.techniqueFor){closePanels();partner=b.dataset.techniqueFor;navigate('summon');setInvocation('techniques');$('technique-mon').value=partner;renderTechniques();}
   if(b.dataset.invocationMode)setInvocation(b.dataset.invocationMode);
-  if(b.dataset.mapStage){selectedStage=b.dataset.mapStage;renderCampaign();}
+  if(b.dataset.mapStage){selectedStage=b.dataset.mapStage;renderCampaign();openPanel('stage-detail');}
   if(b.dataset.chapter){const ch=Number(b.dataset.chapter);if(ch===2&&!save().journey?.cleared.includes('1-10'))return;const chStages=ch===2?CHAPTER_TWO:CHAPTER_ONE,j=save().journey;selectedChapter=ch;selectedStage=j?.active?.stage&&j.active.stage.startsWith(ch+'-')?j.active.stage:chStages[Math.max(0,Math.min((j?.cleared.length||0)-(ch===2?10:0),9))].id;renderCampaign();}
-  if(b.dataset.formationSlot!==undefined){const i=Number(b.dataset.formationSlot);slot=Math.min(i,save().team.mons.length);renderTeam();}
+  if(b.dataset.formationSlot!==undefined){const i=Number(b.dataset.formationSlot);slot=Math.min(i,save().team.mons.length);renderTeam();if(save().team.mons[slot])openPanel('formation-detail');else $('formation-roster').scrollIntoView({block:'nearest'});}
   if(b.dataset.rosterAdd){const team=p.getTeam(),key=b.dataset.rosterAdd,prior=team.mons.indexOf(key);if(prior>=0&&slot<team.mons.length)[team.mons[slot],team.mons[prior]]=[team.mons[prior],team.mons[slot]];else if(prior<0){if(slot<team.mons.length)team.mons[slot]=key;else if(team.mons.length<6)team.mons.push(key);}team.gimmick=null;apply(p.setTeam(team));}
   if(b.dataset.formationLead!==undefined){const team=p.getTeam(),i=Number(b.dataset.formationLead);[team.mons[0],team.mons[i]]=[team.mons[i],team.mons[0]];team.gimmick=null;slot=0;apply(p.setTeam(team));}
-  if(b.dataset.formationRemove!==undefined){const team=p.getTeam();if(team.mons.length>1){team.mons.splice(Number(b.dataset.formationRemove),1);team.gimmick=null;apply(p.setTeam(team));}}
+  if(b.dataset.formationRemove!==undefined){closePanels();const team=p.getTeam();if(team.mons.length>1){team.mons.splice(Number(b.dataset.formationRemove),1);team.gimmick=null;apply(p.setTeam(team));}}
  });
  return {addSlot(){slot=Math.min(5,save().team.mons.length);renderTeam();$('formation-roster').scrollIntoView({block:'nearest'});},renderTeam,renderPartner,renderBag,renderCampaign,renderTechniques,openPartner,setInvocation,stopSprites,partner:()=>partner};
 }

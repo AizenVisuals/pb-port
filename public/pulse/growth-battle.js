@@ -1,5 +1,14 @@
 import {planCPU} from './tactical-ai.js';
 import {EVOLUTIONS,ITEMS,selectedMoves,xpAt} from './growth.js';
+/** Apply earned levels without replaying Mega transitions, healing, or resetting commands. */
+export function applyEarnedLevel(actor,level){
+ if(!actor||!Number.isInteger(level)||level<=actor.level||level>100)return false;
+ const hpScale=actor.maxHp/actor.st.hp,oldMax=actor.maxHp,wasAlive=actor.hp>0&&!actor.fainted;
+ const stats=Object.fromEntries(Object.entries(actor.spec.base).map(([key,base])=>[key,Math.floor((2*base+31)*level/100)+(key==='hp'?level+10:5)]));
+ actor.level=level;actor.spec={...actor.spec,level};actor.st=stats;actor.maxHp=stats.hp*hpScale;
+ actor.hp=wasAlive?Math.min(actor.maxHp,actor.hp+actor.maxHp-oldMax):0;
+ actor.hpShown=actor.hp;actor.hpChip=actor.hp;return true;
+}
 export function evolutionAssets(keys){const result=new Set(keys);for(const key of result){const next=EVOLUTIONS[key]?.[0];if(next)result.add(next);}return [...result];}
 export function configureGrowthBattle(b,engine,{levels={},opponentLevel=5,selected={},held={},onConsume=()=>true,onEvolve=()=>true,preview=()=>null,onEvent=()=>{},icons={},onKnockout=()=>null,onSuppress=()=>{},onPendingResolved=()=>{},pendingAuto=null,suppressedAuto={}}={}){
   b.speciesTable={...b.speciesTable};
@@ -94,6 +103,7 @@ export function configureGrowthBattle(b,engine,{levels={},opponentLevel=5,select
           if(actor&&!actor.fainted)b.text(actor.x,actor.y-actor.bodyH-35,`+${result.total} XP`,{kind:'status',color:'#f9e0a1',life:70});
           onEvent({kind:'ko-xp',total:result.total,changes:result.changes});
           for(const change of result.changes||[]){
+            for(const mon of b.teams[0].mons)if(mon.rkKey===change.key)applyEarnedLevel(mon,change.to);
             const edge=EVOLUTIONS[change.key];
             if(edge&&change.from<edge[1]&&change.to>=edge[1])maybeAutoPrompt(change.key,edge[1]);
           }

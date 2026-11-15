@@ -1,0 +1,195 @@
+2026-11-15T19:49:38.829Z GET / 200 7ms
+2026-11-15T19:49:38.858Z GET /api/admin/settings 401 3ms
+2026-11-15T19:49:38.889Z POST /api/auth/guest 201 8ms
+2026-11-15T19:49:38.896Z GET /api/admin/overview 403 2ms
+2026-11-15T19:49:38.913Z POST /api/auth/google 200 5ms
+2026-11-15T19:49:38.919Z GET /api/admin/settings 403 1ms
+2026-11-15T19:49:38.924Z GET /api/profile 200 1ms
+2026-11-15T19:49:38.931Z PUT /api/admin/settings 200 2ms
+2026-11-15T19:49:38.937Z PUT /api/admin/settings 200 1ms
+2026-11-15T19:49:38.944Z PUT /api/admin/settings 200 2ms
+pulse-online: erro interno Error: arena_disabled
+    at fail (file:///home/bloody/Projetos/pb-port/pulse-online/server.mjs:42:13)
+    at handle (file:///home/bloody/Projetos/pb-port/pulse-online/server.mjs:544:50)
+    at Server.<anonymous> (file:///home/bloody/Projetos/pb-port/pulse-online/server.mjs:630:5)
+    at Server.emit (node:events:514:20)
+    at parserOnIncoming (node:_http_server:1464:12)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17) {
+  status: 503,
+  code: 'arena_disabled'
+}
+2026-11-15T19:49:38.951Z POST /api/arena/queue 503 2ms
+2026-11-15T19:49:38.955Z GET /api/settings 200 0ms
+2026-11-15T19:49:38.958Z GET /api/admin/overview 200 1ms
+2026-11-15T19:49:38.967Z POST /api/auth/google 200 3ms
+2026-11-15T19:49:38.970Z GET /api/admin/settings 403 1ms
+✔ portal Google login, server-side admin authorization, settings validation and audit (370.707751ms)
+✔ arena: rotação é determinística por data, com as quotas por banda (6.19914ms)
+✔ arena: nível do bot pelos pontos (0-49→2, 50-149→3, 150-299→4, 300+→5) (0.590923ms)
+✔ arena: pontos (+20 PvP, +10 bot, -5 com piso 0) (0.717266ms)
+✔ arena: validação do time (3 da rotação, 4 golpes, gimmick) (2.258512ms)
+✔ arena: fila casa dois jogadores (FIFO, lado 0 é quem esperou mais) (12.826335ms)
+✔ arena: sem adversário em 2 min, o bot entra (nível pelos pontos) (11.593784ms)
+✔ arena: resultado aplica pontos, é idempotente e o segundo relato não duplica (10.971922ms)
+✔ arena: vitória contra bot dá +10 e derrota tira 5 (8.128981ms)
+2026-11-15T19:49:38.780Z GET /api/arena/rotation 401 9ms
+2026-11-15T19:49:38.827Z POST /api/auth/guest 201 6ms
+2026-11-15T19:49:38.840Z POST /api/auth/guest 201 3ms
+2026-11-15T19:49:38.847Z GET /api/arena/rotation 200 2ms
+2026-11-15T19:49:38.852Z GET /api/arena/rotation 200 1ms
+2026-11-15T19:49:38.859Z POST /api/arena/queue 400 2ms
+2026-11-15T19:49:38.865Z POST /api/arena/queue 200 2ms
+2026-11-15T19:49:38.872Z POST /api/arena/queue 200 2ms
+2026-11-15T19:49:38.879Z POST /api/arena/result 200 2ms
+2026-11-15T19:49:38.888Z POST /api/arena/result 200 4ms
+2026-11-15T19:49:38.893Z GET /api/arena/me 200 1ms
+2026-11-15T19:49:38.898Z GET /api/arena/ladder 200 1ms
+2026-11-15T19:49:38.902Z GET /api/arena/history 200 1ms
+2026-11-15T19:49:38.907Z POST /api/arena/result 200 2ms
+2026-11-15T19:49:38.910Z GET /api/arena/me 200 0ms
+2026-11-15T19:49:38.919Z POST /api/arena/result 404 2ms
+✔ arena HTTP: rotação, fila, resultado, ladder e histórico (247.55424ms)
+2026-11-15T19:49:38.952Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:38.957Z POST /api/auth/guest 201 1ms
+2026-11-15T19:49:38.964Z POST /api/rankings/match 200 4ms
+2026-11-15T19:49:38.967Z GET /api/rankings/me 200 1ms
+✔ ranking: POST /match devolve o standing pós-atualização (igual ao /me) (32.830348ms)
+2026-11-15T19:49:38.985Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:38.989Z POST /api/auth/guest 201 1ms
+2026-11-15T19:49:38.992Z GET /api/arena/rotation 200 1ms
+2026-11-15T19:49:38.996Z POST /api/arena/queue 200 1ms
+2026-11-15T19:49:39.000Z POST /api/arena/queue 200 2ms
+2026-11-15T19:49:40.149Z GET /api/arena/me 200 1ms
+2026-11-15T19:49:40.154Z GET /api/arena/me 200 1ms
+✔ arena WS: PvP entre dois clientes (hello, ready, go, tick, input, result, end) (1204.298106ms)
+2026-11-15T19:49:40.196Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:40.204Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:40.208Z GET /api/arena/rotation 200 1ms
+2026-11-15T19:49:40.213Z POST /api/arena/queue 200 1ms
+2026-11-15T19:49:40.217Z POST /api/arena/queue 200 2ms
+✔ arena WS: desistência dá a vitória ao outro lado; sem hello, fecha (70.405332ms)
+✔ arena: conflicting reports cancel a match without awarding points (7.90598ms)
+✔ arena: roster legality rejects incompatible moves and illegal Mega; low-move Pokémon are playable (0.721735ms)
+✔ ranks: rankOf nas fronteiras de tier/divisão (5.686368ms)
+✔ ranks: score — vitórias, bônus de sequência, bot, derrota e piso (1.235834ms)
+✔ ranks: temporada e Champion (1.306861ms)
+✔ banco: standing zera quando a temporada muda (5.964545ms)
+2026-11-15T19:49:38.711Z POST /api/auth/guest 201 14ms
+2026-11-15T19:49:38.737Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:38.746Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:38.754Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:38.760Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:38.766Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:38.771Z GET /api/friends 401 2ms
+2026-11-15T19:49:38.776Z POST /api/friends/request 401 1ms
+2026-11-15T19:49:38.780Z POST /api/friends/respond 401 0ms
+2026-11-15T19:49:38.786Z DELETE /api/friends/x 401 1ms
+2026-11-15T19:49:38.799Z POST /api/friends/heartbeat 401 0ms
+2026-11-15T19:49:38.807Z GET /api/friends 200 2ms
+2026-11-15T19:49:38.812Z POST /api/friends/request 400 2ms
+2026-11-15T19:49:38.816Z POST /api/friends/request 400 1ms
+2026-11-15T19:49:38.820Z POST /api/friends/request 400 1ms
+2026-11-15T19:49:38.825Z POST /api/friends/request 201 2ms
+2026-11-15T19:49:38.829Z GET /api/friends 200 2ms
+2026-11-15T19:49:38.832Z GET /api/friends 200 1ms
+2026-11-15T19:49:38.837Z POST /api/friends/request 400 2ms
+2026-11-15T19:49:38.841Z POST /api/friends/respond 404 1ms
+2026-11-15T19:49:38.849Z POST /api/friends/respond 200 2ms
+2026-11-15T19:49:38.853Z GET /api/friends 200 2ms
+2026-11-15T19:49:38.856Z GET /api/friends 200 1ms
+2026-11-15T19:49:38.860Z POST /api/friends/request 400 1ms
+2026-11-15T19:49:38.863Z POST /api/friends/heartbeat 200 0ms
+2026-11-15T19:49:38.866Z GET /api/friends 200 1ms
+2026-11-15T19:49:38.869Z GET /api/friends 200 1ms
+2026-11-15T19:49:38.874Z POST /api/friends/request 201 1ms
+2026-11-15T19:49:38.878Z POST /api/friends/respond 200 1ms
+2026-11-15T19:49:38.883Z GET /api/friends 200 1ms
+2026-11-15T19:49:38.887Z POST /api/friends/request 400 1ms
+2026-11-15T19:49:38.892Z POST /api/friends/request 201 2ms
+2026-11-15T19:49:38.895Z GET /api/friends 200 1ms
+2026-11-15T19:49:38.898Z POST /api/friends/respond 404 1ms
+2026-11-15T19:49:38.903Z POST /api/friends/request 201 2ms
+2026-11-15T19:49:38.907Z POST /api/friends/request 201 2ms
+2026-11-15T19:49:38.911Z GET /api/friends 200 2ms
+2026-11-15T19:49:38.915Z POST /api/friends/request 400 1ms
+2026-11-15T19:49:38.918Z DELETE /api/friends/a58f8abe-15c0-4e9c-8ea1-a562dfd5d062 200 1ms
+2026-11-15T19:49:38.922Z POST /api/friends/request 201 1ms
+2026-11-15T19:49:38.925Z DELETE /api/friends/4b0e88f5-a965-4274-9843-ff7a189c1c38 200 0ms
+2026-11-15T19:49:38.929Z GET /api/friends 200 1ms
+2026-11-15T19:49:38.932Z GET /api/friends 200 1ms
+2026-11-15T19:49:38.935Z DELETE /api/friends/4b0e88f5-a965-4274-9843-ff7a189c1c38 404 1ms
+2026-11-15T19:49:38.937Z DELETE /api/friends/usuario-inexistente 404 1ms
+✔ HTTP amizades: pedido, aceite, recusa, cooldown, expiração, pedido mútuo, remover, presença (336.86478ms)
+2026-11-15T19:49:38.970Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:38.974Z POST /api/auth/guest 201 1ms
+2026-11-15T19:49:38.977Z GET /api/rankings/me 401 0ms
+2026-11-15T19:49:38.979Z GET /api/rankings/ladder 401 1ms
+2026-11-15T19:49:38.980Z GET /api/rankings/history 401 0ms
+2026-11-15T19:49:38.983Z POST /api/rankings/match 401 0ms
+2026-11-15T19:49:38.987Z GET /api/rankings/me 200 2ms
+2026-11-15T19:49:38.992Z POST /api/rankings/match 200 3ms
+2026-11-15T19:49:38.997Z POST /api/rankings/match 200 3ms
+2026-11-15T19:49:39.001Z POST /api/rankings/match 200 2ms
+2026-11-15T19:49:39.005Z POST /api/rankings/match 200 2ms
+2026-11-15T19:49:39.010Z POST /api/rankings/match 200 1ms
+2026-11-15T19:49:39.014Z POST /api/rankings/match 200 2ms
+2026-11-15T19:49:39.018Z POST /api/rankings/match 200 2ms
+2026-11-15T19:49:39.022Z POST /api/rankings/match 200 1ms
+2026-11-15T19:49:39.025Z POST /api/rankings/match 400 1ms
+2026-11-15T19:49:39.028Z POST /api/rankings/match 400 1ms
+2026-11-15T19:49:39.031Z POST /api/rankings/match 400 1ms
+2026-11-15T19:49:39.034Z POST /api/rankings/match 404 1ms
+2026-11-15T19:49:39.038Z GET /api/rankings/ladder 200 2ms
+2026-11-15T19:49:39.047Z POST /api/rankings/match 200 3ms
+2026-11-15T19:49:39.055Z GET /api/rankings/ladder 200 2ms
+2026-11-15T19:49:39.059Z GET /api/rankings/ladder 200 2ms
+2026-11-15T19:49:39.063Z GET /api/rankings/history 200 2ms
+2026-11-15T19:49:39.070Z GET /api/rankings/history 200 1ms
+✔ HTTP ranking: /me, match, ladder, histórico, Champion e erros (125.912293ms)
+2026-11-15T19:49:39.090Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:39.095Z POST /api/auth/guest 201 1ms
+2026-11-15T19:49:39.098Z POST /api/auth/guest 201 1ms
+2026-11-15T19:49:39.101Z POST /api/auth/guest 201 1ms
+2026-11-15T19:49:39.105Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:39.109Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:39.112Z POST /api/auth/guest 201 2ms
+2026-11-15T19:49:39.115Z POST /api/auth/guest 201 1ms
+2026-11-15T19:49:39.118Z POST /api/auth/guest 201 1ms
+2026-11-15T19:49:39.121Z POST /api/auth/guest 201 1ms
+2026-11-15T19:49:39.124Z POST /api/auth/guest 201 1ms
+2026-11-15T19:49:39.127Z GET /api/rankings/ladder 200 1ms
+2026-11-15T19:49:39.129Z GET /api/rankings/me 200 1ms
+2026-11-15T19:49:39.131Z GET /api/rankings/me 200 0ms
+✔ HTTP ranking: Champion é o top 10% dos 600+ pts (60.356777ms)
+✔ sessão: assina e verifica; rejeita adulteração, expiração e segredo errado (5.589989ms)
+✔ firebase: verifica token RS256 válido e rejeita aud/iss/expiração/assinatura (202.714555ms)
+✔ validação de perfil: aceita valores válidos e rejeita os inválidos (4.69861ms)
+✔ banco: cria usuário, impede duplicata e persiste o perfil (12.011502ms)
+2026-11-15T19:49:38.967Z GET /api/health 200 7ms
+2026-11-15T19:49:39.008Z POST /api/auth/guest 201 4ms
+2026-11-15T19:49:39.015Z GET /api/profile 200 2ms
+2026-11-15T19:49:39.023Z PUT /api/profile 200 2ms
+2026-11-15T19:49:39.026Z GET /api/profile 200 1ms
+2026-11-15T19:49:39.031Z GET /api/profile 401 1ms
+2026-11-15T19:49:39.034Z GET /api/profile 401 0ms
+2026-11-15T19:49:39.040Z PUT /api/profile 400 2ms
+2026-11-15T19:49:39.044Z PUT /api/profile 400 1ms
+2026-11-15T19:49:39.050Z PUT /api/profile 400 1ms
+pulse-online: google auth falhou: token malformado
+2026-11-15T19:49:39.057Z POST /api/auth/google 401 2ms
+2026-11-15T19:49:39.060Z GET /api/friends 401 0ms
+2026-11-15T19:49:39.063Z GET /api/rankings/me 401 1ms
+2026-11-15T19:49:39.065Z GET /api/rankings/ladder 401 0ms
+2026-11-15T19:49:39.067Z GET /api/rankings/history 401 0ms
+2026-11-15T19:49:39.070Z GET /api/arena 401 1ms
+2026-11-15T19:49:39.071Z GET /api/admin/settings 401 0ms
+2026-11-15T19:49:39.073Z GET /api/não-existe 404 0ms
+✔ HTTP: saúde, convidado, perfil, erros e esqueletos (226.662899ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9971.170077

@@ -1,0 +1,15 @@
+[Unit]
+Description=PULSE ARENA online Cloudflare tunnel
+After=pulse-online.service
+Wants=pulse-online.service
+
+[Service]
+Type=simple
+ExecStart=/home/bloody/.local/share/pulse-online/tunnel.sh
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

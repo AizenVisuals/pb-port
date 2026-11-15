@@ -31,3 +31,23 @@ test('failed SDK loading permits retry without changing save',async()=>{
  assert.ok(await account.prepare());assert.equal(calls,2);assert.equal(f.data.get('pulse-arena.save.v1'),'existing-local-save');
  assert.match(accountError({code:'auth/network-request-failed'}),/Sem conexão/);
 });
+test('login expõe signIn, getIdToken e onAuth sem tocar no save',async()=>{
+ const f=fixture();let emit;const user={uid:'qa-user',name:'QA',email:'qa@example.test'};
+ const seen=[];
+ const sdk={subscribe:fn=>{emit=fn;fn(null);},signIn:async()=>emit(user),signOut:async()=>emit(null),getIdToken:async()=>'fake.id.token'};
+ const account=mountAccount({...f,onAuth:u=>seen.push(u?u.uid:null),load:async()=>sdk});
+ await account.prepare();
+ assert.equal(account.getUser(),null);
+ await account.signIn();
+ assert.equal(account.getUser()?.uid,'qa-user');
+ assert.equal(await account.getIdToken(),'fake.id.token');
+ assert.deepEqual(seen,[null,'qa-user']);
+ assert.equal(f.data.get('pulse-arena.save.v1'),'existing-local-save');
+});
+test('getIdToken retorna null quando o SDK não expõe o método',async()=>{
+ const f=fixture();
+ const sdk={subscribe:fn=>fn(null),signIn:async()=>{},signOut:async()=>{}};
+ const account=mountAccount({...f,load:async()=>sdk});
+ await account.prepare();
+ assert.equal(await account.getIdToken(),null);
+});

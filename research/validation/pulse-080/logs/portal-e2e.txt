@@ -1,0 +1,21 @@
+2026-11-15T19:35:51.873Z POST /api/auth/google 200 17ms
+2026-11-15T19:35:52.630Z GET / 200 2ms
+2026-11-15T19:35:52.681Z GET /portal.css 200 1ms
+2026-11-15T19:35:52.683Z GET /portal.js 200 1ms
+2026-11-15T19:35:52.774Z GET /api/settings 200 1ms
+2026-11-15T19:35:52.880Z GET /pulse/firebase-config.json 200 1ms
+2026-11-15T19:35:52.893Z POST /api/auth/google 200 2ms
+2026-11-15T19:35:52.902Z GET /api/profile 200 1ms
+2026-11-15T19:35:53.007Z GET /api/admin/overview 200 2ms
+2026-11-15T19:35:53.009Z GET /api/admin/settings 200 1ms
+2026-11-15T19:35:53.226Z GET / 200 1ms
+2026-11-15T19:35:53.280Z GET /portal.css 200 2ms
+2026-11-15T19:35:53.280Z GET /portal.js 200 1ms
+2026-11-15T19:35:53.307Z GET /api/profile 200 1ms
+2026-11-15T19:35:53.325Z GET /api/settings 200 1ms
+2026-11-15T19:35:53.445Z GET /pulse/firebase-config.json 200 1ms
+2026-11-15T19:35:53.486Z GET / 200 1ms
+2026-11-15T19:35:53.537Z GET /portal.css 200 1ms
+2026-11-15T19:35:53.538Z GET /portal.js 200 1ms
+2026-11-15T19:35:53.554Z GET /api/settings 200 1ms
+PASS portal: signed Google fixture, admin, F5 restoration, logout remains signed out after F5; no page errors

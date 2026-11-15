@@ -1,0 +1,15 @@
+{
+  "description": "PULSE ARENA: contas, amigos, rankings, Arena e portal administrativo",
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "server.mjs",
+  "name": "pulse-online",
+  "private": true,
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "type": "module",
+  "version": "0.2.0"
+}
