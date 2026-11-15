@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Usage · PB Ranked</title>
+<meta name="description" content="Which Pokémon players use in PB Ranked: usage, tiers, win rates, moves and teammates.">
+<link rel="icon" href="/branding/logo_160.png">
+<link rel="stylesheet" href="/doc.css">
+<style>
+  main { max-width: 900px; }
+  .tabs { display: inline-flex; background: #16181f; margin: 6px 0 4px; } .tabs button { font: italic 800 18px 'Barlow Condensed', sans-serif; text-transform: uppercase; color: #8f94a1; background: none; border: 0; padding: 8px 18px; cursor: pointer; }
+  .tabs button[aria-selected=true] { color: #fff; background: #1f222b; box-shadow: inset 0 -3px 0 #e3262f; }
+  .tabs.ranks button { font-size: 15px; padding-top: 6px; padding-bottom: 6px; }
+  .note { background: #16181f; padding: 10px 14px; margin: 10px 0; color: #d9d7d0; } .legend { color: #8f94a1; font-size: 14px; margin: 6px 0 0; }
+  h2 .count { color: #8f94a1; font-size: 16px; font-style: normal; font-family: Barlow, sans-serif; text-transform: none; margin-left: 6px; }
+  .row { display: grid; grid-template-columns: 30px 44px 1fr 150px 54px 64px; align-items: center; gap: 10px; background: #16181f; padding: 4px 10px; margin: 3px 0; cursor: pointer; border: 0; width: 100%; color: inherit; font: inherit; text-align: left; }
+  .row:hover { background: #1c1f27; } .row .rk { color: #8f94a1; font-variant-numeric: tabular-nums; } .row img { width: 40px; height: 40px; image-rendering: pixelated; }
+  .row .nm { font-weight: 700; } .bar { height: 8px; background: #2a2e39; position: relative; } .bar i { position: absolute; inset: 0 auto 0 0; background: #e3262f; border-radius: 0 4px 4px 0; }
+  .sorter { background: none; border: 0; padding: 0; color: inherit; font: inherit; cursor: pointer; text-align: left; } .sorter.num { text-align: right; } .sorter.on { color: #fff; font-weight: 700; }
+  .ttag { font-size: 11px; font-weight: 800; padding: 1px 6px; margin-left: 6px; background: #2a2e39; color: #d9d7d0; } .ttag.t-OU { background: #e3262f; color: #fff; } .ttag.t-UU { background: #3a6ae8; color: #fff; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; } .pct { font-weight: 700; } .up { color: #3ddc84; } .down { color: #ff6b72; } .dim { color: #8f94a1; }
+  .more { background: #12141a; padding: 10px 14px 12px 94px; margin: -3px 0 3px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 6px 20px; font-size: 14px; }
+  .more b { display: block; color: #8f94a1; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2px; } .more div span { color: #8f94a1; }
+  .head { display: grid; grid-template-columns: 30px 44px 1fr 150px 54px 64px; gap: 10px; padding: 0 10px; font-size: 12.5px; color: #8f94a1; margin-top: 4px; }
+  .tabs .short { display: none; } @media (max-width: 600px) { .tabs .long { display: none; } .tabs .short { display: inline; } }   /* (the period buttons: 24h, 3d... on a phone) */
+  @media (max-width: 600px) { .row, .head { grid-template-columns: 24px 36px 1fr 70px 48px; } .row .wr, .head .wr { display: none; } .row img { width: 34px; height: 34px; } .more { padding-left: 14px; } }
+</style>
+</head>
+<body>
+<header><a href="/"><img src="/branding/logo_160.png" alt="">PB Ranked</a><a href="/" class="back">◀ Back to the game</a></header>
+<main>
+  <h1>Usage</h1>
+  <p class="muted" id="sub">Loading…</p>
+  <div class="tabs" role="tablist" aria-label="Format" id="tabs"></div><br>
+  <div class="tabs ranks" role="tablist" aria-label="Players' rank" id="ranks"></div><br>
+  <div class="tabs ranks" role="tablist" aria-label="Period" id="periods"></div>
+  <div id="out"></div>
+</main>
+<script type="module">
+// The meta (server/usage.mjs via /api/usage): usage %, tiers, win rates, moves, teammates. Tap a Pokémon for details.
+import { INFO } from '/roster.js';
+const $ = s => document.querySelector(s), esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const pc = (x, d = 1) => `${(x * 100).toFixed(d)}%`;
+// move names stay in English when a browser set to Portuguese translates the page (Discord 2026-11-13, a player request; as app.js moveEl)
+const KEEP_MOVES = [...(navigator.languages || []), navigator.language || ''].some(l => /^pt\b/i.test(l));
+const mv = name => (KEEP_MOVES ? `<bdi translate="no" class="notranslate">${esc(name)}</bdi>` : esc(name));
+const portrait = k => (INFO[k] ? `/assets/portraits/${INFO[k].dex}_Normal.png` : '');
+const TIER_NAME = { OU: 'OU · Overused', UU: 'UU · Underused', RU: 'RU · Rarely used', NU: 'NU · Never used' };
+const Q = new URLSearchParams(location.search), FMT_NAME = { '3v3': '3v3', '6v6': '6v6', dbl: 'Doubles', tag: 'Tag team', pick4: 'Pick 4' };
+// (rank: every player, or the players in that tier and up this season - /api/usage?rank=)
+const RANK_NAME = { '': 'All players', great: 'Great Ball +', ultra: 'Ultra Ball +', master: 'Master Ball +' };
+// (period: the matches of the last 24 hours, 3, 7 or 28 days, or all of them - /api/usage?period=, Sondre 2026-11-10)
+const PERIOD_NAME = { '1': 'Last 24 hours', '3': 'Last 3 days', '7': 'Last 7 days', '28': 'Last 28 days', all: 'All time' };
+const PERIOD_SHORT = { '1': '24h', '3': '3 days', '7': '7 days', '28': '28 days', all: 'All' };
+const PERIOD_TEXT = { '1': 'the last 24 hours', '3': 'the last 3 days', '7': 'the last 7 days', '28': 'the last 28 days', all: 'all time' };
+const inPeriod = () => (period === 'all' ? 'so far' : `in ${PERIOD_TEXT[period]}`);
+let data = null, fmt = Q.get('format') || '3v3', sort = Q.get('sort') === 'winrate' ? 'winrate' : 'usage', rank = RANK_NAME[Q.get('rank') || ''] ? Q.get('rank') || '' : '';   // (sort: by usage in tiers, or one list by win rate)
+let period = PERIOD_NAME[Q.get('period')] ? Q.get('period') : '28';
+const url = () => `?format=${fmt}${sort === 'winrate' ? '&sort=winrate' : ''}${rank ? `&rank=${rank}` : ''}${period !== '28' ? `&period=${period}` : ''}`;
+function render() {
+  const F = data.formats[fmt] || { teams: 0, enough: false, list: [] }, T = data.tiers;
+  $('#tabs').innerHTML = Object.keys(FMT_NAME).map(f => `<button role="tab" aria-selected="${f === fmt}" data-f="${f}">${FMT_NAME[f]}</button>`).join('');
+  document.querySelectorAll('#tabs button').forEach(b => (b.onclick = () => { fmt = b.dataset.f; history.replaceState(null, '', url()); render(); }));
+  $('#ranks').innerHTML = Object.keys(RANK_NAME).map(g => `<button role="tab" aria-selected="${g === rank}" data-g="${g}">${RANK_NAME[g]}</button>`).join('');
+  document.querySelectorAll('#ranks button').forEach(b => (b.onclick = () => { rank = b.dataset.g; history.replaceState(null, '', url()); load(); }));
+  $('#periods').innerHTML = Object.keys(PERIOD_NAME).map(p => `<button role="tab" aria-selected="${p === period}" data-p="${p}"><span class="long">${PERIOD_NAME[p]}</span><span class="short">${PERIOD_SHORT[p]}</span></button>`).join('');
+  document.querySelectorAll('#periods button').forEach(b => (b.onclick = () => { period = b.dataset.p; history.replaceState(null, '', url()); load(); }));
+  const used = new Set(F.list.map(m => m.key)), unused = Object.keys(INFO).filter(k => !used.has(k)).length;
+  let html = F.enough ? '' : `<p class="note">Only ${F.teams} team${F.teams === 1 ? '' : 's'} in ${FMT_NAME[fmt] || fmt} so far: the tiers settle once there are ${data.minTeams}. Numbers below are early.</p>`;
+  html += `<p class="legend">Usage = share of players who used the Pokémon (each player counts once, however many battles they play; ${F.players ?? '?'} players, ${F.teams} teams). OU ${pc(T.OU)}+ · UU ${pc(T.UU)}+ · RU ${pc(T.RU)}+ · NU below. Win rate from 5 uses.${period === 'all' ? '' : ` ↑↓ = change from the ${period === '1' ? '24 hours' : `${period} days`} before.`} Counted: players with ${data.minGames ?? 5}+ battles in this format ${inPeriod()}${rank ? `, in ${RANK_NAME[rank].replace(' +', '')} or higher this season (their rank now)` : ''}.</p>`;
+  const head = `<div class="head"><span>#</span><span></span><span>Pokémon</span><button class="sorter${sort === 'usage' ? ' on' : ''}" data-s="usage">Usage ${sort === 'usage' ? '▾' : ''}</button><span class="num"></span><button class="num wr sorter${sort === 'winrate' ? ' on' : ''}" data-s="winrate">Win rate ${sort === 'winrate' ? '▾' : ''}</button></div>`;
+  // by usage: a section per tier; by win rate: one list (the ones with fewer than 5 uses last, by usage)
+  const sections = sort === 'usage' ? ['OU', 'UU', 'RU', 'NU'].map(t => [TIER_NAME[t], F.list.filter(m => m.tier === t)])
+    : [['By win rate', [...F.list.filter(m => m.uses >= 5).sort((a, b) => b.winRate - a.winRate || b.usage - a.usage), ...F.list.filter(m => m.uses < 5)]]];
+  for (const [title, list] of sections) {
+    if (!list.length) continue;
+    html += `<h2>${title}<span class="count">${list.length}</span></h2>${head}`;
+    for (const m of list) {
+      const rank = sort === 'usage' ? F.list.indexOf(m) + 1 : list.indexOf(m) + 1, ch = m.change == null ? '' : Math.abs(m.change) < 0.0005 ? '' : m.change > 0 ? `<span class="up">↑</span>` : `<span class="down">↓</span>`;
+      html += `<button class="row" data-k="${m.key}" aria-expanded="false"><span class="rk">${rank}</span><img src="${portrait(m.key)}" alt="" onerror="this.style.visibility='hidden'"><span class="nm">${esc(m.name)}${sort === 'winrate' ? ` <span class="ttag t-${m.tier}">${m.tier}</span>` : ''}</span>
+        <span class="bar" title="${pc(m.usage, 2)} of teams"><i style="width:${Math.min(100, (m.usage / F.list[0].usage) * 100).toFixed(1)}%"></i></span><span class="num pct">${pc(m.usage)} ${ch}</span>
+        <span class="num wr">${m.uses >= 5 ? pc(m.winRate, 0) : '<span class="dim">–</span>'}</span></button>
+        <div class="more" hidden><div><b>Moves</b>${m.moves.map(x => `${mv(x.name)} <span>${pc(x.pct, 0)}</span>`).join('<br>')}</div>
+        <div><b>Teammates</b>${m.mates.map(x => `${esc(x.name)} <span>${pc(x.pct, 0)}</span>`).join('<br>') || '<span>–</span>'}</div>
+        <div><b>On ${m.uses} team${m.uses === 1 ? '' : 's'}</b>Leads ${pc(m.lead, 0)}${INFO[m.key]?.mega ? `<br>${INFO[m.key].bond ? 'Battle Bond' : 'Mega Evolves'} ${pc(m.mega, 0)}` : ''}<br>Wins ${pc(m.winRate, 0)}</div></div>`;
+    }
+  }
+  if (unused) html += `<p class="muted">${unused} Pokémon not used in ${fmt} ${inPeriod()}.</p>`;
+  $('#out').innerHTML = html;
+  document.querySelectorAll('.sorter').forEach(b => (b.onclick = () => { sort = b.dataset.s; history.replaceState(null, '', url()); render(); }));
+  document.querySelectorAll('.row').forEach(r => (r.onclick = () => { const m = r.nextElementSibling, open = m.hidden; m.hidden = !open; r.setAttribute('aria-expanded', String(open)); }));
+}
+const cache = {};
+function load() {
+  const key = `${rank}|${period}`;
+  const got = d => { if (d.error) { $('#sub').textContent = d.error; return setTimeout(load, 5000); } cache[key] = d; data = d; $('#sub').textContent = `Players' teams in ranked and unranked matches, ${PERIOD_TEXT[period]} · updated ${new Date(d.updated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`; render(); };
+  if (cache[key]) return got(cache[key]);
+  fetch(`/api/usage?period=${period}${rank ? `&rank=${rank}` : ''}`).then(r => r.json()).then(got).catch(() => { $('#sub').textContent = 'Could not load the usage stats. Try again in a moment.'; });
+}
+load();
+</script>
+</body>
+</html>

@@ -4,12 +4,21 @@ import json,re,hashlib,xml.etree.ElementTree as ET,shutil
 root=Path(__file__).resolve().parents[1];prisma=Path('/home/bloody/Documents/Pokémon/android/app/src/main/assets')
 roster=json.loads((root/'public/roster.json').read_text());source=(root/'research/campaign/growth-stats-source.ts').read_text();moves=json.loads((prisma/'moves.json').read_text())
 normalize=lambda s:re.sub('[^a-z0-9]','',s.lower())
-basic=[dict(id='pulseBasics:Scratch',name='Scratch',type='normal',cat='phys',power=40,cd=150,reach='close',source='gibleAT:Tackle',adapted=True,desc='Arranha o adversário. Sem efeito adicional.'),dict(id='pulseBasics:Ember',name='Ember',type='fire',cat='spec',power=40,cd=150,reach='mid',source='typhlosion:Flamethrower',adapted=True,desc='Pequenas chamas que podem causar queimadura. Animação adaptada do PB.'),*[dict(id='pulseBasics:'+name,name=name,type='normal' if name!='Withdraw' else 'water',cat='status',power=0,cd=420,reach='mid',stat=stat,amount=amount,self=own,desc=desc)for name,stat,amount,own,desc in [('Growl','atk',-1,False,'Reduz o Ataque do adversário em um estágio.'),('Leer','def',-1,False,'Reduz a Defesa do adversário em um estágio.'),('Tail Whip','def',-1,False,'Reduz a Defesa do adversário em um estágio.'),('Withdraw','def',1,True,'Aumenta a Defesa do usuário em um estágio.')]]]
+basic=[dict(id='pulseBasics:Scratch',name='Scratch',type='normal',cat='phys',power=40,cd=150,reach='close',source='gibleAT:Tackle',adapted=True,desc='Arranha o adversário. Sem efeito adicional.'),dict(id='pulseBasics:Ember',name='Ember',type='fire',cat='spec',power=40,cd=150,reach='mid',source='typhlosion:Flamethrower',adapted=True,desc='Pequeno projétil de fogo. 10% de chance de queimadura após causar dano.'),*[dict(id='pulseBasics:'+name,name=name,type='normal' if name!='Withdraw' else 'water',cat='status',power=0,cd=420,reach='mid',stat=stat,amount=amount,self=own,desc=desc)for name,stat,amount,own,desc in [('Growl','atk',-1,False,'Reduz o Ataque do adversário em um estágio.'),('Leer','def',-1,False,'Reduz a Defesa do adversário em um estágio.'),('Tail Whip','def',-1,False,'Reduz a Defesa do adversário em um estágio.'),('Withdraw','def',1,True,'Aumenta a Defesa do usuário em um estágio.')]]]
+basic.extend([
+ dict(id='pulseBasics:Harden',name='Harden',type='normal',cat='status',power=0,cd=420,reach='self',stat='def',amount=1,self=True,desc='Aumenta a Defesa em um estágio.'),
+ dict(id='pulseBasics:Teleport',name='Teleport',type='psychic',cat='status',power=0,cd=600,reach='self',desc='Recua para um parceiro disponível. Sem parceiro, falha.'),
+ dict(id='pulseBasics:Transform',name='Transform',type='normal',cat='status',power=0,cd=600,reach='mid',desc='Copia a forma, tipos, atributos e golpes do alvo, preservando HP e nível. Reverte ao sair de campo.')
+])
 global_moves={}
 for m in roster:
  for x in m['pool']:global_moves.setdefault(normalize(x['name']),x)
 for x in basic:global_moves[normalize(x['name'])]=x
 expansion={'ivysaur':('0002','venusaur'),'charmeleon':('0005','charizard'),'wartortle':('0008','blastoise'),'chikorita':('0152','venusaur'),'bayleef':('0153','venusaur'),'meganium':('0154','venusaur'),'cyndaquil':('0155','typhlosion'),'quilava':('0156','typhlosion'),'totodile':('0158','feraligatrD'),'croconaw':('0159','feraligatrD'),'feraligatr':('0160','feraligatrD')}
+# Canonical Kanto roster expansion, enabled only after its full animation import succeeds.
+kanto_report=root/'research/campaign/kanto-sprite-import.json'
+if kanto_report.exists() and not json.loads(kanto_report.read_text())['failures']:
+ expansion.update({k:tuple(v)for k,v in json.loads((root/'research/next-pass/kanto-expansion-plan.json').read_text()).items()})
 anims=json.loads((root/'public/assets/sprites/anims.json').read_text());new=[]
 for key,(dex,template)in expansion.items():
  block=source.split('\n\t'+key+': {',1)[1].split('\n\t},',1)[0];stats={k:int(v)for k,v in re.findall(r'(hp|atk|def|spa|spd|spe): (\d+)',block)};types=[s.lower()for s in re.findall(r'"([A-Za-z]+)"',re.search(r'types: \[(.*?)\]',block)[1])]
@@ -37,7 +46,7 @@ for mon in roster:
   if not definition:continue
   lv=[v['level']for v in x['versions']if v['game']==preferred and str(v['method'])in['1','level-up']]
   if lv:levels[definition['id']]=max(1,min(lv))
-  if any(str(v['method'])in['2','3','4','egg','tutor','machine']for v in x['versions']):special.add(definition['id'])
+  if any(v['game']==preferred and str(v['method'])in['4','machine'] for v in x['versions']):special.add(definition['id'])
  pool=list(mon['pool']);ids={x['id']for x in pool};names={normalize(x['name'])for x in pool}
  for definition in global_moves.values():
   if (definition['id']in levels or definition['id']in special)and normalize(definition['name'])not in names:pool.append(dict(definition));names.add(normalize(definition['name']))
@@ -51,7 +60,7 @@ for mon in roster:
  mon['pool']=pool
  early=[x for x in legal if levels.get(x['id'],999)<=5]
  initial=5 if early else min(levels.values(),default=5)
- rules[mon['key']]={'levelMoves':{x['id']:levels[x['id']]for x in pool if x['id']in levels},'specialMoves':[x['id']for x in legal if x['id']in special and x['id']not in levels],'initialLevel':initial,'game':preferred}
+ rules[mon['key']]={'levelMoves':{x['id']:levels[x['id']]for x in pool if x['id']in levels},'specialMoves':[x['id']for x in legal if x['id']in special],'initialLevel':initial,'game':preferred}
  if mon['key']in new:
   mon['defaults']=[x['id']for x in early][:4]or[x['id']for x in legal][:4]
  records.append({'key':mon['key'],'path':str(path),'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'game':preferred})
@@ -63,5 +72,5 @@ expanded=[m for m in roster if m['key']in new]
 items=json.loads((prisma/'items.json').read_text());assets=[]
 for slug in ['oranberry','sitrusberry','lumberry','cheriberry','pechaberry','chestoberry','leftovers']:
  item=next(x for x in items.values()if x['slug']==slug);src=prisma/item['icon'];dst=root/f'public/pulse/assets/items/{slug}.png';dst.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(src,dst);assets.append({'item':slug,'source':str(src),'sha256':hashlib.sha256(src.read_bytes()).hexdigest(),'upstream':item['source']})
-(root/'research/campaign/growth-data-sources.json').write_text(json.dumps({'learnsets':'PrismaDex pinned PokeAPI 2bf639e5572812a67d2b94903fdcb9d095f5aeb2; methods 1/level-up and 2/3/4 egg/tutor/machine; Scarlet-Violet preferred','records':records,'items':assets,'basicMoves':'PB behavior adaptations explicitly marked in definitions; Growl/Leer/Tail Whip/Withdraw implement canonical stat stages.','statsSource':'https://raw.githubusercontent.com/smogon/pokemon-showdown/master/data/pokedex.ts','statsSha256':hashlib.sha256(source.encode()).hexdigest()},indent=2)+'\n')
+(root/'research/campaign/growth-data-sources.json').write_text(json.dumps({'learnsets':'PrismaDex pinned PokeAPI 2bf639e5572812a67d2b94903fdcb9d095f5aeb2; level-up and TM/machine only, same selected version group; egg/tutor excluded; Scarlet-Violet preferred','records':records,'items':assets,'basicMoves':'PB behavior adaptations explicitly marked in definitions; Growl/Leer/Tail Whip/Withdraw implement canonical stat stages.','statsSource':'https://raw.githubusercontent.com/smogon/pokemon-showdown/master/data/pokedex.ts','statsSha256':hashlib.sha256(source.encode()).hexdigest()},indent=2)+'\n')
 print(json.dumps({'newSpecies':new,'learnsets':len(rules),'itemIcons':len(assets)}))

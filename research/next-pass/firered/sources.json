@@ -1,0 +1,167 @@
+{
+  "upstream": "https://github.com/pret/pokefirered",
+  "revision": "ce6406d8c2eaf46d543c8a2606de0c3cb1951982",
+  "scope": "Original FireRed game assets, not original PULSE art; research/import only pending map composition",
+  "files": [
+    {
+      "path": "data/tilesets/primary/general/tiles.png",
+      "sha256": "9ff889d1b9da5383a0cd0c85ac7b791812867804f3a38566b46172087419e0b9"
+    },
+    {
+      "path": "data/tilesets/primary/general/metatiles.bin",
+      "sha256": "8d950c1a1f151f5e1bded1ecee165b815c3a4d62b69a4a9cec4f676283f9041e"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/00.pal",
+      "sha256": "757529e794c7fb9c333b1c2ef83704f6b03bb0fe756443b80025b2bc55dbe7f0"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/01.pal",
+      "sha256": "baec95e65952c79e6ceb9cf8306995379982dc9253e67797b350556e1db83bfb"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/02.pal",
+      "sha256": "ea0310019345ea29e2196c4326182e32cbddf0e5fc2c4d010e8c40794c78852b"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/03.pal",
+      "sha256": "117156779971950f6693bbefa2e92c373662209f2e39e4716f1e37a4f72ba022"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/04.pal",
+      "sha256": "7fed8601788c83852288c2395afd84a2c9ca6717c1eb38b762ad8ae7a9d61c5d"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/05.pal",
+      "sha256": "f8497b9b541ebe7ba0a80b0ac865135410d9cf6324f13949f3285c70b1119e07"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/06.pal",
+      "sha256": "4d2d0cfdc068acb9bc2adc9d4d762bcee527fd0cf045c30728632e15b0590582"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/07.pal",
+      "sha256": "9fd961331b3d93c934ae2606e4c71e915af26bdefdded710b3992d047360fc3e"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/08.pal",
+      "sha256": "9fd961331b3d93c934ae2606e4c71e915af26bdefdded710b3992d047360fc3e"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/09.pal",
+      "sha256": "9fd961331b3d93c934ae2606e4c71e915af26bdefdded710b3992d047360fc3e"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/10.pal",
+      "sha256": "9fd961331b3d93c934ae2606e4c71e915af26bdefdded710b3992d047360fc3e"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/11.pal",
+      "sha256": "9fd961331b3d93c934ae2606e4c71e915af26bdefdded710b3992d047360fc3e"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/12.pal",
+      "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/13.pal",
+      "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/14.pal",
+      "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+    },
+    {
+      "path": "data/tilesets/primary/general/palettes/15.pal",
+      "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/tiles.png",
+      "sha256": "321a23f388126175b34b85cf46c2d8f943daab5ee4d0916129c345b99b9108d2"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/metatiles.bin",
+      "sha256": "3b7ba7f75fd5d750413fc252519569a9f98fac586d87f62066bdf1e3edf35ca2"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/00.pal",
+      "sha256": "77bf9872166325d3efeac30fd239248fdf52d9f726aad11658c3b9043af6294f"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/01.pal",
+      "sha256": "df2417a4e46e1089cb56041750c6b81a2c98fef14f8256de0d7dcdda64e1da8b"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/02.pal",
+      "sha256": "1232c6a269f74fa49e0b34ca573cb336b6f2b262feb41c3b2f36e8044159f3bc"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/03.pal",
+      "sha256": "0c6d9358c87a8245d0ec44f40b7064f5e0cec3ad2142157bb8e62e44628fd9a7"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/04.pal",
+      "sha256": "dc6c7c3af8e1da0d769b72653d369181c5c65d82cbead71ecd5e73481f74dc2d"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/05.pal",
+      "sha256": "2bb3f814b7be56fd42b2ba870a3a09b96bdb7cbcbf8d57bcc39fe82c68e14d2d"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/06.pal",
+      "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/07.pal",
+      "sha256": "a47bca4043b26b45e2e06f38bd87f2c611c81629a65dc46e7144273143d3d5b2"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/08.pal",
+      "sha256": "14c4f6f561b62186b212917e7e922e12ddcc2eae3cca047b53c3354220669997"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/09.pal",
+      "sha256": "18fa76a58a43b9968fd1b506a6a5b72b39a1093d1cb8b7479115e2f3bcd514c9"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/10.pal",
+      "sha256": "24abe115664ebcb82c3651b316d2496999c0ec99690dcb956ccee2afc2f030e9"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/11.pal",
+      "sha256": "9a4bea40b1915f05d12a5867c1d9c65d72a876f23931d7aa95f035eddbb04c5f"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/12.pal",
+      "sha256": "1ad9341bbc8ee6284a665f18d2bd535637cffdc2c0a2e47bd2a7d9253af32ba6"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/13.pal",
+      "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/14.pal",
+      "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+    },
+    {
+      "path": "data/tilesets/secondary/pallet_town/palettes/15.pal",
+      "sha256": "226f0ddc9a6d3b26b78e138333dfde67d39aa7ac95a257e9e53c766fb6035675"
+    },
+    {
+      "path": "data/layouts/layouts.json",
+      "sha256": "1e8fdf737b31d269d0b918d4ed88bec8c2701bc7b1cbae2b2e3938bdea3de394"
+    },
+    {
+      "path": "data/layouts/PalletTown/map.bin",
+      "sha256": "b709c6d47d6006ff6402026496a9d0d9caab19a4515b02517eaf049c5f7bf2e0"
+    },
+    {
+      "path": "data/maps/PalletTown/map.json",
+      "sha256": "2816338934241bac34f52dae8b101ac3add59e0ebdde3e3fb6575f3b525b01c3"
+    },
+    {
+      "path": "include/global.fieldmap.h",
+      "sha256": "34a8c91e10803ba48b97a2df8a721ca37fad7572b2ff951a4ab7ec15a5f050eb"
+    }
+  ]
+}

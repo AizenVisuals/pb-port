@@ -1,6 +1,6 @@
 ---
 name: PULSE ARENA
-description: Light framed game menus with pixel creatures and a real-time battle surface.
+description: Light framed game menus with FireRed tile scenes, lobby destinations and light framed real-time game menus.
 colors:
   bg: "#d7e8e4"
   surface: "#fff9eb"
@@ -54,6 +54,7 @@ rounded:
   slot: "12px"
   card: "13px"
   panel: "14px"
+  prize: "16px"
   dialog: "18px"
 spacing:
   tight: "4px"
@@ -95,8 +96,12 @@ components:
     rounded: "{rounded.slot}"
     padding: "8px"
   navigation-item:
-    rounded: "{rounded.slot}"
+    rounded: "{rounded.secondary}"
     padding: "3px 5px"
+  daily-prize:
+    backgroundColor: "#e1ecda"
+    rounded: "{rounded.prize}"
+    padding: "14px 20px"
 ---
 
 # Design System: PULSE ARENA
@@ -105,15 +110,15 @@ components:
 
 **Creative North Star: "Light game panels around a living pixel partner"**
 
-PULSE ARENA uses warm ivory panels, navy graphite text and structural frames around colorful pixel creatures and original world art. Coral commands have shallow tactile depth; cyan distinguishes selection and progress. The game remains compact and landscape, with an animated favorite leading the lobby.
+PULSE ARENA uses warm ivory panels, navy graphite text and structural frames around colorful pixel creatures and authored scenes composed from authentic FireRed tiles. Coral commands have shallow tactile depth; cyan distinguishes selection and progress. The game remains compact and landscape, with an animated favorite leading the lobby.
 
-This records the approved light-game replacement, superseding the old dark menu rules while preserving the graphite/cyan/coral identity, bundled Barlow typography, pixel assets and high-contrast real-time battle HUD. Authority is PRODUCT.md and `.impeccable/surfaces/pulse-light-game.md`; the pinned Pokémon: Champion captures establish composition rather than reusable promotional art. No catalog roll, QUALITY BAR card or independently verified FORM seed was recorded.
+This records the approved light-game replacement, superseding the old dark menu rules while preserving the graphite/cyan/coral identity, bundled Barlow typography, pixel assets and high-contrast real-time battle HUD. Authority is PRODUCT.md and `.impeccable/surfaces/pulse-light-game.md`; the pinned Pokémon: Champion captures establish composition rather than reusable promotional art. The reproducible FORM audit (seed `7ccad869466fc571`) was performed after the build, as the surface contract explicitly records; it is not evidence of prior user approval. No generated UI comp, catalog roll or QUALITY BAR card is asserted.
 
 **Key Characteristics:**
 - Warm framed task panels and shallow bevels.
 - Pixel creatures carry identity; world artwork carries place.
 - Coral actions, cyan selection and explicit text states.
-- Landscape workspaces with internal scrolling and persistent navigation.
+- Landscape workspaces with internal scrolling, six lobby destinations and contextual Back.
 
 ## Colors
 
@@ -133,7 +138,7 @@ The normative colors above are extracted from the final stylesheet cascade, with
 - **Battle ink / battle cyan:** local high-contrast HUD overrides; these are not an alternate management theme.
 
 
-**The Action and Selection Rule.** Use coral for primary commands and cyan for selected inventory, formation and progress; keep state text alongside color.
+**The Action and Selection Rule.** Use coral for primary commands and cyan for selected inventory and progress; formation selection uses a warm fill and coral border; keep state text alongside color.
 
 ## Typography
 
@@ -144,7 +149,7 @@ The normative colors above are extracted from the final stylesheet cascade, with
 - **Display:** the base wordmark uses the frontmatter role; compact landscape uses 33px, expanded desktop 56px. The creature name uses 29px base, 27px compact and 43px expanded.
 - **Headline:** contextual screen titles use the frontmatter role, adapting to 25px compact and 34px expanded; campaign compact titles use 23px.
 - **Title:** panel headings use the title role; compact panels commonly use 20px, with inventory and formation refinements scoped locally.
-- **Body:** base 16px and 1.4 line-height; panel text commonly uses 13px base, 11–12px compact and 15px expanded.
+- **Body:** base 16px and 1.4 line-height; panel text commonly uses 13px base and 15px expanded. Final compact support-copy overrides raise campaign, XP, summon-budget, pity, odds, technique and inventory counts to 13px; evolution conditions and recipient labels use 12px.
 - **Label:** common chips and navigation use 12px, with navigation 11px compact and 14px expanded. Quantities and experience use tabular numerals where defined.
 
 The type ramp is responsive and component-specific, not a single multiplicative scale. Compact micro-labels are implementation debt, not a new minimum legibility standard.
@@ -153,9 +158,9 @@ The type ramp is responsive and component-specific, not a single multiplicative 
 
 ## Layout
 
-The app fills 100svh as header, flexible content and bottom navigation, with safe-area padding on every edge. The base header/navigation heights are 56px/69px; compact landscape at max-height 440px uses 50px/62px. At min-width 1100px and min-height 600px they become 65px/83px. Bottom navigation remains horizontal at the observed desktop size; the old rail prescription no longer describes the build.
+The app fills 100svh with safe-area padding, a compact header and a flexible playfield. Only the lobby has a destination dock. The header is 56px base, 50px compact and 65px expanded. Final dock heights are 78px base, 70px compact and 88px expanded; tile heights are 65px, 60px and 74px respectively. Secondary screens hide the dock and use the recovered viewport for the current task. Compact landscape matches max-height 440px; expanded matches min-width 1100px and min-height 600px.
 
-Content uses 12px 18px base padding, 9px 14px compact and 20px 30px expanded. The spacing tokens are recurring measurements, not an exclusive grid. Formation uses a field and command panel with an owned roster below; partner uses sprite stage and tabbed workspace; inventory uses item slots and persistent detail; campaign uses a pannable numbered map and stage summary with a fixed launch action. Most workspaces use a flexible main area with a roughly 215–250px minimum side panel on phones. The collection uses auto-fill cards, with compact minimum column width 103px and 8px gaps.
+Content uses 12px 18px base padding, 9px 14px compact and 20px 30px expanded. The spacing tokens are recurring measurements, not an exclusive grid. Formation uses a field and command panel with an owned roster below; partner uses sprite stage and tabbed workspace; inventory uses item slots and persistent detail; campaign uses a pannable numbered map and stage summary with a fixed launch action. Most workspaces use a flexible main area with a roughly 215–250px minimum side panel on phones. The collection uses auto-fill cards, with compact minimum column width 110px and 10px gaps.
 
 Internal scrolling is explicit on task panels, roster and stage summary. Campaign adds an "Arraste para explorar" affordance. At max-width 639px in portrait, task workspaces stack as a fallback; landscape remains the product orientation. All 48px measurements here are CSS pixels in the shared WebView surface, not verified Android dp measurements.
 
@@ -163,7 +168,7 @@ Internal scrolling is explicit on task panels, roster and stage summary. Campaig
 
 ## Elevation & Depth
 
-This world uses shallow gradients, inset highlights and soft ambient shadows as game-panel materials. These devices are native to the approved direction. The lobby layers UI over an illustrated terrace, formation over an oval field and campaign over original route art. Depth is structural and contextual rather than decorative glass.
+This world uses shallow gradients, inset highlights and soft ambient shadows as game-panel materials. These devices are native to the approved direction. The lobby layers UI over `lobby-tiles.webp`, formation over an oval field and campaign over `chapter-one-tiles.webp`. The two tile scenes are authored compositions from original FireRed materials; upstream files, palettes, hashes and offline composers remain under `research/next-pass/firered/`. These are fangame assets with retained original ownership, not newly owned original illustration. Depth is structural and contextual rather than decorative glass.
 
 ### Shadow Vocabulary
 - **Command bevel:** inset top highlight, subtle lower lip and short ambient shadow; exact snippets are in the sidecar.
@@ -174,27 +179,33 @@ This world uses shallow gradients, inset highlights and soft ambient shadows as 
 
 ## Shapes
 
-Small tags have gently rounded corners, fields and secondary buttons slightly larger corners, cards and inventory slots rounded rectangular frames, and dialogs the largest shared radius. Contextual Back is circular. Campaign nodes are circles with numbered captions; the formation field is an oval. These content geometries are part of the game vocabulary. Primary borders and shallow bevels remain visible against light panels.
+Small tags have gently rounded corners, fields and secondary buttons slightly larger corners, cards and inventory slots rounded rectangular frames, and dialogs the largest shared radius. Contextual Back is a rounded graphite square (12px corners) with a light SVG chevron. Campaign nodes are circles with numbered captions; the formation field is an oval. These content geometries are part of the game vocabulary. Primary borders and shallow bevels remain visible against light panels.
 
 ## Components
 
 ### Buttons
-Coral primary buttons use the two-stop gradient, dark text, thin coral border, inset highlight and lower lip shown in the sidecar. Secondary buttons use a cream gradient, navy text and muted border. Text actions retain a simple readable label. Hover brightens enabled controls; press moves them down 2px. Disabled opacity is .48 with the disabled cursor inherited from the base sheet. Focus-visible is a 3px outline, menu color #148b91 and 2px offset for buttons/fields. Most task commands are at least 48px high; smaller ancillary controls are exceptions, not a pattern to extend.
+Coral primary buttons use the two-stop gradient, dark text, thin coral border, inset highlight and lower lip shown in the sidecar. Secondary buttons use a cream gradient, navy text and muted border. Text actions retain a simple readable label. Hover brightens enabled controls; press moves them down 2px. Disabled opacity is .48 with the disabled cursor inherited from the base sheet. Formation command exceptions keep full opacity, muted cream/green colors, no shadow and a visible 12px reason beneath the command. Focus-visible is a 3px outline, menu color #148b91 and 3px offset for buttons/fields. Most task commands are at least 48px high; smaller ancillary controls are exceptions, not a pattern to extend.
 
 ### Chips and Tabs
 Type tags are small framed labels rather than buttons. Segmented filters use an inset pale container with a warm selected tile. Partner and invocation tabs expose aria-selected; selected tabs use a cream gradient, coral text and a small shadow. Compact task tabs retain the final 48px minimum override.
 
 ### Cards / Containers
-Collection cards use pale green gradients, framed borders, shallow shadows and pixel portraits. Rare cards shift toward mint, epic toward warm gold. Locked cards retain readable text and use desaturated portraits with .45 opacity; ownership is also stated in copy. Inventory slots use cream gradients, item art and visible quantities, with a cyan border and mint fill for the selection. The side panel keeps item description, recipient selection and equip command separate from the grid.
+Collection cards use pale green gradients, framed borders, shallow shadows and pixel portraits. Rare cards shift toward mint, epic toward warm gold. Locked cards retain readable text and use desaturated portraits with .7 opacity in the compact landscape override (.45 base); ownership is also stated in copy. Inventory slots use cream gradients, item art and visible quantities, with a cyan border and mint fill for the selection. The side panel keeps item description, recipient selection and equip command separate from the grid.
 
 ### Inputs / Fields
 Inputs/selects use warm white fill, graphite text, a muted green-gray stroke, field radius, 12px padding and a 48px base minimum. Search remains editable; the body's text-selection restriction explicitly exempts editable fields. Some compact lobby selects override the minimum; do not reuse that exception as a general field specification.
 
 ### Navigation
-Seven labeled SVG destinations form the bottom hub in the shipped menu. Active aria-current uses a warm peach gradient and border; each destination icon has its own restrained color. Secondary tasks add a circular Back control and contextual title. The sidecar reproduces the item treatment, not the complete routing logic.
+Six labeled SVG destination tiles appear only in the lobby: Equipe, Pokémon, Recrutar, Loja, Mochila and Bônus. The redundant Home element remains hidden. Each cream/green tile has a thin green border, 10px corners and shallow inset/ambient depth over a graphite dock; icon accents distinguish the destinations. The active style uses a peach gradient. Secondary screens expose contextual Back and title rather than retaining the hub dock. Routing and retained selection belong to the app, not the isolated sidecar specimen.
+
+**The Lobby Ownership Rule.** The hub owns destinations; secondary tasks own the full playfield and contextual return.
+
+### Daily Prize
+The bonus screen presents two large SVG prizes (150 coins and 2 TM tickets), one coral claim command, reset availability text and a separate recruitment/save-tools area. The mint prize panel has 16px corners. Its two-column layout uses `minmax(0,1.8fr) minmax(220px,1fr)` with a 24px gap, reducing to 20px in compact landscape. Prize numerals use 35px base and 30px compact; supporting labels use 15px/13px. Claimed state disables the command and changes its label. Hidden legacy record counters are not a visible metrics dashboard.
+
 
 ### Partner, Formation and Campaign
-The partner workspace separates attributes, moves, evolution and held item. Evolution shows eligibility, a disclosure explaining permanent real-time evolution, and a sticky campaign command. Compact formation keeps six ordered slots, text lead/reserve roles and actual add/replace/remove actions; small sprites are supporting content, not a decorative badge system. Map nodes expose locked/current/cleared states through text, icons and color. Invocation separates Pokémon banners from compatible technique draws and keeps costs, chances and pity visible.
+The partner workspace separates attributes, moves, evolution and held item. Evolution shows eligibility, a disclosure explaining permanent real-time evolution, and a sticky campaign command. Compact formation keeps six ordered slots, text lead/reserve roles and actual add/replace/remove actions; small sprites are supporting content, not a decorative badge system. Map nodes expose locked/current/cleared states through text, icons and color. Invocation separates Pokémon banners from compatible TM draws and keeps costs, chances and pity visible. A successful TM draw adds a named single-use item and offers “Abrir mochila”; it does not teach immediately. The selected bag item lists compatible eligible owners and an explicit “Usar TM” action, or a textual unavailable reason. Teaching consumes one item and persists the learned move. These distinct acquisition/use states must remain visible in future surfaces.
 
 ### Motion and Feedback
 Menu title arrival uses a short eased 5px rise and fade; pressed controls respond immediately. Selected map nodes gently pulse. Summon reveal uses authored film plus sprite/reveal states. The base reduced-motion media rule suppresses CSS animation/transition ; the controller omits portal film and chooses the reduced-motion path. This records implementation support, not a measured native frame-rate claim.
@@ -213,6 +224,6 @@ Menu title arrival uses a short eased 5px rise and fade; pressed controls respon
 - Don't imply that formation position grants a front/back combat bonus or that acquisition rarity increases stats.
 - Don't claim native performance or complete device coverage from browser screenshots.
 
-Source evidence: `public/pulse.html` loads `public/pulse/style.css` before `public/pulse/rpg.css`; final overrides determine the values above. Behavior samples: `public/pulse/management-ui.js` and `public/pulse/app.js`. Visual samples inspected: `research/validation/rpg/home-phone.png`, `team-phone.png`, and `bag-desktop.png` (844×390 phone / 1280×720 desktop matrix). The native captures `research/validation/rpg/redmi-inventory.png` and `redmi-final-lobby.png` are separate device evidence; they do not establish every menu or performance condition. The finish verdict covers its seven scored fixes, not a fresh complete quality audit.
+Source evidence: `public/pulse.html` loads `public/pulse/style.css` before `public/pulse/rpg.css`; final overrides determine the values above. Behavior samples: `public/pulse/management-ui.js` and `public/pulse/app.js`. Current visual evidence is the ten-screen matrix under `research/validation/game-ui/`, each at 844×390 and 1280×720, plus `tm-inventory-phone.png`; `result.json` records bounded overflow/error checks and `tm-functional.json` records acquisition → inventory → compatible use → reload. This documentation pass directly inspected the lobby and prize phone captures against the source. Older `research/validation/rpg/` captures, including its device captures, are historical evidence of the superseded interface and are not validation of this replacement. The final finish verdict resolves its seven named material fixes, not a fresh complete quality audit or native-performance measurement.
 
-Not canonized or repaired: compact microtype, ancillary controls below the 48px target, seven-destination bottom navigation on expanded screens, and the bundled-font/style mismatch remain build limitations. No invented kickers, system display faces or hard offset shadows are promoted as rules. Only documentation changed.
+Not canonized or repaired: residual compact micro-labels and some ancillary/disclosure controls below 48px, plus the bundled-font/style mismatch, remain source limitations outside this documentation pass. No invented kickers, system display faces or hard offset shadows are promoted as rules. Only documentation changed.

@@ -1,0 +1,4 @@
+PASS abra Teleport
+PASS ditto Transform
+PASS metapod Harden
+PASS charmander Ember

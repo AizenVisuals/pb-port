@@ -1,3 +1,4 @@
+import {bindGamepad} from './gamepad.js';
 import {createManagementUI} from './management-ui.js';
 import {ITEMS,EVOLUTIONS,levelOf,xpAt,moveRequirement,specialPool} from './growth.js';
 import {mountAccount} from './account.js';
@@ -141,9 +142,11 @@ function refresh() {
   $("home-team-preview").innerHTML = s.team.mons
     .map((k) => portrait(mon(k)))
     .join("");
-  $("format-select").value = s.team.mons.length===6?"6v6":"3v3";
-  $("battle-start").disabled=s.team.mons.length<3;
-  $("battle-start").title=s.team.mons.length<3?"A Arena exige três parceiros. Avance pela jornada para formar sua equipe.":"";
+  $('format-select').innerHTML=Array.from({length:Math.min(6,s.unlocked.length)},(_,i)=>`<option value="${i+1}v${i+1}">Equipe ${i+1} × ${i+1}</option>`).join('');
+  $('format-select').value=`${s.team.mons.length}v${s.team.mons.length}`;
+  $("battle-start").disabled=s.team.mons.length<1;
+  $("battle-start").title="Treino contra uma equipe do mesmo tamanho e nível.";
+  if($("training-reason"))$("training-reason").textContent=`Treino ${s.team.mons.length} × ${s.team.mons.length} disponível`;
   for (const [id, value] of Object.entries({
     "record-battles": s.records.battles,
     "record-wins": s.records.wins,
@@ -414,8 +417,8 @@ async function battleGrowth(opponentLevel){
 function renderBag(){management?.renderBag();}
 function drawTechnique(){
  const key=$('technique-mon').value,result=p.summonMove(key);if(!apply(result))return;
- rewardSound();$('pull-content').innerHTML=`<div class="dialog-heading"><h2>Nova técnica aprendida!</h2></div><div class="technique-reveal">${portrait(mon(key))}<h2>${esc(result.move.name)}</h2><p>${esc(mon(key).name)} já pode equipar esse golpe.</p><span class="type-list">${types[result.move.type]}</span></div><button id="technique-equip" class="primary-button">Escolher golpes</button><button id="technique-close" class="text-button">Voltar à mochila</button>`;
- $('pull-dialog').onclose=()=>refresh();$('technique-equip').onclick=()=>{$('pull-dialog').close();movePicker(key);};$('technique-close').onclick=()=>$('pull-dialog').close();showDialog('pull-dialog');
+ rewardSound();$('pull-content').innerHTML=`<div class="dialog-heading"><h2>TM obtida!</h2></div><div class="technique-reveal">${portrait(mon(key))}<h2>${esc(result.move.name)}</h2><p>${esc(mon(key).name)} é compatível com esta TM. Use o item na mochila para ensinar o golpe.</p><span class="type-list">${types[result.move.type]}</span></div><button id="technique-equip" class="primary-button">Abrir mochila</button><button id="technique-close" class="text-button">Fechar</button>`;
+ $('pull-dialog').onclose=()=>refresh();$('technique-equip').onclick=()=>{$('pull-dialog').close();navigate('bag');};$('technique-close').onclick=()=>$('pull-dialog').close();showDialog('pull-dialog');
 }
 async function startBattle(options={}) {
   setMenuAmbient(false);
@@ -770,7 +773,7 @@ function wire() {
   $("collection-search").oninput = renderCollection;
   $("type-filter").onchange = renderCollection;
   $("format-select").onchange = (e) =>
-    changeFormat(e.target.value === "6v6" ? 6 : 3);
+    changeFormat(Number(e.target.value[0]));
   $("summon-one").onclick = () => startPulls(1);
   $("summon-ten").onclick = () => startPulls(10);
   $("battle-start").onclick = startBattle;
@@ -817,6 +820,7 @@ function wire() {
     }
     e.target.value = "";
   };
+  bindGamepad({getSnapshot:()=>snapshot,command:input=>battle?.command(input.kind==="mega"&&snapshot?.canEvolve?{kind:"evolve"}:input),pause:()=>{battle?.pause();showDialog("pause-dialog");}});
   bindBattleControls({
     surface: $("battle-screen"), stick: $("joystick"), knob: $("joystick-knob"),
     getSnapshot: () => snapshot,

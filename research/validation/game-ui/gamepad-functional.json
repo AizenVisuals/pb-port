@@ -1,0 +1,14 @@
+{
+  "pass": true,
+  "scope": "Isolated Chromium with simulated standard Gamepad API; no physical Bluetooth claim.",
+  "checks": [
+    "D-pad focuses menu",
+    "Cross activates campaign",
+    "Circle returns lobby",
+    "one-partner practice starts",
+    "left stick enables manual and steers",
+    "Cross triggers learned move while steering",
+    "Options pauses"
+  ],
+  "errors": []
+}

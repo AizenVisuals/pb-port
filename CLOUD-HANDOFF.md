@@ -146,3 +146,14 @@ Código: `a28c5809d860caf7eb7c2fd89f8c4eb0d4bc8d76`; assets APK e SHA-256 com es
 - Atualização final instalada e aberta no Redmi: captura `redmi-final-lobby.png` mostra CharmanderNv.9 e830moedas preservados após o novo APK. SHA256 final `c90ddf201db35fdf7511d85d803e73f0a1d9c1ab9e41b8a33cb4081e7422089c`.
 
 Entrega 0.3.0 publicada e lida de volta pela API GitHub: https://github.com/AizenVisuals/pb-port/releases/tag/pulse-arena-v0.3.0-test.1 . Código `6090f479783d87586ae488c4e6fbfbbb5bfd7f52`; APK99563077bytes, assets uploaded e digest remoto igual ao SHA256 local acima. Repositório permanece privado. A revisão/documentação e todos os relatórios desta rodada estão nesse commit.
+
+## Atualização0.4.0 — 15/11/2026
+
+Pedidos desta rodada, evidências e limites: `research/next-pass/final-status.md`; leituras de skills em`skills-adopted.md`, PB/meta em`pb-comparison.md` e`meta-observed.md`.
+
+-151Kantoúnicos no bannerRota;109formas novas de sprite, dadosdelevel/TMporversão;TMs agora são itens consumidos explicitamente na mochila. Migração guarda backup`.before-tm`, preserva coleção/XP/currencies e reembolsa técnicas antigas incompatíveis com as regras corrigidas. Não zerar oaparelho.
+- Ember/Scratch próprios e Harden/Teleport/Transform reais, resetdeTransform ao sair e HPpreservado. IA tática emgrowthmode, treinos1–6com o time disponível. Fix importante: cachear os movimentos nativos antes de registrar novas espécies, evitando perder referências como Marshadow→golpe de espécie sobrescrita.
+- Gamepadpadrão/DualSense, incluindo menus. Teste software deAPIpadrão passou; controleBluetoothfísico não foi pareado/testado.
+- GameUI:cenáriosFireRed de composição própria, navegação somente nolobby, Backcontextual, bônusvisual, legibilidade/alvos. DESIGN/sidecar atualizados pelo documentador a partir do artefato. Revisão: sete itens resolvidos, escopo limitado.
+-63/63testes, relatórios/capturas/scripts em`research/validation/game-ui`. BuildAndroid0.4.0-test.1/versionCode4;SHA256APK `b63de2755bb6a4beec177f26d60addda7e7cadfed4717e8db2862e112293c7b3`. Main/Render ePBselfhostseparado intactos.
+- Não declarar todas habilidades/700golpes, todos métodos evolutivos, modosonline oubalanceamento/performancefísica como completos: os limites estão explicitados emfinal-status. Esta é uma prévia de teste do conjunto pedido, não paridade total do serviçoPB.

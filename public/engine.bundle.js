@@ -1821,10 +1821,12 @@ installCampaignStarters({species:ms,catalog:ej,ranked:vr,roster:_4e,entries:I4e,
 
 // PULSE growth adds species and shared PB move implementations without changing upstream matches.
 import {installGrowth} from './custom/growth.js';
-installGrowth({species:ms,catalog:ej,ranked:vr,roster:_4e,entries:I4e,faces:ii0,getMove:yj,wrapMove:U4e,sourceEntries:N7a});
+installGrowth({species:ms,catalog:ej,ranked:vr,roster:_4e,entries:I4e,faces:ii0,getMove:yj,wrapMove:U4e,sourceEntries:N7a,hit:Ng,applyInput:fxe});
 export function pulseEvolve(b,actor,targetKey,moves){
  const team=b.teams[actor.side];if(!team||team.ctl||b.cinematic||actor.fainted||actor.hidden||actor.action)return false;
  const target=q9a(targetKey,moves);b.speciesTable[target]||=ms[target];
  actor.spec={...actor.spec,evolveTo:target};actor.pulseEvolving=true;b.pulseEvolving=true;
  team.ctl=(function*(){try{yield* Ixe(b,team,actor,Ssa(b,team,actor));if(!actor.fainted){actor.rkKey=targetKey;actor.mega=false;}}finally{actor.pulseEvolving=false;b.pulseEvolving=false;}})();return true;
 }
+export function pulseSpeciesDefinition(key){return ms[key];}
+export function pulseSwitch(b,actor,to){const team=b.teams[actor.side],target=team?.mons[to];if(!target||target===actor||target.fainted||team.ctl||actor.action||b.cinematic||actor.fainted)return false;b.rk.sides[actor.side].wantMove=null;team.switches++;team.lastSwitch=b.tick;b.switchLog.push({t:b.tick,side:actor.side,from:actor.name,to:target.name,pivot:true});team.ctl=z9a(b,team,actor,target);return true;}

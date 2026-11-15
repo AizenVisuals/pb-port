@@ -1,5 +1,7 @@
+import {KANTO_LEVEL_EVOLUTIONS} from './kanto.js';
+import {LEGACY_TECHNIQUES} from './legacy-techniques.js';
 import {LEARNSETS} from './learnsets.js';
-export const EVOLUTIONS=Object.freeze({bulbasaur:['ivysaur',16],ivysaur:['venusaur',32],charmander:['charmeleon',16],charmeleon:['charizard',36],squirtle:['wartortle',16],wartortle:['blastoise',36],chikorita:['bayleef',16],bayleef:['meganium',32],cyndaquil:['quilava',14],quilava:['typhlosion',36],totodile:['croconaw',18],croconaw:['feraligatr',30]});
+export const EVOLUTIONS=Object.freeze({...KANTO_LEVEL_EVOLUTIONS,bulbasaur:['ivysaur',16],ivysaur:['venusaur',32],charmander:['charmeleon',16],charmeleon:['charizard',36],squirtle:['wartortle',16],wartortle:['blastoise',36],chikorita:['bayleef',16],bayleef:['meganium',32],cyndaquil:['quilava',14],quilava:['typhlosion',36],totodile:['croconaw',18],croconaw:['feraligatr',30]});
 export const ITEMS=Object.freeze({
  oranberry:{name:'Oran Berry',price:45,description:'Uma vez: recupera 10 HP ao chegar à metade do HP.'},
  sitrusberry:{name:'Sitrus Berry',price:90,description:'Uma vez: recupera ¼ do HP máximo ao chegar à metade do HP.'},
@@ -9,13 +11,20 @@ export const ITEMS=Object.freeze({
  chestoberry:{name:'Chesto Berry',price:45,description:'Uma vez: acorda o Pokémon adormecido.'},
  leftovers:{name:'Leftovers',price:450,description:'Recupera 1/16 do HP máximo a cada 6 segundos em campo. Não é consumido.'},
 });
-export const initialGrowth=()=>({pokemon:{},inventory:{moveTicket:2,oranberry:3,sitrusberry:1,lumberry:1,cheriberry:0,pechaberry:0,chestoberry:0,leftovers:0},held:{},inherited:{},specialMoves:{},ticketWins:0,processedItems:[],evolutions:[]});
+export const initialGrowth=()=>({pokemon:{},inventory:{moveTicket:2,oranberry:3,sitrusberry:1,lumberry:1,cheriberry:0,pechaberry:0,chestoberry:0,leftovers:0},held:{},inherited:{},specialMoves:{},tmInventory:{},tmSchema:1,retiredTechniques:[],ticketWins:0,processedItems:[],evolutions:[]});
 export const levelOf=xp=>{let level=Math.min(100,Math.max(1,Math.floor(Math.cbrt(xp))));while(level<100&&(level+1)**3<=xp)level++;return level;};
 export const xpAt=level=>level**3;
 export function ensureGrowth(save,catalog){
  if(!save.growth&&save.profileMode!=='journey'&&!save.journey?.starter)return;
  save.growth||=initialGrowth();save.growth.inherited||={};
- for(const key of save.unlocked){if(!catalog.has(key))continue;const level=Math.max(5,LEARNSETS[key]?.initialLevel||5);save.growth.pokemon[key]||={xp:xpAt(level)};}
+ const g=save.growth;g.tmInventory||={};g.retiredTechniques||=[];
+ if(g.tmSchema!==1){
+  for(const [key,ids]of Object.entries(g.specialMoves)){const allowed=new Set(LEARNSETS[key]?.specialMoves||[]);g.specialMoves[key]=ids.filter(id=>{if(allowed.has(id))return true;g.retiredTechniques.push({mon:key,id});g.inventory.moveTicket++;return false;});}
+  for(const [key,ids]of Object.entries(g.inherited)){g.inherited[key]=ids.filter(id=>{if(LEARNSETS[key]?.levelMoves[id]!==undefined||LEARNSETS[key]?.specialMoves.includes(id))return true;g.retiredTechniques.push({mon:key,id});g.inventory.moveTicket++;return false;});}
+  g.tmSchema=1;
+ }
+
+ for(const key of save.unlocked){if(!catalog.has(key))continue;const level=Math.max(5,LEARNSETS[key]?.initialLevel||5);save.growth.pokemon[key]||={xp:xpAt(level)};save.growth.pokemon[key].xp=Math.max(save.growth.pokemon[key].xp,xpAt(level));}
 }
 export function learnedMoves(save,entry){
  if(!save.growth)return entry.pool;
@@ -51,13 +60,15 @@ export function validateGrowth(save){
  if(Object.entries(g.pokemon).some(([key,v])=>!save.unlocked.includes(key)||!obj(v)||!integer(v.xp,1,1000000)))throw Error('XP inválida.');
  if(Object.entries(g.inventory).some(([id,n])=>!['moveTicket',...Object.keys(ITEMS)].includes(id)||!integer(n))||!integer(g.inventory.moveTicket))throw Error('Inventário inválido.');
  if(Object.entries(g.held).some(([key,id])=>!save.unlocked.includes(key)||!ITEMS[id]))throw Error('Item equipado inválido.');
- if(!obj(g.inherited)||Object.entries(g.inherited).some(([key,ids])=>!save.unlocked.includes(key)||!Array.isArray(ids)||new Set(ids).size!==ids.length||ids.some(id=>LEARNSETS[key]?.levelMoves[id]===undefined&&!LEARNSETS[key]?.specialMoves.includes(id))))throw Error('Golpes herdados inválidos.');
- if(Object.entries(g.specialMoves).some(([key,ids])=>!save.unlocked.includes(key)||!Array.isArray(ids)||new Set(ids).size!==ids.length||ids.some(id=>!LEARNSETS[key]?.specialMoves.includes(id))))throw Error('Golpe especial inválido.');
+ if(!obj(g.inherited)||Object.entries(g.inherited).some(([key,ids])=>!save.unlocked.includes(key)||!Array.isArray(ids)||new Set(ids).size!==ids.length||ids.some(id=>LEARNSETS[key]?.levelMoves[id]===undefined&&!LEARNSETS[key]?.specialMoves.includes(id)&&!(g.tmSchema!==1&&LEGACY_TECHNIQUES[key]?.includes(id)))))throw Error('Golpes herdados inválidos.');
+ if(Object.entries(g.specialMoves).some(([key,ids])=>!save.unlocked.includes(key)||!Array.isArray(ids)||new Set(ids).size!==ids.length||ids.some(id=>!LEARNSETS[key]?.specialMoves.includes(id)&&!(g.tmSchema!==1&&LEGACY_TECHNIQUES[key]?.includes(id)))))throw Error('Golpe especial inválido.');
+ if(g.tmSchema!==undefined&&g.tmSchema!==1)throw Error('Versão de TMs inválida.');
+ const tmIds=new Set(Object.values(LEARNSETS).flatMap(x=>x.specialMoves));if(g.tmInventory!==undefined&&(!obj(g.tmInventory)||Object.entries(g.tmInventory).some(([id,n])=>!tmIds.has(id)||!integer(n))))throw Error('Inventário de TMs inválido.');
 }
-export const moveRequirement=(key,id)=>LEARNSETS[key]?.levelMoves[id] ? `Nível ${LEARNSETS[key].levelMoves[id]}` : LEARNSETS[key]?.specialMoves.includes(id)?'Ticket de técnica':'Indisponível nesta jornada';
+export const moveRequirement=(key,id)=>LEARNSETS[key]?.levelMoves[id] ? `Nível ${LEARNSETS[key].levelMoves[id]}` : LEARNSETS[key]?.specialMoves.includes(id)?'TM compatível':'Indisponível nesta jornada';
 export function awardTicketWin(save,eligible){
  if(!save.growth||!eligible)return 0;
  if(++save.growth.ticketWins<3)return 0;
  save.growth.ticketWins=0;save.growth.inventory.moveTicket++;return 1;
 }
-export const specialPool=(save,key,entry)=>(LEARNSETS[key]?.specialMoves||[]).filter(id=>entry.pool.some(m=>m.id===id)&&!save.growth.specialMoves[key]?.includes(id)&&!save.growth.inherited?.[key]?.includes(id));
+export const specialPool=(save,key,entry)=>(LEARNSETS[key]?.specialMoves||[]).filter(id=>entry.pool.some(m=>m.id===id)&&!learnedMoves(save,entry).some(m=>m.id===id)&&!save.growth.specialMoves[key]?.includes(id)&&!save.growth.inherited?.[key]?.includes(id)&&!(save.growth.tmInventory?.[id]>0));

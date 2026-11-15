@@ -1,0 +1,11 @@
+{
+  "pass": true,
+  "checks": [
+    "ticket draw creates TM inventory item",
+    "draw does not teach immediately",
+    "TM inventory selects compatible owner",
+    "teach consumes TM once",
+    "learned move survives reload"
+  ],
+  "errors": []
+}

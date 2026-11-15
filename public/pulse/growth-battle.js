@@ -1,3 +1,4 @@
+import {planCPU} from './tactical-ai.js';
 import {EVOLUTIONS,ITEMS,selectedMoves,xpAt} from './growth.js';
 export function evolutionAssets(keys){const result=new Set(keys);for(const key of result){const next=EVOLUTIONS[key]?.[0];if(next)result.add(next);}return [...result];}
 export function configureGrowthBattle(b,engine,{levels={},opponentLevel=5,selected={},held={},onConsume=()=>true,onEvolve=()=>true,preview=()=>null,onEvent=()=>{},icons={}}={}){
@@ -31,6 +32,12 @@ export function configureGrowthBattle(b,engine,{levels={},opponentLevel=5,select
     canEvolve,
     requestEvolution(){if(!canEvolve())return false;wanted=true;return true;},
     before(){
+      for(const team of b.teams)for(const actor of team.mons){
+        if(actor.pulseTeleport!==undefined&&!actor.action){const to=actor.pulseTeleport;if(engine.pulseSwitch(b,actor,to))delete actor.pulseTeleport;}
+        if(actor.ai){if(actor.moves.every(m=>!m.power)){actor.ai.jabReady=Infinity;actor.ai.pulseNoJab=true;}else if(actor.ai.pulseNoJab){actor.ai.jabReady=b.tick+60;delete actor.ai.pulseNoJab;}}
+      }
+      if(b.phase==='fight'&&!b.cinematic&&!b.done){const actor=b.fighters[1],opponent=b.fighters[0];if(actor?.ai&&!actor.action&&!actor.fainted&&!actor.hidden&&b.tick%36===0){const move=planCPU(actor,opponent,engine.moveStatus(b,1),b.teams[1].mons);if(move)actor.ai.plan=actor.moves.find(m=>m.name===move);}}
+
       if(!wanted||b.phase!=='fight'||b.cinematic)return;
       const actor=b.fighters[0],plan=preview(actor.rkKey);if(!plan||actor.fainted){wanted=false;return;}
       if(actor.action||b.teams[0].ctl)return;
@@ -42,6 +49,10 @@ export function configureGrowthBattle(b,engine,{levels={},opponentLevel=5,select
       }
     },
     after(){
+      for(const team of b.teams)for(const actor of team.mons)if(actor.pulseTransform&&b.fighters[actor.side]!==actor){
+        const original=actor.pulseTransform,hp=actor.hp;delete actor.pulseTransform;actor.megaEvolve(original.spec);actor.maxHp=original.maxHp;actor.hp=hp;actor.hpShown=hp;actor.hpChip=hp;actor.mega=false;actor.stages=original.stages;
+      }
+
       if(pending&&!b.pulseEvolving){
         const {actor,plan,oldKey,cooldowns,startedTick}=pending;pending=null;
         if(actor.rkKey===plan.target&&!actor.fainted){actor.lastUsed=Object.fromEntries(Object.entries(cooldowns).map(([name,at])=>[name,at<0?at:at+b.tick-startedTick]));onEvolve(oldKey,plan.target);onEvent({kind:'evolved',from:oldKey,target:plan.target});}

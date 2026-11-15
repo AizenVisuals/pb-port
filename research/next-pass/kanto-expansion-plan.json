@@ -1,0 +1,466 @@
+{
+  "metapod": [
+    "0011",
+    "scyther"
+  ],
+  "butterfree": [
+    "0012",
+    "scyther"
+  ],
+  "kakuna": [
+    "0014",
+    "scyther"
+  ],
+  "beedrill": [
+    "0015",
+    "scyther"
+  ],
+  "pidgeotto": [
+    "0017",
+    "pidgeot"
+  ],
+  "raticate": [
+    "0020",
+    "pidgeot"
+  ],
+  "spearow": [
+    "0021",
+    "pidgeot"
+  ],
+  "fearow": [
+    "0022",
+    "pidgeot"
+  ],
+  "arbok": [
+    "0024",
+    "nidoqueenAG"
+  ],
+  "raichu": [
+    "0026",
+    "pikachu"
+  ],
+  "sandshrew": [
+    "0027",
+    "dugtrio"
+  ],
+  "sandslash": [
+    "0028",
+    "dugtrio"
+  ],
+  "nidoranf": [
+    "0029",
+    "nidoqueenAG"
+  ],
+  "nidorina": [
+    "0030",
+    "nidoqueenAG"
+  ],
+  "nidoqueen": [
+    "0031",
+    "nidoqueenAG"
+  ],
+  "nidoranm": [
+    "0032",
+    "nidoqueenAG"
+  ],
+  "nidorino": [
+    "0033",
+    "nidoqueenAG"
+  ],
+  "clefairy": [
+    "0035",
+    "clefable"
+  ],
+  "vulpix": [
+    "0037",
+    "arcanine"
+  ],
+  "ninetales": [
+    "0038",
+    "arcanine"
+  ],
+  "jigglypuff": [
+    "0039",
+    "pidgeot"
+  ],
+  "wigglytuff": [
+    "0040",
+    "pidgeot"
+  ],
+  "golbat": [
+    "0042",
+    "nidoqueenAG"
+  ],
+  "oddish": [
+    "0043",
+    "exeggutor"
+  ],
+  "gloom": [
+    "0044",
+    "exeggutor"
+  ],
+  "vileplume": [
+    "0045",
+    "exeggutor"
+  ],
+  "paras": [
+    "0046",
+    "scyther"
+  ],
+  "parasect": [
+    "0047",
+    "scyther"
+  ],
+  "venonat": [
+    "0048",
+    "scyther"
+  ],
+  "venomoth": [
+    "0049",
+    "scyther"
+  ],
+  "diglett": [
+    "0050",
+    "dugtrio"
+  ],
+  "meowth": [
+    "0052",
+    "pidgeot"
+  ],
+  "psyduck": [
+    "0054",
+    "tentacruelH"
+  ],
+  "golduck": [
+    "0055",
+    "tentacruelH"
+  ],
+  "mankey": [
+    "0056",
+    "lucario"
+  ],
+  "primeape": [
+    "0057",
+    "lucario"
+  ],
+  "growlithe": [
+    "0058",
+    "arcanine"
+  ],
+  "poliwag": [
+    "0060",
+    "tentacruelH"
+  ],
+  "poliwhirl": [
+    "0061",
+    "tentacruelH"
+  ],
+  "poliwrath": [
+    "0062",
+    "tentacruelH"
+  ],
+  "abra": [
+    "0063",
+    "alakazam"
+  ],
+  "kadabra": [
+    "0064",
+    "alakazam"
+  ],
+  "machop": [
+    "0066",
+    "lucario"
+  ],
+  "machoke": [
+    "0067",
+    "lucario"
+  ],
+  "machamp": [
+    "0068",
+    "lucario"
+  ],
+  "bellsprout": [
+    "0069",
+    "exeggutor"
+  ],
+  "weepinbell": [
+    "0070",
+    "exeggutor"
+  ],
+  "victreebel": [
+    "0071",
+    "exeggutor"
+  ],
+  "tentacool": [
+    "0072",
+    "tentacruelH"
+  ],
+  "tentacruel": [
+    "0073",
+    "tentacruelH"
+  ],
+  "graveler": [
+    "0075",
+    "golemAG"
+  ],
+  "golem": [
+    "0076",
+    "golemAG"
+  ],
+  "ponyta": [
+    "0077",
+    "arcanine"
+  ],
+  "rapidash": [
+    "0078",
+    "arcanine"
+  ],
+  "slowpoke": [
+    "0079",
+    "tentacruelH"
+  ],
+  "slowbro": [
+    "0080",
+    "tentacruelH"
+  ],
+  "magnemite": [
+    "0081",
+    "pikachu"
+  ],
+  "magneton": [
+    "0082",
+    "pikachu"
+  ],
+  "farfetchd": [
+    "0083",
+    "pidgeot"
+  ],
+  "doduo": [
+    "0084",
+    "pidgeot"
+  ],
+  "seel": [
+    "0086",
+    "tentacruelH"
+  ],
+  "dewgong": [
+    "0087",
+    "tentacruelH"
+  ],
+  "grimer": [
+    "0088",
+    "nidoqueenAG"
+  ],
+  "muk": [
+    "0089",
+    "nidoqueenAG"
+  ],
+  "shellder": [
+    "0090",
+    "tentacruelH"
+  ],
+  "cloyster": [
+    "0091",
+    "tentacruelH"
+  ],
+  "gastly": [
+    "0092",
+    "spiritomb"
+  ],
+  "haunter": [
+    "0093",
+    "spiritomb"
+  ],
+  "drowzee": [
+    "0096",
+    "alakazam"
+  ],
+  "hypno": [
+    "0097",
+    "alakazam"
+  ],
+  "krabby": [
+    "0098",
+    "tentacruelH"
+  ],
+  "kingler": [
+    "0099",
+    "tentacruelH"
+  ],
+  "voltorb": [
+    "0100",
+    "pikachu"
+  ],
+  "electrode": [
+    "0101",
+    "pikachu"
+  ],
+  "exeggcute": [
+    "0102",
+    "exeggutor"
+  ],
+  "cubone": [
+    "0104",
+    "dugtrio"
+  ],
+  "marowak": [
+    "0105",
+    "dugtrio"
+  ],
+  "hitmonlee": [
+    "0106",
+    "lucario"
+  ],
+  "hitmonchan": [
+    "0107",
+    "lucario"
+  ],
+  "lickitung": [
+    "0108",
+    "pidgeot"
+  ],
+  "weezing": [
+    "0110",
+    "nidoqueenAG"
+  ],
+  "rhyhorn": [
+    "0111",
+    "dugtrio"
+  ],
+  "chansey": [
+    "0113",
+    "pidgeot"
+  ],
+  "tangela": [
+    "0114",
+    "exeggutor"
+  ],
+  "kangaskhan": [
+    "0115",
+    "pidgeot"
+  ],
+  "horsea": [
+    "0116",
+    "tentacruelH"
+  ],
+  "seadra": [
+    "0117",
+    "tentacruelH"
+  ],
+  "goldeen": [
+    "0118",
+    "tentacruelH"
+  ],
+  "seaking": [
+    "0119",
+    "tentacruelH"
+  ],
+  "staryu": [
+    "0120",
+    "tentacruelH"
+  ],
+  "starmie": [
+    "0121",
+    "tentacruelH"
+  ],
+  "mrmime": [
+    "0122",
+    "alakazam"
+  ],
+  "jynx": [
+    "0124",
+    "sandslashA"
+  ],
+  "electabuzz": [
+    "0125",
+    "pikachu"
+  ],
+  "magmar": [
+    "0126",
+    "arcanine"
+  ],
+  "pinsir": [
+    "0127",
+    "scyther"
+  ],
+  "magikarp": [
+    "0129",
+    "tentacruelH"
+  ],
+  "ditto": [
+    "0132",
+    "pidgeot"
+  ],
+  "eevee": [
+    "0133",
+    "pidgeot"
+  ],
+  "vaporeon": [
+    "0134",
+    "tentacruelH"
+  ],
+  "flareon": [
+    "0136",
+    "arcanine"
+  ],
+  "porygon": [
+    "0137",
+    "pidgeot"
+  ],
+  "omanyte": [
+    "0138",
+    "golemAG"
+  ],
+  "omastar": [
+    "0139",
+    "golemAG"
+  ],
+  "kabuto": [
+    "0140",
+    "golemAG"
+  ],
+  "kabutops": [
+    "0141",
+    "golemAG"
+  ],
+  "aerodactyl": [
+    "0142",
+    "golemAG"
+  ],
+  "articuno": [
+    "0144",
+    "sandslashA"
+  ],
+  "zapdos": [
+    "0145",
+    "pikachu"
+  ],
+  "moltres": [
+    "0146",
+    "arcanine"
+  ],
+  "dratini": [
+    "0147",
+    "altariaL"
+  ],
+  "dragonair": [
+    "0148",
+    "altariaL"
+  ],
+  "dragonite": [
+    "0149",
+    "altariaL"
+  ],
+  "mewtwo": [
+    "0150",
+    "alakazam"
+  ],
+  "mew": [
+    "0151",
+    "alakazam"
+  ],
+  "gyarados": [
+    "0130",
+    "gyarados"
+  ]
+}

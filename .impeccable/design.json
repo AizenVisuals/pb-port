@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-15T04:30:09.574703+00:00",
+  "generatedAt": "2026-11-15T05:10:31.642713+00:00",
   "title": "Design System: PULSE ARENA",
   "extensions": {
     "colorMeta": {
@@ -336,7 +336,16 @@
         "public/pulse/rpg.css"
       ],
       "surface": ".impeccable/surfaces/pulse-light-game.md",
-      "rampNote": "Synthesized OKLCH strips for panel visualization only; not additional implemented palette tokens."
+      "rampNote": "Synthesized OKLCH strips for panel visualization only; not additional implemented palette tokens.",
+      "sources": [
+        "public/pulse.html",
+        "public/pulse/management-ui.js",
+        "public/pulse/app.js"
+      ],
+      "currentEvidence": "research/validation/game-ui/",
+      "tileProvenance": "research/next-pass/firered/",
+      "formAudit": "post-build seed 7ccad869466fc571; not prior user approval",
+      "validationBoundary": "Browser matrix and TM transaction; seven named finish fixes only. No new native-performance claim."
     }
   },
   "components": [
@@ -346,7 +355,7 @@
       "refersTo": "button-primary",
       "description": "Coral task action with the final dark foreground.",
       "html": "<button class=\"ds-control ds-primary\">Equipar item</button>",
-      "css": ".ds-primary{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;padding:12px 18px;background:linear-gradient(#f27b67,#e76558);color:#49251f;border:1px solid #c24e46;border-radius:11px;box-shadow:inset 0 1px #ffd9b7,inset 0 -3px #b94c442e,0 3px 6px #45514b22}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:2px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
+      "css": ".ds-primary{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;padding:12px 18px;background:linear-gradient(#f27b67,#e76558);color:#49251f;border:1px solid #c24e46;border-radius:11px;box-shadow:inset 0 1px #ffd9b7,inset 0 -3px #b94c442e,0 3px 6px #45514b22}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:3px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
     },
     {
       "name": "Secondary command",
@@ -354,7 +363,7 @@
       "refersTo": "button-secondary",
       "description": "Cream alternate action.",
       "html": "<button class=\"ds-control ds-secondary\">Colocar como inicial</button>",
-      "css": ".ds-secondary{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;padding:12px 18px;background:linear-gradient(#fffdf5,#eae8d6);color:#304a54;border:1px solid #b8bba7;border-radius:10px;box-shadow:inset 0 1px #fff,inset 0 -2px #2e514b12}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:2px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
+      "css": ".ds-secondary{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;padding:12px 18px;background:linear-gradient(#fffdf5,#eae8d6);color:#304a54;border:1px solid #b8bba7;border-radius:10px;box-shadow:inset 0 1px #fff,inset 0 -2px #2e514b12}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:3px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
     },
     {
       "name": "Search field",
@@ -362,7 +371,7 @@
       "refersTo": "input",
       "description": "Editable search on a light panel.",
       "html": "<input class=\"ds-control ds-input\" aria-label=\"Buscar Pokémon\" placeholder=\"Buscar Pokémon\">",
-      "css": ".ds-input{font:16px Barlow,sans-serif;min-height:48px;padding:12px;background:#fffdf6;color:var(--ink,#263f4d);border:1px solid #9eafa9;border-radius:9px}.ds-input::placeholder{color:#637981}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:2px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
+      "css": ".ds-input{font:16px Barlow,sans-serif;min-height:48px;padding:12px;background:#fffdf6;color:var(--ink,#263f4d);border:1px solid #9eafa9;border-radius:9px}.ds-input::placeholder{color:#637981}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:3px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
     },
     {
       "name": "Type tag",
@@ -373,12 +382,12 @@
       "css": ".ds-tag{display:inline-block;font:12px Barlow,sans-serif;padding:3px 7px;background:#e3eee5;color:#264b4b;border:1px solid #b8cec3;border-radius:6px}"
     },
     {
-      "name": "Hub navigation item",
+      "name": "Lobby destination tile",
       "kind": "nav",
       "refersTo": "navigation-item",
-      "description": "The active hub tile; routing is supplied by the app.",
-      "html": "<nav aria-label=\"Principal\"><button class=\"ds-control ds-nav\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" aria-hidden=\"true\"><path d=\"M3 10 12 3l9 7M5 9v12h5v-7h4v7h5V9\"/></svg><small>Início</small></button></nav>",
-      "css": ".ds-nav{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:100px;height:58px;padding:3px 5px;background:transparent;color:#38535f;border:1px solid transparent;border-radius:12px}.ds-nav svg{width:28px;height:28px}.ds-nav small{font-size:12px}.ds-nav[aria-current]{background:linear-gradient(#ffdfb9,#ffd19b);border-color:#d99c5a;color:#7b3c29;box-shadow:inset 0 1px #fff4cf,inset 0 -2px #d68a4426}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:2px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
+      "description": "One of six lobby-only destinations; app owns routing and contextual Back.",
+      "html": "<nav aria-label=\"Principal\"><button class=\"ds-control ds-nav\" ><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" aria-hidden=\"true\"><path d=\"M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM2 21v-2a6 6 0 0 1 12 0v2M17 4a4 4 0 0 1 0 8m0 3a6 6 0 0 1 5 6\"/></svg><small>Equipe</small></button></nav>",
+      "css": ".ds-nav{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:100px;height:65px;padding:3px 5px;background:linear-gradient(#f8f4df,#d9e3cd);color:#294955;border:1px solid #a3bcad;border-radius:10px;box-shadow:inset 0 1px #fff9e7,0 2px 3px #13303d40}.ds-nav svg{width:28px;height:28px}.ds-nav small{font-size:12px}.ds-nav[aria-current]{background:linear-gradient(#f8c99d,#f39974);border-color:#ebbd8b;color:#673a28;box-shadow:inset 0 1px #fff4cf,inset 0 -2px #d68a4426}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:3px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
     },
     {
       "name": "Collection card frame",
@@ -386,7 +395,7 @@
       "refersTo": "collection-card",
       "description": "Extracted card frame and text; pixel art remains a bundled app asset and is omitted from this isolated specimen.",
       "html": "<button class=\"ds-control ds-card\"><strong>Bulbasaur</strong><small>Nv. 5 · Na coleção</small></button>",
-      "css": ".ds-card{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;display:grid;align-content:end;gap:5px;min-height:126px;min-width:135px;padding:8px;text-align:center;background:linear-gradient(#f9f9e9,#e8efd5);border:1px solid #b6c2a2;border-radius:13px;color:#304b51;box-shadow:inset 0 1px #fff,0 3px 5px #3b4b3b20}.ds-card strong{font-size:14px;line-height:1.1}.ds-card small{font-size:11px;color:#59716b}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:2px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
+      "css": ".ds-card{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;display:grid;align-content:end;gap:5px;min-height:126px;min-width:135px;padding:8px;text-align:center;background:linear-gradient(#f9f9e9,#e8efd5);border:1px solid #b6c2a2;border-radius:13px;color:#304b51;box-shadow:inset 0 1px #fff,0 3px 5px #3b4b3b20}.ds-card strong{font-size:14px;line-height:1.1}.ds-card small{font-size:11px;color:#59716b}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:3px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
     },
     {
       "name": "Selected inventory slot",
@@ -394,7 +403,7 @@
       "refersTo": "inventory-slot",
       "description": "Item frame and selected state; app supplies the pixel item image.",
       "html": "<button class=\"ds-control ds-slot\" aria-pressed=\"true\"><b>Oran Berry</b><small>× 3</small></button>",
-      "css": ".ds-slot{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:105px;height:105px;padding:8px;background:linear-gradient(#fffdf5,#ede4c8);color:var(--ink,#263f4d);border:1px solid #c1bb99;border-radius:12px;box-shadow:inset 0 1px #fff,0 3px 5px #334d4420}.ds-slot[aria-pressed=true]{border:2px solid #4eaaa1;background:linear-gradient(#faffef,#d8eee0)}.ds-slot b,.ds-slot small{font-size:12px}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:2px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
+      "css": ".ds-slot{font-family:Barlow,sans-serif;font-size:15px;font-weight:700;min-height:48px;cursor:pointer;transition:transform .12s,filter .12s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:105px;height:105px;padding:8px;background:linear-gradient(#fffdf5,#ede4c8);color:var(--ink,#263f4d);border:1px solid #c1bb99;border-radius:12px;box-shadow:inset 0 1px #fff,0 3px 5px #334d4420}.ds-slot[aria-pressed=true]{border:2px solid #4eaaa1;background:linear-gradient(#faffef,#d8eee0)}.ds-slot b,.ds-slot small{font-size:12px}.ds-control:hover:not(:disabled){filter:brightness(1.08)}.ds-control:focus-visible{outline:3px solid #148b91;outline-offset:3px}.ds-control:active:not(:disabled){transform:translateY(2px)}.ds-control:disabled{opacity:.48;cursor:default}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
     },
     {
       "name": "Task side panel",
@@ -402,22 +411,30 @@
       "refersTo": "side-panel",
       "description": "Persistent task detail without dialog interruption.",
       "html": "<section class=\"ds-panel\"><h2>Oran Berry</h2><p>Uma vez: recupera 10 HP ao chegar à metade do HP.</p></section>",
-      "css": ".ds-panel{font:16px/1.4 Barlow,sans-serif;background:#fffbef;color:#263f4d;border:1px solid #c9c7ac;border-radius:14px;padding:16px;box-shadow:0 3px 6px #2c4e4b13}.ds-panel h2{font-size:23px;line-height:1.12;margin:0 0 8px}.ds-panel p{font-size:13px;line-height:1.4;color:#526c75;margin:0}"
+      "css": ".ds-panel{font:16px/1.4 Barlow,sans-serif;background:#fffbef;color:#263f4d;border:1px solid #bac5ac;border-radius:14px;padding:16px;box-shadow:none}.ds-panel h2{font-size:23px;line-height:1.12;margin:0 0 8px}.ds-panel p{font-size:13px;line-height:1.4;color:#526c75;margin:0}"
+    },
+    {
+      "name": "Daily prize panel",
+      "kind": "custom",
+      "refersTo": "daily-prize",
+      "description": "Two prize quantities and one claim action; app supplies daily eligibility.",
+      "html": "<section class=\"ds-prize\"><div class=\"ds-prize-counts\"><p><strong>150</strong><span>moedas</span></p><p><strong>2</strong><span>tickets de TM</span></p></div><button class=\"ds-claim\">Resgatar presente</button><small>Disponível uma vez por dia.</small></section>",
+      "css": ".ds-prize{font:16px/1.4 Barlow,sans-serif;padding:14px 20px;border:1px solid #aac3ae;border-radius:16px;background:#e1ecda;display:flex;flex-direction:column;gap:12px;color:#38554e}.ds-prize-counts{display:flex;justify-content:center;gap:55px}.ds-prize-counts p{display:grid;gap:4px}.ds-prize-counts strong{font-size:35px;line-height:1}.ds-prize-counts span{font-size:15px;color:#48645b}.ds-prize small{text-align:center;font-size:13px;color:#49655b}.ds-claim{font:700 15px Barlow,sans-serif;min-height:54px;padding:12px 18px;background:linear-gradient(#f27b67,#e76558);color:#49251f;border:1px solid #c24e46;border-radius:11px;box-shadow:inset 0 1px #ffd9b7,inset 0 -3px #b94c442e,0 3px 6px #45514b22}.ds-claim:hover:not(:disabled){filter:brightness(1.08)}.ds-claim:focus-visible{outline:3px solid #148b91;outline-offset:3px}.ds-claim:active:not(:disabled){transform:translateY(2px)}.ds-claim:disabled{opacity:.48;cursor:default}"
     }
   ],
   "narrative": {
     "northStar": "Light game panels around a living pixel partner",
-    "overview": "PULSE ARENA uses warm ivory panels, navy graphite text and structural frames around colorful pixel creatures and original world art. Coral commands have shallow tactile depth; cyan distinguishes selection and progress. The game remains compact and landscape, with an animated favorite leading the lobby.\n\nThis records the approved light-game replacement, superseding the old dark menu rules while preserving the graphite/cyan/coral identity, bundled Barlow typography, pixel assets and high-contrast real-time battle HUD. Authority is PRODUCT.md and `.impeccable/surfaces/pulse-light-game.md`; the pinned Pokémon: Champion captures establish composition rather than reusable promotional art. No catalog roll, QUALITY BAR card or independently verified FORM seed was recorded.",
+    "overview": "PULSE ARENA uses warm ivory panels, navy graphite text and structural frames around colorful pixel creatures and authored scenes composed from authentic FireRed tiles. Coral commands have shallow tactile depth; cyan distinguishes selection and progress. The game remains compact and landscape, with an animated favorite leading the lobby.\n\nThis records the approved light-game replacement, superseding the old dark menu rules while preserving the graphite/cyan/coral identity, bundled Barlow typography, pixel assets and high-contrast real-time battle HUD. Authority is PRODUCT.md and `.impeccable/surfaces/pulse-light-game.md`; the pinned Pokémon: Champion captures establish composition rather than reusable promotional art. The reproducible FORM audit (seed `7ccad869466fc571`) was performed after the build, as the surface contract explicitly records; it is not evidence of prior user approval. No generated UI comp, catalog roll or QUALITY BAR card is asserted.",
     "keyCharacteristics": [
       "Warm framed task panels and shallow bevels.",
       "Pixel creatures carry identity; world artwork carries place.",
       "Coral actions, cyan selection and explicit text states.",
-      "Landscape workspaces with internal scrolling and persistent navigation."
+      "Landscape workspaces with internal scrolling, six lobby destinations and contextual Back."
     ],
     "rules": [
       {
         "name": "The Action and Selection Rule",
-        "body": "Use coral for primary commands and cyan for selected inventory, formation and progress; keep state text alongside color.",
+        "body": "Use coral for primary commands and cyan for selected inventory and progress; formation selection uses a warm fill and coral border. Keep state text alongside color.",
         "section": "colors"
       },
       {
@@ -434,6 +451,11 @@
         "name": "The Combat Contrast Rule",
         "body": "Keep the dark real-time HUD scoped to battle; light menu tokens must not reduce its control contrast.",
         "section": "elevation"
+      },
+      {
+        "name": "The Lobby Ownership Rule",
+        "body": "The hub owns six destinations; secondary tasks own the full playfield and contextual return.",
+        "section": "layout"
       }
     ],
     "dos": [

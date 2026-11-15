@@ -1,0 +1,70 @@
+[
+  {
+    "size": "phone",
+    "route": "team",
+    "overflow": false
+  },
+  {
+    "size": "phone",
+    "route": "collection",
+    "overflow": false
+  },
+  {
+    "size": "phone",
+    "route": "bag",
+    "overflow": false
+  },
+  {
+    "size": "phone",
+    "route": "summon",
+    "overflow": false
+  },
+  {
+    "size": "phone",
+    "route": "shop",
+    "overflow": false
+  },
+  {
+    "size": "phone",
+    "route": "rewards",
+    "overflow": false
+  },
+  {
+    "size": "phone",
+    "errors": []
+  },
+  {
+    "size": "desktop",
+    "route": "team",
+    "overflow": false
+  },
+  {
+    "size": "desktop",
+    "route": "collection",
+    "overflow": false
+  },
+  {
+    "size": "desktop",
+    "route": "bag",
+    "overflow": false
+  },
+  {
+    "size": "desktop",
+    "route": "summon",
+    "overflow": false
+  },
+  {
+    "size": "desktop",
+    "route": "shop",
+    "overflow": false
+  },
+  {
+    "size": "desktop",
+    "route": "rewards",
+    "overflow": false
+  },
+  {
+    "size": "desktop",
+    "errors": []
+  }
+]

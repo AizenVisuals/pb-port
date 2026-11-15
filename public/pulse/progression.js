@@ -40,7 +40,7 @@ function validateSave(value){
 }
 function validName(name){return typeof name==='string'&&/^[\p{L}\p{N} ._'-]{2,16}$/u.test(name.trim());}
 function acquisitionRarity(mon){
- if(['marshadow','gardevoir','metagross','dragoniteL','garchomp','greninja','tyranitar','salamence'].includes(mon.key))return 'epic';
+ if(['articuno','zapdos','moltres','mewtwo','mew','dragonite','marshadow','gardevoir','metagross','dragoniteL','garchomp','greninja','tyranitar','salamence'].includes(mon.key))return 'epic';
  // Stable catalog grouping, unrelated to base stats or battle modifiers.
  let hash=0;for(const c of mon.key)hash=(hash*31+c.charCodeAt(0))>>>0;
  return hash%10<3?'rare':'common';
@@ -76,6 +76,7 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
    if(!Array.isArray(roster)||roster.some(m=>!m||!key(m.key)||!Array.isArray(m.pool)))return failure('Catálogo inválido.');
    monsters=new Map(roster.map(m=>[m.key,{...clone(m),rarity:acquisitionRarity(m)}]));
    if(!save.growth&&save.profileMode==='journey'&&storage)try{storage.setItem(SAVE_KEY+'.before-growth',JSON.stringify(save));}catch{}
+   if(save.growth&&save.growth.tmSchema!==1&&storage)try{storage.setItem(SAVE_KEY+'.before-tm',JSON.stringify(save));}catch{}
    ensureGrowth(save,monsters);
    const available=save.unlocked.filter(m=>entry(m));
    if(save.profileMode==='journey'&&save.journey?.starter===null){persist();return success(save);}
@@ -134,7 +135,13 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
   buyItem(id,count=1){if(!save.growth||!ITEMS[id]||!integer(count,1,99))return failure('Item indisponível.');const spent=ITEMS[id].price*count;if(save.coins<spent)return failure('Moedas insuficientes.');save.coins-=spent;save.growth.inventory[id]+=count;persist();return success(save,{spent});},
   equipItem(mon,id){if(!save.growth||!save.unlocked.includes(mon)||id!==null&&!ITEMS[id])return failure('Escolha um item e um Pokémon da coleção.');if(save.journey?.active)return failure('Troque os itens depois de terminar a fase em andamento.');const old=save.growth.held[mon];if(old===id)return success(save);if(id&&save.growth.inventory[id]<1)return failure('Esse item não está na mochila.');if(old)save.growth.inventory[old]++;delete save.growth.held[mon];if(id){save.growth.inventory[id]--;save.growth.held[mon]=id;}persist();return success(save);},
   consumeHeld({battleId,mon,item}){const g=save.growth,event=battleId+':'+mon+':'+item;if(!g||typeof battleId!=='string'||!battleId.length||battleId.length>160||g.held[mon]!==item||!ITEMS[item]||item==='leftovers'||g.processedItems.includes(event))return failure('Item já consumido ou indisponível.');delete g.held[mon];g.processedItems.push(event);persist();return success(save);},
-  summonMove(mon){const item=entry(mon),g=save.growth;if(!g||!item||!save.unlocked.includes(mon))return failure('Escolha um Pokémon da sua coleção.');const pool=specialPool(save,mon,item);if(!pool.length)return failure('Todos os golpes especiais disponíveis para esse Pokémon já foram aprendidos.');if(g.inventory.moveTicket<1)return failure('Você precisa de um ticket de técnica.');const roll=Number(rng());if(!Number.isFinite(roll)||roll<0||roll>=1)return failure('Não foi possível sortear a técnica.');const id=pool[Math.floor(roll*pool.length)];g.specialMoves[mon]||=[];g.specialMoves[mon].push(id);g.inventory.moveTicket--;persist();return success(save,{mon,move:clone(item.pool.find(m=>m.id===id)),spent:1});},
+  summonMove(mon){const item=entry(mon),g=save.growth;if(!g||!item||!save.unlocked.includes(mon))return failure('Escolha um Pokémon da sua coleção.');const pool=specialPool(save,mon,item);if(!pool.length)return failure('Todos os golpes especiais disponíveis para esse Pokémon já foram aprendidos.');if(g.inventory.moveTicket<1)return failure('Você precisa de um ticket de técnica.');const roll=Number(rng());if(!Number.isFinite(roll)||roll<0||roll>=1)return failure('Não foi possível sortear a técnica.');const id=pool[Math.floor(roll*pool.length)];g.tmInventory||={};g.tmInventory[id]=(g.tmInventory[id]||0)+1;g.inventory.moveTicket--;persist();return success(save,{mon,move:clone(item.pool.find(m=>m.id===id)),spent:1});},
+  teachTM(mon,id){const g=save.growth,item=entry(mon);if(!g||!item||!save.unlocked.includes(mon)||!(g.tmInventory?.[id]>0))return failure('Escolha uma TM da mochila e um Pokémon obtido.');
+   if(save.journey?.active)return failure('Use a TM depois de concluir a fase em andamento.');
+   const source=[...monsters.values()].flatMap(x=>x.pool).find(x=>x.id===id),target=item.pool.find(x=>x.name===source?.name&&LEARNSETS[mon]?.specialMoves.includes(x.id));
+   if(!target)return failure('Esse Pokémon não é compatível com esta TM.');if(learnedMoves(save,item).some(x=>x.name===target.name))return failure('Esse Pokémon já conhece este golpe.');
+   g.tmInventory[id]--;g.specialMoves[mon]||=[];g.specialMoves[mon].push(target.id);persist();return success(save,{mon,move:clone(target)});
+  },
   previewEvolution(mon){
    const edge=EVOLUTIONS[mon],record=save.growth?.pokemon[mon];if(!edge||!record||levelOf(record.xp)<edge[1]||!entry(edge[0]))return null;
    const target=edge[0],next=clone(save);next.growth.pokemon[target]={xp:record.xp};

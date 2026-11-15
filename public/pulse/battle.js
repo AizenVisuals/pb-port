@@ -1,3 +1,4 @@
+import {LEARNSETS} from './learnsets.js';
 import {configureGrowthBattle,evolutionAssets} from './growth-battle.js';
 /** PULSE ARENA local battle runtime. One simulation, no transport or backend. */
 const STEP_MS = 1000 / 60;
@@ -37,7 +38,7 @@ export class OfflineBattle {
       const engine = this.engine = await getEngine();
       const count = Number(this.format[0]);
       this.team = normalizeTeam(engine, team, count);
-      const cpu = botTeam ? normalizeTeam(engine, botTeam, Number(this.format[2])) : buildBotTeam(engine, this.team, count, seed);
+      const cpu = botTeam ? normalizeTeam(engine, botTeam, Number(this.format[2])) : buildBotTeam(engine, this.team, count, seed, growth);
       // A bot does not get a Mega unless the player selected one too.
       if (!this.team.gimmick) cpu.gimmick = null;
       if (this.team.gimmick && !cpu.gimmick) {
@@ -290,10 +291,11 @@ function normalizeTeam(engine, team, count) {
   return {mons:[...team.mons],moves,gimmick};
 }
 const total = info => Object.values(info.stats || {}).reduce((sum,n) => sum + (Number(n) || 0), 0);
-function buildBotTeam(engine, player, count, seed) {
+function buildBotTeam(engine, player, count, seed, growth) {
   const budget = player.mons.reduce((sum,key) => sum + total(engine.INFO[key]), 0) / count;
   const random = seeded(Number.isInteger(seed) ? seed ^ 0x8d12aa13 : randomSeed());
-  const candidates = [...engine.ROSTER].filter(key => !player.mons.includes(key));
+  const level=growth?.opponentLevel||Math.max(5,...Object.values(growth?.levels||{}));
+  const candidates = [...engine.ROSTER].filter(key => !player.mons.includes(key)&&(!growth||engine.INFO[key]?.pool.some(m=>m.power>0&&LEARNSETS[key]?.levelMoves[m.id]<=level)));
   const ranked = candidates.map(key => ({key,score:Math.abs(total(engine.INFO[key]) - budget) + random() * 170})).sort((a,b) => a.score-b.score);
   const mons = ranked.slice(0,count).map(x => x.key);
   return {mons,moves:mons.map(key => engine.legalMoves(key)),gimmick:null};

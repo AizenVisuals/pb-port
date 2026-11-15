@@ -1,0 +1,83 @@
+npm notice run pb-self-hosted-port@0.1.0 test
+npm notice run node --test test/*.test.mjs
+(node:455683) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ four- and five-member journey teams survive catalog load and reload intact (409.252738ms)
+✔ full chapter can fail, resume and clear with exactly one badge and first-clear rewards (1029.434842ms)
+✔ new journey selects one initial exactly once and reloads without bonus team (159.071989ms)
+✔ legacy profile keeps its collection, balance and team when choosing a journey starter (78.309171ms)
+✔ chapter locks, result validation and first-clear rewards survive reloading (176.943001ms)
+✔ invalid journey imports are transactional (60.200491ms)
+✔ wild encounters, ball spending and capture are persistent and transactional (129.255193ms)
+✔ invalid RNG never consumes a ball, and ball purchases charge once (107.907365ms)
+✔ campaign starters have independent species, sprites and four PB moves (77.848919ms)
+✔ bulbasaur completes a real local PB battle and uses its moves (3798.889575ms)
+✔ charmander completes a real local PB battle and uses its moves (2330.556029ms)
+✔ squirtle completes a real local PB battle and uses its moves (2500.986231ms)
+✔ all chapter opponents are registered with usable PB animations and moves (4083.177086ms)
+✔ delivered client includes every static module dependency and stylesheet font (156.831705ms)
+✔ local canvas adapter produces deterministic battle state (4786.276116ms)
+✔ complete 3v3 and 6v6 simulations end with valid winners (9217.155419ms)
+✔ Marshadow registers independent sprites, canonical typing and expanded legal moves (3563.527375ms)
+✔ Spectral Thief transfers only positive boosts, capped at two stages total (1.314125ms)
+✔ fan-made Mega transforms once, retains four selected moves and does not heal (1996.945798ms)
+✔ native image augmented with getContext remains an image when drawn (21.774276ms)
+✔ Google identity and logout never replace local progression (10.349363ms)
+✔ double presses cannot open two auth requests; cancelled login stays usable (1.704675ms)
+✔ failed SDK loading permits retry without changing save (5.674428ms)
+(node:455700) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ three banners have distinct real pools with every advertised rarity (229.525114ms)
+✔ banner pity is independent and invalid banners never charge (76.167083ms)
+✔ left stick and face move are emitted simultaneously with standard mapping (7.991677ms)
+✔ dead zone and release reset movement, dpad overrides axis (1.243795ms)
+✔ DualSense shoulder, trigger and options commands have single press edges (0.927835ms)
+✔ six starters run the native PB evolution cinematic without Mega and keep HP proportion (16989.304694ms)
+✔ Sitrus triggers exactly once, heals quarter HP and calls the inventory transaction (1564.740285ms)
+✔ Oran restores ten canonical HP; berries cure only their status and failed inventory transactions cannot heal (9978.462618ms)
+✔ Leftovers stays equipped and heals once per six-second interval; fainted Pokémon cannot consume berries (3250.81727ms)
+✔ Lum cures confusion and resets persistent ailment counters (1591.483452ms)
+(node:455718) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ all six starters begin at level five with legal basic moves, not advanced default kits (1175.898327ms)
+✔ first-clear XP, ticket cadence and daily tickets persist without duplicate rewards (163.182472ms)
+✔ special gacha consumes exactly one inventory ticket, teaches compatible unique moves and rejects bad RNG (141.159912ms)
+✔ level locks are enforced when selecting and importing moves (80.288111ms)
+✔ permanent evolution retains XP, compatible learned techniques, held item and selected team across reload (173.901084ms)
+✔ held items reserve inventory, return on unequip and consume once when activated (102.387076ms)
+✔ old journey saves migrate without losing collection, currencies or cleared stages, and invalid growth imports preserve save (182.028321ms)
+✔ level boundaries and all evolution/icon assets are complete (120.685374ms)
+✔ a TM stays in inventory for incompatible targets and legacy techniques migrate without wiping the save (201.027681ms)
+(node:455841) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Kanto banner contains each canonical species once and every species has usable legal acquisition moves and assets (14889.014942ms)
+(node:455845) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ starter collection includes playable 3v3 and 6v6 without spending (117.328335ms)
+✔ local profile, teams, moves, Mega and favorites survive reloading (165.451042ms)
+✔ locked species, duplicate team members, invalid moves and unavailable Mega are rejected (206.281527ms)
+✔ daily reward can be claimed once per UTC day and cannot be reclaimed by rolling clock back (84.761974ms)
+✔ battle rewards are persistent and idempotent, exclude surrender/short runs and obey pacing (119.368315ms)
+✔ gacha applies normal probability boundaries, charges coins and awards diamonds for duplicates (415.006226ms)
+✔ tenth consecutive common pull guarantees rare or better and persists pity across loads (105.82115ms)
+✔ bad RNG, insufficient balance and invalid counts are transactional (64.920963ms)
+✔ direct unlock is an alternative with explicit price and no duplicate charges (273.369372ms)
+✔ corrupt saves are backed up and recovery is visible; storage failures keep a usable session (209.839988ms)
+✔ export/import validates data and preserves old state on bad imports (164.717783ms)
+✔ legacy saves gain diamond and shiny fields without losing progress (163.169202ms)
+✔ shiny purchases require ownership, supported art and diamonds; persist without modifying stats (341.334486ms)
+✔ invalid diamond and shiny imports preserve previous save (47.992174ms)
+✔ duplicate diamond amounts follow rarity and never refund coins (390.964848ms)
+✔ CPU favors effective attacks without selecting unavailable moves and avoids already-maxed buffs (4.359185ms)
+✔ HTTP serves local client and disables production sign-in (2569.166879ms)
+✔ profiles issue independent tokens and invalid teams are rejected (109.645704ms)
+✔ practice loads the actual engine, ticks, accepts input, and surrenders (3643.083972ms)
+✔ two clients share seed, commands and ranked result; cancellation removes queue (1779.84404ms)
+ℹ tests 63
+ℹ suites 0
+ℹ pass 63
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36156.192006

@@ -21,3 +21,23 @@ Five original promotional screenshots are preserved under research/ui-reference/
 
 ## Process scope
 Exact user-supplied game reference and explicit light-panel approval pinned this code-led replacement. No catalog roll, QUALITY BAR card or independently verified FORM seed was recorded; reference evidence is limited to the five source captures. This process gap is disclosed, not retroactively represented as a performed choice.
+
+## Current replacement contract — 15/11/2026
+
+### 1. Authority and use
+Latest user explicitly rejects website design and asks game UI, original PB as primary mechanical reference, FireRed assets for map, landscape mobile, own established colours. The owner authorized work through final update. These specific references pin the direction; the implementation lead authorizes code-led continuation against those supplied references instead of a catalog-roll exercise. This records the present execution decision, not a claim that a missing roll happened or that the user approved unseen screenshots.
+
+### 2. FORM evidence
+Verifiable reference forms are the five images listed in `research/ui-reference/x7/sources.json` and stored beside it: illustrated world lobby, visual ordered formation, dense portrait collection, numbered stage selection and battle HUD. The current artifacts inherit only those structural forms. Source FireRed maps and palettes are fixed by SHA in `research/next-pass/firered/sources.json`; authored scene composition is produced by the checked-in offline composers. No unverified catalogue FORM card or seed is asserted. OriginalPB real-time mechanics remain the technical authority; no turn-based controls are introduced.
+
+### 3. First viewport and hierarchy
+Native-sized landscape lobby shows animated favorite, earned balances, one campaign entrance, a separate training command and six destinations only at the hub. Secondary screens use contextual Back and own the game viewport. Daily reward is a visual coin/ticket prize with one resgate action. Inventory teaches from actual compatible TM items; a draw alone never learns the move.
+
+### 4. Material and motion
+Genuine FireRed pixel tiles compose new lobby and route images, with original ownership/provenance retained. Warm ivory HUD, navy/graphite structure, cyan selected state and coral commands persist. Creature sprites and original PB battle VFX animate; no unrelated website hero/bento system. Immediate button response, cancellable navigation, reduced motion and no delayed input are motion constraints. No generated terrace remains as lobby background.
+
+### 5. Verification boundary
+Required browser matrix: ten screens at844×390 and1280×720, plus TM acquisition→inventory→compatible use→reload. Meaningful commands48px, readable secondary text, explicit disabled reasons or available alternative. Finish review scores its named fixes; Android install/render and physical controller support must be reported from their own evidence. There is no approved generated UI comp, catalog QUALITY BAR or catalogue roll; explicit user-provided game references are the comparison standard.
+
+### Reproducible FORM audit performed after the build
+FORM — seed:7ccad869466fc571. The verification run is persisted in `pulse-game-form-seed.txt`; its reproduction metadata stays only in that evidence file. This run happened after implementation and is not retroactively represented as prior user approval. Grounded structural inventory: (1) trainer-plaza hub, (2) creature-box grid, (3) numbered Kanto route map, (4) partner status sheet, (5) real-time command cluster, (6) bag slot inventory, (7) daily prize panel. The script's printed assignment is acknowledged as structural calibration; its own rule says the assignment never outranks user or brief. The owner already pinned Pokémon game references and explicitly rejected website/interface-of-tools structures, so the delivered game forms remain the user's specified direction. Catalog challengers are declined for product clarity/audience identification when they replace game navigation with unrelated music/dance/publishing instruments; their transferable discipline is coordinated attention, not literal styling. No new alternate direction or unapproved comp is asserted.
