@@ -6,6 +6,11 @@ export function bindBattleControls({surface, stick, knob, getSnapshot, command})
     if (!button || button.disabled) return null;
     if (button.dataset.move !== undefined) return {kind:'move',index:Number(button.dataset.move)};
     if (button.dataset.switch !== undefined) return {kind:'switch',to:Number(button.dataset.switch)};
+    // Slot especial do grid de golpes (MEGA / EVOLUIR): mesmo comando do
+    // botão #battle-mega; o wrapper em app.js converte para 'evolve' quando
+    // o Pokémon pode evoluir. CAPTURAR (data-capture-slot) não é comando:
+    // o clique chega ao onclick ligado em app.js.
+    if (button.dataset.special === 'mega') return {kind:'mega'};
     const kind = {'battle-auto':'manual','battle-guard':'guard','battle-dodge':'dodge','battle-mega':'mega','battle-evolve-cancel':'cancel-evolution'}[button.id];
     return kind ? {kind} : null;
   };

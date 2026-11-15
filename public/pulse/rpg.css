@@ -2,8 +2,7 @@
 :root{color-scheme:light;--bg:#d7e8e4;--surface:#fff9eb;--raised:#f2ead7;--ink:#263f4d;--muted:#526c75;--cyan:#2b9f9f;--coral:#e96758;--gold:#9a6812;--line:#c8c5ae;--good:#28734e;--bad:#ae3943}
 body{background:#c4ded9;color:var(--ink)}button{font-weight:700}button:disabled{opacity:.48}button:focus-visible,select:focus-visible,input:focus-visible{outline-color:#148b91;outline-offset:2px}button:active:not(:disabled){transform:translateY(2px)}h1,h2,h3{color:var(--ink)}p{color:var(--muted)}input,select{background:#fffdf6;color:var(--ink);border-color:#9eafa9;border-radius:9px;min-height:48px}input::placeholder{color:#637981}progress,progress::-webkit-progress-bar{background:#d7d5bf}progress::-webkit-progress-value{background:var(--cyan)}img{image-rendering:pixelated}.primary-button{background:linear-gradient(#f27b67,#e76558);color:#fffdf0;border:1px solid #c24e46;border-radius:11px;box-shadow:inset 0 1px #ffd9b7,inset 0 -3px #b94c442e,0 3px 6px #45514b22;min-height:48px;font-size:15px}.secondary-button{background:linear-gradient(#fffdf5,#eae8d6);color:#304a54;border:1px solid #b8bba7;box-shadow:inset 0 1px #fff,inset 0 -2px #2e514b12;border-radius:10px;min-height:48px}.text-button{color:#386572;min-height:48px}.icon-button,.section-back{background:#fff8e7;border:1px solid #aeb9ac;color:#355967;min-width:48px;min-height:48px;border-radius:13px;display:inline-grid;place-items:center;box-shadow:inset 0 -2px #35596714}.section-back svg{width:25px;height:25px}.count-mark,.level-badge{background:#f9efd1;color:#5d4a27;border:1px solid #d2c491;padding:7px 12px;border-radius:8px;white-space:nowrap}.type-tag{background:#e3eee5;color:#264b4b;border:1px solid #b8cec3;border-radius:6px;padding:3px 7px;font-size:12px}.segmented{background:#dddcc9;padding:3px;border:1px solid #babfac;border-radius:11px}.segmented button{background:transparent;color:#435f65;min-height:44px;border-radius:8px;padding:7px 16px}.segmented button[aria-pressed=true]{background:#fff9e9;color:#b84940;box-shadow:0 2px 3px #293f4420}
 #app{height:100svh;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);display:flex;flex-direction:column;background:#e7eddf;overflow:hidden}.app-header{height:56px;min-height:56px;padding:5px 18px;background:#284a58;border-bottom:3px solid #73bdb4;color:#fff4dc;box-shadow:0 3px 8px #233d4322;z-index:12}.trainer-button{color:#fff4dc;gap:10px;padding:0}.trainer-button>img{width:44px;height:44px;background:#f4e8c7;border:2px solid #e9cc86;border-radius:12px}.trainer-button strong{font-size:15px}.trainer-button small{color:#c8e6dd;font-size:11px}.currencies{gap:9px}.wallet{background:#fffae9;color:#7b571c;border:1px solid #d6c797;border-radius:10px;min-height:40px;padding:7px 12px;gap:8px}.wallet svg{color:#c58b24;width:20px;height:20px}.diamond-wallet{color:#365e7d}.diamond-wallet svg{color:#5e94c3}.wallet b{font-size:15px}#screens{height:auto;flex:1;min-height:0;position:relative;overflow:hidden;width:100%}.screen{height:100%;min-height:0}.content-screen{max-width:none;width:100%;padding:12px 18px;overflow:auto;background:#f7f2e3}.screen-title{display:flex;align-items:center;gap:12px;margin:0 0 12px;min-height:44px;flex-shrink:0}.screen-title>div{min-width:0;flex:1}.screen-title h1{font-family:BarlowCondensed,Barlow,sans-serif;font-size:28px;font-style:normal;line-height:1.05;letter-spacing:-.02em}.screen-title p{font-size:12px;margin-top:4px}.screen-title>.section-back{width:44px;min-width:44px;min-height:44px;height:44px;border-radius:50%}.screen-title>button:not(.section-back){min-height:44px}.screen-title>span{font-size:13px}.main-nav{position:relative;top:auto;left:auto;right:auto;bottom:auto;transform:none;display:flex;flex-direction:row;gap:9px;width:100%;max-width:none;min-height:69px;height:69px;padding:5px 18px 4px;background:linear-gradient(#fff9e8,#e8e7d4);border:0;border-top:2px solid #c4c8b5;box-shadow:0 -4px 10px #233f4316;z-index:15}.main-nav button{width:auto;min-width:0;flex:1;height:58px;min-height:48px;gap:2px;padding:3px 5px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#38535f;background:transparent;border:1px solid transparent;border-radius:12px;position:relative}.main-nav button span{width:32px;height:30px;display:grid;place-items:center;filter:drop-shadow(0 2px 1px #3e575325)}.main-nav button svg{width:28px;height:28px;stroke-width:2.2}.main-nav button small{font-size:12px;font-weight:700}.main-nav button[aria-current]{background:linear-gradient(#ffdfb9,#ffd19b);border-color:#d99c5a;color:#7b3c29;box-shadow:inset 0 1px #fff4cf,inset 0 -2px #d68a4426}.main-nav button[aria-current]::after{display:none}.main-nav button[data-route=team] span{color:#3a9d99}.main-nav button[data-route=collection] span{color:#df6655}.main-nav button[data-route=summon] span{color:#c48b23}.main-nav button[data-route=shop] span{color:#658ec3}.main-nav button[data-route=bag] span{color:#7b9a51}.main-nav button[data-route=rewards] span{color:#c87587}.toast{background:#294b56;color:#fff8e6;bottom:82px;left:50%;border:1px solid #a2c8b8;box-shadow:0 5px 14px #19313935;font-size:14px}.save-status{background:#ffe5b4;color:#644725}
-/* Home has a game world, a favorite, and two meaningful battle entrances. */
-.home-screen{position:relative;isolation:isolate;max-width:none;padding:0;margin:0;overflow:hidden;background:#b8dcc5}.home-screen::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#183b4518,transparent 55%,#34525825),url('/pulse/assets/lobby-tiles.webp') center 63%/cover;z-index:-2}.home-screen::after{content:'';position:absolute;inset:60% 0 0;background:linear-gradient(transparent,#304d543d);z-index:-1;pointer-events:none}.home-heading{position:absolute;left:20px;top:17px;right:auto;z-index:3;display:flex;flex-direction:column;align-items:start;gap:12px}.home-heading .wordmark{font-size:38px;color:#fffbed;filter:drop-shadow(0 3px 2px #22464a88);text-shadow:none;line-height:.85;letter-spacing:-.025em}.home-heading .wordmark b{color:#b8fff0;font-size:13px;margin-top:10px;letter-spacing:.14em}.home-heading .icon-button{min-width:42px;min-height:42px;width:42px;height:42px;background:#fff9e7e8}.hero-stage{position:absolute;left:23%;top:3%;width:40%;height:95%;min-height:0;margin:0;overflow:visible}.hero-stage::before,.arena-orbit,.arena-floor{display:none}#hero-canvas{width:100%;height:100%;position:absolute;inset:0;filter:drop-shadow(0 9px 4px #173c4d35)}.hero-name{position:absolute;left:5%;right:0;bottom:2px;padding:0;text-align:center;background:none}.hero-name h2{font-family:BarlowCondensed,Barlow,sans-serif;font-size:29px;color:#fff9e9;text-shadow:0 2px 4px #17364c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hero-name .type-list{justify-content:center;margin-bottom:4px}.hero-name .type-tag{background:#fff7e9f2;color:#315363;box-shadow:0 2px 4px #1e3d4626}.hero-name>span:last-child{display:none}.hero-info{position:absolute;right:0;bottom:8px;background:#fff9e9e8;border:1px solid #b8c5b3;color:#315363;width:35px;height:35px}.battle-launch{position:absolute;right:18px;top:50%;transform:translateY(-50%);width:30%;max-width:330px;background:#fff7e8f5;border:1px solid #c5bfa0;border-radius:16px;padding:12px;box-shadow:0 7px 14px #27494c33;margin:0}.journey-cta{background:linear-gradient(#f7886e,#df6453);color:#fff9e9;font-family:BarlowCondensed,Barlow,sans-serif;font-size:25px;font-style:normal;min-height:58px;line-height:1.05;width:100%;margin-bottom:10px;border:1px solid #bd4f43;box-shadow:inset 0 1px #ffdba0,inset 0 -3px #963f3224,0 4px 5px #3c4b4425}.battle-choice{display:flex;gap:8px;margin-bottom:8px}.battle-choice label{font-size:11px;color:#45616d}.battle-choice select{font-size:11px;padding:6px;min-height:40px;background:#fffdf4;border-color:#b6c0ae}.battle-cta{min-height:48px;background:linear-gradient(#4c9399,#367b88);border:1px solid #2e6878;border-radius:10px;color:#fff9e9;padding:8px 10px;gap:8px;box-shadow:inset 0 1px #b4d8d2,inset 0 -2px #1e596926}.battle-cta::after{display:none}.battle-cta b{font-family:Barlow;font-size:13px;font-style:normal}.battle-cta small{font-size:11px;color:#e3f4e9}.battle-cta svg{width:24px;height:24px}.battle-cta>span:first-child{display:none}.battle-cta .cta-arrow{font-size:20px}.launch-note,.home-progress{display:none}.lobby-shortcuts{position:absolute;left:18px;bottom:15px;width:21%;margin:0;display:grid;gap:8px}.daily-shortcut,.summon-shortcut{background:#fff9e9f2;border:1px solid #c5c6ae;border-radius:11px;box-shadow:inset 0 1px #fff,0 4px 9px #23444a26;color:#314f5b}.daily-shortcut{min-height:48px;font-size:12px;padding:8px;line-height:1.2}.summon-shortcut{padding:10px;text-align:left}.summon-shortcut:after{display:none}.summon-shortcut>span{font-size:12px;color:#b35b42}.summon-shortcut b{display:block;font-size:15px;line-height:1.15;margin:4px 0}.summon-shortcut small{font-size:11px;color:#526b72}
+
 /* Full-screen ordered formation, visual slots and real collection roster. */
 .formation-screen,.partner-screen,.campaign-screen,.inventory-screen{display:flex;flex-direction:column}.formation-screen .screen-title p{display:none}.formation-layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(235px,1fr);gap:14px;flex:1;min-height:0}.formation-field{position:relative;border:1px solid #b4c5b4;border-radius:16px;background:radial-gradient(ellipse at 50% 60%,#fef8e5 0 45%,#d7e6ce 46% 52%,#ecf2dc 53% 67%,#c5ded4 68%);overflow:hidden}.formation-field>.team-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:6px;height:calc(100% - 22px);padding:4px 12px}.formation-field>p{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:10px}.formation-slot{min-height:0;min-width:0;position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;background:none;border:1px solid transparent;border-radius:13px;padding:0;box-shadow:none;overflow:hidden}.formation-slot.selected{background:#fff9e996;border-color:#55a7a6}.formation-slot canvas{height:calc(100% - 28px);min-height:22px;width:100%;object-fit:contain}.formation-slot>b{font-size:12px;line-height:1.05;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.formation-slot>small{font-size:10px;line-height:1.1}.slot-number{position:absolute;left:6px;top:3px;color:#396569;font-size:9px;font-weight:700;z-index:2}.empty-slot{opacity:.6}.empty-slot-mark svg{width:27px;height:27px;color:#718b75}.game-side-panel{background:#fffbef;border:1px solid #c9c7ac;border-radius:14px;padding:16px;overflow:auto;min-height:0;box-shadow:0 3px 6px #2c4e4b13}.formation-selected{display:flex;align-items:center;gap:8px}.formation-selected>img{width:58px;height:58px}.formation-selected h2{font-size:22px}.formation-selected .type-tag{font-size:10px;padding:2px 5px}.formation-selected p{font-size:11px;margin-top:5px}.formation-command-list{display:grid;gap:8px;margin-top:14px}.formation-command-list button{min-height:44px;font-size:12px}.formation-command-list+.support-copy{font-size:11px;margin-top:10px}.formation-roster-bar{display:flex;align-items:center;gap:10px;min-height:76px;margin-top:8px;flex-shrink:0}.formation-roster-bar>b{font-size:12px;writing-mode:vertical-rl;transform:rotate(180deg)}.formation-roster{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;flex:1;padding:3px}.roster-thumb{display:flex;align-items:center;flex-direction:column;min-width:87px;background:#fff9e9;border:1px solid #c4c9b0;border-radius:10px;padding:3px 7px;color:#324c56}.roster-thumb img{width:35px;height:35px}.roster-thumb span{font-size:11px;line-height:1.1;max-width:85px;overflow:hidden;text-overflow:ellipsis}.roster-thumb small{font-size:9px}.roster-thumb.in-team{background:#dfeee4;border-color:#62a59b}.formation-roster-bar>.icon-button{min-width:48px;font-size:24px;height:48px}
 /* Partner workspace: one task per tab. */
@@ -22,19 +21,13 @@ body{background:#c4ded9;color:var(--ink)}button{font-weight:700}button:disabled{
 .sheet-dialog,.pull-dialog,.result-dialog,.pause-dialog{background:#fff9e9;color:#294a56;border:1px solid #c3c7ac;border-radius:18px;box-shadow:0 14px 40px #163b4955}.sheet-dialog::backdrop,.pull-dialog::backdrop,.result-dialog::backdrop,.pause-dialog::backdrop{background:#193e4b99}.dialog-heading h2,.pull-dialog h2{color:#294a56}.dialog-heading{margin-bottom:16px}.dialog-heading .icon-button{background:#e5ecd8;border-color:#bbc9ad}.detail-stats>div{background:#e8edda;color:#34545d;border-color:#cad0b7}.detail-stats small{color:#526b6f}.pull-results{gap:10px}.pull-result{background:#edf0de;border-color:#c4ccaf;color:#354f57}.pull-result.rarity-rare{background:#dceddf}.pull-result.rarity-epic{background:#f7e5ba}.rarity-label{color:#776238}.result-symbol{background:#e6ecd5;color:#478e7b}.result-coins{color:#a57520}.profile-form label{color:#3d5a65}.profile-form .sound-preference{color:#3d5a65}.account-panel{border-color:#c8cdb8}.starter-dialog{max-width:min(100vw - 24px,850px)}.starter-dialog h1{color:#294a56}.starter-options{display:flex;gap:12px;overflow-x:auto;padding:10px 3px 18px;scroll-snap-type:x proximity}.starter-option{min-width:180px;background:#edf1df;border:1px solid #b9c7b0;border-radius:14px;box-shadow:0 4px 6px #2b4b3c19;color:#2f535d;padding:12px;scroll-snap-align:start}.starter-option[aria-pressed=true]{border:2px solid #df7560;background:#fff0d8}.starter-option canvas{height:125px;width:140px}.starter-option strong{font-size:18px}.starter-option small{font-size:12px;color:#59716a}.starter-dialog>.primary-button{margin-top:8px}
 /* Combat remains the PB real-time surface; light menu tokens must not lower HUD contrast. */
 .battle-screen{color:#f6f3ea;--ink:#f6f3ea;--muted:#abc5cf;--cyan:#7de5e0;--coral:#ff7b65;--line:#314552}.battle-screen h1,.battle-screen h2,.battle-screen h3{color:#f6f3ea}.battle-screen .move-button b{color:#f6f3ea}.battle-screen .mega-action{color:#fff1bc}.battle-screen .utility-action{color:#fff8e9}.battle-screen .bench-button{border:0}.battle-screen button:focus-visible{outline-color:#9affed}.battle-pill{border:1px solid #73c3c673}.battle-icon-button{border:1px solid #75a8b24a}.battle-screen button.is-pressed:not(:disabled){filter:brightness(1.18)}
-@media(min-width:1100px) and (min-height:600px){.app-header{height:65px;min-height:65px;padding-inline:28px}.main-nav{height:83px;min-height:83px;padding-inline:7%;gap:20px}.main-nav button{height:70px}.main-nav button span{height:38px;width:40px}.main-nav button svg{width:35px;height:35px}.main-nav button small{font-size:14px}.content-screen{padding:20px 30px}.screen-title{min-height:50px;margin-bottom:18px}.screen-title h1{font-size:34px}.formation-roster-bar{min-height:110px}.roster-thumb img{width:55px;height:55px}.roster-thumb{min-width:115px;padding:7px}.roster-thumb span{font-size:14px}.roster-thumb small{font-size:11px}.formation-slot>b{font-size:17px}.formation-slot>small{font-size:13px}.slot-number{font-size:12px;top:8px;left:12px}.formation-field>.team-list{padding:10px 30px}.game-side-panel{padding:24px}.formation-selected>img{width:85px;height:85px}.formation-selected h2{font-size:28px}.formation-command-list button{font-size:15px;min-height:48px}.partner-stage{padding:22px}.partner-panel{padding:20px 8px}.partner-panel h2{font-size:27px}.partner-panel p{font-size:15px}.partner-tabs button{font-size:16px;min-height:48px}.partner-stats span{font-size:15px}.partner-stats b{font-size:18px}.partner-stats{gap:18px 30px;margin:20px 0}.evolution-path img{width:100px;height:100px}.inventory-layout{grid-template-columns:1.9fr 1fr}.inventory-layout>.bag-items{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));grid-auto-rows:145px;gap:15px}.inventory-slot>img{width:65px;height:65px}.inventory-slot>b{font-size:16px}.inventory-slot>small{font-size:14px}.inventory-item-hero{width:100px;height:100px}.game-side-panel>h2{font-size:28px}.game-side-panel>p{font-size:15px}.campaign-layout{grid-template-columns:1fr 300px}.chapter-map{height:100%;min-height:420px}.map-stage{width:66px;height:75px}.map-stage>span{width:55px;height:55px;font-size:15px}.map-stage>b{font-size:13px}.stage-trainer img{width:75px;height:75px}.stage-opponents img{width:65px;height:65px}.stage-reward{font-size:15px}.invocation-tabs{top:20px;right:95px;width:280px}.pokemon-invocation{grid-template-columns:210px minmax(0,1fr) minmax(260px,.65fr);gap:18px 24px}.banner-nav button{min-height:80px;font-size:18px;padding:17px}.summon-actions{margin-top:45px}.summon-actions button{min-height:74px}.summon-actions button b{font-size:23px}.summon-actions button span{font-size:15px}#summon-banner-title{font-size:34px;bottom:20px}.pity-box>div{font-size:15px}.summon-budget{font-size:17px}.odds-details summary{font-size:14px}.hero-stage{left:25%;width:36%}.home-heading{left:35px;top:35px}.home-heading .wordmark{font-size:56px}.home-heading .wordmark b{font-size:19px}.hero-name h2{font-size:43px}.battle-launch{width:28%;padding:20px;right:30px}.journey-cta{font-size:35px;min-height:84px}.battle-choice select{font-size:14px;min-height:48px}.battle-choice label{font-size:13px}.battle-cta{min-height:64px}.battle-cta b{font-size:17px}.battle-cta small{font-size:13px}.lobby-shortcuts{left:30px;bottom:30px;width:20%;gap:12px}.daily-shortcut{font-size:16px;padding:14px}.summon-shortcut{padding:16px}.summon-shortcut b{font-size:22px}.summon-shortcut small,.summon-shortcut>span{font-size:14px}.formation-field>p{font-size:13px;bottom:5px}}
-@media(orientation:landscape) and (max-height:440px){.app-header{height:50px;min-height:50px;padding-block:4px}.trainer-button>img{width:39px;height:39px}.main-nav{height:62px;min-height:62px;padding-top:2px;gap:5px}.main-nav button{height:56px;padding:2px 3px}.main-nav button span{height:29px;width:29px}.main-nav button svg{width:26px;height:26px}.main-nav button small{font-size:11px}.content-screen{padding:9px 14px}.screen-title{gap:9px;min-height:40px;margin-bottom:8px}.screen-title>.section-back{width:40px;min-width:40px;height:40px;min-height:40px}.screen-title h1{font-size:25px}.screen-title p{font-size:11px}.screen-title>span{font-size:11px}.screen-title>button:not(.section-back){min-height:40px;font-size:12px}.formation-roster-bar{min-height:71px;margin-top:5px;gap:6px}.formation-layout{gap:10px;grid-template-columns:minmax(0,1.8fr) minmax(215px,1fr)}.game-side-panel{padding:12px}.formation-selected>img{width:45px;height:45px}.formation-selected h2{font-size:19px}.formation-command-list{margin-top:7px;gap:5px}.formation-command-list button{min-height:39px;font-size:11px}.formation-command-list+.support-copy{display:none}.formation-field>.team-list{padding:1px 6px;gap:2px}.formation-slot>b{font-size:10px}.formation-slot>small{font-size:9px}.formation-slot canvas{height:calc(100% - 22px)}.formation-field>p{font-size:9px;bottom:1px}.slot-number{font-size:8px;top:1px;left:4px}.formation-roster-bar .roster-thumb{min-width:81px}.roster-thumb img{width:32px;height:32px}.partner-layout{gap:13px;grid-template-columns:minmax(180px,.8fr) minmax(0,1.4fr)}.partner-tabs button{font-size:12px;min-height:39px;padding:4px 6px}.partner-panel{padding-top:9px}.partner-panel h2{font-size:20px}.partner-panel p{font-size:12px;margin-bottom:9px}.partner-stats{gap:9px 16px;margin:10px 0}.partner-panel .move-save{bottom:-8px}.partner-panel .move-option{min-height:49px;padding:7px}.partner-panel .mega-label{font-size:11px}.partner-actions button{font-size:11px;min-height:44px}.partner-stage>canvas{height:calc(100% - 54px)}.campaign-layout{grid-template-columns:minmax(0,1fr) 230px;gap:10px}.campaign-screen .screen-title h1{font-size:23px}.campaign-screen .screen-title p{display:none}.stage-trainer{margin-bottom:5px}.stage-trainer img{width:36px;height:36px}.game-side-panel>h2{font-size:20px}.stage-opponents{margin-bottom:5px}.stage-opponents img{width:34px;height:34px}.game-side-panel>p{font-size:11px}.stage-reward{font-size:11px;padding:7px;margin:7px 0}.stage-trainer span{font-size:11px}.inventory-layout{grid-template-columns:minmax(0,1.8fr) minmax(235px,1fr);gap:13px}.inventory-layout>.bag-items{grid-template-columns:repeat(auto-fill,minmax(98px,1fr));grid-auto-rows:98px;gap:8px}.inventory-slot>img{width:37px;height:37px}.inventory-slot>b{font-size:11px}.inventory-slot>small{font-size:11px}.inventory-item-hero{width:50px;height:50px;margin-bottom:5px}.inventory-item-hero svg{width:48px;height:48px}.inventory-owner-label{margin-top:7px;font-size:11px;gap:4px}.inventory-owner-label select{min-height:43px;font-size:12px}.game-side-panel>button{min-height:43px;font-size:12px;margin-top:8px}.inventory-count{font-size:12px;margin:7px 0}.collection-toolbar{margin-bottom:8px}.collection-toolbar input,.collection-toolbar select{min-height:40px;font-size:12px}.collection-grid{grid-template-columns:repeat(auto-fill,minmax(103px,1fr));gap:8px}.pokemon-card{min-height:111px;padding:7px}.pokemon-card>img{width:58px;height:58px}.pokemon-card h3{font-size:12px}.pokemon-card>small{font-size:10px;margin-top:4px}.home-heading{left:16px;top:14px;gap:10px}.home-heading .wordmark{font-size:33px}.home-heading .wordmark b{font-size:11px}.hero-name h2{font-size:27px}.hero-stage{left:24%;width:37%;top:0;height:98%}.hero-name .type-tag{font-size:10px;padding:2px 6px}.hero-info{right:-3px;bottom:5px;width:30px;height:30px}.battle-launch{right:14px;width:31%;padding:10px}.journey-cta{font-size:23px;min-height:51px;margin-bottom:7px}.battle-choice{gap:6px;margin-bottom:6px}.battle-choice select{font-size:10px;min-height:35px;padding:4px}.battle-choice label{font-size:10px}.battle-cta{min-height:44px;padding:6px}.battle-cta b{font-size:11px}.battle-cta small{font-size:10px}.lobby-shortcuts{left:14px;bottom:11px;width:21%;gap:6px}.daily-shortcut{font-size:11px;min-height:43px}.summon-shortcut{padding:8px}.summon-shortcut b{font-size:13px}.summon-shortcut>span,.summon-shortcut small{font-size:10px}.invocation-tabs{top:9px;right:70px;width:200px;padding:3px}.invocation-tabs button{min-height:32px;font-size:11px}.pokemon-invocation{grid-template-columns:130px minmax(0,1fr) minmax(185px,.7fr);gap:6px 12px}.banner-nav{gap:7px}.banner-nav button{min-height:50px;padding:7px 10px;font-size:11px}.banner-picker>p{font-size:10px;margin-top:7px}.summon-actions{margin-top:24px;gap:7px}.summon-actions button{min-height:47px;padding:6px}.summon-actions button b{font-size:14px}.summon-actions button span{font-size:11px}.summon-budget{font-size:11px}.pity-box{padding-bottom:2px}.pity-box>div{font-size:10px}.odds-details summary{font-size:10px;min-height:24px}#summon-banner-title{font-size:20px;bottom:8px}.technique-invocation{gap:16px;grid-template-columns:.8fr 1.2fr}.technique-partner img{width:125px;height:125px}.technique-controls h2{font-size:21px}.technique-controls>p{font-size:11px;margin-bottom:7px}.technique-controls select{min-height:43px;font-size:12px}.technique-controls>button{min-height:45px}.technique-controls .support-copy{font-size:10px}.technique-controls details summary{min-height:32px}.shop-toolbar{margin-bottom:8px}.shop-toolbar p{font-size:11px}.shop-toolbar .segmented button{min-height:38px;font-size:12px}.shop-item{min-height:73px;padding:9px}.shop-item>img{width:50px;height:50px}.shop-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}.shop-consumable h2{font-size:17px}.shop-consumable p{font-size:11px}.toast{bottom:72px;font-size:12px}.sheet-dialog{max-height:92svh}.screen-partner .screen-title{margin-bottom:7px}}
+@media(min-width:1100px) and (min-height:600px){.app-header{height:65px;min-height:65px;padding-inline:28px}.main-nav{height:83px;min-height:83px;padding-inline:7%;gap:20px}.main-nav button{height:70px}.main-nav button span{height:38px;width:40px}.main-nav button svg{width:35px;height:35px}.main-nav button small{font-size:14px}.content-screen{padding:20px 30px}.screen-title{min-height:50px;margin-bottom:18px}.screen-title h1{font-size:34px}.formation-roster-bar{min-height:110px}.roster-thumb img{width:55px;height:55px}.roster-thumb{min-width:115px;padding:7px}.roster-thumb span{font-size:14px}.roster-thumb small{font-size:11px}.formation-slot>b{font-size:17px}.formation-slot>small{font-size:13px}.slot-number{font-size:12px;top:8px;left:12px}.formation-field>.team-list{padding:10px 30px}.game-side-panel{padding:24px}.formation-selected>img{width:85px;height:85px}.formation-selected h2{font-size:28px}.formation-command-list button{font-size:15px;min-height:48px}.partner-stage{padding:22px}.partner-panel{padding:20px 8px}.partner-panel h2{font-size:27px}.partner-panel p{font-size:15px}.partner-tabs button{font-size:16px;min-height:48px}.partner-stats span{font-size:15px}.partner-stats b{font-size:18px}.partner-stats{gap:18px 30px;margin:20px 0}.evolution-path img{width:100px;height:100px}.inventory-layout{grid-template-columns:1.9fr 1fr}.inventory-layout>.bag-items{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));grid-auto-rows:145px;gap:15px}.inventory-slot>img{width:65px;height:65px}.inventory-slot>b{font-size:16px}.inventory-slot>small{font-size:14px}.inventory-item-hero{width:100px;height:100px}.game-side-panel>h2{font-size:28px}.game-side-panel>p{font-size:15px}.campaign-layout{grid-template-columns:1fr 300px}.chapter-map{height:100%;min-height:420px}.map-stage{width:66px;height:75px}.map-stage>span{width:55px;height:55px;font-size:15px}.map-stage>b{font-size:13px}.stage-trainer img{width:75px;height:75px}.stage-opponents img{width:65px;height:65px}.stage-reward{font-size:15px}.invocation-tabs{top:20px;right:95px;width:280px}.pokemon-invocation{grid-template-columns:210px minmax(0,1fr) minmax(260px,.65fr);gap:18px 24px}.banner-nav button{min-height:80px;font-size:18px;padding:17px}.summon-actions{margin-top:45px}.summon-actions button{min-height:74px}.summon-actions button b{font-size:23px}.summon-actions button span{font-size:15px}#summon-banner-title{font-size:34px;bottom:20px}.pity-box>div{font-size:15px}.summon-budget{font-size:17px}.odds-details summary{font-size:14px}.formation-field>p{font-size:13px;bottom:5px}}
+@media(orientation:landscape) and (max-height:440px){.app-header{height:50px;min-height:50px;padding-block:4px}.trainer-button>img{width:39px;height:39px}.main-nav{height:62px;min-height:62px;padding-top:2px;gap:5px}.main-nav button{height:56px;padding:2px 3px}.main-nav button span{height:29px;width:29px}.main-nav button svg{width:26px;height:26px}.main-nav button small{font-size:11px}.content-screen{padding:9px 14px}.screen-title{gap:9px;min-height:40px;margin-bottom:8px}.screen-title>.section-back{width:40px;min-width:40px;height:40px;min-height:40px}.screen-title h1{font-size:25px}.screen-title p{font-size:11px}.screen-title>span{font-size:11px}.screen-title>button:not(.section-back){min-height:40px;font-size:12px}.formation-roster-bar{min-height:71px;margin-top:5px;gap:6px}.formation-layout{gap:10px;grid-template-columns:minmax(0,1.8fr) minmax(215px,1fr)}.game-side-panel{padding:12px}.formation-selected>img{width:45px;height:45px}.formation-selected h2{font-size:19px}.formation-command-list{margin-top:7px;gap:5px}.formation-command-list button{min-height:39px;font-size:11px}.formation-command-list+.support-copy{display:none}.formation-field>.team-list{padding:1px 6px;gap:2px}.formation-slot>b{font-size:10px}.formation-slot>small{font-size:9px}.formation-slot canvas{height:calc(100% - 22px)}.formation-field>p{font-size:9px;bottom:1px}.slot-number{font-size:8px;top:1px;left:4px}.formation-roster-bar .roster-thumb{min-width:81px}.roster-thumb img{width:32px;height:32px}.partner-layout{gap:13px;grid-template-columns:minmax(180px,.8fr) minmax(0,1.4fr)}.partner-tabs button{font-size:12px;min-height:39px;padding:4px 6px}.partner-panel{padding-top:9px}.partner-panel h2{font-size:20px}.partner-panel p{font-size:12px;margin-bottom:9px}.partner-stats{gap:9px 16px;margin:10px 0}.partner-panel .move-save{bottom:-8px}.partner-panel .move-option{min-height:49px;padding:7px}.partner-panel .mega-label{font-size:11px}.partner-actions button{font-size:11px;min-height:44px}.partner-stage>canvas{height:calc(100% - 54px)}.campaign-layout{grid-template-columns:minmax(0,1fr) 230px;gap:10px}.campaign-screen .screen-title h1{font-size:23px}.campaign-screen .screen-title p{display:none}.stage-trainer{margin-bottom:5px}.stage-trainer img{width:36px;height:36px}.game-side-panel>h2{font-size:20px}.stage-opponents{margin-bottom:5px}.stage-opponents img{width:34px;height:34px}.game-side-panel>p{font-size:11px}.stage-reward{font-size:11px;padding:7px;margin:7px 0}.stage-trainer span{font-size:11px}.inventory-layout{grid-template-columns:minmax(0,1.8fr) minmax(235px,1fr);gap:13px}.inventory-layout>.bag-items{grid-template-columns:repeat(auto-fill,minmax(98px,1fr));grid-auto-rows:98px;gap:8px}.inventory-slot>img{width:37px;height:37px}.inventory-slot>b{font-size:11px}.inventory-slot>small{font-size:11px}.inventory-item-hero{width:50px;height:50px;margin-bottom:5px}.inventory-item-hero svg{width:48px;height:48px}.inventory-owner-label{margin-top:7px;font-size:11px;gap:4px}.inventory-owner-label select{min-height:43px;font-size:12px}.game-side-panel>button{min-height:43px;font-size:12px;margin-top:8px}.inventory-count{font-size:12px;margin:7px 0}.collection-toolbar{margin-bottom:8px}.collection-toolbar input,.collection-toolbar select{min-height:40px;font-size:12px}.collection-grid{grid-template-columns:repeat(auto-fill,minmax(103px,1fr));gap:8px}.pokemon-card{min-height:111px;padding:7px}.pokemon-card>img{width:58px;height:58px}.pokemon-card h3{font-size:12px}.pokemon-card>small{font-size:10px;margin-top:4px}.invocation-tabs{top:9px;right:70px;width:200px;padding:3px}.invocation-tabs button{min-height:32px;font-size:11px}.pokemon-invocation{grid-template-columns:130px minmax(0,1fr) minmax(185px,.7fr);gap:6px 12px}.banner-nav{gap:7px}.banner-nav button{min-height:50px;padding:7px 10px;font-size:11px}.banner-picker>p{font-size:10px;margin-top:7px}.summon-actions{margin-top:24px;gap:7px}.summon-actions button{min-height:47px;padding:6px}.summon-actions button b{font-size:14px}.summon-actions button span{font-size:11px}.summon-budget{font-size:11px}.pity-box{padding-bottom:2px}.pity-box>div{font-size:10px}.odds-details summary{font-size:10px;min-height:24px}#summon-banner-title{font-size:20px;bottom:8px}.technique-invocation{gap:16px;grid-template-columns:.8fr 1.2fr}.technique-partner img{width:125px;height:125px}.technique-controls h2{font-size:21px}.technique-controls>p{font-size:11px;margin-bottom:7px}.technique-controls select{min-height:43px;font-size:12px}.technique-controls>button{min-height:45px}.technique-controls .support-copy{font-size:10px}.technique-controls details summary{min-height:32px}.shop-toolbar{margin-bottom:8px}.shop-toolbar p{font-size:11px}.shop-toolbar .segmented button{min-height:38px;font-size:12px}.shop-item{min-height:73px;padding:9px}.shop-item>img{width:50px;height:50px}.shop-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}.shop-consumable h2{font-size:17px}.shop-consumable p{font-size:11px}.toast{bottom:72px;font-size:12px}.sheet-dialog{max-height:92svh}.screen-partner .screen-title{margin-bottom:7px}}
 @media(max-width:639px) and (orientation:portrait){.formation-layout,.partner-layout,.inventory-layout,.campaign-layout{grid-template-columns:1fr;min-height:500px;overflow:auto}.content-screen{overflow:auto}.formation-roster-bar{min-height:90px}.partner-stage{min-height:230px}.formation-field{min-height:280px}.partner-workspace{min-height:320px}.inventory-layout .bag-items{min-height:230px}.campaign-viewport{min-height:300px}.pokemon-invocation{grid-template-columns:1fr;overflow:auto}.banner-picker{grid-column:1;grid-row:auto}.banner-nav{grid-template-columns:repeat(3,1fr)}.summon-display{grid-column:1;grid-row:auto;min-height:250px!important}.summon-budget,.summon-actions,.pity-box,.odds-details{grid-column:1;grid-row:auto;margin-top:0}.invocation-tabs{position:static;margin-bottom:12px;width:100%}.summon-screen{overflow:auto}.technique-invocation{grid-template-columns:1fr}.technique-partner{min-height:190px}.main-nav{padding-inline:5px;gap:1px}.main-nav button small{font-size:10px}}
 @media(prefers-reduced-motion:no-preference){.screen:not([hidden])>.screen-title{animation:interface-arrive .2s cubic-bezier(.16,1,.3,1)}.primary-button,.secondary-button,.main-nav button,.pokemon-card{transition:transform .12s,filter .12s}.map-stage.selected>span{animation:map-current 1.8s ease-in-out infinite}.technique-reveal{animation:interface-arrive .25s cubic-bezier(.16,1,.3,1)}}@keyframes map-current{50%{box-shadow:0 0 0 5px #fff8d485,0 4px 6px #243e3b55}}@keyframes interface-arrive{from{opacity:.65;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 
 /* Explicit replacement of the incumbent grid placements; compact screens scroll within task panels. */
-#screen-home{display:block;grid-template-columns:none;grid-template-rows:none}
-#screen-home[hidden]{display:none}
-#screen-home>.battle-launch{grid-area:auto;left:auto;bottom:auto;min-width:0;max-height:calc(100% - 20px);overflow:auto}
-#screen-home>.lobby-shortcuts{grid-area:auto;top:auto;right:auto;min-width:0;max-width:none}
-#screen-home>.home-heading{grid-area:auto;bottom:auto;width:auto}
-#screen-home>.hero-stage{grid-area:auto;bottom:auto;right:auto}
-#screen-home .journey-cta{font-family:Barlow,sans-serif;font-weight:800;font-size:19px;white-space:normal}
+
 #pokemon-invocation>.summon-display{grid-column:2;grid-row:1/3}
 #screen-summon #summon-back{display:none}
 .invocation-tabs{right:18px}
@@ -57,13 +50,6 @@ body{background:#c4ded9;color:var(--ink)}button{font-weight:700}button:disabled{
 .partner-tabs button,.invocation-tabs button,.screen-title>.section-back,.formation-command-list button,.shop-toolbar .segmented button,.collection-toolbar input,.collection-toolbar select{min-height:48px}
 .screen-title>.section-back{min-width:48px;width:48px;height:48px}
 @media(orientation:landscape) and (max-height:440px){
- #screen-home .battle-launch{width:33%;right:12px;top:50%}
- #screen-home .lobby-shortcuts{width:21%;left:14px;bottom:10px}
- #screen-home .summon-shortcut{width:100%;min-height:58px}
- #screen-home .summon-shortcut>span{display:none}
- #screen-home .journey-cta{font-size:18px;min-height:48px}
- #screen-home .battle-choice select{min-height:38px}
- #screen-home .battle-cta{min-height:48px}
  #inventory-detail>p{font-size:11px}
  #inventory-detail>h2{margin-bottom:4px}
  #inventory-detail .inventory-count{display:none}
@@ -80,7 +66,7 @@ body{background:#c4ded9;color:var(--ink)}button{font-weight:700}button:disabled{
 }
 
 /* Finish review: readable tasks and explicit scrolling at the phone's real height. */
-.primary-button,.journey-cta{color:#49251f}
+.primary-button{color:#49251f}
 .pokemon-card.is-locked h3{color:#3e565b}
 .pokemon-card.is-locked small{color:#4e6669}
 .shop-balance{color:#395d79}
@@ -157,23 +143,6 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid 
 .main-nav button{background:linear-gradient(#f8f4df,#d9e3cd);border:1px solid #a3bcad;border-radius:10px;height:65px;color:#294955;box-shadow:inset 0 1px #fff9e7,0 2px 3px #13303d40}
 .main-nav button[aria-current]{background:linear-gradient(#f8c99d,#f39974);border-color:#ebbd8b;color:#673a28;box-shadow:inset 0 1px #fff0cf,0 2px 4px #163b4040}
 .main-nav button span{height:32px;width:34px}.main-nav button svg{width:29px;height:29px}.main-nav button small{font-size:12px}
-#screen-home .battle-launch{padding:0;background:none;border:0;box-shadow:none;width:30%;max-width:340px;overflow:visible;top:auto;bottom:22px;transform:none}
-#screen-home .journey-cta{min-height:76px;font-family:BarlowCondensed,Barlow,sans-serif;font-size:30px;text-align:center;margin-bottom:8px;padding:12px 18px;box-shadow:inset 0 1px #ffe1b7,0 5px 10px #213f3c50;border-radius:12px}
-#screen-home .battle-cta{background:#f6f0dceF;color:#284a58;border-color:#c6c5a8;min-height:55px;padding:8px 15px}
-#screen-home .battle-cta b{font-size:17px;color:#284a58}
-#screen-home .battle-cta small{font-size:12px;color:#4b6870}
-#screen-home .battle-cta .cta-arrow{display:none}
-#screen-home .arena-settings{position:absolute;bottom:calc(100% + 8px);right:0;width:100%;z-index:4;font-size:12px;color:#284a58}
-.arena-settings summary{min-height:48px;display:flex;align-items:center;justify-content:flex-end;padding:8px 14px;background:#fff9e8ee;border:1px solid #b7c3b0;border-radius:10px;cursor:pointer;font-weight:700}
-.arena-settings[open]{padding:8px;background:#fff9e9;border:1px solid #c2c7ae;border-radius:12px;box-shadow:0 5px 12px #1d40463d}
-.arena-settings[open] summary{background:none;border:0;min-height:36px;padding:0 3px 8px}
-.arena-settings .battle-choice{margin:0;gap:8px}
-.arena-settings .battle-choice select{min-height:48px!important;font-size:12px!important;background:#fffdf4;border:1px solid #b7c5b5;border-radius:8px;padding:6px!important}
-#screen-home .lobby-shortcuts{width:23%;gap:9px}
-#screen-home .daily-shortcut,#screen-home .summon-shortcut{min-height:56px;background:#fff8e9f2;border-radius:10px;padding:10px 14px}
-#screen-home .summon-shortcut b{font-family:BarlowCondensed,Barlow,sans-serif;font-size:22px;color:#304f58}
-#screen-home .summon-shortcut small{font-size:12px}
-#screen-home .hero-stage{left:24%;width:43%}
 .formation-field{background:radial-gradient(ellipse at 50% 62%,#fff4d8 0 35%,#c2ddcf 36% 40%,#eaf0d9 41% 64%,#accdc4 65%);border-color:#93b7ad}
 .formation-field>.team-list{gap:8px;padding:8px 12px;height:100%}
 .formation-slot{background:#f9f7e6b3;border:1px solid #b2c8b6;border-radius:12px}
@@ -196,18 +165,6 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid 
  .main-nav button{height:60px;min-height:60px}
  .main-nav button small{font-size:11px}
  .main-nav button span{height:29px;width:30px}
- #screen-home .battle-launch{width:29%;right:14px;bottom:16px;top:auto;max-height:none}
- #screen-home .journey-cta{min-height:62px;font-size:25px;line-height:1.05;padding:9px 12px}
- #screen-home .battle-cta{min-height:49px;padding:6px 12px}
- #screen-home .battle-cta b{font-size:15px}
- #screen-home .battle-cta small{font-size:11px}
- #screen-home .arena-settings summary{min-height:48px;font-size:11px}
- #screen-home .arena-settings[open] summary{min-height:28px}
- #screen-home .lobby-shortcuts{width:22%;bottom:14px}
- #screen-home .daily-shortcut{min-height:48px;font-size:11px}
- #screen-home .summon-shortcut{min-height:59px}
- #screen-home .summon-shortcut b{font-size:19px}
- #screen-home .hero-stage{left:23%;width:44%}
  #app:not([data-route="home"]) .screen-title{padding-bottom:7px;margin-bottom:9px}
  .formation-layout{grid-template-columns:minmax(0,1.9fr) minmax(225px,1fr);gap:12px}
  .formation-field>.team-list{padding:6px 8px;gap:6px}
@@ -252,22 +209,11 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid 
  .shop-grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
 }
 @media(min-width:1100px) and (min-height:600px){
- #screen-home .battle-launch{bottom:35px;right:35px;width:29%}
- #screen-home .journey-cta{min-height:98px;font-size:39px}
- #screen-home .battle-cta{min-height:65px}
- #screen-home .battle-cta b{font-size:22px}
- #screen-home .lobby-shortcuts{bottom:35px;width:21%}
- #screen-home .summon-shortcut b{font-size:27px}
  .main-nav{padding-inline:5%;height:88px;min-height:88px}
  .main-nav button{height:74px}
 }
 @media(prefers-reduced-motion:reduce){.screen,.screen-title,.main-nav button,.map-stage.selected>span{animation:none!important;transition:none!important}}
 #main-nav>[data-route="home"]{display:none}
-#screen-home .arena-settings{width:112px}
-#screen-home .arena-settings summary{gap:8px;justify-content:center}
-.arena-settings summary svg{width:21px;height:21px;flex-shrink:0}
-#screen-home .arena-settings[open]{width:270px}
-#screen-home .arena-settings[open] summary{justify-content:flex-end}
 @media(orientation:landscape) and (max-height:440px){
  .partner-panel:has(.partner-stats){padding-top:7px}
  .partner-panel:has(.partner-stats)>h2{font-size:20px;margin-bottom:5px}
@@ -308,11 +254,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid 
 .bonus-side .save-tools button{flex:1;min-height:48px;padding:8px}
 .formation-command-list button:disabled{opacity:1;background:#e4e5d5;border-color:#c1c9b4;color:#5a6b68;box-shadow:none}
 .formation-command-list button small{display:block;font-weight:400;font-size:12px;margin-top:2px;line-height:1.1}
-.home-heading #favorite-button,#hero-info{min-width:48px;min-height:48px;width:48px;height:48px}
 .odds-details summary{min-height:48px;display:flex;align-items:center;font-size:13px;color:#3c5b60}
-.training-reason{color:#294b55;background:#fff8e8eb;border-radius:6px;font-size:12px;line-height:1.25;margin-top:6px;padding:5px 8px}
-.training-reason:empty{display:none}
-#screen-home::before{image-rendering:pixelated}
 @media(orientation:landscape) and (max-height:440px){
  .bonus-layout{gap:20px}
  .bonus-screen .daily-reward{padding:12px 18px;gap:9px}
@@ -364,7 +306,6 @@ progress::-webkit-progress-value{background:#e60012}
 .icon-button,.section-back{background:#fff;border:1px solid #d7e0e6;color:#16283a;box-shadow:0 2px 4px #0004}
 .count-mark,.level-badge{background:#fff;color:#16283a;border:1px solid #d7e0e6}
 .type-tag{background:var(--type,#2b414a);color:#fff;border-color:transparent}
-.hero-name .type-tag{background:var(--type,#2b414a);color:#fff;border-color:transparent;box-shadow:0 2px 4px #0006}
 .segmented{background:#16283a;padding:3px;border:1px solid #2b3e46}
 .segmented button{color:#b7d2df}
 .segmented button[aria-pressed=true]{background:#e60012;color:#fff;box-shadow:0 2px 3px #0005}
@@ -375,25 +316,7 @@ progress::-webkit-progress-value{background:#e60012}
 .main-nav button[data-route=team] span,.main-nav button[data-route=collection] span,.main-nav button[data-route=summon] span,.main-nav button[data-route=shop] span,.main-nav button[data-route=bag] span,.main-nav button[data-route=rewards] span{color:inherit}
 .toast{background:#16283a;color:#fff;border:1px solid #2b3e46}
 .save-status{background:#f5b301;color:#16283a}
-/* Lobby */
-.home-screen{background:#0f1c26}
-.home-heading .wordmark{color:#fff}
-.home-heading .wordmark b{color:#ffd23f}
-.hero-name h2{color:#fff}
-.battle-launch{background:#fff;border:1px solid #d7e0e6;box-shadow:0 7px 14px #0006}
-.journey-cta{background:#e60012;color:#fff;border:1px solid #b3000e;box-shadow:0 4px 5px #0005}
-.battle-choice label{color:#5a7280}
-.battle-choice select{background:#fff;border-color:#d7e0e6}
-.battle-cta{background:#16283a;color:#fff;border:1px solid #2b3e46}
-.battle-cta small{color:#b7d2df}
-.daily-shortcut,.summon-shortcut{background:#fff;border:1px solid #d7e0e6;color:#16283a;box-shadow:0 4px 9px #0005}
-.daily-shortcut{color:#b8860b}
-.summon-shortcut>span{color:#e60012}
-.summon-shortcut b{color:#16283a}
-.summon-shortcut small{color:#5a7280}
-.home-progress>div>span{color:#fff}
-.home-progress small{color:#b7d2df}
-.home-progress button{color:#fff}
+
 /* Collection cards + rarity tiers */
 .pokemon-card{background:#fff;border:1px solid #d7e0e6;box-shadow:0 3px 5px #0004;color:#16283a}
 .pokemon-card h3{color:#16283a}
@@ -484,7 +407,6 @@ progress::-webkit-progress-value{background:#e60012}
 .odds-details[open]{background:#16283a;border:1px solid #2b3e46}
 .partner-panel .move-save{background:#0f1c26}
 .summon-screen #summon-back{background:#fff}
-.hero-info{background:#fff}
 .technique-controls h2{color:#fff}
 .technique-controls>p{color:#b7d2df}
 .technique-controls label{color:#fff}
@@ -528,3 +450,182 @@ progress::-webkit-progress-value{background:#e60012}
 .starter-option[aria-pressed=true]{border:2px solid #e60012;background:#fff5f5}
 .starter-option small{color:#5a7280}
 .starter-option strong{color:#16283a}
+
+.trainer-picker-field{border:1px solid #d7e0e6;border-radius:10px;padding:8px}
+.trainer-picker-field legend{color:#16283a;padding:0 4px}
+.trainer-picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px;max-height:220px;overflow:auto;padding:2px}
+.trainer-option{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px;border:2px solid transparent;border-radius:10px;background:#fff;color:#16283a}
+.trainer-option img{width:48px;height:48px;image-rendering:pixelated}
+.trainer-option span{font-size:11px;text-align:center}
+.trainer-option[aria-pressed="true"]{border-color:#e60012;background:#fff5f5}
+
+/* ---- PULSE ARENA Game Design: cards compactos + campanha full-bleed ---- */
+/* Coleção: cards horizontais compactos (~170×64px). Posse = Nv. + cor;
+   o check absoluto some (o card travado já é cinza + "A descobrir"). */
+.collection-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+#screen-collection .pokemon-card{min-height:64px;padding:7px 9px;display:flex;align-items:center;gap:8px;text-align:left}
+.pokemon-card>img{width:48px;height:48px;margin:0;flex-shrink:0}
+.pokemon-card .card-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.pokemon-card .card-name{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pokemon-card .card-name .tier-badge{flex-shrink:0}
+.pokemon-card .card-types{display:flex;gap:4px;align-items:center}
+.pokemon-card .card-level{position:static;font-size:10px;background:none;padding:0;color:#59716b;white-space:nowrap;flex-shrink:0}
+.pokemon-card .card-shiny{font-size:9px;font-weight:800;color:#d685ad;letter-spacing:.04em;flex-shrink:0}
+.pokemon-card .owned-mark{display:none}
+/* Loja: mesmo card compacto (64px), com o preço à direita. */
+.shop-grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.shop-item{min-height:64px;padding:7px 10px;gap:10px}
+.shop-item>img{width:48px;height:48px}
+.shop-item .shop-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.shop-item .shop-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.shop-item .shop-name .tier-badge{flex-shrink:0}
+.shop-item .shop-types{display:flex;gap:4px;align-items:center}
+.shop-item .shop-note{font-size:10px;color:#5f7978;font-weight:600;white-space:nowrap}
+.shop-item strong{font-size:13px}
+/* Ícone de tipo (glifo 686) — usado nos cards e nos golpes. */
+.type-ico{display:inline-block;background-image:url('/pulse/assets/type-glyphs.png');background-repeat:no-repeat;background-color:var(--type,#8fa8b3);border-radius:4px;flex-shrink:0}
+/* Pílula de tipo da folha 696 (Pokédex) — tela do parceiro. */
+.type-pill-696{display:inline-block;width:96px;height:32px;background-image:url('/pulse/assets/type-pills-696.png');background-size:96px 608px;background-repeat:no-repeat;flex-shrink:0}
+/* Campanha: mapa full-bleed + card flutuante da fase; abas de capítulo na
+   linha do título (~90px de chrome total). O "Arraste para explorar"
+   permanente some — vira toast de primeira vez (ver management-ui.js). */
+.campaign-screen .screen-title{margin-bottom:8px}
+.campaign-screen .screen-title .chapter-tabs{margin:0 0 0 auto;display:flex;gap:6px;flex-shrink:0}
+.chapter-tabs button{padding:6px 10px;font-size:11px;border-radius:8px}
+.chapter-tabs button:disabled{opacity:1;background:#c9cbb8;color:#5a6353;border-color:#aab09a;cursor:not-allowed}
+.campaign-layout{display:block;flex:1;min-height:0}
+.campaign-viewport{overflow:hidden;height:100%}
+.chapter-map{width:100%;height:100%;min-height:0}
+.campaign-viewport::after{content:none}
+.campaign-hint{position:absolute;left:10px;bottom:10px;z-index:5;background:#fff9e8ed;color:#31535c;border-radius:6px;padding:5px 9px;font-size:12px;font-weight:700;pointer-events:none;opacity:0;transition:opacity .25s ease}
+.campaign-hint.campaign-hint-show{opacity:1}
+.stage-detail-float{position:absolute;right:10px;bottom:10px;z-index:4;width:280px;max-width:calc(100% - 20px);background:#fffbef;border:1px solid #c9c7ac;border-radius:14px;box-shadow:0 6px 16px #2c4e4b33;display:flex;flex-direction:column;color:#16283a}
+.stage-detail-float h2{color:#16283a}
+#stage-detail.stage-detail-float{overflow:auto;max-height:calc(100% - 20px)}
+.stage-detail-float #campaign-enter{flex-shrink:0;margin-top:8px;min-height:44px}
+@media (min-width:1100px){.stage-detail-float{width:300px}}
+@media (orientation:landscape) and (max-height:440px){.shop-toolbar p{display:none}}
+@media (max-width:639px) and (orientation:portrait){
+  .campaign-viewport{overflow:auto}
+  .chapter-map{width:max(100%,730px);height:auto;aspect-ratio:5/2;min-height:0}
+  .stage-detail-float{position:static;width:auto;max-width:none;margin-top:10px}
+  #stage-detail.stage-detail-float{max-height:none}
+}
+
+/* ---- Home redesenhada (aprovada 2026-11-15): topbar 48dp + rail 72dp,
+   parceiro em destaque + UM botão primário. Grid, zero position:absolute.
+   A topbar e o rail assumem os papéis do header e da navegação globais,
+   que ficam ocultos só na Home (regras #app[data-route="home"] abaixo). */
+#app[data-route="home"]{padding:0}
+#app[data-route="home"] .app-header{display:none}
+#app[data-route="home"] .main-nav{display:none}
+#screen-home{
+  --home-bg:#0f1c26;
+  --home-surface:#16283a;
+  --home-raised:#213342;
+  --home-ink:#f6f3ea;
+  --home-muted:#aabdc9;
+  --home-line:#314552;
+  --home-gold:#f4cd78;
+  --home-cyan:#7de5e0;
+  --home-coral:#ff7b65;
+  --home-red:#e60012;
+  --home-red-dark:#b3000e;
+  --home-card:#fffaf0;
+  --home-card-border:#c3c7af;
+  --home-card-ink:#304d58;
+  --home-card-muted:#59716b;
+  --home-hp-track:#d7d5bf;
+  --home-hp-fill:#3d9b4f;
+}
+#screen-home .home{
+  display:grid;
+  grid-template-rows:48px minmax(0,1fr);
+  grid-template-columns:72px minmax(0,1fr);
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:var(--home-bg);
+  color:var(--home-ink);
+  padding-top:env(safe-area-inset-top,0px);
+  padding-right:env(safe-area-inset-right,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  padding-left:env(safe-area-inset-left,0px);
+}
+#screen-home .topbar{
+  grid-column:1 / -1;
+  display:flex;align-items:center;gap:12px;min-width:0;
+  padding:0 14px;
+  background:var(--home-surface);
+  border-bottom:1px solid var(--home-line);
+}
+#screen-home .trainer-chip{display:flex;align-items:center;gap:9px;min-width:0;padding:0;text-align:left}
+#screen-home .trainer-chip img{width:32px;height:32px;border-radius:8px;background:#223743;flex:none}
+#screen-home .trainer-chip .who{min-width:0}
+#screen-home .trainer-chip strong{display:block;font-size:15px;font-weight:700;line-height:1.15;color:var(--home-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#screen-home .trainer-chip small{display:block;font-size:11px;color:var(--home-muted);margin-top:1px}
+#screen-home .wallet{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none;background:none;border:0;border-radius:0;box-shadow:none;padding:0;min-height:0}
+#screen-home .pill{display:flex;align-items:center;gap:6px;min-height:32px;padding:5px 11px;border:1px solid var(--home-line);border-radius:20px;background:var(--home-raised);font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--home-ink)}
+#screen-home .pill svg{width:14px;height:14px;flex:none}
+#screen-home .pill.coins{color:var(--home-gold)}
+#screen-home .pill.diamonds{color:var(--home-cyan)}
+#screen-home .pill.tickets{color:var(--home-coral)}
+#screen-home .rail{
+  grid-row:2;grid-column:1;
+  display:flex;flex-direction:column;
+  background:var(--home-surface);
+  border-right:1px solid var(--home-line);
+  padding:6px 0;
+}
+#screen-home .rail button{
+  flex:1 1 0;min-height:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  padding:4px 2px;
+  color:var(--home-muted);
+  font-size:10px;font-weight:600;line-height:1.15;text-align:center;
+  border-left:3px solid transparent;
+  background:none;border-top:0;border-right:0;border-bottom:0;border-radius:0;box-shadow:none;
+}
+#screen-home .rail button svg{width:22px;height:22px;flex:none}
+#screen-home .rail button[aria-current="page"]{color:#fff;background:var(--home-raised);border-left-color:var(--home-red);font-weight:700}
+#screen-home .rail button:disabled{opacity:.55}
+#screen-home .stage{
+  grid-row:2;grid-column:2;
+  display:grid;grid-template-rows:minmax(0,1fr) auto;
+  min-width:0;min-height:0;
+  padding:14px 16px 12px;
+}
+#screen-home .partner{display:flex;align-items:center;gap:18px;min-height:0;padding:0 6px}
+#screen-home .partner-stage{
+  width:168px;height:168px;flex:none;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 42%,#1d3a4d 0%,var(--home-surface) 62%,var(--home-bg) 100%);
+  border:1px solid var(--home-line);border-radius:24px;
+  box-shadow:inset 0 1px 0 #ffffff14,0 6px 14px #0006;
+}
+#screen-home .partner-stage canvas{width:100%;height:100%;object-fit:contain}
+#screen-home .partner-card{
+  flex:1 1 auto;min-width:0;
+  background:var(--home-card);color:var(--home-card-ink);
+  border:1px solid var(--home-card-border);border-radius:13px;
+  padding:12px 14px;
+  box-shadow:0 3px 5px #2c493c14;
+}
+#screen-home .partner-card .row1{display:flex;align-items:center;gap:8px;min-width:0}
+#screen-home .partner-card h1{margin:0;font-size:22px;font-weight:700;color:#16283a;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#screen-home .partner-card .tier-badge{flex:none}
+#screen-home .partner-card .level-badge{flex:none}
+#screen-home .shiny-mark{flex:none;font-size:11px;font-weight:800;color:#d685ad;letter-spacing:.04em;white-space:nowrap}
+#screen-home .partner-card .type-list{display:flex;gap:6px;margin-top:9px;justify-content:flex-start;flex-wrap:wrap}
+#screen-home .hp{margin-top:11px}
+#screen-home .hp-label{display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--home-card-muted)}
+#screen-home .hp-label b{font-variant-numeric:tabular-nums;color:var(--home-card-muted)}
+#screen-home .hp-bar{height:8px;margin-top:4px;background:var(--home-hp-track);border-radius:8px;overflow:hidden}
+#screen-home .hp-bar i{display:block;height:100%;width:100%;background:var(--home-hp-fill);border-radius:8px}
+#screen-home .journey-note{margin:9px 0 0;font-size:11px;color:var(--home-card-muted)}
+#screen-home .cta-row{display:flex;justify-content:flex-end;padding-top:10px}
+#screen-home .cta-row .primary-button{
+  min-height:52px;padding:12px 22px;
+  font-family:"Barlow Condensed",Barlow,sans-serif;
+  font-size:20px;font-weight:700;letter-spacing:.02em;
+}

@@ -653,6 +653,223 @@
           ]
         }
       ]
+    },
+    "0142": {
+      "dex": "0142",
+      "animations": [
+        {
+          "name": "Walk",
+          "w": 40,
+          "h": 64,
+          "durations": [
+            8,
+            8,
+            8,
+            8
+          ]
+        },
+        {
+          "name": "Attack",
+          "w": 64,
+          "h": 72,
+          "durations": [
+            2,
+            2,
+            6,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Strike",
+          "w": 64,
+          "h": 72,
+          "durations": [
+            2,
+            2,
+            6,
+            1,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Shoot",
+          "w": 56,
+          "h": 64,
+          "durations": [
+            2,
+            2,
+            6,
+            1,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Hover",
+          "w": 40,
+          "h": 64,
+          "durations": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Sleep",
+          "w": 32,
+          "h": 32,
+          "durations": [
+            30,
+            35
+          ]
+        },
+        {
+          "name": "Hurt",
+          "w": 40,
+          "h": 64,
+          "durations": [
+            2,
+            8
+          ]
+        },
+        {
+          "name": "Idle",
+          "w": 40,
+          "h": 64,
+          "durations": [
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            8
+          ]
+        },
+        {
+          "name": "Swing",
+          "w": 88,
+          "h": 80,
+          "durations": [
+            2,
+            1,
+            2,
+            2,
+            3,
+            2,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Double",
+          "w": 64,
+          "h": 88,
+          "durations": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            2,
+            3,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Hop",
+          "w": 40,
+          "h": 104,
+          "durations": [
+            2,
+            1,
+            2,
+            3,
+            4,
+            4,
+            3,
+            2,
+            1,
+            2
+          ]
+        },
+        {
+          "name": "Charge",
+          "w": 40,
+          "h": 64,
+          "durations": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "name": "Rotate",
+          "w": 40,
+          "h": 64,
+          "durations": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ]
     }
   },
   "files": [
@@ -1507,6 +1724,252 @@
       "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/credits.txt",
       "bytes": 353,
       "sha256": "b585d7d7c723801ec276f228f44610d390c42d04f873985d6ffe83303d89ef47"
+    },
+    {
+      "path": "public/assets/sprites/0142/AnimData.xml",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/AnimData.xml",
+      "bytes": 5818,
+      "sha256": "48409c958822b3fb3af4b6ff66dee8e70bd5999ca53633f506a829b62d291156"
+    },
+    {
+      "path": "public/assets/sprites/0142/Attack-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Attack-Anim.png",
+      "bytes": 30312,
+      "sha256": "4e37d06e8a4bf2556e491473a96f1922bcd5ebee1423c6400f74e6ff7a4ef7d4"
+    },
+    {
+      "path": "public/assets/sprites/0142/Attack-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Attack-Offsets.png",
+      "bytes": 3098,
+      "sha256": "892897e43ee5b7cae1b5fa2bf21630eb129eff4e6a1491f9ddb36038f2132c6b"
+    },
+    {
+      "path": "public/assets/sprites/0142/Attack-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Attack-Shadow.png",
+      "bytes": 5749,
+      "sha256": "19f5ed94b8f879603e04588d6a3723fddb1c004be927e400600d26ef615be6e4"
+    },
+    {
+      "path": "public/assets/sprites/0142/Charge-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Charge-Anim.png",
+      "bytes": 11664,
+      "sha256": "d16ac0c00c0de2bda9e3be2b3d7d41d0402b45ba102f298196e230d43ac4ee63"
+    },
+    {
+      "path": "public/assets/sprites/0142/Charge-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Charge-Offsets.png",
+      "bytes": 1578,
+      "sha256": "5032d106c9fcda5605fbb37aec7594e659c729d99ff05c27ca860315eed042b4"
+    },
+    {
+      "path": "public/assets/sprites/0142/Charge-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Charge-Shadow.png",
+      "bytes": 2630,
+      "sha256": "3831d551ff10e4bcd4612ea172c7546f07c2a8d96b8787164df37751930a939d"
+    },
+    {
+      "path": "public/assets/sprites/0142/Double-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Double-Anim.png",
+      "bytes": 27104,
+      "sha256": "0b99ab416f1d853b5d46a512a02a9def00cd5cb9254f2628a9c4d262f9d61c1f"
+    },
+    {
+      "path": "public/assets/sprites/0142/Double-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Double-Offsets.png",
+      "bytes": 4278,
+      "sha256": "24c449cb9ea6047a5bbad028c3e052e444ba8e3d9e8d76e5d371dd340e9e1f79"
+    },
+    {
+      "path": "public/assets/sprites/0142/Double-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Double-Shadow.png",
+      "bytes": 7516,
+      "sha256": "f3a8af5f8fa09e93955a9c45b4b2f08a4e37fa8552b3a9f51384aa06b2366f72"
+    },
+    {
+      "path": "public/assets/sprites/0142/Hop-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Hop-Anim.png",
+      "bytes": 28338,
+      "sha256": "c4955d790a613ff9136f260bc8c8e102ed84520b9e5e3eb035606dee86d9107a"
+    },
+    {
+      "path": "public/assets/sprites/0142/Hop-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Hop-Offsets.png",
+      "bytes": 2327,
+      "sha256": "142b6bfeeea84db0bd4f8fdc4da6c82fb23dc20e107939059cc3a972b1413608"
+    },
+    {
+      "path": "public/assets/sprites/0142/Hop-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Hop-Shadow.png",
+      "bytes": 2538,
+      "sha256": "9db289046134994995caf1dddfa0ed955e615eae4d4172966afa0c05d9ea0a45"
+    },
+    {
+      "path": "public/assets/sprites/0142/Hover-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Hover-Anim.png",
+      "bytes": 19092,
+      "sha256": "5b4461d6e68a569f84eb473607cbe37079da87a6af97f3e25812ab026ffec85f"
+    },
+    {
+      "path": "public/assets/sprites/0142/Hover-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Hover-Offsets.png",
+      "bytes": 2236,
+      "sha256": "61e8ed3a92326ba883b171fe172725014d35d576279dabf818c49098f81401a4"
+    },
+    {
+      "path": "public/assets/sprites/0142/Hover-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Hover-Shadow.png",
+      "bytes": 2538,
+      "sha256": "234be802da997f12f207e6840544e1c25435e616de0d9a97669d9fef7cd3e9be"
+    },
+    {
+      "path": "public/assets/sprites/0142/Hurt-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Hurt-Anim.png",
+      "bytes": 6210,
+      "sha256": "fd73a01b2eea792b1d0af1c042d744f214afa034e3d6fcd22782d552060fe883"
+    },
+    {
+      "path": "public/assets/sprites/0142/Hurt-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Hurt-Offsets.png",
+      "bytes": 436,
+      "sha256": "ca806f08ecf85fb971ded8df8b319cbf41a64f17459dad6888fe7f15132ce488"
+    },
+    {
+      "path": "public/assets/sprites/0142/Hurt-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Hurt-Shadow.png",
+      "bytes": 802,
+      "sha256": "20ce4ed6a229d23fb065544b3db4a5f77b92814c9c6028c1cca425c0e7233a5f"
+    },
+    {
+      "path": "public/assets/sprites/0142/Idle-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Idle-Anim.png",
+      "bytes": 18196,
+      "sha256": "09b827c98d35ab4de4707b2a953e737b3368db4b7946492fed55ab42bf581510"
+    },
+    {
+      "path": "public/assets/sprites/0142/Idle-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Idle-Offsets.png",
+      "bytes": 1433,
+      "sha256": "b077f5447919652b653d8545362e14e5e76301eb761f7caf5b232ff26aaf9158"
+    },
+    {
+      "path": "public/assets/sprites/0142/Idle-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Idle-Shadow.png",
+      "bytes": 1767,
+      "sha256": "43ae0a81445828a54e2ad59c55033b6e250404ce24a72388cee56fc54b230aaf"
+    },
+    {
+      "path": "public/assets/sprites/0142/Rotate-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Rotate-Anim.png",
+      "bytes": 34304,
+      "sha256": "ca7b85d7902131e2f2860e2fc3dcf823ed22cfd3db9b590c8b5f5955df7ba76b"
+    },
+    {
+      "path": "public/assets/sprites/0142/Rotate-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Rotate-Offsets.png",
+      "bytes": 1652,
+      "sha256": "b19fcdb719e6aefca7bf580ef2548c213a1803a095f7fa20f0439479fd239a29"
+    },
+    {
+      "path": "public/assets/sprites/0142/Rotate-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Rotate-Shadow.png",
+      "bytes": 1868,
+      "sha256": "ee16c7d6ea71095b5f573d2d55999b3008112371abce73ef8b9330ee23ea7877"
+    },
+    {
+      "path": "public/assets/sprites/0142/Shoot-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Shoot-Anim.png",
+      "bytes": 26424,
+      "sha256": "21d7d8a3e8f480b6b08278c54ee28be7edd38ee610ca091b2dd8d22bda16d904"
+    },
+    {
+      "path": "public/assets/sprites/0142/Shoot-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Shoot-Offsets.png",
+      "bytes": 2470,
+      "sha256": "3f396b2cc762bcc3c4746524e0915edf041da5331735511558eea886c7883823"
+    },
+    {
+      "path": "public/assets/sprites/0142/Shoot-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Shoot-Shadow.png",
+      "bytes": 4642,
+      "sha256": "1ce237ff463eff48d91182df136241b4c8b496f943938fc334dd2298585c43b6"
+    },
+    {
+      "path": "public/assets/sprites/0142/Sleep-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Sleep-Anim.png",
+      "bytes": 833,
+      "sha256": "c6dfb828480aabfc6a455e7d8be7776317df6c055db4417ecda3bcff1a4e24fa"
+    },
+    {
+      "path": "public/assets/sprites/0142/Sleep-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Sleep-Offsets.png",
+      "bytes": 115,
+      "sha256": "e760725f0a25300c8b2c947479c7728f2568f6ae6322bf76b58dc6ae324b9098"
+    },
+    {
+      "path": "public/assets/sprites/0142/Sleep-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Sleep-Shadow.png",
+      "bytes": 176,
+      "sha256": "b2717e641b16bbe84e3e955b50d5aa6cbbdb4b8e5df997e84ffa25645632f63d"
+    },
+    {
+      "path": "public/assets/sprites/0142/Strike-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Strike-Anim.png",
+      "bytes": 44549,
+      "sha256": "d5ba2a9b5362c1be85199556b763efa487d03807e140cf0bb9c14fd9762dd4aa"
+    },
+    {
+      "path": "public/assets/sprites/0142/Strike-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Strike-Offsets.png",
+      "bytes": 2947,
+      "sha256": "702f3da4dac36ff37c2e98e5825aeac7377298a56c201352bffb17c8bf42c889"
+    },
+    {
+      "path": "public/assets/sprites/0142/Strike-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Strike-Shadow.png",
+      "bytes": 5366,
+      "sha256": "bae3af4b0df7648a6c797f39faf0dd7c53302eefc4f9de114b254fd4b128342b"
+    },
+    {
+      "path": "public/assets/sprites/0142/Swing-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Swing-Anim.png",
+      "bytes": 31521,
+      "sha256": "f86a6a3705575822e58f6d10333dba0babe5effd9a59666b16bd27fcfddb3978"
+    },
+    {
+      "path": "public/assets/sprites/0142/Swing-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Swing-Offsets.png",
+      "bytes": 2933,
+      "sha256": "387d711b7f0e968bbf125b9483d397bece568f26aab8a497c69aabcd1a2cbf48"
+    },
+    {
+      "path": "public/assets/sprites/0142/Swing-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Swing-Shadow.png",
+      "bytes": 5242,
+      "sha256": "8cb21c34820399140412ba6c169343f438f856d025ae7f0e4a2d98059c79979c"
+    },
+    {
+      "path": "public/assets/sprites/0142/Walk-Anim.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Walk-Anim.png",
+      "bytes": 12632,
+      "sha256": "7f9c0ace84f4911b6945be4c0fb765fa8127796a7cfb94e9df3698643e84eb43"
+    },
+    {
+      "path": "public/assets/sprites/0142/Walk-Offsets.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Walk-Offsets.png",
+      "bytes": 785,
+      "sha256": "6ede9950903d2a7394f0ee017d49b6764f8ae02dc6f0d4efc75fd82fe89ecc95"
+    },
+    {
+      "path": "public/assets/sprites/0142/Walk-Shadow.png",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/Walk-Shadow.png",
+      "bytes": 1228,
+      "sha256": "639a6c232a5f4211585700a27338e6f6ba1768d8f6bc88c5e940c034efdf5559"
+    },
+    {
+      "path": "public/assets/sprites/0142/credits.txt",
+      "source": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0142/credits.txt",
+      "bytes": 130,
+      "sha256": "a0b81ef6cadcee2508a8dac8149671822b49adff298d5b7bc1c5a37aba46c22b"
     }
   ],
   "failures": []

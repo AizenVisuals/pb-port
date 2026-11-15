@@ -24,6 +24,11 @@ export const STONES=Object.freeze({
 export const initialGrowth=()=>({pokemon:{},inventory:{moveTicket:2,oranberry:3,sitrusberry:1,lumberry:1,cheriberry:0,pechaberry:0,chestoberry:0,leftovers:0},held:{},inherited:{},specialMoves:{},tmInventory:{},stoneInventory:{},tmSchema:1,retiredTechniques:[],ticketWins:0,processedItems:[],suppressedAuto:{},pendingAuto:null,evolutions:[]});
 export const levelOf=xp=>{let level=Math.min(100,Math.max(1,Math.floor(Math.cbrt(xp))));while(level<100&&(level+1)**3<=xp)level++;return level;};
 export const xpAt=level=>level**3;
+// HP exibido no card do parceiro da Home: o engine transforma o HP base
+// (engine.bundle.js, uq0/F9a: HP clássico no Nv. 50, ×1.35) e a tela divide
+// o HP do engine por 9 — o resultado é a fórmula clássica de HP no nível.
+export const engineBaseHp=baseHp=>{const at50=Math.floor((2*baseHp+31)*50/100)+60;return Math.round(((at50*1.35-60)*100/50-31)/2);};
+export const displayMaxHp=(baseHp,level)=>Math.floor((2*engineBaseHp(baseHp)+31)*level/100)+level+10;
 export const koXpFor=level=>{const foe=Math.min(100,Math.max(1,Math.round(level)||5));return (foe+1)**3-foe**3;};
 export function ensureGrowth(save,catalog){
  if(!save.growth&&save.profileMode!=='journey'&&!save.journey?.starter)return;

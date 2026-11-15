@@ -1,63 +1,64 @@
 {
   "asset": "public/pulse/assets/chapter-two-tiles.webp",
   "width": 1280,
-  "height": 720,
+  "height": 512,
   "format": "lossless WebP",
   "tiles": "FireRed original 8px tiles / 16px metatiles, nearest neighbor",
-  "composition": "Original PULSE campaign arrangement; not a screenshot of Cerulean City. River, lake, Mt. Moon cave approach, Cerulean City and gym.",
+  "composition": "Original PULSE campaign arrangement, wide 80x32 recomposition (2.5:1); not a screenshot of Cerulean City. River, lake, Mt. Moon cave approach, Cerulean City and gym.",
   "source": "https://github.com/pret/pokefirered/tree/ce6406d8c2eaf46d543c8a2606de0c3cb1951982/data/tilesets",
   "upstream": "https://github.com/pret/pokefirered",
   "revision": "ce6406d8c2eaf46d543c8a2606de0c3cb1951982",
   "ownership": "Original Pok\u00e9mon FireRed graphics belong to their respective rights holders. pret is a decompilation source, not evidence of asset ownership transfer.",
   "sourceManifest": "research/next-pass/firered/sources.json",
-  "script": "scripts/build-firered-map-chapter-two.py",
-  "sha256": "075fcb07eef474ae1868d31f920cc59cf9c98edef7d7a3fe70b08f8ee019462e",
+  "script": "scripts/build-firered-map-wide.py",
+  "sha256": "184bbe2a5738aec492cf2338744e3130e0bd188919e03c7177a352d5530d8e0f",
   "nodesPercent": [
     [
       10.0,
-      84.44
+      81.25
     ],
     [
       20.0,
-      75.56
+      71.88
     ],
     [
       30.0,
-      66.67
+      65.62
     ],
     [
       40.0,
-      57.78
+      56.25
     ],
     [
       50.0,
-      48.89
+      46.88
     ],
     [
       60.0,
-      53.33
+      53.12
     ],
     [
       70.0,
-      44.44
+      43.75
     ],
     [
       77.5,
-      33.33
+      31.25
     ],
     [
       85.0,
-      22.22
+      21.88
     ],
     [
       90.0,
-      13.33
+      18.75
     ]
   ],
   "limitations": [
     "Static campaign scene only; no exploration/collision engine implied.",
     "Original tiles are not original PULSE artwork.",
-    "No NPC or story labels baked in; actual stage controls stay in UI."
+    "No NPC or story labels baked in; actual stage controls stay in UI.",
+    "Wide 80x32 recomposition of the 80x45 original; vertical space compressed, decorative elements repositioned, route nodes rescaled."
   ],
-  "prompt": "Sourced FireRed game graphics from https://github.com/pret/pokefirered/tree/ce6406d8c2eaf46d543c8a2606de0c3cb1951982/data/tilesets; original PULSE tile arrangement by scripts/build-firered-map-chapter-two.py. Source hashes: research/next-pass/firered/sources.json. Not AI-generated art."
+  "prompt": "Sourced FireRed game graphics from https://github.com/pret/pokefirered/tree/ce6406d8c2eaf46d543c8a2606de0c3cb1951982/data/tilesets; original PULSE tile arrangement by scripts/build-firered-map-wide.py. Source hashes: research/next-pass/firered/sources.json. Not AI-generated art."
 }

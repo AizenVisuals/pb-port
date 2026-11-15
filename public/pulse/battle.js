@@ -1,5 +1,6 @@
 import {LEARNSETS} from './learnsets.js';
 import {configureGrowthBattle,evolutionAssets} from './growth-battle.js';
+import {resolveTrainerKey} from './progression.js';
 /** PULSE ARENA local battle runtime. One simulation, no transport or backend. */
 const STEP_MS = 1000 / 60;
 const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
@@ -21,7 +22,7 @@ export class OfflineBattle {
     document.addEventListener('visibilitychange', this._visibility);
   }
 
-  async start({team, difficulty = 3, format = '3v3', arena = 'stadium', seed, botTeam, shinies = [], shinyCatalog = {}, battleId,growth} = {}) {
+  async start({team, difficulty = 3, format = '3v3', arena = 'stadium', seed, botTeam, shinies = [], shinyCatalog = {}, battleId,growth, trainer = 'red'} = {}) {
     this._stopLoop();
     this.audio?.stop?.();
     const generation = ++this.generation;
@@ -46,13 +47,14 @@ export class OfflineBattle {
         if (mon >= 0) cpu.gimmick = {kind: 'mega', mon};
       }
       this.arena = engine.ARENAS.some(a => a.key === arena) ? arena : 'stadium';
+      const trainerKey = resolveTrainerKey(trainer);
       const teams = [
-        {...this.team, name: 'Você', trainer: 'red', bot: false},
+        {...this.team, name: 'Você', trainer: trainerKey, bot: false},
         {...cpu, name: ['Iniciante','Aprendiz','Rival','Veterano','Elite'][this.difficulty - 1], trainer: 'blue', bot: true, level: this.difficulty},
       ];
       await Promise.all([
         engine.loadRankedAssets(growth?evolutionAssets(teams.flatMap(t=>t.mons)):teams.flatMap(t=>t.mons)),
-        engine.loadTrainers(['red','blue']),
+        engine.loadTrainers([trainerKey,'blue']),
         engine.loadArena(this.arena),
       ]);
       if (generation !== this.generation) return null;
@@ -163,6 +165,8 @@ export class OfflineBattle {
       return {key, dex: actor?.spec?.dex || info?.dex, name: actor?.name || info?.name || key || '', index,
         level:actor?.level||50,hp, maxHp, hpRatio: hp / maxHp, types: [...(actor?.types || info?.types || [])], status: actor?.status || null,
         frozen: (actor?.frozen || 0) > 0, confused: (actor?.confusedT || 0) > 0, toxic: !!actor?.toxic,
+        guarding: !!actor?.guarding,
+        stages: Object.fromEntries(Object.entries(actor?.stages || {}).filter(([, v]) => v)),
         fainted: !!actor?.fainted, hidden: !!actor?.hidden, active: actor === activeActor,
         mega: !!actor?.spec?.megaForm || /^MEGA /i.test(actor?.name || ''),
         portrait: info?.dex ? `assets/portraits/${info.dex}_Normal.png` : null};
@@ -170,7 +174,36 @@ export class OfflineBattle {
     const playerIndex = b.teams[0].mons.indexOf(active);
     const opponent = b.fighters[1];
     const opponentIndex = b.teams[1].mons.indexOf(opponent);
+    // Eventos novos do engine desde o último snapshot: golpes usados
+    // (actionLog, só kind "move") e status aplicados (statusLog). O HUD
+    // narra esses eventos no log de batalha; o rastreio é por comprimento
+    // do log (o array do engine é mutado in place).
+    let newActions = [], newStatuses = [];
+    try {
+      const actionLog = Array.isArray(b.actionLog) ? b.actionLog : [];
+      newActions = actionLog.slice(this._seenAction || 0)
+        .filter((x) => x && x.kind === 'move')
+        .map((x) => {
+          // Categoria do golpe (para o narrador: só 'status'/'stat' mudam
+          // stages; só 'status' aplica condição). Busca no lutador, que
+          // guarda os mesmos objetos de golpe que o engine usa.
+          const fighter = b.fighters?.[x.side];
+          const mv = fighter?.moves?.find((m) => m.name === x.name);
+          return {name: x.name, side: x.side, tick: x.t, cat: mv?.cat || null};
+        });
+      this._seenAction = actionLog.length;
+      const statusLog = Array.isArray(b.statusLog) ? b.statusLog : [];
+      newStatuses = statusLog.slice(this._seenStatus || 0)
+        .map((x) => ({side: x.side, status: x.s, tick: x.t}));
+      this._seenStatus = statusLog.length;
+    } catch { /* logs indisponíveis: snapshot segue sem eventos */ }
     const snapshot = {
+      canEvolve:this.growth?.canEvolve()||false,evolutionPrompt:this.growth?.evolutionPrompt?.()||null,
+      id: this.id, state: this.state, frame: b.frame, phase: b.phase, secondsLeft: e.timeLeft(b),
+      manual: !!side.manual, choosing: !!side.choosing, canMega: !!side.gimmick && !side.megaDone && !b.teams[0].mons[side.gimmick.mon]?.fainted,
+      megaDone: !!side.megaDone, switchCharge: e.switchReady(b, 0), dodgeReady: e.dodgeReadyIn(b, 0) <= 0,
+      guardReady: e.guardReadyIn(b, 0) <= 0, dodgeReadyIn: e.dodgeReadyIn(b,0) / 60, guardReadyIn: e.guardReadyIn(b,0) / 60,
+      newActions, newStatuses,
       canEvolve:this.growth?.canEvolve()||false,evolutionPrompt:this.growth?.evolutionPrompt?.()||null,
       id: this.id, state: this.state, frame: b.frame, phase: b.phase, secondsLeft: e.timeLeft(b),
       manual: !!side.manual, choosing: !!side.choosing, canMega: !!side.gimmick && !side.megaDone && !b.teams[0].mons[side.gimmick.mon]?.fainted,

@@ -1,13 +1,14 @@
 import {bindGamepad} from './gamepad.js';
 import {createManagementUI} from './management-ui.js';
-import {ITEMS,STONES,EVOLUTIONS,levelOf,xpAt,moveRequirement,specialPool} from './growth.js';
+import {ITEMS,STONES,EVOLUTIONS,levelOf,xpAt,moveRequirement,specialPool,displayMaxHp} from './growth.js';
 import {mountAccount} from './account.js';
 import {bindBattleControls} from './controls.js';
 import {installAudioControls,setMenuAmbient,rewardSound,playPulseSound} from './ui-audio.js';
 import {animatePartner} from './sprites.js';
 import {SUMMON_BANNERS,isSummonable} from './banners.js';
 import {ALL_STAGES} from './campaign.js';
-import { createProgression, ECONOMY } from "./progression.js";
+import { BattleNarrator } from "./battle-log.js";
+import { createProgression, ECONOMY, TRAINERS, resolveTrainerKey, trainerFace, trainerLabel } from "./progression.js";
 import { icon } from "./icons.js";
 const $ = (id) => document.getElementById(id),
   all = (sel) => [...document.querySelectorAll(sel)];
@@ -55,6 +56,54 @@ const STATUS_META = {
   toxic: { label: "ENVENENADO", cls: "st-tox" },
   confused: { label: "CONFUSO", cls: "st-cnf" },
 };
+const STAGE_LABELS = { atk: "ATQ", def: "DEF", spa: "ATQ ESP", spd: "DEF ESP", spe: "VEL" };
+// Índice do tipo na folha de glifos 686 (ordem = chaves de `types`).
+const TYPE_INDEX = Object.fromEntries(Object.keys(types).map((t, i) => [t, i]));
+// Ícone de tipo (glifo branco da folha 686 sobre a cor oficial do tipo).
+// px = tamanho do ícone; a folha tem 18 células de 28px (504×28).
+const typeIcon = (t, px = 24) => {
+  const i = TYPE_INDEX[t] ?? 0;
+  return `<span class="type-ico" style="--type:${TYPE_COLORS[t] || "#8fa8b3"};background-position:${-i * px}px 0;width:${px}px;height:${px}px;background-size:${(504 * px) / 28}px ${px}px" aria-hidden="true"></span>`;
+};
+// Pedra de Mega Evolução clássica (PokéSprite, variante outline) por espécie.
+// Espécies sem pedra clássica (dragoniteL, froslassAP, greninja, floette,
+// golisopodJJ, marshadow) usam o botão MEGA só com texto.
+const MEGA_STONES = {
+  venusaur: "venusaurite.png", charizard: "charizardite-x.png",
+  blastoise: "blastoisinite.png", gengar: "gengarite.png",
+  steelixD: "steelixite.png", sceptile: "sceptilite.png",
+  blazikenNM: "blazikenite.png", swampertNM: "swampertite.png",
+  gardevoir: "gardevoirite.png", aggron: "aggronite.png",
+  sharpedoH: "sharpedonite.png", cameruptH: "cameruptite.png",
+  absolNM: "absolite.png", metagross: "metagrossite.png",
+  garchomp: "garchompite.png",
+};
+// Narrador do log de batalha (battle-log.js) + fila de mensagens do HUD.
+// A mensagem fica visível ~3,8 s; a última permanece até a próxima chegar.
+let narrator = null, battleLogQueue = [], battleLogTimer = 0;
+function pushBattleMessages(list) {
+  if (!list?.length) return;
+  battleLogQueue.push(...list);
+  if (!battleLogTimer) showNextBattleMessage();
+}
+function showNextBattleMessage() {
+  const msg = battleLogQueue.shift();
+  if (!msg) { battleLogTimer = 0; return; }
+  const el = $("battle-log");
+  if (el) {
+    el.textContent = msg;
+    el.classList.remove("battle-log-show");
+    void el.offsetWidth; // reinicia a animação de entrada
+    el.classList.add("battle-log-show");
+  }
+  battleLogTimer = setTimeout(showNextBattleMessage, 3800);
+}
+function clearBattleLog() {
+  battleLogQueue = [];
+  if (battleLogTimer) { clearTimeout(battleLogTimer); battleLogTimer = 0; }
+  const el = $("battle-log");
+  if (el) { el.textContent = ""; el.classList.remove("battle-log-show"); }
+}
 const TIER_META = {
   C: { code: "C", label: "Comum", cls: "tier-c" },
   R: { code: "R", label: "Raro", cls: "tier-r" },
@@ -189,23 +238,45 @@ function refresh() {
   catalog = p.getCatalog();
   const s = save();
   const bannerMeter=selectedBanner==="route"?s.gacha:(s.gacha.banners?.[selectedBanner]||{pity:0});
+  const summonBanner=SUMMON_BANNERS.find(b=>b.id===selectedBanner);
   $("banner-description").textContent=SUMMON_BANNERS.find(b=>b.id===selectedBanner).description;
   $("trainer-name").textContent = s.trainerName;
+  const trainerFaceEl = $("trainer-face");
+  if (trainerFaceEl) {
+    const facePath = trainerFace(s.trainerKey);
+    if (trainerFaceEl.getAttribute("src") !== facePath) trainerFaceEl.src = facePath;
+    trainerFaceEl.alt = `Treinador ${trainerLabel(s.trainerKey)}`;
+  }
   $("account-summary").textContent = s.trainer?`Treinador Nv. ${levelOf(s.trainer.xp||0)} · no aparelho`:`Seu progresso, no aparelho`;
   $("coin-balance").textContent = s.coins.toLocaleString("pt-BR");
   $("diamond-balance").textContent = s.diamonds.toLocaleString("pt-BR");
   currencyPulse("coin-balance", s.coins);
   currencyPulse("diamond-balance", s.diamonds);
-  $("home-wins").textContent = s.records.wins;
-  $("home-owned").textContent = s.unlocked.length;
-  $("home-team-preview").innerHTML = s.team.mons
-    .map((k) => portrait(mon(k)))
-    .join("");
-  $('format-select').innerHTML=Array.from({length:Math.min(6,s.unlocked.length)},(_,i)=>`<option value="${i+1}v${i+1}">Equipe ${i+1} × ${i+1}</option>`).join('');
-  $('format-select').value=`${s.team.mons.length}v${s.team.mons.length}`;
-  $("battle-start").disabled=s.team.mons.length<1;
-  $("battle-start").title="Treino contra uma equipe do mesmo tamanho e nível.";
-  if($("training-reason"))$("training-reason").textContent=`Treino ${s.team.mons.length} × ${s.team.mons.length} disponível`;
+  // Selects de formato/dificuldade ficam ocultos na Home nova, mas seguem
+  // no DOM: refresh(), wire() e startBattle() leem deles sem mudança.
+  const fmtSel = $("format-select");
+  if (fmtSel) {
+    fmtSel.innerHTML = Array.from({length: Math.min(6, s.unlocked.length)}, (_, i) => `<option value="${i+1}v${i+1}">Equipe ${i+1} × ${i+1}</option>`).join("");
+    fmtSel.value = `${s.team.mons.length}v${s.team.mons.length}`;
+  }
+  const railBattle = $("rail-battle");
+  if (railBattle) {
+    railBattle.disabled = s.team.mons.length < 1;
+    railBattle.title = "Treino contra uma equipe do mesmo tamanho e nível.";
+  }
+  // Home nova: carteira, avatar e progresso da jornada (valores do save).
+  const setHomeText = (id, value) => { const el = $(id); if (el) el.textContent = value; };
+  setHomeText("home-coins-value", s.coins.toLocaleString("pt-BR"));
+  setHomeText("home-diamonds-value", s.diamonds.toLocaleString("pt-BR"));
+  setHomeText("home-tickets-value", (s.tickets || 0).toLocaleString("pt-BR"));
+  setHomeText("home-trainer-name", s.trainerName);
+  const homeFaceEl = $("home-trainer-face");
+  if (homeFaceEl) {
+    const facePath = trainerFace(s.trainerKey);
+    if (homeFaceEl.getAttribute("src") !== facePath) homeFaceEl.src = facePath;
+    homeFaceEl.alt = `Treinador ${trainerLabel(s.trainerKey)}`;
+  }
+  setHomeText("home-journey-progress", `Jornada de Kanto · ${s.journey?.cleared.length || 0} / ${ALL_STAGES.length} fases`);
   for (const [id, value] of Object.entries({
     "record-battles": s.records.battles,
     "record-wins": s.records.wins,
@@ -218,6 +289,12 @@ function refresh() {
   $("collection-progress").value = s.unlocked.length;
   $("collection-progress").max = catalog.length;
   $("pity-progress").value = bannerMeter.pity;
+  const pityText=document.querySelector(".pity-box p");
+  if(pityText)pityText.textContent=summonBanner?.premium?"Após 9 invocações sem SSS seguidas, a próxima invocação garante um Pokémon SSS.":"Após 9 resultados comuns seguidos, a próxima invocação garante R, SR, SSS ou UR.";
+  const oddsGuarantee=$("odds-guarantee"),oddsRates=$("odds-rates"),oddsDuplicates=$("odds-duplicates");
+  if(oddsGuarantee)oddsGuarantee.textContent=summonBanner?.premium?"Banner premium: sem tier comum. A garantia é separada para cada banner. Após nove invocações sem SSS naquele banner, a próxima garante um SSS.":"A garantia é separada para cada banner. Após nove comuns consecutivos naquele banner, a próxima invocação garante R, SR, SSS ou UR.";
+  if(oddsRates)oddsRates.textContent=summonBanner?.premium?"SR: 85% · SSS: 15%.":"C: 70% · R: 21% · SR: 7,8% · SSS: 0,7% · UR: 0,5%.";
+  if(oddsDuplicates)oddsDuplicates.textContent=summonBanner?.premium?"Pokémon repetidos viram diamantes: SR 60 · SSS 150. Use na loja para escolher um Pokémon ou adquirir uma versão shiny. Na invocação garantida, a chance é SSS 100%. Você também pode desbloquear Pokémon diretamente pela coleção.":"Pokémon repetidos viram diamantes: C 10 · R 30 · SR 60 · SSS 150 · UR 300. Use na loja para escolher um Pokémon ou adquirir uma versão shiny. Na invocação garantida, as chances são R 70% · SR 26% · SSS 2,33% · UR 1,67%. Você também pode desbloquear Pokémon diretamente pela coleção.";
   const daily =
     s.dailyClaimedAt &&
     s.dailyClaimedAt >= new Date().toISOString().slice(0, 10);
@@ -225,13 +302,12 @@ function refresh() {
   $("daily-claim").textContent = daily
     ? "Resgatado hoje"
     : `Resgatar 150 moedas${s.growth?" + 2 tickets":""}`;
-  $("home-daily").textContent = daily
-    ? "Bônus resgatado"
-    : "Resgatar bônus diário";
+  const summonTicketCost = summonBanner?.premium ? (summonBanner.ticketCost || 2) : 1;
+  const summonDiamondCost = summonBanner?.premium ? (summonBanner.diamondCost || 400) : ECONOMY.summonDiamondCost;
   const summonCostFor = (count) => {
-    const tickets = Math.min(count, s.tickets || 0);
-    const diamonds = (count - tickets) * ECONOMY.summonDiamondCost;
-    return { tickets, diamonds, affordable: s.diamonds >= diamonds };
+    const ticketPulls = Math.min(count, Math.floor((s.tickets || 0) / summonTicketCost));
+    const diamonds = (count - ticketPulls) * summonDiamondCost;
+    return { tickets: ticketPulls * summonTicketCost, diamonds, affordable: s.diamonds >= diamonds };
   };
   const summonCostLabel = (count) => {
     const cost = summonCostFor(count);
@@ -288,7 +364,7 @@ function renderCollection() {
   $("collection-grid").innerHTML = matches
     .map(
       (m) =>
-        `<button data-detail="${m.key}" class="pokemon-card rarity-${rarityTier(m).code} ${m.owned ? "" : "is-locked"}" aria-label="${esc(m.name)}, ${m.owned ? "na coleção" : "não desbloqueado"}">${m.owned ? `<span class="owned-mark">${icon("check")}</span>` : ""}${portrait(m)}<span class="card-level">${m.owned?`Nv. ${m.level}`:"A descobrir"}</span><h3>${esc(m.name)}</h3><small>${tierBadge(m)} ${rarityTier(m).label}${save().shinies.includes(m.key) ? " · Shiny" : ""}</small></button>`,
+        `<button data-detail="${m.key}" class="pokemon-card rarity-${rarityTier(m).code} ${m.owned ? "" : "is-locked"}" aria-label="${esc(m.name)}, ${m.owned ? "na coleção" : "não desbloqueado"}">${portrait(m)}<span class="card-main"><span class="card-name">${esc(m.name)}${save().shinies.includes(m.key) ? `<span class="card-shiny">Shiny</span>` : ""}${tierBadge(m)}</span><span class="card-types">${m.types.map((t) => typeIcon(t, 20)).join("")}</span></span><span class="card-level">${m.owned ? `Nv. ${m.level}` : "A descobrir"}</span></button>`,
     )
     .join("");
 }
@@ -309,7 +385,7 @@ function renderShop() {
         const cosmetic = shopFilter === "shiny",
           bought = cosmetic && s.shinies.includes(m.key),
           price = cosmetic ? ECONOMY.shinyPrice : m.price;
-        return `<button class="shop-item rarity-${rarityTier(m).code}" data-shop-detail="${m.key}" data-cosmetic="${cosmetic}"><img src="${esc(face(m, cosmetic))}" alt=""><span><b>${esc(m.name)}${cosmetic ? " Shiny" : ""}</b><small>${bought ? "Na sua coleção" : cosmetic ? "Visual alternativo · mesmos atributos" : `${tierBadge(m)} ${rarityTier(m).label}`}</small></span><strong>${bought ? icon("check") : (cosmetic || isSummonable(m.key)) ? `${icon("diamond")} ${price}` : "Evolução"}</strong></button>`;
+        return `<button class="shop-item rarity-${rarityTier(m).code}" data-shop-detail="${m.key}" data-cosmetic="${cosmetic}"><img src="${esc(face(m, cosmetic))}" alt=""><span class="shop-main"><span class="shop-name">${esc(m.name)}${cosmetic ? " Shiny" : ""}${tierBadge(m)}</span><span class="shop-types">${m.types.map((t) => typeIcon(t, 20)).join("")}${bought ? `<span class="shop-note">Na sua coleção</span>` : cosmetic ? `<span class="shop-note">Visual alternativo</span>` : ""}</span></span><strong>${bought ? icon("check") : (cosmetic || isSummonable(m.key)) ? `${icon("diamond")} ${price}` : "Evolução"}</strong></button>`;
       })
       .join("") ||
     '<p class="empty-state">Você já desbloqueou todos os Pokémon desta edição.</p>';
@@ -350,11 +426,23 @@ async function drawHero() {
   const token = ++heroToken,
     m = mon(save().favorite);
   if (!m) return;
-  $("hero-name").textContent = `${m.name} · Nv. ${m.level}`;
-  $("hero-types").innerHTML = tags(m);
-  $("hero-subtitle").textContent = isShiny(m.key)
-    ? "Versão shiny · Seu parceiro de arena"
-    : "Seu parceiro de arena";
+  // Card do parceiro (texto — não depende da imagem, atualiza antes do await).
+  const tier = tierOf(m);
+  const setHomeText = (id, value) => { const el = $(id); if (el) el.textContent = value; };
+  setHomeText("home-partner-name", m.name);
+  const tierEl = $("home-partner-tier");
+  if (tierEl) { tierEl.className = `tier-badge ${tier.cls}`; tierEl.textContent = tier.code; }
+  setHomeText("home-partner-level", `Nv. ${m.level}`);
+  const typesEl = $("home-partner-types");
+  if (typesEl) typesEl.innerHTML = tags(m);
+  const shinyEl = $("home-partner-shiny");
+  if (shinyEl) shinyEl.hidden = !isShiny(m.key);
+  // HP cheio: o HP não persiste entre batalhas; o máximo é a fórmula
+  // clássica no nível (ver displayMaxHp em growth.js).
+  const maxHp = displayMaxHp(m.stats.hp, m.level);
+  setHomeText("home-partner-hp", `${maxHp} / ${maxHp}`);
+  const hpBar = $("home-partner-hp-bar");
+  if (hpBar) hpBar.style.width = "100%";
   const image = new Image();
   image.src = `/${isShiny(m.key) && shiny[m.key] ? shiny[m.key].idle : m.icon.file}`;
   try {
@@ -364,6 +452,7 @@ async function drawHero() {
   }
   if (token !== heroToken) return;
   const canvas = $("hero-canvas");
+  if (!canvas) return;
   const bounds = canvas.parentElement.getBoundingClientRect();
   canvas.width = Math.max(1, Math.round(bounds.width * 2));
   canvas.height = Math.max(1, Math.round(bounds.height * 2));
@@ -396,14 +485,10 @@ async function drawHero() {
     if (token !== heroToken) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.imageSmoothingEnabled = false;
-    const labelSpace =
-      Math.ceil(
-        canvas.parentElement.querySelector(".hero-name").getBoundingClientRect()
-          .height * 2,
-      ) + 12;
+    // Home nova: sem rótulo sob o sprite — centraliza no palco do parceiro.
     const scale = Math.max(
         1,
-        Math.min(16, (canvas.height - labelSpace - 12) / bh),
+        Math.min(16, (canvas.height - 16) / bh, (canvas.width - 16) / bw),
       ),
       frame = reduced ? 0 : Math.floor(t / 110) % cols;
     ctx.drawImage(
@@ -413,7 +498,7 @@ async function drawHero() {
       bw,
       bh,
       (canvas.width - bw * scale) / 2,
-      canvas.height - labelSpace - bh * scale,
+      (canvas.height - bh * scale) / 2,
       bw * scale,
       bh * scale,
     );
@@ -508,6 +593,8 @@ function drawTechnique(){
 }
 async function startBattle(options={}) {
   setMenuAmbient(false);
+  narrator = new BattleNarrator((key) => mon(key)?.name || key);
+  clearBattleLog();
   if(options?.type)options={};
   closeDialogs();
   battle?.destroy();
@@ -534,6 +621,7 @@ async function startBattle(options={}) {
       shinyCatalog: shiny,
       growth: await battleGrowth(options.opponentLevel),
       ...options,
+      trainer: save().trainerKey,
     });
   } catch (error) {
     exitBattle();
@@ -542,9 +630,10 @@ async function startBattle(options={}) {
 }
 function updateBattle(s) {
   snapshot = s;
-  $("battle-capture").hidden = !wildBattle;
   $("battle-loading").hidden = s.state !== "loading";
   if (!s.player) return;
+  // Narra o que acabou de acontecer (stage, status, Protect) no log do HUD.
+  if (narrator) pushBattleMessages(narrator.feed(s));
   $("battle-clock").textContent =
     `${Math.floor(s.secondsLeft / 60)}:${String(Math.floor(s.secondsLeft % 60)).padStart(2, "0")}`;
   const scale = save().growth ? 9 : 1;
@@ -582,6 +671,19 @@ function updateBattle(s) {
       chip.textContent = st.label;
       chip.className = `status-chip ${st.cls}`;
     }
+    const stagesEl = $(side + "-stages");
+    const stageEntries = Object.entries(a.stages || {}).filter(([, v]) => v);
+    const stageKey = stageEntries.map(([k, v]) => `${k}:${v}`).join("|");
+    if (stagesEl.dataset.key !== stageKey) {
+      stagesEl.dataset.key = stageKey;
+      stagesEl.innerHTML = stageEntries
+        .map(
+          ([k, v]) =>
+            `<span class="stage-chip ${v > 0 ? "st-up" : "st-down"}">${STAGE_LABELS[k] || k.toUpperCase()} ${v > 0 ? "+" : ""}${v}</span>`,
+        )
+        .join("");
+    }
+    stagesEl.hidden = !stageEntries.length;
     const ballsEl = $(side + "-balls");
     const bench = side === "player" ? s.bench : s.opponentBench;
     if (ballsEl.dataset.key !== ballsKey(bench)) {
@@ -603,7 +705,15 @@ function updateBattle(s) {
     ? "Mova para desviar"
     : "Movimento automático";
   $("battle-choose").hidden = !s.choosing;
-  $("battle-mega").hidden = !s.canMega && !s.canEvolve;
+  // Ação especial (MEGA / EVOLUIR / CAPTURAR): vai para o 4º slot do grid
+  // quando há espaço (menos de 4 golpes); com 4 golpes, fica no botão
+  // redondo da área de especiais. CAPTURAR e MEGA/EVOLUIR são ações
+  // independentes — uma pode estar no grid e a outra na área de especiais.
+  const gridSpecial = s.moves.length < 4
+    ? (s.canEvolve ? "evolve" : s.canMega ? "mega" : wildBattle ? "capture" : null)
+    : null;
+  $("battle-capture").hidden = !wildBattle || gridSpecial === "capture";
+  $("battle-mega").hidden = gridSpecial === "mega" || gridSpecial === "evolve" || (!s.canMega && !s.canEvolve);
   $("battle-mega").textContent = s.canEvolve ? "EVOLUIR" : "MEGA";
   const prompt = s.evolutionPrompt;
   $("battle-evolve").hidden = !prompt;
@@ -614,35 +724,52 @@ function updateBattle(s) {
   }
   $("battle-guard").disabled = !s.guardReady;
   $("battle-dodge").disabled = !s.dodgeReady;
-  const moveKey = s.moves.map((m) => m.name).join("|");
+  // Grid 2×2, sempre 4 slots: golpes aprendidos + a ação especial no 4º
+  // slot (quando há espaço) + placeholders desabilitados nos demais.
+  const moveKey = s.moves.map((m) => m.name).join("|") + "|" + (gridSpecial || "");
   if ($("battle-moves").dataset.key !== moveKey) {
     $("battle-moves").dataset.key = moveKey;
-    $("battle-moves").innerHTML = s.moves
-      .map(
-        (m, i) =>
-          `<button data-move="${i}" class="move-button"><span class="move-type"></span><b>${esc(m.name)}</b><span class="move-power"></span><span class="move-eff"></span><small></small></button>`,
-      )
+    const slots = [...s.moves];
+    while (slots.length < 4) slots.push(null);
+    $("battle-moves").innerHTML = slots
+      .map((m, i) => {
+        if (m)
+          return `<button data-move="${i}" class="move-button"><span class="move-line1"><span class="move-ico">${typeIcon(m.type, 24)}</span><b>${esc(m.name)}</b></span><span class="move-line2"><span class="move-power"></span><span class="move-eff"></span></span><small></small></button>`;
+        if (i === 3 && gridSpecial === "capture")
+          return `<button data-capture-slot class="move-button move-special"><span class="move-line1"><span class="move-ico">${icon("pokeball")}</span><b>CAPTURAR</b></span><span class="move-line2"><span class="move-power">Poké Ball</span></span><small></small></button>`;
+        if (i === 3 && (gridSpecial === "mega" || gridSpecial === "evolve")) {
+          const stone = MEGA_STONES[s.player.key];
+          const label = gridSpecial === "evolve" ? "EVOLUIR" : "MEGA";
+          return `<button data-special="mega" class="move-button move-special"><span class="move-line1">${stone ? `<img class="mega-stone" src="/pulse/assets/mega-stones/${stone}" alt="">` : `<span class="move-ico">${icon("star")}</span>`}<b>${label}</b></span><span class="move-line2"><span class="move-power">${gridSpecial === "evolve" ? "Evolução" : "Mega Evolução"}</span></span><small></small></button>`;
+        }
+        return `<button class="move-button move-empty" disabled aria-hidden="true"><span class="move-line1"><b>—</b></span><span class="move-line2"></span><small></small></button>`;
+      })
       .join("");
+    // CAPTURAR no grid: o controls.js ignora (sem data-move/data-special),
+    // então o clique chega aqui.
+    $("battle-moves").querySelector("[data-capture-slot]")?.addEventListener("click", captureEncounter);
   }
   all("#battle-moves button").forEach((button, i) => {
     const m = s.moves[i];
+    if (!m) return; // slot especial ou vazio: sem estado por frame
     button.style.setProperty("--charge", m.charge);
     button.style.setProperty("--move-color", TYPE_COLORS[m.type] || "#8fe1de");
     button.classList.toggle("is-ready", m.charge >= 1 && !m.locked);
     button.classList.toggle("is-called", m.called);
+    // Fora de alcance = estado visual (esmaecido), botão segue clicável —
+    // o motor aproxima o Pokémon. Sem a linha "Ao alcance".
+    button.classList.toggle("is-out-of-range", !m.inRange && !m.locked);
     button.disabled = m.locked;
-    button.querySelector(".move-type").textContent = types[m.type] || m.type;
     button.querySelector(".move-power").textContent = m.power ? m.power : "—";
     const effEl = button.querySelector(".move-eff");
     effEl.textContent = effectLabel(m.eff);
     effEl.className = `move-eff ${effectClass(m.eff)}`;
+    // Só o essencial no <small>: % de recarga, ou "Indisponível".
     button.querySelector("small").textContent = m.locked
       ? "Indisponível"
       : m.charge < 1
         ? `${Math.round(m.charge * 100)}%`
-        : m.inRange
-          ? "Ao alcance"
-          : "Fora de alcance";
+        : "";
   });
   const benchKey = s.bench.map((m) => m.key).join("|");
   if ($("battle-bench").dataset.key !== benchKey) {
@@ -685,6 +812,8 @@ function exitBattle() {
   if(activeStage&&save().journey?.active)p.abandonStage();
   activeStage=null;
   wildBattle=false;
+  narrator = null;
+  clearBattleLog();
   closeDialogs();
   battle?.destroy();
   battle = null;
@@ -762,7 +891,7 @@ async function drawBanner(){
  if(token!==selectedBanner||route!=='summon')stop();else stopBannerSprite=stop;
 }
 function wire() {
-  management=createManagementUI({p,save,mon,portrait,tags,esc,navigate,notify,apply,movePicker,launchStage,drawTechnique,goBack});
+  management=createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,notify,apply,movePicker,launchStage,drawTechnique,goBack});
   for(const title of all('#screens>.screen:not(#screen-home) .screen-title')){const back=document.createElement('button');back.className='section-back';back.type='button';back.dataset.menuBack='true';back.setAttribute('aria-label','Voltar');back.innerHTML=icon('back');title.prepend(back);}
 
   $("technique-mon").onchange=()=>management.renderTechniques();
@@ -778,9 +907,6 @@ function wire() {
   for (const [id, name] of Object.entries({
     "coin-icon": "coin",
     "diamond-icon": "diamond",
-    "favorite-button": "heart",
-    "hero-info": "info",
-    "battle-start-icon": "bolt",
     "search-icon": "search",
     "daily-icon": "gift",
     "summon-core": "bolt",
@@ -884,35 +1010,59 @@ function wire() {
     }
   });
   const account=mountAccount();
-  $("profile-button").onclick = () => {
+let pendingTrainerKey = "red";
+function renderTrainerPicker() {
+  const box = $("trainer-picker");
+  if (!box) return;
+  pendingTrainerKey = resolveTrainerKey(save().trainerKey);
+  box.replaceChildren(
+    ...TRAINERS.map((t) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "trainer-option";
+      b.setAttribute("aria-pressed", String(t.key === pendingTrainerKey));
+      b.dataset.trainerKey = t.key;
+      b.innerHTML = `<img src="/faces/${t.key}.png" alt=""><span>${esc(t.name)}</span>`;
+      b.onclick = () => {
+        pendingTrainerKey = t.key;
+        box
+          .querySelectorAll(".trainer-option")
+          .forEach((el) => el.setAttribute("aria-pressed", String(el === b)));
+      };
+      return b;
+    }),
+  );
+}
+  const openProfile = () => {
     account.prepare();
     $("profile-name").value = save().trainerName;
+    renderTrainerPicker();
     showDialog("profile-dialog");
   };
+  $("profile-button").onclick = openProfile;
+  $("home-profile").onclick = openProfile;
   $("profile-form").onsubmit = (e) => {
     e.preventDefault();
+    if (!apply(p.setTrainerKey(pendingTrainerKey))) return;
     if (apply(p.setTrainerName($("profile-name").value)))
       $("profile-dialog").close();
   };
   $("wallet-button").onclick = () => navigate("rewards");
   $("diamond-wallet").onclick = () => navigate("shop");
-  $("home-team-link").onclick = () => navigate("team");
-  $("favorite-button").onclick = () => {
-    ownedFilter = "owned";
-    navigate("collection");
-  };
-  $("hero-info").onclick = () => detail(save().favorite);
-  $("home-daily").onclick = () => {
+  // Pílulas da topbar da Home nova: mesmas rotas da carteira do header.
+  $("home-coins").onclick = () => navigate("rewards");
+  $("home-diamonds").onclick = () => navigate("shop");
+  $("home-tickets").onclick = () => navigate("summon");
+  $("daily-claim").onclick = () => {
     if (apply(p.claimDaily())) notify("Bônus diário: +150 moedas.");
   };
-  $("daily-claim").onclick = $("home-daily").onclick;
   const starterClaimBtn = $("starter-tickets-claim");
   if (starterClaimBtn)
     starterClaimBtn.onclick = () => {
       if (apply(p.claimStarterTickets()))
         notify("Recompensa inicial: +10 tickets de invocação.");
     };
-  for (const id of ["collection-summon", "rewards-summon", "home-summon"])
+  for (const id of ["collection-summon", "rewards-summon"])
     $(id).onclick = () => navigate("summon");
   $("summon-back").onclick = () => navigate("home");
   $("team-add").onclick=()=>management.addSlot();
@@ -922,7 +1072,7 @@ function wire() {
     changeFormat(Number(e.target.value[0]));
   $("summon-one").onclick = () => startPulls(1);
   $("summon-ten").onclick = () => startPulls(10);
-  $("battle-start").onclick = startBattle;
+  $("rail-battle").onclick = startBattle;
   $("battle-pause").onclick = () => battle?.pause();
   $("battle-resume").onclick = () => {
     $("pause-dialog").close();

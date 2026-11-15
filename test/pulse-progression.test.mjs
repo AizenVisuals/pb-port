@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile} from 'node:fs/promises';
-import {createProgression,ECONOMY,SAVE_KEY,STARTERS} from '../public/pulse/progression.js';
+import {readFile,access} from 'node:fs/promises';
+import {createProgression,ECONOMY,SAVE_KEY,STARTERS,TRAINERS,resolveTrainerKey,trainerFace,trainerLabel} from '../public/pulse/progression.js';
 import {isSummonable} from '../public/pulse/banners.js';
 const roster=JSON.parse(await readFile(new URL('../public/roster.json',import.meta.url),'utf8'));
 const storage=()=>{const values=new Map;return {values,getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value)};};
@@ -162,23 +162,31 @@ test('stone evolutions are manual, cost coins and consume exactly one stone',()=
 });
 
 test('gacha economy uses C/R/SR/UR/SSS rates, prices and refunds',()=>{assert.deepEqual(ECONOMY.rates,{C:.70,R:.21,SR:.078,UR:.005,SSS:.007});assert.deepEqual(ECONOMY.prices,{C:60,R:180,SR:360,UR:1800,SSS:900});assert.deepEqual(ECONOMY.duplicateDiamonds,{C:10,R:30,SR:60,UR:300,SSS:150});assert.equal(ECONOMY.pityAt,10);});
-test('empty tiers fall back instead of failing the summon',()=>{const values=[.9,0];const p=fixture({rng:()=>values.shift()});const r=p.summon(1,'night');assert.equal(r.ok,true);assert.equal(r.pulls[0].rarity,'R');assert.equal(r.pulls[0].key,'spiritomb');});
+test('empty tiers fall back instead of failing the summon',()=>{const values=[.5,0];const p=fixture({rng:()=>values.shift()});const r=p.summon(1,'night');assert.equal(r.ok,true);assert.equal(r.pulls[0].rarity,'SR');assert.equal(r.pulls[0].key,'shedinjaNM');const values2=[.99,0];const q=fixture({rng:()=>values2.shift()});const r2=q.summon(1,'battle');assert.equal(r2.ok,true);assert.equal(r2.pulls[0].rarity,'SSS');assert.equal(r2.pulls[0].key,'marshadow');});
 
 test('pity renormalizes over the available R-or-better tiers',()=>{
-  for(const [roll,key]of [[.9,'spiritomb'],[.97,'marshadow']]){
+  for(const [roll,key]of [[.5,'sandshrew'],[.9,'rhyhorn'],[.99,'marshadow']]){
     const disk=storage();
     const seed=fixture({storage:disk,rng:()=>0});
-    const s=JSON.parse(seed.exportSave());s.gacha.banners={night:{pulls:0,pity:9}};assert.equal(seed.importSave(JSON.stringify(s)).ok,true);
+    const s=JSON.parse(seed.exportSave());s.gacha.banners={battle:{pulls:0,pity:9}};assert.equal(seed.importSave(JSON.stringify(s)).ok,true);
     const values=[roll,0];const q=fixture({storage:disk,rng:()=>values.shift()});
-    const r=q.summon(1,'night');assert.equal(r.ok,true);assert.equal(r.pulls[0].guaranteed,true);assert.equal(r.pulls[0].key,key);
+    const r=q.summon(1,'battle');assert.equal(r.ok,true);assert.equal(r.pulls[0].guaranteed,true);assert.equal(r.pulls[0].key,key);
   }
+});
+test('premium night pity guarantees SSS after nine pulls without one',()=>{
+  const disk=storage();
+  const seed=fixture({storage:disk,rng:()=>0});
+  const s=JSON.parse(seed.exportSave());s.gacha.banners={night:{pulls:9,pity:9}};assert.equal(seed.importSave(JSON.stringify(s)).ok,true);
+  const values=[.5,0];const q=fixture({storage:disk,rng:()=>values.shift()});
+  const r=q.summon(1,'night');assert.equal(r.ok,true);assert.equal(r.pulls[0].guaranteed,true);assert.equal(r.pulls[0].rarity,'SSS');assert.equal(r.pulls[0].key,'marshadow');
+  assert.equal(q.getSave().gacha.banners.night.pity,0);
 });
 
 test('battle pity draws rare and super rare before the mythical and UR stays rarer than SSS',()=>{
   assert.ok(ECONOMY.rates.UR<ECONOMY.rates.SSS);
   assert.ok(ECONOMY.prices.UR>ECONOMY.prices.SSS);
   assert.ok(ECONOMY.duplicateDiamonds.UR>ECONOMY.duplicateDiamonds.SSS);
-  for(const [roll,key]of [[.5,'rhyhorn'],[.9,'omanyte'],[.99,'marshadow']]){
+  for(const [roll,key]of [[.5,'sandshrew'],[.9,'rhyhorn'],[.99,'marshadow']]){
     const disk=storage();
     const seed=fixture({storage:disk,rng:()=>0});
     const s=JSON.parse(seed.exportSave());s.gacha.banners={battle:{pulls:0,pity:9}};assert.equal(seed.importSave(JSON.stringify(s)).ok,true);
@@ -207,6 +215,21 @@ test('summon costs tickets first and diamonds as fallback, mixing on ten pulls',
   assert.equal(p.summon(10).ok,false);assert.equal(p.exportSave(),before3);
   const s4=JSON.parse(p.exportSave());s4.tickets=0;s4.diamonds=50;p.importSave(JSON.stringify(s4));
   assert.equal(p.summon().ok,false);
+});
+test('premium night costs 2 tickets per pull with a 400-diamond fallback',()=>{
+  const p=fixture();
+  const before=p.getSave();
+  const r1=p.summon(1,'night');
+  assert.equal(r1.ok,true);assert.equal(r1.spentTickets,2);assert.equal(r1.spentDiamonds,0);
+  assert.equal(p.getSave().tickets,before.tickets-2);
+  const s=JSON.parse(p.exportSave());s.tickets=0;s.diamonds=1000;p.importSave(JSON.stringify(s));
+  const r2=p.summon(1,'night');
+  assert.equal(r2.ok,true);assert.equal(r2.spentTickets,0);assert.equal(r2.spentDiamonds,400);
+  const s2=JSON.parse(p.exportSave());s2.tickets=3;s2.diamonds=1000;p.importSave(JSON.stringify(s2));
+  const r3=p.summon(2,'night');
+  assert.equal(r3.ok,true);assert.equal(r3.spentTickets,2);assert.equal(r3.spentDiamonds,400);
+  const s3=JSON.parse(p.exportSave());s3.tickets=1;s3.diamonds=100;p.importSave(JSON.stringify(s3));
+  assert.equal(p.summon(1,'night').ok,false);
 });
 test('pity counts diamond-paid summons the same way',()=>{
   const p=fixture({rng:()=>0});
@@ -258,4 +281,27 @@ test('campaign first wins can drop a gacha ticket and repeats never do',()=>{
   assert.equal(z.beginStage('1-1','loss-1').ok,true);
   const r4=z.completeStage({id:'loss-1',won:false,frames:600});
   assert.equal(r4.ok,true);assert.equal(r4.gachaTickets,0);assert.equal(z.getSave().tickets,0);
+});
+
+test('trainer defaults to Red, selection persists and unknown trainers are rejected',()=>{
+ const disk=storage();const p=fixture({storage:disk});assert.equal(p.getSave().trainerKey,'red');
+ assert.equal(resolveTrainerKey('ash'),'ash');assert.equal(resolveTrainerKey('nope'),'red');assert.equal(resolveTrainerKey(),'red');assert.equal(resolveTrainerKey(42),'red');
+ assert.equal(trainerFace('ash'),'/faces/ash.png');assert.equal(trainerFace('nope'),'/faces/red.png');assert.equal(trainerLabel('ash'),'Ash');assert.equal(trainerLabel('nope'),'Red');
+ assert.equal(p.setTrainerKey('ash').ok,true);assert.equal(p.getSave().trainerKey,'ash');
+ const q=fixture({storage:disk});assert.equal(q.getSave().trainerKey,'ash');
+ for(const bad of ['missing','','RED','ash ',42,null])assert.equal(p.setTrainerKey(bad).ok,false);
+ assert.equal(p.getSave().trainerKey,'ash');
+});
+test('legacy saves without a trainer key migrate to Red; forged keys are rejected on import',()=>{
+ const disk=storage(),p=fixture({storage:disk});const old=JSON.parse(p.exportSave());delete old.trainerKey;old.trainerName='Legado';disk.setItem(SAVE_KEY,JSON.stringify(old));const q=fixture({storage:disk});assert.equal(q.getSave().trainerName,'Legado');assert.equal(q.getSave().trainerKey,'red');assert.equal(q.status().recovered,false);
+ const forged=JSON.parse(p.exportSave());forged.trainerKey='nope';assert.equal(p.importSave(JSON.stringify(forged)).ok,false);assert.equal(p.getSave().trainerKey,'red');
+});
+test('trainer roster matches trainers.json and every trainer has face and battle sprites',async()=>{
+ const listed=JSON.parse(await readFile(new URL('../public/trainers.json',import.meta.url),'utf8'));
+ assert.deepEqual(TRAINERS,listed);
+ for(const t of TRAINERS){
+  await access(new URL(`../public/faces/${t.key}.png`,import.meta.url));
+  await access(new URL(`../public/assets/trainers/${t.key}.png`,import.meta.url));
+  await access(new URL(`../public/assets/trainers/${t.key}_face.png`,import.meta.url));
+ }
 });

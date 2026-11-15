@@ -3,9 +3,13 @@ import {ITEMS,EVOLUTIONS,STONES,STONE_EVOLUTIONS,xpAt,specialPool,moveRequiremen
 import {LEARNSETS} from './learnsets.js';
 import {CHAPTER_ONE,CHAPTER_TWO,ALL_STAGES} from './campaign.js';
 import {icon} from './icons.js';
-export function createManagementUI({p,save,mon,portrait,tags,esc,navigate,notify,apply,movePicker,launchStage,drawTechnique,goBack}){
+export function createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,notify,apply,movePicker,launchStage,drawTechnique,goBack}){
  const $=id=>document.getElementById(id);
- let partner=null,tab='attributes',slot=0,bagItem='oranberry',selectedStage=null,selectedChapter=1,stops=[],partnerStop,worldToken=0,invocation='pokemon';
+ let partner=null,tab='attributes',slot=0,bagItem='oranberry',selectedStage=null,selectedChapter=1,stops=[],partnerStop,worldToken=0,invocation='pokemon',mapHintShown=false;
+ // Pílulas de tipo da folha 696 (Pokédex, 19 linhas de 32px) para a tela do
+ // parceiro. Linha 9 é um tipo não usado (marcador); não há pílula para ela.
+ const TYPE_PILL_696={normal:0,fighting:1,flying:2,poison:3,ground:4,rock:5,bug:6,ghost:7,steel:8,fire:10,water:11,grass:12,electric:13,psychic:14,ice:15,dragon:16,dark:17,fairy:18};
+ const typePills696=m=>m.types.map(t=>`<span class="type-pill-696" style="background-position:0 ${-(TYPE_PILL_696[t]??0)*32}px" role="img" aria-label="${esc(types?.[t]||t)}"></span>`).join('');
  const stopSprites=()=>{worldToken++;for(const stop of stops)stop?.();stops=[];partnerStop?.();partnerStop=null;};
  const animate=async(canvas,key)=>{const token=worldToken;try{const stop=await animatePartner(canvas,mon(key),{reduced:matchMedia('(prefers-reduced-motion:reduce)').matches});if(canvas.isConnected&&token===worldToken)stops.push(stop);else stop();}catch{}};
  const openPartner=(key,section='attributes')=>{partner=key;tab=section;navigate('partner');};
@@ -20,7 +24,7 @@ export function createManagementUI({p,save,mon,portrait,tags,esc,navigate,notify
  }
  function renderPartner(){
   partner||=save().favorite;const m=mon(partner);if(!m){navigate('collection');return;}
-  $('partner-name').textContent=m.name;$('partner-level').textContent=`Nv. ${m.level}`;$('partner-types').innerHTML=tags(m);
+  $('partner-name').textContent=m.name;$('partner-level').textContent=`Nv. ${m.level}`;$('partner-types').innerHTML=typePills696(m);
   const value=(m.xp??0)-xpAt(m.level),max=Math.max(1,xpAt(Math.min(100,m.level+1))-xpAt(m.level));
   $('partner-xp').innerHTML=`<progress max="${max}" value="${m.level===100?1:value}" aria-label="Experiência de ${esc(m.name)}"></progress><span>${m.level===100?'Nível máximo':`${value} / ${max} XP para o próximo nível`}</span>`;
   document.querySelectorAll('[data-partner-tab]').forEach(button=>button.setAttribute('aria-selected',String(button.dataset.partnerTab===tab)));
@@ -68,17 +72,37 @@ export function createManagementUI({p,save,mon,portrait,tags,esc,navigate,notify
   detail.innerHTML=`<img class="inventory-item-hero" src="/pulse/assets/items/${bagItem}.png" alt=""><h2>${item.name}</h2><p>${item.description}</p><p class="inventory-count">${g.inventory[bagItem]} na mochila</p><label class="inventory-owner-label">Equipar em<select id="inventory-owner">${s.unlocked.map(key=>`<option value="${key}" ${key===owner?'selected':''}>${esc(mon(key).name)} · Nv. ${mon(key).level}</option>`).join('')}</select></label><button id="inventory-equip" class="primary-button" ${g.inventory[bagItem]<1?'disabled':''}>Equipar item</button><button data-route="shop" class="text-button">Obter mais itens na loja</button>`;
   $('inventory-equip').onclick=()=>{if(apply(p.equipItem($('inventory-owner').value,bagItem))){notify('Item equipado.');renderBag();}};
  }
- const positionsOne=[[20,75.56],[28.75,66.67],[37.5,66.67],[46.25,60],[57.5,57.78],[67.5,62.22],[76.25,57.78],[82.5,44.44],[90,28.89],[90,15.56]];
- const positionsTwo=[[10,84.44],[20,75.56],[30,66.67],[40,57.78],[50,48.89],[60,53.33],[70,44.44],[77.5,33.33],[85,22.22],[90,13.33]];
+ // Nós (% do mapa wide 1280×512, 80×32 metatiles — gerados por
+ // scripts/build-firered-map-wide.py; ver os .json ao lado dos .webp).
+ const positionsOne=[[20,71.88],[28.75,65.62],[37.5,65.62],[46.25,59.38],[57.5,56.25],[67.5,59.38],[76.25,56.25],[82.5,43.75],[90,28.12],[90,21.88]];
+ const positionsTwo=[[10,81.25],[20,71.88],[30,65.62],[40,56.25],[50,46.88],[60,53.12],[70,43.75],[77.5,31.25],[85,21.88],[90,18.75]];
  function renderCampaign(){
   const s=save(),j=s.journey;selectedStage||=j?.active?.stage||ALL_STAGES[Math.min(j?.cleared.length||0,19)].id;
   selectedChapter=selectedStage.startsWith('2-')?2:1;
   const stages=selectedChapter===2?CHAPTER_TWO:CHAPTER_ONE,positions=selectedChapter===2?positionsTwo:positionsOne,list=$('chapter-list');
   list.className='chapter-map'+(selectedChapter===2?' chapter-two':'');
-  $('campaign-subtitle').textContent=selectedChapter===2?'Capítulo 2 · Caminho para Cerulean':'Capítulo 1 · Arraste o mapa para explorar.';
+  $('campaign-subtitle').textContent=selectedChapter===2?'Capítulo 2 · Caminho para Cerulean':'Capítulo 1';
+  // Abas de capítulo embutidas na linha do título (não mais acima do mapa).
+  const title=document.querySelector('#screen-campaign .screen-title');
   let tabs=document.getElementById('chapter-tabs');
-  if(!tabs){tabs=document.createElement('div');tabs.id='chapter-tabs';tabs.className='chapter-tabs';tabs.innerHTML='<button data-chapter="1">Capítulo 1</button><button data-chapter="2">Capítulo 2 · Caminho para Cerulean</button>';list.parentElement.parentElement.before(tabs);}
-  tabs.querySelectorAll('[data-chapter]').forEach(b=>{b.setAttribute('aria-selected',String(Number(b.dataset.chapter)===selectedChapter));if(Number(b.dataset.chapter)===2)b.disabled=!j?.cleared.includes('1-10');});
+  if(!tabs){tabs=document.createElement('div');tabs.id='chapter-tabs';tabs.className='chapter-tabs';tabs.innerHTML='<button data-chapter="1">Capítulo 1</button><button data-chapter="2">Capítulo 2</button>';}
+  if(title)title.appendChild(tabs);
+  tabs.querySelectorAll('[data-chapter]').forEach(b=>{const ch=Number(b.dataset.chapter);b.setAttribute('aria-selected',String(ch===selectedChapter));b.disabled=ch===2&&!j?.cleared.includes('1-10');if(ch===2)b.textContent=b.disabled?'🔒 Capítulo 2':'Capítulo 2';});
+  // Toast de primeira vez: "Arraste para explorar" aparece uma única vez
+  // (nunca mais, nem em outro carregamento) e some sozinho ou no 1º arrastar.
+  if(!mapHintShown){
+    mapHintShown=true;
+    const hint=$('campaign-hint');
+    if(hint&&!localStorage.getItem('pulse-arena.mapHintSeen')){
+      localStorage.setItem('pulse-arena.mapHintSeen','1');
+      hint.hidden=false;
+      hint.classList.add('campaign-hint-show');
+      const hide=()=>{hint.hidden=true;hint.classList.remove('campaign-hint-show');};
+      const view=list.parentElement;
+      view.addEventListener('pointerdown',hide,{once:true});
+      setTimeout(hide,3500);
+    }
+  }
   list.innerHTML=stages.map((stage,i)=>{const cleared=j?.cleared.includes(stage.id),locked=!j?.starter||ALL_STAGES.indexOf(stage)>j.cleared.length;return `<button class="map-stage ${stage.badge?'gym-node':''} ${cleared?'cleared':''} ${locked?'locked':''} ${selectedStage===stage.id?'selected':''}" style="--x:${positions[i][0]}%;--y:${positions[i][1]}%" data-map-stage="${stage.id}" ${locked?'disabled':''} aria-label="Fase ${stage.id}, ${cleared?'concluída':locked?'bloqueada':stage.title}"><span>${stage.badge?`<img src="/pulse/assets/badges/${stage.badge==='cascade'?'kanto-2':'kanto-1'}.png" alt="Insígnia ${stage.badge==='cascade'?'Cascata':'Rocha'}" width="22" height="22">`:cleared?icon('check'):stage.id}</span><b>${stage.id}</b></button>`;}).join('');
   requestAnimationFrame(()=>{const node=$('chapter-list').querySelector('.map-stage.selected'),view=$('chapter-list').parentElement;if(node){view.scrollLeft=node.offsetLeft-view.clientWidth/2;view.scrollTop=node.offsetTop-view.clientHeight/2;}});
   const stage=ALL_STAGES.find(x=>x.id===selectedStage),gi=ALL_STAGES.indexOf(stage);$('campaign-progress').textContent=`${j?.cleared.length||0} / 20 fases concluídas`;
