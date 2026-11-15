@@ -1,0 +1,12 @@
+{
+  "pass": true,
+  "providerHost": "accounts.google.com",
+  "checks": [
+    "profile loads bundled Firebase Auth SDK",
+    "real Google provider opens",
+    "popup cancellation unlocks retry",
+    "local save unchanged"
+  ],
+  "signedInUser": false,
+  "errors": []
+}

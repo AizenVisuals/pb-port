@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "871839787784",
+    "project_id": "pulse-arena-pb",
+    "storage_bucket": "pulse-arena-pb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871839787784:android:fd4c76e651117f81c1dabd",
+        "android_client_info": {
+          "package_name": "app.pulsearena.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871839787784-2boq3t8if6e1b6g83431kdjo2ehaetb0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.pulsearena.game",
+            "certificate_hash": "5a5545ef2b5bdaf282cfcec1756db3dad1b0d972"
+          }
+        },
+        {
+          "client_id": "871839787784-dh1qjntbsiav1v72hqvugv5k3ib6spsi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.pulsearena.game",
+            "certificate_hash": "7bc1bf9a0ce6248c9eb7642d7b54dff7f40d6b86"
+          }
+        },
+        {
+          "client_id": "871839787784-1ipiih9jt2ekpbb3a7ihnji0k2gg38d4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdTag0Q7-3HEvhWrzb8eUHp_9NeDUg3Xo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871839787784-1ipiih9jt2ekpbb3a7ihnji0k2gg38d4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

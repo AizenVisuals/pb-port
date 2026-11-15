@@ -9,15 +9,20 @@
     "dev": "node server/index.mjs",
     "android:package": "node scripts/package-android.mjs",
     "android:sync": "npm run android:package && cap sync android",
-    "android:build": "node scripts/android-build.mjs"
+    "android:build": "node scripts/android-build.mjs",
+    "account:build": "node scripts/build-account-sdk.mjs"
   },
   "dependencies": {
+    "@capacitor-firebase/authentication": "^8.6.0",
     "@capacitor/android": "^8.6.2",
     "@capacitor/app": "^8.1.2",
     "@capacitor/core": "^8.6.2",
+    "@capacitor/filesystem": "^8.1.5",
     "@capacitor/screen-orientation": "^8.0.2",
+    "@capacitor/share": "^8.0.3",
     "@capacitor/status-bar": "^8.0.4",
     "@napi-rs/canvas": "^0.1.80",
+    "firebase": "^12.19.0",
     "ws": "^8.18.3"
   },
   "devDependencies": {

@@ -1,0 +1,60 @@
+npm notice run pb-self-hosted-port@0.1.0 test
+npm notice run node --test test/*.test.mjs
+(node:298291) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ four- and five-member journey teams survive catalog load and reload intact (119.342171ms)
+✔ full chapter can fail, resume and clear with exactly one badge and first-clear rewards (225.403482ms)
+✔ new journey selects one initial exactly once and reloads without bonus team (24.841261ms)
+✔ legacy profile keeps its collection, balance and team when choosing a journey starter (13.35978ms)
+✔ chapter locks, result validation and first-clear rewards survive reloading (25.879933ms)
+✔ invalid journey imports are transactional (12.244632ms)
+✔ wild encounters, ball spending and capture are persistent and transactional (27.146706ms)
+✔ invalid RNG never consumes a ball, and ball purchases charge once (17.29964ms)
+✔ campaign starters have independent species, sprites and four PB moves (28.344826ms)
+✔ bulbasaur completes a real local PB battle and uses its moves (3959.716147ms)
+✔ charmander completes a real local PB battle and uses its moves (2594.551262ms)
+✔ squirtle completes a real local PB battle and uses its moves (3188.809098ms)
+✔ all chapter opponents are registered with usable PB animations and moves (4868.002179ms)
+✔ delivered client includes every static module dependency and stylesheet font (120.576747ms)
+✔ local canvas adapter produces deterministic battle state (5044.212931ms)
+✔ complete 3v3 and 6v6 simulations end with valid winners (11439.557427ms)
+✔ Marshadow registers independent sprites, canonical typing and expanded legal moves (3623.275824ms)
+✔ Spectral Thief transfers only positive boosts, capped at two stages total (1.079739ms)
+✔ fan-made Mega transforms once, retains four selected moves and does not heal (2161.112382ms)
+✔ native image augmented with getContext remains an image when drawn (22.501803ms)
+✔ Google identity and logout never replace local progression (5.968526ms)
+✔ double presses cannot open two auth requests; cancelled login stays usable (2.26836ms)
+✔ failed SDK loading permits retry without changing save (4.337115ms)
+(node:298317) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ three banners have distinct real pools with every advertised rarity (69.227753ms)
+✔ banner pity is independent and invalid banners never charge (27.973202ms)
+(node:298326) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ starter collection includes playable 3v3 and 6v6 without spending (36.436233ms)
+✔ local profile, teams, moves, Mega and favorites survive reloading (55.92196ms)
+✔ locked species, duplicate team members, invalid moves and unavailable Mega are rejected (55.288784ms)
+✔ daily reward can be claimed once per UTC day and cannot be reclaimed by rolling clock back (20.449111ms)
+✔ battle rewards are persistent and idempotent, exclude surrender/short runs and obey pacing (44.112019ms)
+✔ gacha applies normal probability boundaries, charges coins and awards diamonds for duplicates (138.636395ms)
+✔ tenth consecutive common pull guarantees rare or better and persists pity across loads (39.033683ms)
+✔ bad RNG, insufficient balance and invalid counts are transactional (19.23905ms)
+✔ direct unlock is an alternative with explicit price and no duplicate charges (41.516663ms)
+✔ corrupt saves are backed up and recovery is visible; storage failures keep a usable session (38.981931ms)
+✔ export/import validates data and preserves old state on bad imports (35.040045ms)
+✔ legacy saves gain diamond and shiny fields without losing progress (21.703313ms)
+✔ shiny purchases require ownership, supported art and diamonds; persist without modifying stats (55.350593ms)
+✔ invalid diamond and shiny imports preserve previous save (18.030385ms)
+✔ duplicate diamond amounts follow rarity and never refund coins (104.685656ms)
+✔ HTTP serves local client and disables production sign-in (2178.521742ms)
+✔ profiles issue independent tokens and invalid teams are rejected (105.822456ms)
+✔ practice loads the actual engine, ticks, accepts input, and surrenders (3240.634894ms)
+✔ two clients share seed, commands and ranked result; cancellation removes queue (1824.881582ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 44
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18153.242783

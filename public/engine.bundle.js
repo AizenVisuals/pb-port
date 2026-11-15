@@ -1814,3 +1814,7 @@ c| 27:10-20 26:18-19`}},m7a={tee:{sleeve:"short",over:["seam"]},jacket:{open:1,o
 // PB port extension: registers original Marshadow content without changing upstream species.
 import {installMarshadow} from "./custom/marshadow.js";
 installMarshadow({species:ms,catalog:ej,ranked:vr,roster:_4e,entries:I4e,faces:ii0,getMove:yj,wrapMove:U4e});
+
+// PULSE campaign: real starter species using existing PB move behaviors.
+import {installCampaignStarters} from './custom/starters.js';
+installCampaignStarters({species:ms,catalog:ej,ranked:vr,roster:_4e,entries:I4e,faces:ii0,getMove:yj,wrapMove:U4e});

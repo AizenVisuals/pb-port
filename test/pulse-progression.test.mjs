@@ -33,11 +33,11 @@ test('battle rewards are persistent and idempotent, exclude surrender/short runs
  assert.equal(p.recordBattle(battle({id:'too-fast'})).coins,0);clock+=8000;assert.equal(p.recordBattle(battle({id:'loss',won:false,reason:'loss'})).coins,40);
  assert.equal(p.getSave().records.battles,5);assert.equal(p.recordBattle(battle({id:'bad',reason:'win',won:false})).ok,false);
 });
-test('gacha applies normal probability boundaries, charges coins and refunds duplicates',()=>{
+test('gacha applies normal probability boundaries, charges coins and awards diamonds for duplicates',()=>{
  for(const [roll,rarity]of [[0,'common'],[.699999,'common'],[.7,'rare'],[.94999,'rare'],[.95,'epic'],[.999999,'epic']]){
-  const values=[roll,0];const p=fixture({rng:()=>values.shift()});const before=p.getSave();const result=p.summon();assert.equal(result.ok,true);assert.equal(result.pulls[0].rarity,rarity);assert.equal(result.spent,100);assert.equal(p.getSave().coins,before.coins-100+result.refund);
+  const values=[roll,0];const p=fixture({rng:()=>values.shift()});const before=p.getSave();const result=p.summon();assert.equal(result.ok,true);assert.equal(result.pulls[0].rarity,rarity);assert.equal(result.spent,100);assert.equal(p.getSave().coins,before.coins-100);
  }
- const p=fixture({rng:()=>0});const first=p.summon(),second=p.summon();assert.equal(second.pulls[0].duplicate,true);assert.equal(second.refund,ECONOMY.duplicateRefund);assert.equal(second.pulls[0].key,first.pulls[0].key);
+ const p=fixture({rng:()=>0});const first=p.summon(),second=p.summon();assert.equal(second.pulls[0].duplicate,true);assert.equal(second.diamonds,ECONOMY.duplicateDiamonds.common);assert.equal(p.getSave().diamonds,first.diamonds+second.diamonds);assert.equal(second.pulls[0].key,first.pulls[0].key);
 });
 test('tenth consecutive common pull guarantees rare or better and persists pity across loads',()=>{
  const disk=storage();const p=fixture({storage:disk,rng:()=>0});const rich=JSON.parse(p.exportSave());rich.coins=3000;assert.equal(p.importSave(JSON.stringify(rich)).ok,true);
@@ -48,7 +48,7 @@ test('bad RNG, insufficient balance and invalid counts are transactional',()=>{
  const p=fixture({rng:()=>1});const before=p.exportSave();assert.equal(p.summon().ok,false);assert.equal(p.exportSave(),before);assert.equal(p.summon(0).ok,false);assert.equal(p.summon(11).ok,false);assert.equal(p.summon(10).ok,false);
 });
 test('direct unlock is an alternative with explicit price and no duplicate charges',()=>{
- const p=fixture();const mon=p.getCatalog().find(m=>!m.owned&&m.rarity==='common');const before=p.getSave().coins;assert.equal(p.buyPokemon(mon.key).ok,true);assert.equal(p.getSave().coins,before-mon.price);assert.ok(p.getSave().unlocked.includes(mon.key));assert.equal(p.buyPokemon(mon.key).ok,false);assert.equal(p.getSave().coins,before-mon.price);
+ const p=fixture();const mon=p.getCatalog().find(m=>!m.owned&&m.rarity==='common');const rich=JSON.parse(p.exportSave());rich.diamonds=1000;assert.equal(p.importSave(JSON.stringify(rich)).ok,true);const before=p.getSave().diamonds;assert.equal(p.buyPokemon(mon.key).ok,true);assert.equal(p.getSave().diamonds,before-mon.price);assert.ok(p.getSave().unlocked.includes(mon.key));assert.equal(p.buyPokemon(mon.key).ok,false);assert.equal(p.getSave().diamonds,before-mon.price);
 });
 test('corrupt saves are backed up and recovery is visible; storage failures keep a usable session',()=>{
  const disk=storage();disk.setItem(SAVE_KEY,'broken json');const p=fixture({storage:disk});assert.equal(p.status().recovered,true);assert.match(p.status().message,/cópia/);assert.ok([...disk.values.entries()].some(([k,v])=>k.includes('.recovery.')&&v==='broken json'));
@@ -61,4 +61,18 @@ test('export/import validates data and preserves old state on bad imports',()=>{
   const invalid=JSON.parse(exported);mutate(invalid);assert.equal(q.importSave(JSON.stringify(invalid)).ok,false);assert.equal(q.exportSave(),before);
  }
  assert.equal(q.importSave('{').ok,false);assert.equal(q.importSave('x'.repeat(3*1024*1024)).ok,false);
+});
+
+test('legacy saves gain diamond and shiny fields without losing progress',()=>{
+ const disk=storage(),p=fixture({storage:disk});const old=JSON.parse(p.exportSave());delete old.diamonds;delete old.shinies;delete old.shinyEquipped;old.trainerName='Legado';disk.setItem(SAVE_KEY,JSON.stringify(old));const q=fixture({storage:disk});assert.equal(q.getSave().trainerName,'Legado');assert.equal(q.getSave().diamonds,0);assert.deepEqual(q.getSave().shinies,[]);assert.equal(q.status().recovered,false);
+});
+test('shiny purchases require ownership, supported art and diamonds; persist without modifying stats',()=>{
+ const disk=storage(),p=fixture({storage:disk});p.setShinyCatalog(['marshadow']);const before=p.getCatalog().find(m=>m.key==='marshadow').stats;assert.equal(p.buyShiny('marshadow').ok,false);assert.equal(p.buyShiny('lucario').ok,false);const rich=JSON.parse(p.exportSave());rich.diamonds=600;p.importSave(JSON.stringify(rich));assert.equal(p.buyShiny('marshadow').ok,true);assert.equal(p.getSave().diamonds,300);assert.equal(p.buyShiny('marshadow').ok,false);assert.equal(p.getSave().diamonds,300);assert.equal(p.equipShiny('marshadow',false).ok,true);assert.deepEqual(p.getSave().shinyEquipped,[]);p.equipShiny('marshadow',true);const q=fixture({storage:disk});assert.deepEqual(q.getSave().shinyEquipped,['marshadow']);assert.deepEqual(q.getCatalog().find(m=>m.key==='marshadow').stats,before);
+});
+test('invalid diamond and shiny imports preserve previous save',()=>{
+ const p=fixture(),before=p.exportSave();for(const mutate of [s=>s.diamonds=-1,s=>s.diamonds=1.5,s=>s.shinies=['unknown'],s=>s.shinyEquipped=['marshadow']]){const invalid=JSON.parse(before);mutate(invalid);assert.equal(p.importSave(JSON.stringify(invalid)).ok,false);assert.equal(p.exportSave(),before);}
+});
+
+test('duplicate diamond amounts follow rarity and never refund coins',()=>{
+ for(const [roll,rarity]of [[0,'common'],[.7,'rare'],[.95,'epic']]){const values=[roll,0],disk=storage(),p=fixture({storage:disk,rng:()=>values.shift()});const rich=JSON.parse(p.exportSave());rich.unlocked=roster.map(m=>m.key);p.importSave(JSON.stringify(rich));const result=p.summon();assert.equal(result.pulls[0].duplicate,true);assert.equal(result.diamonds,ECONOMY.duplicateDiamonds[rarity]);assert.equal(p.getSave().coins,500);const q=fixture({storage:disk});assert.equal(q.getSave().diamonds,result.diamonds);}
 });

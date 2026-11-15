@@ -1,0 +1,15 @@
+{
+  "source": "motion/src/index.jsx",
+  "tool": "Remotion",
+  "composition": "PulsePortal",
+  "size": [
+    960,
+    540
+  ],
+  "fps": 60,
+  "frames": 72,
+  "durationSeconds": 1.2,
+  "output": "public/pulse/assets/motion/portal.mp4",
+  "sha256": "5e305770694fafe6117dbda1296b4a9f549ecb5c75f3c269692e60cb6e2b9789",
+  "purpose": "Local invocation prelude; skip and reduced motion handled by controller"
+}

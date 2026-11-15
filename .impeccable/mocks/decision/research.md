@@ -1,0 +1,4 @@
+Referências: https://champions.pokemon.com/en-us/ ; https://unite.pokemon.com/en-us/ ; Unite lobby screenshots https://www.serebii.net/pokemonunite/pics.shtml . Referência enviada pelo usuário: exemplo de nível de acabamento, sem copiar roxo nem o layout. Menu moderno e Pokémon pixel art confirmado pelo usuário.
+Estruturas estudadas: anfiteatro do favorito; arena panorâmica; clube da equipe; preparação de duelo; equipe em destaque; saguão da arena; chegada por portal. Seed surface:9028cf3aa385b411; índices 6,1,4.
+
+Estado: três prévias HTML autocontidas prontas, escolha do usuário pendente em http://127.0.0.1:43475/ (key fe4f7504). ImageGen retornou moderation_blocked no estágio output para o pedido de lobby; nenhum raster foi gerado, nenhuma tentativa de contornar a recusa foi feita. Prévias usam sprites existentes, fontes locais incorporadas e cenário herdado. O jogo instalado não foi alterado nesta etapa.

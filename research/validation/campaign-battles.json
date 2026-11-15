@@ -1,0 +1,450 @@
+{
+  "seed": 73,
+  "scope": "Headless PB engine, bot-controlled player, route captures assumed. This is a balance sample, not UI or human play validation.",
+  "rows": [
+    {
+      "starter": "bulbasaur",
+      "stage": "1-1",
+      "team": [
+        "bulbasaur"
+      ],
+      "opponents": [
+        "rattata"
+      ],
+      "finished": true,
+      "frames": 1457,
+      "winner": 0
+    },
+    {
+      "starter": "bulbasaur",
+      "stage": "1-2",
+      "team": [
+        "bulbasaur"
+      ],
+      "opponents": [
+        "pidgey"
+      ],
+      "finished": true,
+      "frames": 2043,
+      "winner": 1
+    },
+    {
+      "starter": "bulbasaur",
+      "stage": "1-3",
+      "team": [
+        "bulbasaur",
+        "pidgey"
+      ],
+      "opponents": [
+        "rattata"
+      ],
+      "finished": true,
+      "frames": 1457,
+      "winner": 0
+    },
+    {
+      "starter": "bulbasaur",
+      "stage": "1-4",
+      "team": [
+        "bulbasaur",
+        "pidgey"
+      ],
+      "opponents": [
+        "caterpie",
+        "weedle"
+      ],
+      "finished": true,
+      "frames": 5962,
+      "winner": 0
+    },
+    {
+      "starter": "bulbasaur",
+      "stage": "1-5",
+      "team": [
+        "bulbasaur",
+        "pidgey"
+      ],
+      "opponents": [
+        "ekans"
+      ],
+      "finished": true,
+      "frames": 3679,
+      "winner": 0
+    },
+    {
+      "starter": "bulbasaur",
+      "stage": "1-6",
+      "team": [
+        "bulbasaur",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "pidgey",
+        "rattata"
+      ],
+      "finished": true,
+      "frames": 4501,
+      "winner": 0
+    },
+    {
+      "starter": "bulbasaur",
+      "stage": "1-7",
+      "team": [
+        "bulbasaur",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "zubat",
+        "koffing"
+      ],
+      "finished": true,
+      "frames": 6569,
+      "winner": 1
+    },
+    {
+      "starter": "bulbasaur",
+      "stage": "1-8",
+      "team": [
+        "bulbasaur",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "charmander",
+        "squirtle"
+      ],
+      "finished": true,
+      "frames": 4686,
+      "winner": 0
+    },
+    {
+      "starter": "bulbasaur",
+      "stage": "1-9",
+      "team": [
+        "bulbasaur",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "geodude"
+      ],
+      "finished": true,
+      "frames": 1441,
+      "winner": 0
+    },
+    {
+      "starter": "bulbasaur",
+      "stage": "1-10",
+      "team": [
+        "bulbasaur",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "geodude",
+        "onix"
+      ],
+      "finished": true,
+      "frames": 6271,
+      "winner": 1
+    },
+    {
+      "starter": "charmander",
+      "stage": "1-1",
+      "team": [
+        "charmander"
+      ],
+      "opponents": [
+        "rattata"
+      ],
+      "finished": true,
+      "frames": 1975,
+      "winner": 0
+    },
+    {
+      "starter": "charmander",
+      "stage": "1-2",
+      "team": [
+        "charmander"
+      ],
+      "opponents": [
+        "pidgey"
+      ],
+      "finished": true,
+      "frames": 2168,
+      "winner": 0
+    },
+    {
+      "starter": "charmander",
+      "stage": "1-3",
+      "team": [
+        "charmander",
+        "pidgey"
+      ],
+      "opponents": [
+        "rattata"
+      ],
+      "finished": true,
+      "frames": 1975,
+      "winner": 0
+    },
+    {
+      "starter": "charmander",
+      "stage": "1-4",
+      "team": [
+        "charmander",
+        "pidgey"
+      ],
+      "opponents": [
+        "caterpie",
+        "weedle"
+      ],
+      "finished": true,
+      "frames": 2575,
+      "winner": 0
+    },
+    {
+      "starter": "charmander",
+      "stage": "1-5",
+      "team": [
+        "charmander",
+        "pidgey"
+      ],
+      "opponents": [
+        "ekans"
+      ],
+      "finished": true,
+      "frames": 2357,
+      "winner": 0
+    },
+    {
+      "starter": "charmander",
+      "stage": "1-6",
+      "team": [
+        "charmander",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "pidgey",
+        "rattata"
+      ],
+      "finished": true,
+      "frames": 4281,
+      "winner": 0
+    },
+    {
+      "starter": "charmander",
+      "stage": "1-7",
+      "team": [
+        "charmander",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "zubat",
+        "koffing"
+      ],
+      "finished": true,
+      "frames": 5956,
+      "winner": 1
+    },
+    {
+      "starter": "charmander",
+      "stage": "1-8",
+      "team": [
+        "charmander",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "charmander",
+        "squirtle"
+      ],
+      "finished": true,
+      "frames": 8089,
+      "winner": 1
+    },
+    {
+      "starter": "charmander",
+      "stage": "1-9",
+      "team": [
+        "charmander",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "geodude"
+      ],
+      "finished": true,
+      "frames": 3822,
+      "winner": 1
+    },
+    {
+      "starter": "charmander",
+      "stage": "1-10",
+      "team": [
+        "charmander",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "geodude",
+        "onix"
+      ],
+      "finished": true,
+      "frames": 3822,
+      "winner": 1
+    },
+    {
+      "starter": "squirtle",
+      "stage": "1-1",
+      "team": [
+        "squirtle"
+      ],
+      "opponents": [
+        "rattata"
+      ],
+      "finished": true,
+      "frames": 1745,
+      "winner": 0
+    },
+    {
+      "starter": "squirtle",
+      "stage": "1-2",
+      "team": [
+        "squirtle"
+      ],
+      "opponents": [
+        "pidgey"
+      ],
+      "finished": true,
+      "frames": 2742,
+      "winner": 0
+    },
+    {
+      "starter": "squirtle",
+      "stage": "1-3",
+      "team": [
+        "squirtle",
+        "pidgey"
+      ],
+      "opponents": [
+        "rattata"
+      ],
+      "finished": true,
+      "frames": 1745,
+      "winner": 0
+    },
+    {
+      "starter": "squirtle",
+      "stage": "1-4",
+      "team": [
+        "squirtle",
+        "pidgey"
+      ],
+      "opponents": [
+        "caterpie",
+        "weedle"
+      ],
+      "finished": true,
+      "frames": 4039,
+      "winner": 0
+    },
+    {
+      "starter": "squirtle",
+      "stage": "1-5",
+      "team": [
+        "squirtle",
+        "pidgey"
+      ],
+      "opponents": [
+        "ekans"
+      ],
+      "finished": true,
+      "frames": 2793,
+      "winner": 0
+    },
+    {
+      "starter": "squirtle",
+      "stage": "1-6",
+      "team": [
+        "squirtle",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "pidgey",
+        "rattata"
+      ],
+      "finished": true,
+      "frames": 3719,
+      "winner": 0
+    },
+    {
+      "starter": "squirtle",
+      "stage": "1-7",
+      "team": [
+        "squirtle",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "zubat",
+        "koffing"
+      ],
+      "finished": true,
+      "frames": 7193,
+      "winner": 1
+    },
+    {
+      "starter": "squirtle",
+      "stage": "1-8",
+      "team": [
+        "squirtle",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "charmander",
+        "squirtle"
+      ],
+      "finished": true,
+      "frames": 5348,
+      "winner": 0
+    },
+    {
+      "starter": "squirtle",
+      "stage": "1-9",
+      "team": [
+        "squirtle",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "geodude"
+      ],
+      "finished": true,
+      "frames": 1273,
+      "winner": 0
+    },
+    {
+      "starter": "squirtle",
+      "stage": "1-10",
+      "team": [
+        "squirtle",
+        "pidgey",
+        "caterpie"
+      ],
+      "opponents": [
+        "geodude",
+        "onix"
+      ],
+      "finished": true,
+      "frames": 2092,
+      "winner": 0
+    }
+  ]
+}

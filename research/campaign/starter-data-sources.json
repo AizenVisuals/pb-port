@@ -1,0 +1,6 @@
+{
+  "statsSource": "https://raw.githubusercontent.com/smogon/pokemon-showdown/master/data/pokedex.ts",
+  "sourceSha256": "d31bb0b0e323388271dd9ed171c7e84b4a280a3b00bcf0f7c73cab5f1e934ffd",
+  "movesSource": "Existing PB implementations; advanced compatible kits, not level-5 learnsets",
+  "note": "PokeAPI endpoint returned 403; no data taken from that endpoint."
+}

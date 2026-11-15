@@ -1,0 +1,22 @@
+{
+  "assets": [
+    {
+      "path": "public/pulse/assets/lobby-arena.png",
+      "origin": "Pre-existing PULSE ARENA asset in repository commit 800bf92b34cf441c4200e0f3fd798286a3565ad0; reused unchanged. Original generation prompt not available in repository."
+    },
+    {
+      "path": "public/pulse/assets/shiny/",
+      "origin": "SpriteCollab pinned revision and per-file URLs, hashes and original artist credits in research/shiny-assets-manifest.json and asset subdirectories."
+    }
+  ],
+  "currentGeneratedArt": {
+    "lobby": "public/pulse/assets/lobby-terrace-v2.webp",
+    "banners": [
+      "public/pulse/assets/banner-route.webp",
+      "public/pulse/assets/banner-battle.webp",
+      "public/pulse/assets/banner-night.webp"
+    ],
+    "editableSources": "research/art-sources/",
+    "method": "Native ImageGen; exact prompts embedded in PNG sources and WebP sidecars; characters use existing PB sprites."
+  }
+}

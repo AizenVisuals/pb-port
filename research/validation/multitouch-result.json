@@ -1,0 +1,1 @@
+{"pass":true,"environment":"Chromium 1248, viewport 844x390, mobile touch emulation through CDP","checks":["stick + move simultaneously","stick + guard","one command per touch","secondary stick finger ignored","cancel resets movement","gesture after cancel","keyboard activation"],"errors":[],"hardwareAndroidVerified":false}

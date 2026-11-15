@@ -1,0 +1,271 @@
+{
+  "source": "https://github.com/PMDCollab/SpriteCollab",
+  "revision": "aab3eb6c7167b247a45f5c12c85515341d0c9895",
+  "method": "Exact pixel palette correspondence from upstream normal and shiny Idle sheets; ambiguous or geometrically different pairs excluded.",
+  "files": [
+    {
+      "path": "public/pulse/assets/shiny/lucario/AnimData.xml",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0448/0000/0001/AnimData.xml",
+      "sha256": "b3d34c30ee6e766d83ac932acce9f9977487e66f519fadc1e9e95d4e6140b420",
+      "bytes": 14714
+    },
+    {
+      "path": "public/pulse/assets/shiny/lucario/Idle-Anim.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0448/0000/0001/Idle-Anim.png",
+      "sha256": "82681b6da0cdaae40708feb3e94c4fcadfdba6dbbb725fd12be469255a9e4477",
+      "bytes": 16177
+    },
+    {
+      "path": "public/pulse/assets/shiny/lucario/sprite-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0448/0000/0001/credits.txt",
+      "sha256": "fea60720ca070a2072d130b2b224bda125724ef622346cdeaafc868877f2ba6a",
+      "bytes": 572
+    },
+    {
+      "path": "public/pulse/assets/shiny/lucario/Normal.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0448/0000/0001/Normal.png",
+      "sha256": "01d9fe17372731b5ab2d87c5320406e9dc796bd15fcbaaee79ce70324f231cc0",
+      "bytes": 1649
+    },
+    {
+      "path": "public/pulse/assets/shiny/lucario/portrait-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0448/0000/0001/credits.txt",
+      "sha256": "5c43a73505f40dd9f7122a4d2ff05b8ef833400ab07c67d3ca28d732f4a81125",
+      "bytes": 1045
+    },
+    {
+      "path": "public/pulse/assets/shiny/gengar/AnimData.xml",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/0000/0001/AnimData.xml",
+      "sha256": "cffb806df2432f57a596eb2d945e7eac7ca4b66dd7e51c7bd06cfdd6de221df0",
+      "bytes": 14111
+    },
+    {
+      "path": "public/pulse/assets/shiny/gengar/Idle-Anim.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/0000/0001/Idle-Anim.png",
+      "sha256": "ede6dba8307e2dd3d8369993507944db4caf6547123b25422dd893f6540c67b4",
+      "bytes": 11220
+    },
+    {
+      "path": "public/pulse/assets/shiny/gengar/sprite-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0094/0000/0001/credits.txt",
+      "sha256": "aeef7987302eefc3c52002153454a56d7ed49a94e0f55f3b192fbd36e88465f4",
+      "bytes": 367
+    },
+    {
+      "path": "public/pulse/assets/shiny/gengar/Normal.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0094/0000/0001/Normal.png",
+      "sha256": "3b90d0df75a66b836368764f11ac6ac155406f4d441fdc67cc9596ded897e2dc",
+      "bytes": 1954
+    },
+    {
+      "path": "public/pulse/assets/shiny/gengar/portrait-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0094/0000/0001/credits.txt",
+      "sha256": "6a10905d52273f6a42a9be8a3aae63679f4dbda112c0df74b2e16adf98ef965d",
+      "bytes": 104
+    },
+    {
+      "path": "public/pulse/assets/shiny/venusaur/AnimData.xml",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0003/0000/0001/AnimData.xml",
+      "sha256": "b5b556e42df4322440f63da430e918bbad794c83cdf58dbff2393138f96c15d3",
+      "bytes": 4873
+    },
+    {
+      "path": "public/pulse/assets/shiny/venusaur/Idle-Anim.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0003/0000/0001/Idle-Anim.png",
+      "sha256": "1086dc123205be711e9a4e059d0123172cf9c89e3558ac8ba9798dde10379e8e",
+      "bytes": 11575
+    },
+    {
+      "path": "public/pulse/assets/shiny/venusaur/sprite-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0003/0000/0001/credits.txt",
+      "sha256": "12477af5a1b753cf4814e8641cfe423acf296a20aa41fad03dcc77bd21eb3284",
+      "bytes": 150
+    },
+    {
+      "path": "public/pulse/assets/shiny/venusaur/Normal.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0003/0000/0001/Normal.png",
+      "sha256": "e1e0df91be2445579c0a5380ee3683f81998688edac98bf1e6ae1a01cacac57f",
+      "bytes": 1909
+    },
+    {
+      "path": "public/pulse/assets/shiny/venusaur/portrait-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0003/0000/0001/credits.txt",
+      "sha256": "8ed736694381476824237f6d5522c4ed9919c2d002839432218b8167116f13c4",
+      "bytes": 442
+    },
+    {
+      "path": "public/pulse/assets/shiny/gardevoir/AnimData.xml",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0282/0000/0001/AnimData.xml",
+      "sha256": "655ccdb89ae914d07d45bc260dc2c367593275e71a2aaceebfc92303189a0a83",
+      "bytes": 5259
+    },
+    {
+      "path": "public/pulse/assets/shiny/gardevoir/Idle-Anim.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0282/0000/0001/Idle-Anim.png",
+      "sha256": "86a39ee65f4b900c2bde4207cbb901b99e26c7aa1fc319b2b31f274741b1cd60",
+      "bytes": 7141
+    },
+    {
+      "path": "public/pulse/assets/shiny/gardevoir/sprite-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0282/0000/0001/credits.txt",
+      "sha256": "d73e829d3660d276c902564ca550c1eb7fc297a0d1309ecb0fcfc59c9812dfe9",
+      "bytes": 285
+    },
+    {
+      "path": "public/pulse/assets/shiny/gardevoir/Normal.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0282/0000/0001/Normal.png",
+      "sha256": "ef6003cb74104971e4419cd1ecf03c4b7782f36f2f4929738e8eb421c63396a6",
+      "bytes": 1762
+    },
+    {
+      "path": "public/pulse/assets/shiny/gardevoir/portrait-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0282/0000/0001/credits.txt",
+      "sha256": "da4e9dc4fec5b1a758dc1e23b064481b77459e9f6ba198896b200851d7e8e7ae",
+      "bytes": 562
+    },
+    {
+      "path": "public/pulse/assets/shiny/garchomp/AnimData.xml",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0445/0000/0001/AnimData.xml",
+      "sha256": "7d23726a290c97e3820a82d12cfbf194a22b2ba8da3f7ea8843bf6616191d591",
+      "bytes": 5615
+    },
+    {
+      "path": "public/pulse/assets/shiny/garchomp/Idle-Anim.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0445/0000/0001/Idle-Anim.png",
+      "sha256": "c43e6b8231ff726681b42a32462d5a95b41d17f2da45ba74e381d483f5d83f65",
+      "bytes": 18053
+    },
+    {
+      "path": "public/pulse/assets/shiny/garchomp/sprite-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0445/0000/0001/credits.txt",
+      "sha256": "790514793da98f8533bf3a7abc763022ddc259867fc3a8f9186f0d83bc27d5ae",
+      "bytes": 292
+    },
+    {
+      "path": "public/pulse/assets/shiny/garchomp/Normal.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0445/0000/0001/Normal.png",
+      "sha256": "dade5d19f69da1bfd148c78d9439bca135f830eba99ee48a74536d54766f9443",
+      "bytes": 1464
+    },
+    {
+      "path": "public/pulse/assets/shiny/garchomp/portrait-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0445/0000/0001/credits.txt",
+      "sha256": "3e3ce258e573a492bfb12da73807e699102e6ddac0891456260ca314cb9baa53",
+      "bytes": 461
+    },
+    {
+      "path": "public/pulse/assets/shiny/greninja/AnimData.xml",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0658/0000/0001/AnimData.xml",
+      "sha256": "8d09e1590e9e89812edff6606922d490cebaab0ae188d0a9eb4fda88ad0d0860",
+      "bytes": 7041
+    },
+    {
+      "path": "public/pulse/assets/shiny/greninja/Idle-Anim.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0658/0000/0001/Idle-Anim.png",
+      "sha256": "87697689b8639a0e55df67217b7cf3fe4e5b57c185c04e4eccdfa30411c2d309",
+      "bytes": 15138
+    },
+    {
+      "path": "public/pulse/assets/shiny/greninja/sprite-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0658/0000/0001/credits.txt",
+      "sha256": "2fff864fd6eb532514dbfbb69944a14e53975e88ec125c9a02c4f921ea582b1c",
+      "bytes": 156
+    },
+    {
+      "path": "public/pulse/assets/shiny/greninja/Normal.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0658/0000/0001/Normal.png",
+      "sha256": "f632f36143261619f7270f4c1c60ff524032c9ea1c3ef7b54af63b66eee4e2da",
+      "bytes": 1732
+    },
+    {
+      "path": "public/pulse/assets/shiny/greninja/portrait-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0658/0000/0001/credits.txt",
+      "sha256": "5dab1785342a472b4363b494a6d658693356d04f424a38827285cc4f72217d28",
+      "bytes": 337
+    },
+    {
+      "path": "public/pulse/assets/shiny/pikachu/AnimData.xml",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0025/0000/0001/AnimData.xml",
+      "sha256": "0666eaa460b7e702dc6c6ecf4cf5095ca652052d4bd92ae4e859da2cd42b2418",
+      "bytes": 12133
+    },
+    {
+      "path": "public/pulse/assets/shiny/pikachu/Idle-Anim.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0025/0000/0001/Idle-Anim.png",
+      "sha256": "916e6ef20e773f840774e0f08c4d98bbdbf081ab3fc57464642ba2191acaab31",
+      "bytes": 9956
+    },
+    {
+      "path": "public/pulse/assets/shiny/pikachu/sprite-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0025/0000/0001/credits.txt",
+      "sha256": "d35ada5b10219547ecd88ee1d597de5850d15fffcb6f0583b576a6e27b8f5bb8",
+      "bytes": 301
+    },
+    {
+      "path": "public/pulse/assets/shiny/pikachu/Normal.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0025/0000/0001/Normal.png",
+      "sha256": "8ac8e2f0473d857140d288caf25c4459f32b00c9b3e6de86a61ac7ec067b9412",
+      "bytes": 1345
+    },
+    {
+      "path": "public/pulse/assets/shiny/pikachu/portrait-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0025/0000/0001/credits.txt",
+      "sha256": "c52858cad9c1bd9508b151c954912e27bf79675b4a4700a1ee7e936865551dd4",
+      "bytes": 674
+    },
+    {
+      "path": "public/pulse/assets/shiny/salamence/AnimData.xml",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0373/0000/0001/AnimData.xml",
+      "sha256": "1932bcf10334ff015c0a6ae372a54c4b2d1ff5f5fb0f528763f939f9251a0d1b",
+      "bytes": 14363
+    },
+    {
+      "path": "public/pulse/assets/shiny/salamence/Idle-Anim.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0373/0000/0001/Idle-Anim.png",
+      "sha256": "abc57c59f17011f22904daec194253dca8ba499e9b29f4a94ec1207dbb46ca04",
+      "bytes": 23753
+    },
+    {
+      "path": "public/pulse/assets/shiny/salamence/sprite-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/sprite/0373/0000/0001/credits.txt",
+      "sha256": "2f0f6419bc4e2ef31526ef8c278edbbe9d5d22971bf4430af4961ba92691eb7b",
+      "bytes": 302
+    },
+    {
+      "path": "public/pulse/assets/shiny/salamence/Normal.png",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0373/0000/0001/Normal.png",
+      "sha256": "6841cd40a5c292da2d96d8cf5490a649810f2de8b486e13f6ca975af1a1edbda",
+      "bytes": 1716
+    },
+    {
+      "path": "public/pulse/assets/shiny/salamence/portrait-credits.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/portrait/0373/0000/0001/credits.txt",
+      "sha256": "7b10cb9d6d84f1e0f828966dacd4345fb7edcc204f24fd382d56bd6fd9ba9cce",
+      "bytes": 185
+    },
+    {
+      "path": "public/pulse/assets/shiny/credit_names.txt",
+      "url": "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/aab3eb6c7167b247a45f5c12c85515341d0c9895/credit_names.txt",
+      "sha256": "3fb38a81fb5db6bdde699598f9092e86c37c315889dff4adf74b2a97a56a0dc6",
+      "bytes": 15716
+    }
+  ],
+  "excluded": [
+    {
+      "key": "marshadow",
+      "reason": "Different sheet geometry"
+    },
+    {
+      "key": "charizard",
+      "reason": "Ambiguous palette mapping"
+    },
+    {
+      "key": "blastoise",
+      "reason": "Ambiguous palette mapping"
+    },
+    {
+      "key": "tyranitar",
+      "reason": "Ambiguous palette mapping"
+    }
+  ]
+}

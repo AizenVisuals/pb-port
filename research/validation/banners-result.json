@@ -1,0 +1,18 @@
+{
+  "pass": true,
+  "banners": [
+    "route",
+    "battle",
+    "night"
+  ],
+  "remainingCoins": 300,
+  "errors": [],
+  "checks": [
+    "select three artworks",
+    "invoke on every banner",
+    "skip portal and reveal summary",
+    "close and reload",
+    "charge exactly 100 per pull",
+    "separate banner counters"
+  ]
+}

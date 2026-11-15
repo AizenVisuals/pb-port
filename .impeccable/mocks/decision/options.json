@@ -1,0 +1,80 @@
+{
+  "title": "PULSE ARENA — próximo visual",
+  "question": "Qual composição você quer levar para o jogo? Todas preservam as cores e as funcionalidades.",
+  "options": [
+    {
+      "id": "portal",
+      "kind": "assigned",
+      "label": "Chegada à arena",
+      "thesis": "O pulso abre o cenário e revela seu parceiro.",
+      "palette": [
+        "#101820",
+        "#83e5da",
+        "#ff8169",
+        "#f6f3ea"
+      ],
+      "materials": [
+        "Painéis modernos",
+        "Pokémon em pixel art",
+        "Cenário de arena"
+      ],
+      "viewport": "Cenário contínuo de entrada da arena; favorito no centro, portal ao fundo e comandos de batalha à direita.",
+      "risk": "Pode competir com o Pokémon se a luz do portal for exagerada.",
+      "html": ".impeccable/mocks/decision/portal.html",
+      "htmlFrame": "960x432"
+    },
+    {
+      "id": "panorama",
+      "kind": "dealt",
+      "label": "Arena panorâmica",
+      "thesis": "O lobby inteiro é a arena do seu Pokémon.",
+      "palette": [
+        "#101820",
+        "#83e5da",
+        "#ff8169",
+        "#f6f3ea"
+      ],
+      "materials": [
+        "Painéis modernos",
+        "Pokémon em pixel art",
+        "Cenário de arena"
+      ],
+      "viewport": "Favorito no palco em um cenário amplo; equipe no rodapé e ação de batalha no canto direito.",
+      "risk": "A arte de fundo precisa deixar os controles legíveis.",
+      "html": ".impeccable/mocks/decision/panorama.html",
+      "htmlFrame": "960x432"
+    },
+    {
+      "id": "equipe",
+      "kind": "dealt",
+      "label": "Equipe em destaque",
+      "thesis": "Seu favorito lidera uma equipe pronta para lutar.",
+      "palette": [
+        "#101820",
+        "#83e5da",
+        "#ff8169",
+        "#f6f3ea"
+      ],
+      "materials": [
+        "Painéis modernos",
+        "Pokémon em pixel art",
+        "Cenário de arena"
+      ],
+      "viewport": "Favorito grande acompanhado de uma faixa de parceiros selecionáveis; preparação e batalha num painel lateral.",
+      "risk": "Uma equipe de seis exige boa separação entre retratos e comandos.",
+      "html": ".impeccable/mocks/decision/equipe.html",
+      "htmlFrame": "960x432"
+    }
+  ],
+  "buildPath": {
+    "value": "code",
+    "toggle": false
+  },
+  "reroll": {
+    "registers": [
+      "safer",
+      "bolder"
+    ]
+  },
+  "steer": true
+}

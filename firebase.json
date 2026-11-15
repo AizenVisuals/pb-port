@@ -1,0 +1,14 @@
+{
+  "auth": {
+    "providers": {
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "PULSE ARENA",
+        "supportEmail": "rapha700evil@gmail.com",
+        "authorizedRedirectUris": [
+          "https://pulse-arena-pb.firebaseapp.com/__/auth/handler",
+          "https://pulse-arena-pb.web.app/__/auth/handler"
+        ]
+      }
+    }
+  }
+}

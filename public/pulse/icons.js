@@ -1,4 +1,5 @@
 const paths={
+ diamond:'M3 8 7 3h10l4 5-9 13L3 8Zm0 0h18M7 3l5 18 5-18',
  home:'M3 11 12 3l9 8M5 10v11h5v-6h4v6h5V10',
  team:'M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM2 21v-2a6 6 0 0 1 12 0v2M17 4a4 4 0 0 1 0 8m0 3a6 6 0 0 1 5 6',
  collection:'M4 3h6v8H4zm10 0h6v8h-6zM4 15h6v6H4zm10 0h6v6h-6z',

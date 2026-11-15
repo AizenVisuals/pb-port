@@ -8,11 +8,11 @@ android
 
 ## Stack
 
-Existing HTML/CSS/JavaScript battle engine retained; Capacitor Android wrapper selected under the user's delegated implementation authority. Menus must not import the simulation engine before a battle. The app is a custom game UI rather than an Android productivity tool.
+Existing HTML/CSS/JavaScript battle engine retained; Capacitor Android wrapper selected under the user's delegated implementation authority. Menus must not import the simulation engine before a battle. Mobile-first landscape game. Button press, navigation transitions and summon reveals must feel immediate and fluid. Browser QA validates the shared WebView UI, but Android evidence is required for native performance claims.
 
 ## Users
 
-The owner plays on an Android phone and wants a polished, purpose-built mobile battle game. They enjoyed the existing Marshadow and fan-made Mega Marshadow. First delivery is a local playable APK against bots; online multiplayer and hosting are deferred.
+The owner plays on an Android phone and wants a polished, purpose-built mobile battle game. They enjoyed the existing Marshadow and fan-made Mega Marshadow. First delivery prioritizes the mobile game and fluid UI; online multiplayer and hosting are deferred.
 
 ## Product Purpose
 
@@ -24,7 +24,7 @@ Landscape orientation throughout, including menus and combat. The user explicitl
 
 ## Capabilities and Constraints
 
-Preserve the existing engine's Auto/manual control, guard, dodge, switching, four selected moves, 3v3/6v6 bot battles and five difficulty settings. Keep Marshadow and its fan-made Mega with expanded moves. Local saved trainer profile, coins, owned collection, favorite, teams and results. Provide rewards, direct unlock and gacha with visible odds, pity and useful duplicates. No paid currency or purchases. Acquisition rarity must not directly increase battle stats. Player starts with a usable team, including Marshadow. Precise reward values are implementation choices delegated by the user and must be documented/tested. Export/import is included to protect local progress across test versions.
+Preserve the existing engine's Auto/manual control, guard, dodge, switching, four selected moves, 3v3/6v6 bot battles and five difficulty settings. Keep Marshadow and its fan-made Mega with expanded moves. Local saved trainer profile, coins, owned collection, favorite, teams and results. Provide rewards, direct unlock and gacha with visible odds, pity and useful duplicates. No paid currency or purchases. Duplicates award diamonds, used for specific Pokémon in the shop and shiny cosmetic versions. Acquisition rarity must not directly increase battle stats. Player starts with a usable team, including Marshadow. Precise reward values are implementation choices delegated by the user and must be documented/tested. Export/import is included to protect local progress across test versions.
 
 ## Brand Commitments
 
@@ -40,7 +40,7 @@ Working browser combat and Node backend live in the original pb-port main branch
 - Collection expands tactical choices rather than selling stronger attributes.
 - Complete offline play and reliable local saves come before future online services.
 - Preserve the working hosted game while building the Android migration separately.
-- Verify an actual APK build; distinguish browser QA from physical Android verification.
+- Validate shared UI in the browser and verify Android when tools are available; distinguish browser QA from actual device evidence.
 
 ## Accessibility & Inclusion
 

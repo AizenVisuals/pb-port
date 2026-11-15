@@ -14,12 +14,12 @@ export class OfflineBattle {
     this.generation = 0;
     this._visibility = () => {
       if (document.hidden && this.state === 'running') { this.autoPaused = true; this.pause(); }
-      else if (!document.hidden && this.autoPaused) { this.autoPaused = false; this.resume(); }
+      // Returning to the app leaves the pause sheet in control; never resume behind it.
     };
     document.addEventListener('visibilitychange', this._visibility);
   }
 
-  async start({team, difficulty = 3, format = '3v3', arena = 'stadium', seed, botTeam} = {}) {
+  async start({team, difficulty = 3, format = '3v3', arena = 'stadium', seed, botTeam, shinies = [], shinyCatalog = {}, battleId} = {}) {
     this._stopLoop();
     this.audio?.stop?.();
     const generation = ++this.generation;
@@ -28,15 +28,15 @@ export class OfflineBattle {
     this.battle = null;
     this.pendingInputs = [];
     this.autoPaused = false;
-    this.format = format === '6v6' ? '6v6' : '3v3';
+    this.format = /^[1-6]v[1-6]$/.test(format) ? format : '3v3';
     this.difficulty = clamp(Math.round(Number(difficulty) || 3), 1, 5);
-    this.id = globalThis.crypto?.randomUUID?.() || `local-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    this.id = battleId || globalThis.crypto?.randomUUID?.() || `local-${Date.now()}-${Math.random().toString(36).slice(2)}`;
     try {
       this.onUpdate({id: this.id, state: 'loading', format: this.format, difficulty: this.difficulty});
       const engine = this.engine = await getEngine();
-      const count = this.format === '6v6' ? 6 : 3;
+      const count = Number(this.format[0]);
       this.team = normalizeTeam(engine, team, count);
-      const cpu = botTeam ? normalizeTeam(engine, botTeam, count) : buildBotTeam(engine, this.team, count, seed);
+      const cpu = botTeam ? normalizeTeam(engine, botTeam, Number(this.format[2])) : buildBotTeam(engine, this.team, count, seed);
       // A bot does not get a Mega unless the player selected one too.
       if (!this.team.gimmick) cpu.gimmick = null;
       if (this.team.gimmick && !cpu.gimmick) {
@@ -54,7 +54,11 @@ export class OfflineBattle {
         engine.loadArena(this.arena),
       ]);
       if (generation !== this.generation) return null;
-      const assets = await engine.loadRankedAssets([]);
+      let assets = await engine.loadRankedAssets([]);
+      if (shinies.length) {
+        const {applyShinyAssets} = await import('./shiny.js');
+        assets = applyShinyAssets(assets, shinies.filter(k => this.team.mons.includes(k)), engine.INFO, shinyCatalog);
+      }
       if (generation !== this.generation) return null;
       this.seed = Number.isInteger(seed) ? seed >>> 0 : randomSeed();
       this.battle = engine.createBattle(assets, this.seed, teams, this.arena);

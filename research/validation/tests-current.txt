@@ -1,0 +1,57 @@
+npm notice run pb-self-hosted-port@0.1.0 test
+npm notice run node --test test/*.test.mjs
+(node:266742) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ four- and five-member journey teams survive catalog load and reload intact (130.212914ms)
+✔ full chapter can fail, resume and clear with exactly one badge and first-clear rewards (266.157802ms)
+✔ new journey selects one initial exactly once and reloads without bonus team (39.961085ms)
+✔ legacy profile keeps its collection, balance and team when choosing a journey starter (20.802499ms)
+✔ chapter locks, result validation and first-clear rewards survive reloading (42.571733ms)
+✔ invalid journey imports are transactional (20.813254ms)
+✔ wild encounters, ball spending and capture are persistent and transactional (42.996156ms)
+✔ invalid RNG never consumes a ball, and ball purchases charge once (20.900485ms)
+✔ campaign starters have independent species, sprites and four PB moves (53.324979ms)
+✔ bulbasaur completes a real local PB battle and uses its moves (3252.928379ms)
+✔ charmander completes a real local PB battle and uses its moves (2393.969709ms)
+✔ squirtle completes a real local PB battle and uses its moves (2762.335535ms)
+✔ all chapter opponents are registered with usable PB animations and moves (4031.231312ms)
+✔ delivered client includes every static module dependency and stylesheet font (138.70758ms)
+✔ local canvas adapter produces deterministic battle state (4319.057118ms)
+✔ complete 3v3 and 6v6 simulations end with valid winners (9349.330786ms)
+✔ Marshadow registers independent sprites, canonical typing and expanded legal moves (3027.071714ms)
+✔ Spectral Thief transfers only positive boosts, capped at two stages total (1.739315ms)
+✔ fan-made Mega transforms once, retains four selected moves and does not heal (2123.542537ms)
+✔ native image augmented with getContext remains an image when drawn (20.09522ms)
+(node:266753) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ three banners have distinct real pools with every advertised rarity (78.450133ms)
+✔ banner pity is independent and invalid banners never charge (24.016921ms)
+(node:266764) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ starter collection includes playable 3v3 and 6v6 without spending (51.030151ms)
+✔ local profile, teams, moves, Mega and favorites survive reloading (63.249984ms)
+✔ locked species, duplicate team members, invalid moves and unavailable Mega are rejected (52.068404ms)
+✔ daily reward can be claimed once per UTC day and cannot be reclaimed by rolling clock back (22.144908ms)
+✔ battle rewards are persistent and idempotent, exclude surrender/short runs and obey pacing (47.513806ms)
+✔ gacha applies normal probability boundaries, charges coins and awards diamonds for duplicates (104.766842ms)
+✔ tenth consecutive common pull guarantees rare or better and persists pity across loads (24.704713ms)
+✔ bad RNG, insufficient balance and invalid counts are transactional (10.829234ms)
+✔ direct unlock is an alternative with explicit price and no duplicate charges (27.137198ms)
+✔ corrupt saves are backed up and recovery is visible; storage failures keep a usable session (43.535955ms)
+✔ export/import validates data and preserves old state on bad imports (45.773095ms)
+✔ legacy saves gain diamond and shiny fields without losing progress (31.604564ms)
+✔ shiny purchases require ownership, supported art and diamonds; persist without modifying stats (93.791851ms)
+✔ invalid diamond and shiny imports preserve previous save (23.282056ms)
+✔ duplicate diamond amounts follow rarity and never refund coins (132.562778ms)
+✔ HTTP serves local client and disables production sign-in (1802.607966ms)
+✔ profiles issue independent tokens and invalid teams are rejected (98.008488ms)
+✔ practice loads the actual engine, ticks, accepts input, and surrenders (3010.01869ms)
+✔ two clients share seed, commands and ranked result; cancellation removes queue (1858.830649ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15364.308407

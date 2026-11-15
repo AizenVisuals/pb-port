@@ -1,3 +1,4 @@
+import './build-account-sdk.mjs';
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { build } from 'esbuild';
 const root = new URL('../', import.meta.url);

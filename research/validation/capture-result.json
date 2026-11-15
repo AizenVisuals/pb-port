@@ -1,0 +1,13 @@
+{
+  "pass": true,
+  "checks": [
+    "capture from encounter UI",
+    "exact ball consumption",
+    "capture survives reload",
+    "resume goes to trainer without another capture",
+    "flee without ball spending",
+    "capture during wild battle transitions to trainer"
+  ],
+  "errors": [],
+  "scope": "Isolated Chromium profile; deterministic crypto RNG in QA only; battle loop held during capture assertion. No existing player save modified."
+}
