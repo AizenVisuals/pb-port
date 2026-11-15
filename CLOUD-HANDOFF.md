@@ -125,3 +125,6 @@ Usuário pediu subir código/APK para instalar fora de casa. Repositório `Aizen
 Certificado conferido no APK real com apksigner: SHA-1 `5A:55:45:EF:2B:5B:DA:F2:82:CF:CE:C1:75:6D:B3:DA:D1:B0:D9:72`. Esse certificado foi cadastrado no Firebase; `google-services.json` atualizado contém seu cliente OAuth. A leitura inicial de `~/.android/debug.keystore` apontava outro certificado (7B...), por isso o APK é a evidência usada para a configuração final. Não assumir que o keystore padrão nominal é o usado pelo build.
 
 Versão Android da entrega: versionCode 2, versionName 0.2.0-test.1. Instalar como atualização, preservando dados. Google real no celular ainda precisa do teste do proprietário; build/popup não provam esse fluxo completo.
+
+Entrega publicada e lida de volta pela API GitHub: https://github.com/AizenVisuals/pb-port/releases/tag/pulse-arena-v0.2.0-test.1
+Código: `a28c5809d860caf7eb7c2fd89f8c4eb0d4bc8d76`; assets APK e SHA-256 com estado uploaded. APK SHA-256 `61c3ed20f099f8697b8ddcdfe2c41ffbada2793c6cafeb6cd2d725b2fc0462c6`, tamanho 95609131 bytes. Release de pré-teste em repositório privado; instalar autenticado no GitHub. Não houve teste no telefone do proprietário.
