@@ -48,6 +48,6 @@ test('stone table covers the roster lines and stone/badge assets are present',as
  const lines={vulpix:['fire-stone','ninetales'],eevee:['water-stone','vaporeon'],growlithe:['fire-stone','arcanine'],clefairy:['moon-stone','clefable'],jigglypuff:['moon-stone','wigglytuff'],gloom:['leaf-stone','vileplume'],exeggcute:['leaf-stone','exeggutor'],staryu:['water-stone','starmie'],shellder:['water-stone','cloyster'],poliwhirl:['water-stone','poliwrath'],pikachu:['thunder-stone','raichu']};
  for(const [from,[stone,to]]of Object.entries(lines))assert.equal(STONE_EVOLUTIONS[from][stone],to,from);
  assert.equal(STONE_EVOLUTIONS.eevee['thunder-stone'],'jolteon');assert.equal(STONE_EVOLUTIONS.eevee['fire-stone'],'flareon');
- for(const [key,entry]of Object.entries(STONES)){assert(Number.isInteger(entry.price)&&entry.price>0,key);await access(new URL('../public/pulse/assets/items/'+key+'.png',import.meta.url));}
+ for(const [key,entry]of Object.entries(STONES)){assert(Number.isInteger(entry.price)&&entry.price>0,key);const asset=entry.asset||`/pulse/assets/items/${key}.png`;assert.match(asset,/^\/pulse\/assets\/items\/[\w-]+\.(png|svg)$/,key);await access(new URL('../public'+asset,import.meta.url));}
  await access(new URL('../public/pulse/assets/badges/kanto-1.png',import.meta.url));
 });
