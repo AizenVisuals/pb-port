@@ -1,6 +1,6 @@
 import{test}from'node:test';import assert from'node:assert/strict';
 import{engine,createSimulation}from'../server/engine.mjs';
-import{configureGrowthBattle,evolutionAssets}from'../public/pulse/growth-battle.js';
+import{configureGrowthBattle,evolutionAssets,pacePulseEvolution,PULSE_EVOLUTION_FRAMES}from'../public/pulse/growth-battle.js';
 import{EVOLUTIONS}from'../public/pulse/growth.js';
 async function arena(key='bulbasaur',level=16,held={},callbacks={}){
  await engine.loadRankedAssets(evolutionAssets([key,'rattata']));
@@ -10,6 +10,28 @@ async function arena(key='bulbasaur',level=16,held={},callbacks={}){
  return {b,growth,actor:b.teams[0].mons[0]};
 }
 const step=({b,growth})=>{growth.before();engine.stepRanked(b);growth.after();};
+test('PULSE evolution pacing yields exactly five seconds at 60 Hz',()=>{
+ function* nativeFrames(){for(let frame=0;frame<254;frame++)yield frame;}
+ const paced=[...pacePulseEvolution(nativeFrames())];
+ assert.equal(PULSE_EVOLUTION_FRAMES,300);
+ assert.equal(paced.length,300);
+ assert.equal(paced[0],0);
+ assert.equal(paced.at(-1),253);
+ assert.equal(new Set(paced).size,254);
+});
+test('PULSE campaign evolution takes five seconds in the live battle engine',async()=>{
+ const game=await arena('bulbasaur',16);const {b,growth}=game;
+ let started=-1,finished=-1;
+ for(let frame=0;frame<900&&!b.done;frame++){
+  if(b.phase==='fight'&&!b.pulseEvolving)growth.requestEvolution();
+  step(game);
+  if(b.pulseEvolving&&started<0)started=frame;
+  if(started>=0&&!b.pulseEvolving){finished=frame;break;}
+ }
+ assert.ok(started>=0,'evolution cinematic must begin');
+ assert.ok(finished>=0,'evolution cinematic must finish');
+ assert.ok(Math.abs(finished-started-PULSE_EVOLUTION_FRAMES)<=2,`cinematic ran for ${finished-started} frames instead of 300`);
+});
 test('six starters run the native PB evolution cinematic without Mega and keep HP proportion',async()=>{
  for(const key of ['bulbasaur','charmander','squirtle','chikorita','cyndaquil','totodile']){
   let evolved;const game=await arena(key,EVOLUTIONS[key][1],{}, {onEvolve:(from,to)=>evolved={from,to}});const {b,actor,growth}=game;
