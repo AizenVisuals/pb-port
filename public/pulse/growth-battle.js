@@ -1,5 +1,22 @@
 import {planCPU} from './tactical-ai.js';
 import {EVOLUTIONS,ITEMS,selectedMoves,xpAt,effectiveNature,natureMultiplier} from './growth.js';
+// PULSE runs at 60 fixed simulation steps/second. The native PB cinematic
+// yields 254 frames (50 entrance + 154 transformation + 50 exit).
+// Pace ONLY PULSE's controller to 300 frames = 5 seconds without altering PB.
+export const PULSE_EVOLUTION_FRAMES=300;
+const PB_EVOLUTION_FRAMES=254;
+export function* pacePulseEvolution(nativeController){
+ let step=0;
+ for(;;){
+  const state=nativeController.next();
+  if(state.done)return state.value;
+  const start=Math.round(step*PULSE_EVOLUTION_FRAMES/PB_EVOLUTION_FRAMES);
+  const end=Math.round((step+1)*PULSE_EVOLUTION_FRAMES/PB_EVOLUTION_FRAMES);
+  for(let frame=start;frame<end;frame++)yield state.value;
+  step++;
+ }
+}
+
 /** Apply earned levels without replaying Mega transitions, healing, or resetting commands. */
 export function applyEarnedLevel(actor,level){
  if(!actor||!Number.isInteger(level)||level<=actor.level||level>100)return false;
@@ -114,6 +131,8 @@ export function configureGrowthBattle(b,engine,{levels={},traits={},opponentLeve
     if(actor.action||b.teams[0].ctl)return 'retry';
     const oldKey=actor.rkKey,cooldowns={...actor.lastUsed};
     if(!engine.pulseEvolve(b,actor,plan.target,plan.moves))return 'retry';
+    // Stretch the entire native cinematic, not just a static pause at its end.
+    const team=b.teams[actor.side];team.ctl=pacePulseEvolution(team.ctl);
     // Reuse the engine cinematic and HP ratio, with learned moves and no cooldown reset.
     const target=actor.spec.evolveTo;b.speciesTable[target]={...b.speciesTable[target],level:actor.level,moves:plan.moves.map(engine.moveObj).filter(Boolean)};
     pending={actor,plan,oldKey,cooldowns,startedTick:b.tick};onEvent({kind:'evolution',from:oldKey,target:plan.target});
