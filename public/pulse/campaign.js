@@ -7,6 +7,15 @@ export const CHAPTER_TWO=Object.freeze([
  ['Margens do rio','youngster',['magikarp'],1],['Pescaria na rota','lass',['goldeen'],1],['Um brilho na água','youngster',['psyduck'],1],['Entrada do Monte Lua','bugcatcher',['zubat','paras'],2],['Eco na caverna','rocketgrunt',['zubat','geodude'],2],['Pedras da caverna','lass',['clefairy'],2],['A sombra dos Rocket','rocketgruntf',['koffing','ekans'],3],['Saída para Cerulean','blue',['wartortle','pikachu'],3],['Às portas do ginásio','youngster',['staryu'],3],['A segunda insígnia','misty',['staryu','starmie'],3],
 ].map(([title,trainer,opponents,difficulty],i)=>Object.freeze({id:`2-${i+1}`,title,trainer,opponents:Object.freeze(opponents),difficulty,firstClearCoins:80+(i+10)*20,badge:i===9?'cascade':null,wild:i===2?'poliwag':i===5?'tentacool':null})));
 export const ALL_STAGES=Object.freeze([...CHAPTER_ONE,...CHAPTER_TWO]);
+// Curva de nível do oponente nas fases da jornada (treino contra o bot):
+// começa em 5 e sobe 1,5 por fase (arredondado para baixo), para acompanhar
+// o ritmo de XP do jogador. 1-10 (Brock) = 18, 2-10 (Misty) = 33.
+// Antes: 5 + índice*2 (Brock 23, Misty 43) — íngreme demais para o XP atual.
+export function stageOpponentLevel(stage){
+ const found=typeof stage==='string'?ALL_STAGES.find(s=>s.id===stage):stage;
+ const index=ALL_STAGES.indexOf(found);
+ return index<0?5:Math.floor(5+index*1.5);
+}
 export const newJourney=()=>({starter:null,cleared:[],active:null,inventory:{pokeball:5},badges:[],resolvedBattles:[]});
 export function validateJourney(j){
  if(j&&j.resolvedBattles===undefined)j.resolvedBattles=[];

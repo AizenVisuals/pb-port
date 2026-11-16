@@ -118,3 +118,17 @@ test('chapter two wild encounters offer poliwag and tentacool',async()=>{
  const q=make(storage);assert.equal(q.getSave().journey.active.encounter.state,'captured');
  assert.equal(q.completeStage({id:'wild-26',won:true,frames:600}).ok,true);
 });
+
+test('curva de nível do oponente achatada: 1-10 (Brock) Nv. 18, 2-10 (Misty) Nv. 33', async () => {
+  const { ALL_STAGES, stageOpponentLevel } = await import('../public/pulse/campaign.js');
+  assert.equal(ALL_STAGES.length, 20);
+  assert.equal(stageOpponentLevel('1-1'), 5);
+  assert.equal(stageOpponentLevel(ALL_STAGES[9]), 18); // Brock, 1-10
+  assert.equal(stageOpponentLevel('2-1'), 20);
+  assert.equal(stageOpponentLevel(ALL_STAGES[19]), 33); // Misty, 2-10
+  assert.equal(stageOpponentLevel('não-existe'), 5);
+  // Curva monotônica e teto 33 — nunca mais 43 na Misty.
+  let prev = 0;
+  for (const s of ALL_STAGES) { const lv = stageOpponentLevel(s); assert.ok(lv >= prev, s.id); prev = lv; }
+  assert.ok(prev <= 33);
+});

@@ -3,6 +3,81 @@ import {LEARNSETS} from './learnsets.js';
 import {configureGrowthBattle,evolutionAssets} from './growth-battle.js';
 import {applyEarnedLevel} from './growth-battle.js';
 import {resolveTrainerKey} from './progression.js';
+import {buildDamageReport} from './damage-graph.js';
+/** Formatos de treino expostos na Home. `teamSize` = Pokémon por lado;
+ * `active` = ativos simultâneos por lado (regras singles = 1). Doubles
+ * (2 ativos) EXISTE no engine — createBattle com `slots` ([0,1]) cria a
+ * batalha dupla — mas o runtime PULSE (snapshot, comandos e HUD) é
+ * singles-only: um único lutador ativo por lado. Por isso 2v2 fica visível
+ * como "em breve" até existir HUD de dois ativos; nunca como singles
+ * disfarçado de Doubles. */
+export const TRAINING_FORMATS = [
+  {id: '1v1', label: 'Singles', teamSize: 1, active: 1},
+  {id: '2v2', label: 'Doubles', teamSize: 2, active: 2, comingSoon: true},
+  {id: '3v3', label: '3v3', teamSize: 3, active: 1},
+  {id: '6v6', label: '6v6', teamSize: 6, active: 1},
+];
+export const TRAINING_FORMAT_DEFAULT = '3v3';
+export function resolveTrainingFormat(value, unlockedCount = 6) {
+  const found = TRAINING_FORMATS.find(f => f.id === value);
+  const format = found || TRAINING_FORMATS.find(f => f.id === TRAINING_FORMAT_DEFAULT);
+  const unlocked = Math.max(0, Math.floor(Number(unlockedCount) || 0));
+  return {...format, matched: !!found, available: !format.comingSoon && unlocked >= format.teamSize, unlocked};
+}
+export function mountTrainingFormatSelector(parent, beforeEl, {onSelect, onComingSoon} = {}) {
+  const doc = parent.ownerDocument;
+  const root = doc.createElement('div');
+  root.className = 'training-format';
+  root.setAttribute('role', 'group');
+  root.setAttribute('aria-label', 'Formato do treino');
+  const label = doc.createElement('p');
+  label.className = 'training-format-label';
+  label.textContent = 'Formato do treino';
+  root.appendChild(label);
+  const row = doc.createElement('div');
+  row.className = 'training-format-row';
+  root.appendChild(row);
+  const buttons = new Map();
+  for (const format of TRAINING_FORMATS) {
+    const button = doc.createElement('button');
+    button.type = 'button';
+    button.className = 'training-format-option';
+    button.dataset.format = format.id;
+    button.setAttribute('aria-pressed', 'false');
+    const name = doc.createElement('b');
+    name.textContent = format.label;
+    const sub = doc.createElement('small');
+    sub.textContent = format.comingSoon ? 'em breve' : `${format.teamSize} × ${format.teamSize}`;
+    button.appendChild(name);
+    button.appendChild(sub);
+    button.addEventListener('click', () => {
+      if (button.disabled) return;
+      if (format.comingSoon) { onComingSoon?.(format); return; }
+      onSelect?.(format.id);
+    });
+    row.appendChild(button);
+    buttons.set(format.id, button);
+  }
+  parent.insertBefore(root, beforeEl || null);
+  return {
+    root,
+    sync({current, unlocked} = {}) {
+      const resolved = resolveTrainingFormat(current, unlocked);
+      for (const format of TRAINING_FORMATS) {
+        const button = buttons.get(format.id);
+        const available = !format.comingSoon && (unlocked ?? 6) >= format.teamSize;
+        const active = resolved.matched && resolved.id === format.id && available;
+        // Doubles fica clicável (não disabled) para explicar que chega em
+        // breve; só formatos travados por coleção são desabilitados.
+        button.disabled = format.comingSoon ? false : !available;
+        button.classList.toggle('is-active', active);
+        button.classList.toggle('is-coming-soon', !!format.comingSoon);
+        button.setAttribute('aria-pressed', String(active));
+      }
+      return resolved;
+    },
+  };
+}
 /** PULSE ARENA local battle runtime. One simulation, no transport or backend. */
 const STEP_MS = 1000 / 60;
 const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
@@ -36,6 +111,9 @@ export class OfflineBattle {
     this.battle = null;
     this.pendingInputs = [];
     this.autoPaused = false;
+    // Formato = tamanho das equipes (regras singles, 1 ativo por lado).
+    // '2v2' aqui seria só um time de 2 (banco), não Doubles de verdade:
+    // Doubles (2 ativos) precisa de `slots` no engine + HUD própria.
     this.format = /^[1-6]v[1-6]$/.test(format) ? format : '3v3';
     this.difficulty = clamp(Math.round(Number(difficulty) || 3), 1, 5);
     this.id = battleId || globalThis.crypto?.randomUUID?.() || `local-${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -175,7 +253,7 @@ export class OfflineBattle {
 
   snapshot() {
     const b = this.battle, e = this.engine;
-    if (!b) return {id: this.id, state: this.state, format: this.format, difficulty: this.difficulty};
+    if (!b) return {id: this.id, state: this.state, format: this.format, difficulty: this.difficulty, doubles: false};
     const own = this.playerSide || 0, enemy = 1-own;
     const side = b.rk.sides[own];
     const active = b.fighters[own];
@@ -227,7 +305,7 @@ export class OfflineBattle {
       moves: e.moveStatus(b, own), player: summary(active, playerIndex, active), opponent: summary(opponent, opponentIndex, opponent),
       bench: b.teams[own].mons.map((m,i) => summary(m,i,active)),
       opponentBench: b.teams[enemy].mons.map((m,i) => summary(m,i,opponent)),
-      format: this.format, difficulty: this.difficulty, arena: this.arena,
+      format: this.format, difficulty: this.difficulty, arena: this.arena, doubles: !!b.rk?.doubles,
       cinematic: !!b.cinematic, result: this.result || null,
     };
     return snapshot;
@@ -293,9 +371,13 @@ export class OfflineBattle {
     this._stopLoop();
     this._resetSteering();
     this.state = 'ended';
+    const damageReport=this.growth?.damageReport?.()||{entries:[],damagingMoves:[]};
+    const damagingMoves=new Set(damageReport.damagingMoves);
+    for(const team of this.battle?.teams||[])for(const actor of team.mons||[])for(const mv of actor.moves||[])if(mv?.power>0&&mv?.name)damagingMoves.add(mv.name);
+    const damage=buildDamageReport({entries:damageReport.entries,damagingMoves:[...damagingMoves],moveUses:this.battle?.rkMoveUse||[],kos:this.battle?.rkKOs||[],playerKeys:[...(this.team?.mons||[])],opponentKeys:(this.battle?.teams?.[1-(this.playerSide||0)]?.mons||[]).map(actor=>actor.rkKey),playerSide:this.playerSide||0,names:key=>this.engine.INFO[key]?.name||key,types:key=>[...(this.engine.INFO[key]?.types||[])]});
     this.result = {id: this.id, won: winner === (this.playerSide || 0), winner, format: this.format, difficulty: this.difficulty,
       frames: this.battle?.frame || 0, duration: (this.battle?.frame || 0) / 60,
-      team: structuredClone(this.team), reason, koXp:this.growth?.koXpTotal?.()||0};
+      team: structuredClone(this.team), reason, knockouts:this.battle?.rkKOs?.filter(event=>event.side===(this.playerSide||0)).length||0,koXp:this.growth?.koXpTotal?.()||0,hitXp:this.growth?.hitXpTotal?.()||0,damage};
     this.audio?.stop?.();
     this.render?.();
     this._emit();

@@ -39,50 +39,62 @@ test('Lum cures confusion and resets persistent ailment counters',async()=>{
  for(const field of ['confusedT','statusT','toxicN','sleepT','rkStDmg'])assert.equal(game.actor[field],0,field);assert.equal(game.actor.toxic,false);
 });
 
-test('knockout awards XP once and starts the auto-evolution prompt',async()=>{
- const knockouts=[];const game=await arena('bulbasaur',16,{},{onKnockout:e=>{knockouts.push(e);return {ok:true,total:91,changes:[{key:'bulbasaur',from:15,to:16}]};}});
+test('knockout awards XP once and evolves immediately, without any prompt',async()=>{
+ let evolved;const knockouts=[];const game=await arena('bulbasaur',16,{},{onKnockout:e=>{knockouts.push(e);return {ok:true,total:22,changes:[{key:'bulbasaur',from:15,to:16}]};},onEvolve:(from,to)=>evolved={from,to}});
  for(let i=0;i<300&&game.b.phase!=='fight';i++)step(game);
  const foe=game.b.teams[1].mons[0];foe.fainted=true;foe.hp=0;game.growth.after();
  assert.equal(knockouts.length,1);assert.equal(knockouts[0].foeKey,'rattata');assert.equal(knockouts[0].foeLevel,5);assert.deepEqual(knockouts[0].participants,['bulbasaur']);assert.equal(knockouts[0].killer,'bulbasaur');
  game.growth.after();assert.equal(knockouts.length,1);
- const prompt=game.growth.evolutionPrompt();assert(prompt);assert.equal(prompt.from,'bulbasaur');assert.equal(prompt.target,'ivysaur');assert.equal(prompt.secondsLeft,5);
+ assert.equal(game.growth.evolutionPrompt(),null);
+ for(let i=0;i<1200&&!evolved&&!game.b.done;i++)step(game);
+ assert.deepEqual(evolved,{from:'bulbasaur',to:'ivysaur'});
 });
-test('knockout mid-battle starts a five-second auto-evolution that fires unless cancelled',async()=>{
+test('knockout mid-battle evolves immediately, with no countdown and nothing to cancel',async()=>{
  await engine.loadRankedAssets(evolutionAssets(['bulbasaur','rattata']));
  const b=await createSimulation(31,[{name:'QA',trainer:'red',mons:['bulbasaur'],bot:true},{name:'CPU',trainer:'blue',mons:['rattata','rattata'],bot:true}],'stadium');
  const selected={bulbasaur:['gibleAT:Tackle']};let evolved;const calls=[];
- const growth=configureGrowthBattle(b,engine,{levels:{bulbasaur:16},opponentLevel:5,selected,preview:k=>EVOLUTIONS[k]&&16>=EVOLUTIONS[k][1]?{target:EVOLUTIONS[k][0],moves:selected.bulbasaur}:null,onKnockout:e=>{calls.push(e);return {ok:true,total:91,changes:[{key:'bulbasaur',from:15,to:16}]};},onEvolve:(from,to)=>evolved={from,to}});
+ const growth=configureGrowthBattle(b,engine,{levels:{bulbasaur:16},opponentLevel:5,selected,preview:k=>EVOLUTIONS[k]&&16>=EVOLUTIONS[k][1]?{target:EVOLUTIONS[k][0],moves:selected.bulbasaur}:null,onKnockout:e=>{calls.push(e);return {ok:true,total:22,changes:[{key:'bulbasaur',from:15,to:16}]};},onEvolve:(from,to)=>evolved={from,to}});
  const game={b,growth};
  for(let i=0;i<300&&b.phase!=='fight';i++)step(game);
  b.teams[1].mons[0].fainted=true;b.teams[1].mons[0].hp=0;growth.after();
  assert.equal(calls.length,1);assert.equal(calls[0].foeKey,'rattata');
- const prompt=growth.evolutionPrompt();assert(prompt);assert.equal(prompt.from,'bulbasaur');assert.equal(prompt.target,'ivysaur');assert.equal(prompt.secondsLeft,5);
+ assert.equal(growth.evolutionPrompt(),null);assert.equal(growth.cancelAutoEvolution(),false);
  for(let i=0;i<1200&&!evolved&&!b.done;i++)step(game);
  assert.deepEqual(evolved,{from:'bulbasaur',to:'ivysaur'});
 });
-test('deferred auto-evolution fires after five seconds',async()=>{
- let evolved;const game=await arena('bulbasaur',16,{},{pendingAuto:{mon:'bulbasaur',level:16},onEvolve:(from,to)=>evolved={from,to}});
+test('a fainted Pokémon that crossed its evolution level evolves in the save when the battle ends',async()=>{
+ let evolved;const game=await arena('bulbasaur',16,{},{onKnockout:()=>({ok:true,total:22,changes:[{key:'bulbasaur',from:15,to:16}]}),onEvolve:(from,to)=>evolved={from,to}});
  for(let i=0;i<300&&game.b.phase!=='fight';i++)step(game);
- for(let i=0;i<10&&!game.growth.evolutionPrompt();i++)step(game);
- assert(game.growth.evolutionPrompt());
- for(let i=0;i<1200&&!evolved&&!game.b.done;i++)step(game);
+ game.actor.fainted=true;game.actor.hp=0;
+ const foe=game.b.teams[1].mons[0];foe.fainted=true;foe.hp=0;game.growth.after();
+ assert.equal(game.growth.evolutionPrompt(),null);assert.equal(evolved,undefined);
+ assert.deepEqual(game.growth.queuedEvolutions(),[{key:'bulbasaur',level:16}]);
+ game.b.done=true;game.growth.after();
+ assert.deepEqual(evolved,{from:'bulbasaur',to:'ivysaur'});
+ assert.deepEqual(game.growth.queuedEvolutions(),[]);
+ game.growth.after();assert.deepEqual(evolved,{from:'bulbasaur',to:'ivysaur'});
+});
+test('damage XP that crosses the evolution level evolves immediately too',async()=>{
+ await engine.loadRankedAssets(evolutionAssets(['bulbasaur','rattata']));
+ const b=await createSimulation(109,[{name:'You',trainer:'red',mons:['bulbasaur']},{name:'CPU',trainer:'blue',mons:['rattata'],bot:true}],'stadium');
+ const player=b.teams[0].mons[0],foe=b.teams[1].mons[0],moves=engine.INFO.bulbasaur.defaults.slice(0,4);let evolved;
+ b.typeEff=()=>2;
+ b.hit=(attacker,target,move)=>{target.hp=Math.max(0,target.hp-1);return 'hit';};
+ const growth=configureGrowthBattle(b,engine,{levels:{bulbasaur:15},selected:{bulbasaur:moves},onDamageXP:()=>({ok:true,total:4,changes:[{key:'bulbasaur',from:15,to:16}]}),preview:k=>k==='bulbasaur'?{target:'ivysaur',moves}:null,onEvolve:(from,to)=>evolved={from,to}});
+ for(const side of[0,1]){engine.applyInput(b,{kind:'autoatk',on:false,side});engine.applyInput(b,{kind:'manual',on:true,side});}
+ while(b.phase!=='fight'&&b.frame<2000)engine.stepRanked(b);
+ b.hit(player,foe,{name:'Tackle',type:'normal'});
+ growth.after();
+ assert.equal(growth.evolutionPrompt(),null);
+ for(let i=0;i<1600&&!evolved&&!b.done;i++){growth.before();engine.stepRanked(b);growth.after();}
  assert.deepEqual(evolved,{from:'bulbasaur',to:'ivysaur'});
 });
-test('cancelling the auto-evolution suppresses it and keeps the save consistent',async()=>{
- let evolved;const suppressed=[];let resolved=0;
- const game=await arena('bulbasaur',16,{},{pendingAuto:{mon:'bulbasaur',level:16},onSuppress:(mon,level)=>suppressed.push([mon,level]),onPendingResolved:()=>resolved++,onEvolve:(from,to)=>evolved={from,to}});
+test('there is no prompt to cancel: evolutionPrompt stays null and cancel returns false',async()=>{
+ let evolved;const game=await arena('bulbasaur',16,{},{onKnockout:()=>({ok:true,total:22,changes:[{key:'bulbasaur',from:15,to:16}]}),onEvolve:(from,to)=>evolved={from,to}});
  for(let i=0;i<300&&game.b.phase!=='fight';i++)step(game);
- for(let i=0;i<10&&!game.growth.evolutionPrompt();i++)step(game);
- const prompt=game.growth.evolutionPrompt();assert(prompt);assert.equal(prompt.secondsLeft,5);
- assert.equal(game.growth.cancelAutoEvolution(),true);
- assert.deepEqual(suppressed,[['bulbasaur',16]]);assert.equal(resolved,1);assert.equal(game.growth.evolutionPrompt(),null);
+ const foe=game.b.teams[1].mons[0];foe.fainted=true;foe.hp=0;game.growth.after();
+ assert.equal(game.growth.evolutionPrompt(),null);
  assert.equal(game.growth.cancelAutoEvolution(),false);
- for(let i=0;i<600&&!game.b.done;i++)step(game);
- assert.equal(evolved,undefined);
-});
-test('suppressed auto-evolution does not reappear',async()=>{
- let resolved=0;const game=await arena('bulbasaur',16,{},{pendingAuto:{mon:'bulbasaur',level:16},suppressedAuto:{bulbasaur:16},onPendingResolved:()=>resolved++});
- for(let i=0;i<300&&game.b.phase!=='fight';i++)step(game);
- for(let i=0;i<10;i++)step(game);
- assert.equal(game.growth.evolutionPrompt(),null);assert.equal(resolved,1);
+ for(let i=0;i<1200&&!evolved&&!game.b.done;i++)step(game);
+ assert.deepEqual(evolved,{from:'bulbasaur',to:'ivysaur'});
 });

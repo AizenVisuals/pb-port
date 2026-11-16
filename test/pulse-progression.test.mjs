@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile,access} from 'node:fs/promises';
 import {createProgression,ECONOMY,SAVE_KEY,STARTERS,TRAINERS,resolveTrainerKey,trainerFace,trainerLabel} from '../public/pulse/progression.js';
 import {isSummonable} from '../public/pulse/banners.js';
+import {MISSIONS} from '../public/pulse/missions.js';
 const roster=JSON.parse(await readFile(new URL('../public/roster.json',import.meta.url),'utf8'));
 const storage=()=>{const values=new Map;return {values,getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value)};};
 function fixture(options={}){const p=createProgression({storage:storage(),now:()=>Date.UTC(2026,10,15),...options});assert.equal(p.setCatalog(roster).ok,true);if(!p.getSave().starterTicketsClaimed)assert.equal(p.claimStarterTickets().ok,true);return p;}
@@ -11,6 +12,29 @@ test('starter collection includes playable 3v3 and 6v6 without spending',()=>{
  const p=fixture(),s=p.getSave();assert.equal(s.coins,600);assert.ok(STARTERS.every(k=>s.unlocked.includes(k)));assert.equal(s.team.mons.length,3);
  assert.equal(p.setTeam([...STARTERS]).ok,true);assert.equal(p.getSave().team.mons.length,6);
  assert.ok(Object.isFrozen(s));assert.throws(()=>s.unlocked.push('x'));assert.equal(p.getSave().unlocked.length,6);
+});
+test('50 campaign missions pay the matching gacha tickets once and survive reload',()=>{
+ assert.equal(MISSIONS.length,50);assert.equal(new Set(MISSIONS.map(m=>m.id)).size,50);
+ const disk=storage(),p=journeyFixture(disk);assert.equal(p.chooseStarter('charmander').ok,true);assert.equal(p.claimStarterTickets().ok,true);
+ const pokemonBefore=p.getSave().tickets;assert.equal(p.summon(1).ok,true);assert.equal(p.getMissions().find(m=>m.id==='pokemon-gacha-1').complete,true);
+ assert.equal(p.claimMission('pokemon-gacha-1').ok,true);assert.equal(p.getSave().tickets,pokemonBefore);
+ assert.equal(p.claimMission('pokemon-gacha-1').ok,false);
+ const tmBefore=p.getSave().growth.inventory.moveTicket,draw=p.summonMove('charmander');assert.equal(draw.ok,true);
+ assert.equal(p.getMissions().find(m=>m.id==='tm-draw-1').complete,true);assert.equal(p.claimMission('tm-draw-1').ok,true);assert.equal(p.getSave().growth.inventory.moveTicket,tmBefore);
+ assert.equal(p.teachTM('charmander',draw.move.id).ok,true);assert.equal(p.getMissions().find(m=>m.id==='tm-use-1').complete,true);
+ const q=journeyFixture(disk);assert.equal(q.getMissions().find(m=>m.id==='pokemon-gacha-1').claimed,true);assert.equal(q.getMissions().find(m=>m.id==='tm-draw-1').claimed,true);assert.equal(q.getSave().growth.inventory.moveTicket,tmBefore);
+});
+test('battle win and validated knockout counts advance missions only once per result',()=>{
+ const p=journeyFixture();assert.equal(p.chooseStarter('charmander').ok,true);
+ const result={...battle({id:'mission-battle',knockouts:10})};assert.equal(p.recordBattle(result).ok,true);
+ assert.equal(p.getMissions().find(m=>m.id==='battle-5').current,1);assert.equal(p.getMissions().find(m=>m.id==='win-1').current,1);assert.equal(p.getMissions().find(m=>m.id==='knockout-10').complete,true);
+ assert.equal(p.recordBattle(result).ok,false);assert.equal(p.getMissions().find(m=>m.id==='knockout-10').current,10);
+});
+test('wild battle activity advances missions without duplicate battle rewards',()=>{
+ const p=journeyFixture();assert.equal(p.chooseStarter('bulbasaur').ok,true);const before=p.getSave();
+ assert.equal(p.recordMissionBattle({id:'wild-mission',won:true,knockouts:3}).ok,true);
+ assert.equal(p.getMissions().find(m=>m.id==='battle-5').current,1);assert.equal(p.getMissions().find(m=>m.id==='win-1').complete,true);assert.equal(p.getMissions().find(m=>m.id==='knockout-10').current,3);
+ assert.equal(p.getSave().records.battles,before.records.battles);assert.equal(p.getSave().coins,before.coins);
 });
 test('local profile, teams, moves, Mega and favorites survive reloading',()=>{
  const disk=storage();const p=fixture({storage:disk});assert.equal(p.setTrainerName('Ágata').ok,true);assert.equal(p.setFavorite('lucario').ok,true);
@@ -78,8 +102,16 @@ test('duplicate diamond amounts follow rarity and never refund coins',()=>{
  for(const [roll,rarity]of [[0,'C'],[.7,'R'],[.91,'SR'],[.988,'UR'],[.993,'SSS']]){const values=[roll,0],disk=storage(),p=fixture({storage:disk,rng:()=>values.shift()});const rich=JSON.parse(p.exportSave());rich.unlocked=roster.map(m=>m.key);p.importSave(JSON.stringify(rich));const result=p.summon();assert.equal(result.pulls[0].duplicate,true);assert.equal(result.diamonds,ECONOMY.duplicateDiamonds[rarity]);assert.equal(p.getSave().coins,600);assert.equal(p.getSave().tickets,9);const q=fixture({storage:disk});assert.equal(q.getSave().diamonds,result.diamonds);}
 });
 
-function journeyFixture(disk){const p=createProgression({storage:disk||storage(),profileMode:'journey',now:()=>Date.UTC(2026,10,15)});assert.equal(p.setCatalog(roster).ok,true);return p;}
-test('trade evolutions unlock at level 36 and manual evolution clears suppression',()=>{
+function journeyFixture(disk,rng=()=>0){const p=createProgression({storage:disk||storage(),profileMode:'journey',rng,now:()=>Date.UTC(2026,10,15)});assert.equal(p.setCatalog(roster).ok,true);return p;}
+test('capture, daily claim and collection update the matching mission tracks',()=>{
+ const p=journeyFixture();assert.equal(p.chooseStarter('bulbasaur').ok,true);
+ assert.equal(p.getMissions().find(m=>m.id==='collection-6').current,1);
+ for(const [stage,id]of [['1-1','mission-stage-1'],['1-2','mission-stage-2']]){assert.equal(p.beginStage(stage,id).ok,true);assert.equal(p.completeStage({id,won:true,frames:600}).ok,true);}
+ assert.equal(p.beginStage('1-3','mission-stage-3').ok,true);const capture=p.captureWild({id:'mission-stage-3',hpRatio:.1});assert.equal(capture.captured,true);
+ assert.equal(p.getMissions().find(m=>m.id==='capture-1').complete,true);assert.equal(p.getMissions().find(m=>m.id==='collection-6').current,2);
+ assert.equal(p.claimDaily().ok,true);assert.equal(p.getMissions().find(m=>m.id==='daily-3').current,1);
+});
+test('trade evolutions unlock at level 36 and manual evolution works',()=>{
  const p=journeyFixture();assert.equal(p.chooseStarter('charmander').ok,true);
  const rich=JSON.parse(p.exportSave());
  for(const key of ['haunter','kadabra','machoke','graveler'])rich.unlocked.push(key);
@@ -92,10 +124,8 @@ test('trade evolutions unlock at level 36 and manual evolution clears suppressio
  assert.equal(p.previewEvolution('kadabra')?.target,'alakazam');
  assert.equal(p.previewEvolution('machoke')?.target,'machamp');
  assert.equal(p.previewEvolution('graveler')?.target,'golem');
- assert.equal(p.suppressAutoEvolution('haunter',36).ok,true);
  assert.equal(p.evolvePokemon('haunter','gengar').ok,true);
  assert.ok(p.getSave().unlocked.includes('gengar'));assert.ok(!p.getSave().unlocked.includes('haunter'));
- assert.equal(p.getSave().growth.suppressedAuto.haunter,undefined);
 });
 test('knockout XP splits among participants and the killer takes the remainder',()=>{
  const p=journeyFixture();assert.equal(p.chooseStarter('charmander').ok,true);
@@ -104,13 +134,27 @@ test('knockout XP splits among participants and the killer takes the remainder',
  assert.equal(p.importSave(JSON.stringify(rich)).ok,true);
  const before=p.getSave().growth.pokemon;
  const result=p.awardKnockoutXP({foeLevel:5,participants:['charmander','bulbasaur'],killer:'bulbasaur'});
- assert.equal(result.ok,true);assert.equal(result.total,91);
- assert.equal(result.changes.find(c=>c.key==='charmander').xp,45);
- assert.equal(result.changes.find(c=>c.key==='bulbasaur').xp,46);
- assert.equal(p.getSave().growth.pokemon.charmander.xp,before.charmander.xp+45);
- assert.equal(p.getSave().growth.pokemon.bulbasaur.xp,before.bulbasaur.xp+46);
+ assert.equal(result.ok,true);assert.equal(result.total,22);
+ assert.equal(result.changes.find(c=>c.key==='charmander').xp,11);
+ assert.equal(result.changes.find(c=>c.key==='bulbasaur').xp,11);
+ assert.equal(p.getSave().growth.pokemon.charmander.xp,before.charmander.xp+11);
+ assert.equal(p.getSave().growth.pokemon.bulbasaur.xp,before.bulbasaur.xp+11);
  assert.equal(p.awardKnockoutXP({foeLevel:5,participants:[],killer:null}).ok,false);
- assert.equal(p.awardKnockoutXP({foeLevel:5,participants:['charmander'],killer:'charmander'}).total,91);
+ assert.equal(p.awardKnockoutXP({foeLevel:5,participants:['charmander'],killer:'charmander'}).total,22);
+ assert.equal(p.awardKnockoutXP({foeLevel:20,participants:['charmander'],killer:'charmander'}).total,315);
+});
+test('damage XP persists doubled half points and accepts only owned campaign Pokémon',()=>{
+ const store=storage(),p=fixture({storage:store,profileMode:'journey'});assert.equal(p.chooseStarter('charmander').ok,true);
+ const before=p.getSave().growth.pokemon.charmander.xp;
+ const weak=p.awardDamageXP({key:'charmander',amount:.5});
+ assert.equal(weak.ok,true);assert.equal(weak.total,.5);assert.equal(weak.changes[0].xp,.5);
+ const received=p.awardDamageXP({key:'charmander',amount:.5});
+ assert.equal(received.ok,true);assert.equal(received.total,.5);
+ const critical=p.awardDamageXP({key:'charmander',amount:4});
+ assert.equal(critical.ok,true);assert.equal(critical.total,4);assert.equal(p.getSave().growth.pokemon.charmander.xp,before+5);
+ assert.equal(fixture({storage:store,profileMode:'journey'}).getSave().growth.pokemon.charmander.xp,before+5);
+ assert.equal(p.awardDamageXP({key:'charmander',amount:.25}).ok,false);
+ assert.equal(p.awardDamageXP({key:'bulbasaur'}).ok,false);
 });
 test('battle-end XP goes to the trainer, not the Pokémon',()=>{
  const p=journeyFixture();assert.equal(p.chooseStarter('charmander').ok,true);
@@ -127,16 +171,14 @@ test('battle-end XP goes to the trainer, not the Pokémon',()=>{
 test('legacy saves gain trainer XP without losing progress',()=>{
  const disk=storage(),p=fixture({storage:disk});const old=JSON.parse(p.exportSave());delete old.trainer;old.trainerName='Legado';disk.setItem(SAVE_KEY,JSON.stringify(old));const q=fixture({storage:disk});assert.equal(q.getSave().trainerName,'Legado');assert.deepEqual(q.getSave().trainer,{xp:0});assert.equal(q.status().recovered,false);
 });
-test('auto-evolution suppression and deferral persist across loads',()=>{
+test('legacy auto-evolution fields in old saves are ignored, never honoured',()=>{
  const disk=storage(),p=journeyFixture(disk);assert.equal(p.chooseStarter('charmander').ok,true);
  const rich=JSON.parse(p.exportSave());rich.unlocked.push('haunter');assert.equal(p.importSave(JSON.stringify(rich)).ok,true);
- assert.equal(p.deferAutoEvolution('haunter',36).ok,true);
- assert.deepEqual(p.getSave().growth.pendingAuto,{mon:'haunter',level:36});
- assert.equal(p.suppressAutoEvolution('haunter',36).ok,true);
- assert.deepEqual(p.getSave().growth.suppressedAuto,{haunter:36});
- assert.equal(p.getSave().growth.pendingAuto,null);
- const q=journeyFixture(disk);assert.deepEqual(q.getSave().growth.suppressedAuto,{haunter:36});assert.equal(q.getSave().growth.pendingAuto,null);
- assert.equal(q.clearPendingAuto().ok,true);
+ assert.equal(typeof p.suppressAutoEvolution,'undefined');
+ assert.equal(typeof p.deferAutoEvolution,'undefined');
+ assert.equal(typeof p.clearPendingAuto,'undefined');
+ const legacy=JSON.parse(p.exportSave());legacy.growth.suppressedAuto={haunter:36};legacy.growth.pendingAuto={mon:'haunter',level:36};assert.equal(p.importSave(JSON.stringify(legacy)).ok,true);
+ const q=journeyFixture(disk);assert.deepEqual(q.getSave().growth.suppressedAuto,{haunter:36});assert.deepEqual(q.getSave().growth.pendingAuto,{mon:'haunter',level:36});
  const bad=JSON.parse(q.exportSave());bad.growth.suppressedAuto={unknown:36};assert.equal(q.importSave(JSON.stringify(bad)).ok,false);
  const badPending=JSON.parse(q.exportSave());badPending.growth.pendingAuto={mon:'unknown',level:36};assert.equal(q.importSave(JSON.stringify(badPending)).ok,false);
 });

@@ -1,8 +1,8 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import{readFile}from'node:fs/promises';import{createProgression}from'../public/pulse/progression.js';import{SUMMON_BANNERS,bannerPool,isSummonable}from'../public/pulse/banners.js';import{EVOLUTIONS,STONE_EVOLUTIONS}from'../public/pulse/growth.js';
 const roster=JSON.parse(await readFile(new URL('../public/roster.json',import.meta.url)));const fixture=()=>{const p=createProgression({storage:null,rng:()=>0});p.setCatalog(roster);const s=JSON.parse(p.exportSave());s.coins=5000;s.tickets=100;p.importSave(JSON.stringify(s));return p};
-test('three banners have distinct real pools; premium night has SR/SSS and no common tier',()=>{
+test('four banners have distinct real pools; premium night has SR/SSS and no common tier',()=>{
   const p=fixture(),c=p.getCatalog();
-  assert.equal(SUMMON_BANNERS.length,3);
+  assert.equal(SUMMON_BANNERS.length,4);
   const count=(pool,t)=>pool.filter(m=>m.rarity===t).length;
   for(const b of SUMMON_BANNERS){
     const pool=bannerPool(c,b.id);

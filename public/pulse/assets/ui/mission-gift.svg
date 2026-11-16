@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <rect x="5" y="27" width="22" height="3" fill="#071521" opacity=".35"/>
+  <rect x="6" y="14" width="20" height="13" fill="#d94f4d"/>
+  <rect x="8" y="16" width="5" height="9" fill="#f07863"/>
+  <rect x="14" y="14" width="4" height="13" fill="#f2c765"/>
+  <rect x="4" y="10" width="24" height="6" fill="#f07863"/>
+  <rect x="6" y="8" width="20" height="2" fill="#f8a17b"/>
+  <rect x="14" y="8" width="4" height="19" fill="#f2c765"/>
+  <rect x="7" y="5" width="6" height="3" fill="#63c9c2"/>
+  <rect x="5" y="3" width="2" height="2" fill="#63c9c2"/>
+  <rect x="13" y="6" width="2" height="2" fill="#63c9c2"/>
+  <rect x="19" y="5" width="6" height="3" fill="#f2c765"/>
+  <rect x="25" y="3" width="2" height="2" fill="#f2c765"/>
+  <rect x="17" y="6" width="2" height="2" fill="#f2c765"/>
+  <path d="M4 10h24v6h-2v13H6V16H4zm2 2v2h2v13h16V14h2v-2H18V9h-3v1h-2V9H7v1H6zm2-5v1h4V7zm12 0v1h4V7z" fill="#122a35"/>
+</svg>

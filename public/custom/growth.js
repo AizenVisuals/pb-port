@@ -1,5 +1,6 @@
 import {BASIC_MOVES,GROWTH_SPECIES} from './growth-data.js';
-export function installGrowth({species,catalog,ranked,roster,entries,faces,getMove,wrapMove,sourceEntries,hit,applyInput}) {
+import {EXPANSION_SPECIES} from './expansion-data.js';
+export function installGrowth({species,catalog,ranked,roster,entries,faces,getMove,wrapMove,sourceEntries,hit,applyInput,applyAbility}) {
   const nativeMoves=new Map(sourceEntries.flatMap(e=>e.pool).map(m=>[m.id,getMove(m.id)]).filter(([,m])=>m));
   const abilityTemplates=new Map(Object.values(species).filter(s=>s.ability?.name).map(s=>[s.ability.name,s.ability]));
   const basics=BASIC_MOVES.map(def=>{
@@ -48,9 +49,10 @@ export function installGrowth({species,catalog,ranked,roster,entries,faces,getMo
     wrapMove(move);return move;
   });
   species.pulseBasics={moves:basics};
-  for(const entry of GROWTH_SPECIES){
+  for(const entry of [...GROWTH_SPECIES,...EXPANSION_SPECIES]){
     const template=species[entry.template];if(!template)throw Error('Missing growth template '+entry.template);
-    species[entry.key]={color:template.color,weight:entry.weight,abilityName:entry.ability.toUpperCase(),ability:abilityTemplates.get(entry.ability.toUpperCase()),dex:entry.dex,name:entry.name.toUpperCase(),types:entry.types,base:entry.stats,moves:[],mega:undefined,megaForm:false,bond:undefined,evolveTo:undefined,flies:entry.types.includes('flying'),glide:false,levitate:entry.ability==='Levitate',hover:entry.ability==='Levitate'?4:0,radius:Math.max(4,Math.min(13,entry.idleH*.18)),bodyH:Math.max(8,Math.min(30,entry.idleH*.45)),scale:1};
+    species[entry.key]={color:template.color,weight:entry.weight,abilityName:entry.ability.toUpperCase(),ability:abilityTemplates.get(entry.ability.toUpperCase()),dex:entry.dex,name:entry.name.toUpperCase(),types:entry.types,base:entry.stats,moves:species[entry.key]?.moves||[],mega:undefined,megaForm:false,bond:undefined,evolveTo:undefined,flies:entry.types.includes('flying'),glide:false,levitate:entry.ability==='Levitate',hover:entry.ability==='Levitate'?4:0,radius:Math.max(4,Math.min(13,entry.idleH*.18)),bodyH:Math.max(8,Math.min(30,entry.idleH*.45)),scale:1};
+    if(EXPANSION_SPECIES.some(m=>m.key===entry.key))applyAbility?.(species[entry.key],entry.ability);
     catalog[entry.key]=entry;ranked[entry.key]=entry;
     if(!roster.includes(entry.key))roster.push(entry.key);
     if(!entries.some(x=>x.key===entry.key))entries.push(entry);

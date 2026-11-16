@@ -1,8 +1,10 @@
 import {LEARNSETS} from './learnsets.js';
+import {NATIONAL_RARITIES} from './expansion-rules.js';
 const moveRequirementAvailable=(key,id)=>LEARNSETS[key]?.levelMoves[id]!==undefined||LEARNSETS[key]?.specialMoves.includes(id);
-import {initialGrowth,ensureGrowth,validateGrowth,learnedMoves,selectedMoves,levelOf,xpAt,addXP,koXpFor,ITEMS,STONES,STONE_EVOLUTIONS,EVOLUTIONS,specialPool,awardTicketWin} from './growth.js';
+import {initialGrowth,ensureGrowth,validateGrowth,learnedMoves,selectedMoves,levelOf,xpAt,addXP,koXpFor,ITEMS,STONES,STONE_EVOLUTIONS,EVOLUTIONS,specialPool,awardTicketWin,MINTS,rollTraits,effectiveNature} from './growth.js';
 import {bannerPool,isSummonable,SUMMON_BANNERS} from './banners.js';
 import {INITIAL_PARTNERS,ALL_STAGES,newJourney,validateJourney} from './campaign.js';
+import {MISSIONS,MISSION_BY_ID,initialMissions,validateMissions} from './missions.js';
 /** PULSE ARENA local-only progression. Acquisition rarity never modifies combat stats. */
 export const SAVE_KEY='pulse-arena.save.v1';
 export const ECONOMY=Object.freeze({summonDiamondCost:100,dailyCoins:150,duplicateDiamonds:Object.freeze({C:10,R:30,SR:60,UR:300,SSS:150}),prices:Object.freeze({C:60,R:180,SR:360,UR:1800,SSS:900}),shinyPrice:300,rates:Object.freeze({C:.70,R:.21,SR:.078,UR:.005,SSS:.007}),pityAt:10,ticketDropRate:.10});
@@ -62,10 +64,11 @@ const failure=error=>({ok:false,error});
 const defaultOnline=()=>({provider:null,team:null,userId:null,syncedAt:null,pendingSync:false,pendingMatches:[],ranking:null});
 const validPendingMatch=m=>m&&typeof m==='object'&&!Array.isArray(m)&&['win','loss'].includes(m.result)&&(m.opponent_id===null||typeof m.opponent_id==='string'&&m.opponent_id.length<=80)&&typeof m.vs_bot==='boolean'&&typeof m.battleId==='string'&&m.battleId.length>0&&m.battleId.length<=160&&integer(m.createdAt);
 const validRanking=r=>r===null||(r&&typeof r==='object'&&!Array.isArray(r)&&typeof r.tier==='string'&&r.tier.length<=60&&integer(r.points,0)&&integer(r.cachedAt));
-const defaultSave=timestamp=>({version:1,trainerName:'Treinador',trainerKey:'red',trainer:{xp:0},coins:600,diamonds:0,tickets:0,starterTicketsClaimed:false,shinies:[],shinyEquipped:[],unlocked:[...STARTERS],favorite:'marshadow',team:{mons:STARTERS.slice(0,3),moves:{},gimmick:null},records:{battles:0,wins:0,losses:0},gacha:{pulls:0,pity:0},dailyClaimedAt:null,claimedBattles:[],lastRewardAt:null,createdAt:timestamp,updatedAt:timestamp,online:defaultOnline()});
+const defaultSave=timestamp=>({version:1,trainerName:'Treinador',trainerKey:'red',trainer:{xp:0},coins:600,diamonds:0,tickets:0,starterTicketsClaimed:false,shinies:[],shinyEquipped:[],unlocked:[...STARTERS],favorite:'marshadow',team:{mons:STARTERS.slice(0,3),moves:{},gimmick:null},records:{battles:0,wins:0,losses:0},gacha:{pulls:0,pity:0},dailyClaimedAt:null,claimedBattles:[],lastRewardAt:null,missions:initialMissions(),createdAt:timestamp,updatedAt:timestamp,online:defaultOnline()});
 function validateSave(value){
  if(value?.journey)validateJourney(value.journey);
  if(value?.version===1){const priorOnline=value.online&&typeof value.online==='object'&&!Array.isArray(value.online)?value.online:{};value={...value,diamonds:value.diamonds??0,tickets:value.tickets??0,starterTicketsClaimed:value.starterTicketsClaimed??false,shinies:value.shinies??[],shinyEquipped:value.shinyEquipped??[],trainer:value.trainer??{xp:0},trainerKey:value.trainerKey??'red',online:{provider:priorOnline.provider??null,team:priorOnline.team??null,userId:priorOnline.userId??null,syncedAt:priorOnline.syncedAt??null,pendingSync:priorOnline.pendingSync??false,pendingMatches:Array.isArray(priorOnline.pendingMatches)?priorOnline.pendingMatches.filter(validPendingMatch):[],ranking:validRanking(priorOnline.ranking??null)?(priorOnline.ranking??null):null}};}
+ value.missions??=initialMissions();
  validateGrowth(value);
  if(!value||value.version!==1)throw Error('Versão de progresso não suportada.');
  if(!value.online||typeof value.online!=='object'||Array.isArray(value.online)||![null,'guest','google','local'].includes(value.online.provider)||!(value.online.team===null||['valor','instinct','mystic'].includes(value.online.team))||!(value.online.userId===null||typeof value.online.userId==='string'&&value.online.userId.length<=80)||!(value.online.syncedAt===null||integer(value.online.syncedAt))||typeof value.online.pendingSync!=='boolean'||!Array.isArray(value.online.pendingMatches)||!value.online.pendingMatches.every(validPendingMatch)||!validRanking(value.online.ranking))throw Error('Conta online inválida.');
@@ -76,13 +79,14 @@ function validateSave(value){
  if(!(value.favorite===null&&value.profileMode==='journey'&&value.journey?.starter===null)&&(!key(value.favorite)||!value.unlocked.includes(value.favorite)))throw Error('Favorito inválido.');
  if(!integer(value.diamonds)||!Array.isArray(value.shinies)||!unique(value.shinies)||!value.shinies.every(m=>key(m)&&value.unlocked.includes(m))||!Array.isArray(value.shinyEquipped)||!unique(value.shinyEquipped)||!value.shinyEquipped.every(m=>value.shinies.includes(m)))throw Error('Diamantes ou versões shiny inválidos.');
  if(!integer(value.tickets)||typeof value.starterTicketsClaimed!=='boolean')throw Error('Tickets de invocação inválidos.');
+ validateMissions(value.missions);
  const t=value.team;if(!t||!Array.isArray(t.mons)||!(value.growth||value.profileMode==='journey'?integer(t.mons.length,value.journey?.starter===null?0:1,6):[3,6].includes(t.mons.length))||!unique(t.mons)||!t.mons.every(m=>value.unlocked.includes(m)))throw Error('Equipe inválida.');
  if(!t.moves||typeof t.moves!=='object'||Array.isArray(t.moves))throw Error('Lista de golpes inválida.');
  for(const [mon,moves] of Object.entries(t.moves))if(!key(mon)||!Array.isArray(moves)||moves.length>4||!moves.every(m=>typeof m==='string'&&m.length<160)||!unique(moves))throw Error('Golpes inválidos.');
  if(t.gimmick!==null&&(!t.gimmick||t.gimmick.kind!=='mega'||!integer(t.gimmick.mon,0,t.mons.length-1)))throw Error('Mega Evolução inválida.');
  if(!value.records||!['battles','wins','losses'].every(k=>integer(value.records[k]))||value.records.battles!==value.records.wins+value.records.losses)throw Error('Resultados inválidos.');
  if(!value.gacha||!integer(value.gacha.pulls)||!integer(value.gacha.pity,0,9))throw Error('Histórico de invocações inválido.');
- if(value.gacha.banners!==undefined&&(typeof value.gacha.banners!=='object'||value.gacha.banners===null||Array.isArray(value.gacha.banners)||Object.entries(value.gacha.banners).some(([k,v])=>!['battle','night'].includes(k)||!v||!integer(v.pulls)||!integer(v.pity,0,9))))throw Error('Histórico de banners inválido.');
+ if(value.gacha.banners!==undefined&&(typeof value.gacha.banners!=='object'||value.gacha.banners===null||Array.isArray(value.gacha.banners)||Object.entries(value.gacha.banners).some(([k,v])=>!SUMMON_BANNERS.some(b=>b.id===k&&k!=='route')||!v||!integer(v.pulls)||!integer(v.pity,0,9))))throw Error('Histórico de banners inválido.');
  if(value.dailyClaimedAt!==null&&(typeof value.dailyClaimedAt!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value.dailyClaimedAt)))throw Error('Recompensa diária inválida.');
  if(!Array.isArray(value.claimedBattles)||!value.claimedBattles.every(x=>typeof x==='string'&&x.length>0&&x.length<=160)||!unique(value.claimedBattles))throw Error('Histórico de recompensas inválido.');
  if(value.lastRewardAt!==null&&!integer(value.lastRewardAt))throw Error('Data de recompensa inválida.');
@@ -95,6 +99,7 @@ const SUMMON_SR=Object.freeze(['bulbasaur','charmander','squirtle','clefairy','v
 // R explicito por especie: o hash antigo deixava a Batalha sem R (nenhum dos 10 C sorteava raro) e a Noite com um so.
 const SUMMON_R=Object.freeze(['pikachu','sandshrew','nidoranf','nidoranm','jigglypuff','diglett','mankey','machop','ponyta','slowpoke','magnemite','doduo','seel','drowzee','voltorb','cubone','koffing','magikarp','hitmonlee','hitmonchan']);
 function acquisitionRarity(mon){
+ if(NATIONAL_RARITIES[mon.key])return NATIONAL_RARITIES[mon.key];
  if(['mew','marshadow'].includes(mon.key))return 'SSS';
  if(['articuno','zapdos','moltres','mewtwo'].includes(mon.key))return 'UR';
  if(SUMMON_SR.includes(mon.key))return 'SR';
@@ -119,6 +124,9 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
  if(!save){save=defaultSave(time());if(profileMode==='journey')Object.assign(save,{profileMode:'journey',journey:newJourney(),unlocked:[],favorite:null,team:{mons:[],moves:{},gimmick:null}});}
  const persist=()=>{save.updatedAt=time();if(storage)try{storage.setItem(SAVE_KEY,JSON.stringify(save));}catch{memoryOnly=true;storage=null;message='O aparelho não conseguiu salvar o progresso. Exporte uma cópia antes de sair.';}};
  const entry=mon=>monsters.get(mon);
+ const progressMission=(state,metric,amount=1)=>{if(!Number.isSafeInteger(amount)||amount<1||!state.missions)return;state.missions.progress[metric]=Math.min(1000000,(state.missions.progress[metric]||0)+amount);};
+ const missionRows=()=>MISSIONS.map(mission=>{const current=Math.min(mission.target,mission.metric==='collection'?Math.max(save.missions.progress.collection||0,save.unlocked.length):save.missions.progress[mission.metric]||0);return {...mission,current,complete:current>=mission.target,claimed:save.missions.claimed.includes(mission.id)};});
+ const recordBattleMissions=result=>{progressMission(save,'battles');if(result.won)progressMission(save,'battleWins');if(Number.isSafeInteger(result.knockouts)&&result.knockouts>0)progressMission(save,'knockouts',Math.min(result.knockouts,1000));};
  const addTrainerXP=amount=>{save.trainer??={xp:0};const before=levelOf(save.trainer.xp);save.trainer.xp=Math.min(1000000,save.trainer.xp+amount);return {xp:amount,from:before,to:levelOf(save.trainer.xp)};};
  const oldLegalMoves=(mon,moves)=>Array.isArray(moves)&&moves.length===Math.min(4,entry(mon)?.pool?.length||4)&&unique(moves)&&moves.every(id=>entry(mon)?.pool?.some(m=>m.id===id));
  const legalMoves=(mon,moves,state=save)=>state.growth?Array.isArray(moves)&&moves.length>=1&&moves.length<=4&&unique(moves)&&moves.every(id=>learnedMoves(state,entry(mon)).some(m=>m.id===id)):oldLegalMoves(mon,moves);
@@ -153,9 +161,13 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
    if(!INITIAL_PARTNERS.includes(mon)||!entry(mon))return failure('Escolha um dos três parceiros iniciais disponíveis.');
    if(save.journey?.starter)return failure('Seu parceiro inicial já foi escolhido.');
    save.journey||=newJourney();save.journey.starter=mon;
+   const fresh=!save.unlocked.includes(mon);
    if(!save.unlocked.includes(mon))save.unlocked.push(mon);
    if(save.profileMode==='journey'){save.team={mons:[mon],moves:{},gimmick:null};save.favorite=mon;}
    ensureGrowth(save,monsters);
+   // Aquisição nova: nature e IVs sorteados (só se o Pokémon ainda não era
+   // da coleção — re-escolha nunca sobrescreve traits existentes).
+   if(fresh&&save.growth?.pokemon[mon])Object.assign(save.growth.pokemon[mon],rollTraits(rng));
    if(save.growth&&save.profileMode==='journey')for(const key of save.team.mons)save.team.moves[key]=selectedMoves(save,entry(key));
    persist();return success(save);
   },
@@ -173,25 +185,40 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
    if(save.journey.inventory.pokeball<1)return failure('Você está sem Poké Balls.');
    const roll=Number(rng());if(!Number.isFinite(roll)||roll<0||roll>=1)return failure('Não foi possível sortear a captura.');
    const chance=Math.min(.95,.25+.6*(1-hpRatio)+(status ? .1 : 0));save.journey.inventory.pokeball--;e.attempts++;
-   const captured=roll<chance;if(captured){e.state='captured';if(!save.unlocked.includes(e.key))save.unlocked.push(e.key);}
-   ensureGrowth(save,monsters);persist();return success(save,{captured,chance,key:e.key});
+  const captured=roll<chance;let freshCapture=false;if(captured){e.state='captured';freshCapture=!save.unlocked.includes(e.key);if(!save.unlocked.includes(e.key))save.unlocked.push(e.key);progressMission(save,'captures');}
+  ensureGrowth(save,monsters);
+  // Captura nova: nature e IVs sorteados (o registro nasce no ensureGrowth
+  // acima; duplicata mantém os traits que já tinha).
+  if(captured&&freshCapture&&save.growth?.pokemon[e.key])Object.assign(save.growth.pokemon[e.key],rollTraits(rng));
+  persist();return success(save,{captured,chance,key:e.key});
   },
   buyPokeballs(count=1){if(!integer(count,1,99)||!save.journey?.starter)return failure('Compra indisponível.');const spent=count*50;if(save.coins<spent)return failure('Moedas insuficientes.');save.coins-=spent;save.journey.inventory.pokeball+=count;persist();return success(save,{spent});},
   abandonStage(){if(!save.journey?.active)return failure('Nenhuma fase em andamento.');save.journey.resolvedBattles.push(save.journey.active.id);save.journey.active=null;persist();return success(save);},
   completeStage(result){
    const j=save.journey;
-   if(!j?.active||result?.id!==j.active.id||typeof result.won!=='boolean'||!integer(result.frames,60))return failure('Resultado de fase inválido.');
+  if(!j?.active||result?.id!==j.active.id||typeof result.won!=='boolean'||!integer(result.frames,60)||result.knockouts!==undefined&&!integer(result.knockouts,0,1000))return failure('Resultado de fase inválido.');
    if(j.active.encounter?.state==='pending')return failure('Resolva o encontro selvagem primeiro.');
    const stage=ALL_STAGES.find(x=>x.id===j.active.stage);let coins=0;const first=result.won&&!j.cleared.includes(stage.id);
-   const trainerXp=addTrainerXP(result.won?(first?300+ALL_STAGES.indexOf(stage)*180:150+ALL_STAGES.indexOf(stage)*30):60);let tickets=awardTicketWin(save,result.won);if(first&&save.growth){save.growth.inventory.moveTicket++;tickets++;}
+  const trainerXp=addTrainerXP(result.won?(first?300+ALL_STAGES.indexOf(stage)*180:150+ALL_STAGES.indexOf(stage)*30):60);let tickets=awardTicketWin(save,result.won);if(first&&save.growth){save.growth.inventory.moveTicket++;tickets++;}
    let gachaTickets=0;if(first){const dropRoll=Number(rng());if(Number.isFinite(dropRoll)&&dropRoll<ECONOMY.ticketDropRate){save.tickets=(save.tickets||0)+1;gachaTickets=1;}}
    if(result.won&&!j.cleared.includes(stage.id)){j.cleared.push(stage.id);coins=stage.firstClearCoins;save.coins+=coins;if(stage.badge)j.badges.push(stage.badge);}
-   save.records.battles++;save.records[result.won?'wins':'losses']++;j.resolvedBattles.push(j.active.id);j.active=null;persist();return success(save,{coins,trainerXp,tickets,gachaTickets});
+  save.records.battles++;save.records[result.won?'wins':'losses']++;recordBattleMissions(result);j.resolvedBattles.push(j.active.id);j.active=null;persist();return success(save,{coins,trainerXp,tickets,gachaTickets});
   },
   getMoves(mon){const item=entry(mon);return item?clone(learnedMoves(save,item)):[];},
   getTeam(){const team=clone(save.team);if(save.growth)for(const key of team.mons)team.moves[key]=selectedMoves(save,entry(key));return team;},
   buyItem(id,count=1){if(!save.growth||!ITEMS[id]||!integer(count,1,99))return failure('Item indisponível.');const spent=ITEMS[id].price*count;if(save.coins<spent)return failure('Moedas insuficientes.');save.coins-=spent;save.growth.inventory[id]+=count;persist();return success(save,{spent});},
   buyStone(id){if(!save.growth||!STONES[id])return failure('Pedra indisponível.');const spent=STONES[id].price;if(save.coins<spent)return failure('Moedas insuficientes.');save.coins-=spent;save.growth.stoneInventory[id]=(save.growth.stoneInventory[id]||0)+1;persist();return success(save,{spent});},
+  buyMint(id,count=1){if(!save.growth||!MINTS[id]||!integer(count,1,99))return failure('Mint indisponível.');const spent=MINTS[id].price*count;if(save.coins<spent)return failure('Moedas insuficientes.');save.coins-=spent;save.growth.mintInventory[id]=(save.growth.mintInventory[id]||0)+count;persist();return success(save,{spent});},
+  // Mint (Sword/Shield): muda o EFEITO da nature nos stats, sem trocar a
+  // nature original — guardada em `mintNature`. Outra mint substitui o
+  // efeito; o cálculo (tela e batalha) usa a nature efetiva.
+  useMint(mon,mintId){const g=save.growth;if(!g||!save.unlocked.includes(mon)||!MINTS[mintId]||!(g.mintInventory?.[mintId]>0))return failure('Escolha uma mint da mochila e um Pokémon obtido.');
+   if(save.journey?.active)return failure('Use a mint depois de concluir a fase em andamento.');
+   const record=g.pokemon[mon];if(!record)return failure('Pokémon sem progresso.');
+   const nature=MINTS[mintId].nature;
+   if(record.mintNature===nature)return failure('Essa mint já está em efeito neste Pokémon.');
+   record.mintNature=nature;g.mintInventory[mintId]--;persist();return success(save,{mon,mint:mintId,nature,original:record.nature});
+  },
   useStone(mon,stoneId){const g=save.growth;if(!g||!save.unlocked.includes(mon)||!(g.stoneInventory?.[stoneId]>0))return failure('Escolha uma pedra da mochila e um Pokémon obtido.');
    if(save.journey?.active)return failure('Use a pedra depois de concluir a fase em andamento.');
    const target=STONE_EVOLUTIONS[mon]?.[stoneId];if(!target||!entry(target))return failure('Essa pedra não evolui esse Pokémon.');
@@ -200,17 +227,17 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
   },
   equipItem(mon,id){if(!save.growth||!save.unlocked.includes(mon)||id!==null&&!ITEMS[id])return failure('Escolha um item e um Pokémon da coleção.');if(save.journey?.active)return failure('Troque os itens depois de terminar a fase em andamento.');const old=save.growth.held[mon];if(old===id)return success(save);if(id&&save.growth.inventory[id]<1)return failure('Esse item não está na mochila.');if(old)save.growth.inventory[old]++;delete save.growth.held[mon];if(id){save.growth.inventory[id]--;save.growth.held[mon]=id;}persist();return success(save);},
   consumeHeld({battleId,mon,item}){const g=save.growth,event=battleId+':'+mon+':'+item;if(!g||typeof battleId!=='string'||!battleId.length||battleId.length>160||g.held[mon]!==item||!ITEMS[item]||item==='leftovers'||g.processedItems.includes(event))return failure('Item já consumido ou indisponível.');delete g.held[mon];g.processedItems.push(event);persist();return success(save);},
-  summonMove(mon){const item=entry(mon),g=save.growth;if(!g||!item||!save.unlocked.includes(mon))return failure('Escolha um Pokémon da sua coleção.');const pool=specialPool(save,mon,item);if(!pool.length)return failure('Todos os golpes especiais disponíveis para esse Pokémon já foram aprendidos.');if(g.inventory.moveTicket<1)return failure('Você precisa de um ticket de técnica.');const roll=Number(rng());if(!Number.isFinite(roll)||roll<0||roll>=1)return failure('Não foi possível sortear a técnica.');const id=pool[Math.floor(roll*pool.length)];g.tmInventory||={};g.tmInventory[id]=(g.tmInventory[id]||0)+1;g.inventory.moveTicket--;persist();return success(save,{mon,move:clone(item.pool.find(m=>m.id===id)),spent:1});},
+  summonMove(mon){const item=entry(mon),g=save.growth;if(!g||!item||!save.unlocked.includes(mon))return failure('Escolha um Pokémon da sua coleção.');const pool=specialPool(save,mon,item);if(!pool.length)return failure('Todos os golpes especiais disponíveis para esse Pokémon já foram aprendidos.');if(g.inventory.moveTicket<1)return failure('Você precisa de um ticket de técnica.');const roll=Number(rng());if(!Number.isFinite(roll)||roll<0||roll>=1)return failure('Não foi possível sortear a técnica.');const id=pool[Math.floor(roll*pool.length)];g.tmInventory||={};g.tmInventory[id]=(g.tmInventory[id]||0)+1;g.inventory.moveTicket--;progressMission(save,'tmDraws');persist();return success(save,{mon,move:clone(item.pool.find(m=>m.id===id)),spent:1});},
   teachTM(mon,id){const g=save.growth,item=entry(mon);if(!g||!item||!save.unlocked.includes(mon)||!(g.tmInventory?.[id]>0))return failure('Escolha uma TM da mochila e um Pokémon obtido.');
    if(save.journey?.active)return failure('Use a TM depois de concluir a fase em andamento.');
    const source=[...monsters.values()].flatMap(x=>x.pool).find(x=>x.id===id),target=item.pool.find(x=>x.name===source?.name&&LEARNSETS[mon]?.specialMoves.includes(x.id));
-   if(!target)return failure('Esse Pokémon não é compatível com esta TM.');if(learnedMoves(save,item).some(x=>x.name===target.name))return failure('Esse Pokémon já conhece este golpe.');
-   g.tmInventory[id]--;g.specialMoves[mon]||=[];g.specialMoves[mon].push(target.id);persist();return success(save,{mon,move:clone(target)});
+  if(!target)return failure('Esse Pokémon não é compatível com esta TM.');if(learnedMoves(save,item).some(x=>x.name===target.name))return failure('Esse Pokémon já conhece este golpe.');
+  g.tmInventory[id]--;g.specialMoves[mon]||=[];g.specialMoves[mon].push(target.id);progressMission(save,'tmUses');persist();return success(save,{mon,move:clone(target)});
   },
   previewEvolution(mon,stoneId=null){
    const stoneTarget=stoneId?STONE_EVOLUTIONS[mon]?.[stoneId]:null;
    const edge=stoneTarget?[stoneTarget,1]:EVOLUTIONS[mon],record=save.growth?.pokemon[mon];if(!edge||!record||(!stoneTarget&&levelOf(record.xp)<edge[1])||!entry(edge[0]))return null;
-   const target=edge[0],next=clone(save);next.growth.pokemon[target]={xp:record.xp};
+   const target=edge[0],next=clone(save);next.growth.pokemon[target]={xp:record.xp,nature:record.nature,ivs:record.ivs,...(record.mintNature?{mintNature:record.mintNature}:{})};
    const knownNames=learnedMoves(save,entry(mon)).map(m=>m.name);
    const inherited=entry(target).pool.filter(m=>knownNames.includes(m.name)).filter(m=>moveRequirementAvailable(target,m.id));
    next.growth.inherited[target]=[...new Set([...(next.growth.inherited[target]||[]),...inherited.map(m=>m.id)])];
@@ -218,9 +245,16 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
    next.team.moves[target]=learnedMoves(next,entry(target)).filter(m=>oldNames.includes(m.name)).map(m=>m.id).slice(0,4);
    return {from:mon,target,level:levelOf(record.xp),moves:selectedMoves(next,entry(target)),inherited:next.growth.inherited[target]};
   },
-  evolvePokemon(mon,target,stoneId=null){const evolution=api.previewEvolution(mon,stoneId);if(!evolution||evolution.target!==target)return failure('Esse Pokémon ainda não pode evoluir.');const g=save.growth,xp=g.pokemon[mon].xp;if(g.pendingAuto?.mon===mon)g.pendingAuto=null;if(g.suppressedAuto)delete g.suppressedAuto[mon];g.pokemon[target]={xp:Math.max(xp,g.pokemon[target]?.xp||0)};delete g.pokemon[mon];delete g.specialMoves[mon];g.inherited[target]=evolution.inherited;delete g.inherited[mon];save.unlocked=save.unlocked.filter(k=>k!==mon);if(!save.unlocked.includes(target))save.unlocked.push(target);g.evolutions.push(mon+'>'+target);if(g.held[mon]){if(g.held[target])g.inventory[g.held[target]]++;g.held[target]=g.held[mon];delete g.held[mon];}save.team.mons=[...new Set(save.team.mons.map(k=>k===mon?target:k))];delete save.team.moves[mon];save.team.moves[target]=evolution.moves;if(save.favorite===mon)save.favorite=target;save.shinyEquipped=save.shinyEquipped.filter(k=>k!==mon);save.shinies=save.shinies.filter(k=>k!==mon);if(save.team.gimmick&&!entry(save.team.mons[save.team.gimmick.mon])?.mega)save.team.gimmick=null;persist();return success(save,{from:mon,target});},
+  evolvePokemon(mon,target,stoneId=null){const evolution=api.previewEvolution(mon,stoneId);if(!evolution||evolution.target!==target)return failure('Esse Pokémon ainda não pode evoluir.');const g=save.growth,xp=g.pokemon[mon].xp,source=g.pokemon[mon],hadTarget=!!g.pokemon[target];
+   // A evolução mantém nature, IVs e mint do Pokémon — ou os do alvo, se a
+   // forma evoluída já era da coleção (dois indivíduos, um registro).
+   const traits=hadTarget?{nature:g.pokemon[target].nature,ivs:g.pokemon[target].ivs,...(g.pokemon[target].mintNature?{mintNature:g.pokemon[target].mintNature}:{})}:{nature:source?.nature??'hardy',ivs:source?.ivs,...(source?.mintNature?{mintNature:source.mintNature}:{})};
+   g.pokemon[target]={xp:Math.max(xp,g.pokemon[target]?.xp||0),...traits};delete g.pokemon[mon];delete g.specialMoves[mon];g.inherited[target]=evolution.inherited;delete g.inherited[mon];save.unlocked=save.unlocked.filter(k=>k!==mon);if(!save.unlocked.includes(target))save.unlocked.push(target);g.evolutions.push(mon+'>'+target);if(g.held[mon]){if(g.held[target])g.inventory[g.held[target]]++;g.held[target]=g.held[mon];delete g.held[mon];}save.team.mons=[...new Set(save.team.mons.map(k=>k===mon?target:k))];delete save.team.moves[mon];save.team.moves[target]=evolution.moves;if(save.favorite===mon)save.favorite=target;save.shinyEquipped=save.shinyEquipped.filter(k=>k!==mon);save.shinies=save.shinies.filter(k=>k!==mon);if(save.team.gimmick&&!entry(save.team.mons[save.team.gimmick.mon])?.mega)save.team.gimmick=null;progressMission(save,'evolutions');persist();return success(save,{from:mon,target});},
   setShinyCatalog(keys){if(!Array.isArray(keys)||keys.some(k=>!entry(k)))return failure('Catálogo shiny inválido.');shinyCatalog=new Set(keys);return {ok:true};},
-  getCatalog(){return freeze([...monsters.values()].map(mon=>({...clone(mon),owned:save.unlocked.includes(mon.key),level:save.growth?levelOf(save.growth.pokemon[mon.key]?.xp??125):50,xp:save.growth?.pokemon[mon.key]?.xp??null,heldItem:save.growth?.held[mon.key]||null,learned:learnedMoves(save,mon).map(m=>m.id),price:ECONOMY.prices[mon.rarity],shinyAvailable:shinyCatalog.has(mon.key)})));},
+  getCatalog(){return freeze([...monsters.values()].map(mon=>({...clone(mon),owned:save.unlocked.includes(mon.key),level:save.growth?levelOf(save.growth.pokemon[mon.key]?.xp??125):50,xp:save.growth?.pokemon[mon.key]?.xp??null,nature:save.growth?.pokemon[mon.key]?.nature??null,ivs:save.growth?.pokemon[mon.key]?.ivs??null,mintNature:save.growth?.pokemon[mon.key]?.mintNature??null,effectiveNature:save.growth?.pokemon[mon.key]?effectiveNature(save.growth.pokemon[mon.key]):null,heldItem:save.growth?.held[mon.key]||null,learned:learnedMoves(save,mon).map(m=>m.id),price:ECONOMY.prices[mon.rarity],shinyAvailable:shinyCatalog.has(mon.key)})));},
+  getMissions(){return freeze(missionRows());},
+  claimMission(id){const mission=MISSION_BY_ID[id];if(!mission)return failure('Missão indisponível.');if(save.missions.claimed.includes(id))return failure('Esta missão já foi resgatada.');const row=missionRows().find(item=>item.id===id);if(!row?.complete)return failure('Conclua a missão antes de resgatar.');if(mission.reward==='tm'&&!save.growth)return failure('Inicie a jornada para resgatar tickets de TM.');if(mission.reward==='tm')save.growth.inventory.moveTicket+=mission.rewardCount;else save.tickets+=mission.rewardCount;save.missions.claimed.push(id);persist();return success(save,{mission:clone(mission),reward:mission.reward,count:mission.rewardCount});},
+  recordMissionBattle(result){if(!result||typeof result.id!=='string'||!result.id.length||result.id.length>160||typeof result.won!=='boolean'||result.knockouts!==undefined&&!integer(result.knockouts,0,1000))return failure('Resultado de batalha inválido.');recordBattleMissions(result);persist();return success(save);},
   getSave(){return freeze(clone(save));},
   status(){return freeze({memoryOnly,recovered,message});},
   setTrainerName(name){if(!validName(name))return failure('Use de 2 a 16 letras, números ou espaços.');save.trainerName=name.trim();persist();return success(save);},
@@ -282,7 +316,7 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
   },
   setMoves(mon,ids){if(!entry(mon)||!save.unlocked.includes(mon)||!legalMoves(mon,ids))return failure('Escolha quatro golpes diferentes da lista desse Pokémon.');save.team.moves[mon]=[...ids];persist();return success(save);},
   setMega(mon){if(mon===null){save.team.gimmick=null;}else{if(!integer(mon,0,save.team.mons.length-1)||!entry(save.team.mons[mon])?.mega)return failure('Esse Pokémon não possui Mega Evolução.');save.team.gimmick={kind:'mega',mon};}persist();return success(save);},
-  claimDaily(){const day=utcDay(time());if(save.dailyClaimedAt&&save.dailyClaimedAt>=day)return failure('A recompensa de hoje já foi recebida.');save.dailyClaimedAt=day;save.coins+=ECONOMY.dailyCoins;const tickets=save.growth?2:0;if(save.growth)save.growth.inventory.moveTicket+=tickets;persist();return success(save,{coins:ECONOMY.dailyCoins,tickets});},
+  claimDaily(){const day=utcDay(time());if(save.dailyClaimedAt&&save.dailyClaimedAt>=day)return failure('A recompensa de hoje já foi recebida.');save.dailyClaimedAt=day;save.coins+=ECONOMY.dailyCoins;const tickets=save.growth?2:0;if(save.growth)save.growth.inventory.moveTicket+=tickets;progressMission(save,'dailyClaims');persist();return success(save,{coins:ECONOMY.dailyCoins,tickets});},
   claimStarterTickets(){if(save.starterTicketsClaimed)return failure('Recompensa inicial já resgatada.');save.starterTicketsClaimed=true;save.tickets=(save.tickets||0)+10;persist();return success(save,{tickets:10});},
   summon(count=1,bannerId='route'){
    if(!integer(count,1,10))return failure('Escolha de 1 a 10 invocações.');if(!monsters.size)return failure('A coleção ainda está carregando.');
@@ -309,24 +343,26 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
     if(!duplicate)next.unlocked.push(mon.key);diamonds+=rebate;meter.pulls++;meter.pity=premium?(rarity==='SSS'?0:meter.pity+1):(rarity==='C'?meter.pity+1:0);
     pulls.push({key:mon.key,name:mon.name,rarity,duplicate,diamonds:rebate,guaranteed});
    }}catch(error){return failure(error.message);}
-   if(bannerId==='route'){next.gacha.pulls=meter.pulls;next.gacha.pity=meter.pity;}else next.gacha.banners[bannerId]=meter;
-   next.tickets=(next.tickets||0)-spentTickets;next.diamonds+=diamonds-spentDiamonds;save=next;ensureGrowth(save,monsters);persist();return success(save,{pulls,spentTickets,spentDiamonds,diamonds});
+  if(bannerId==='route'){next.gacha.pulls=meter.pulls;next.gacha.pity=meter.pity;}else next.gacha.banners[bannerId]=meter;
+  progressMission(next,'pokemonPulls',pulls.length);
+   next.tickets=(next.tickets||0)-spentTickets;next.diamonds+=diamonds-spentDiamonds;save=next;ensureGrowth(save,monsters);
+   // Invocação nova: nature e IVs sorteados (duplicata mantém os traits).
+   if(save.growth)for(const pull of pulls)if(!pull.duplicate&&save.growth.pokemon[pull.key])Object.assign(save.growth.pokemon[pull.key],rollTraits(rng));
+   persist();return success(save,{pulls,spentTickets,spentDiamonds,diamonds});
   },
-  buyPokemon(mon){const item=entry(mon);if(!item||!isSummonable(mon))return failure('Esse Pokémon só pode ser obtido por evolução.');if(save.unlocked.includes(mon))return failure('Esse Pokémon já está na sua coleção.');const spent=ECONOMY.prices[item.rarity];if(save.diamonds<spent)return failure('Diamantes insuficientes.');save.diamonds-=spent;save.unlocked.push(mon);ensureGrowth(save,monsters);persist();return success(save,{key:mon,spent});},
+  buyPokemon(mon){const item=entry(mon);if(!item||!isSummonable(mon))return failure('Esse Pokémon só pode ser obtido por evolução.');if(save.unlocked.includes(mon))return failure('Esse Pokémon já está na sua coleção.');const spent=ECONOMY.prices[item.rarity];if(save.diamonds<spent)return failure('Diamantes insuficientes.');save.diamonds-=spent;save.unlocked.push(mon);ensureGrowth(save,monsters);if(save.growth?.pokemon[mon])Object.assign(save.growth.pokemon[mon],rollTraits(rng));persist();return success(save,{key:mon,spent});},
   buyShiny(mon){if(!entry(mon)||!shinyCatalog.has(mon))return failure('Versão shiny indisponível nesta edição.');if(!save.unlocked.includes(mon))return failure('Desbloqueie o Pokémon primeiro.');if(save.shinies.includes(mon))return failure('Você já possui essa versão shiny.');if(save.diamonds<ECONOMY.shinyPrice)return failure('Diamantes insuficientes.');save.diamonds-=ECONOMY.shinyPrice;save.shinies.push(mon);save.shinyEquipped.push(mon);persist();return success(save,{spent:ECONOMY.shinyPrice});},
   equipShiny(mon,on){if(!save.shinies.includes(mon))return failure('Adquira essa versão shiny primeiro.');save.shinyEquipped=save.shinyEquipped.filter(k=>k!==mon);if(on)save.shinyEquipped.push(mon);persist();return success(save);},
   recordBattle(result){
-   if(!result||typeof result.id!=='string'||!result.id.length||result.id.length>160||typeof result.won!=='boolean'||!integer(result.frames,0)||!integer(result.difficulty,1,5)||!['3v3','6v6'].includes(result.format)||!['win','loss','surrender'].includes(result.reason)||(result.reason==='win'&&!result.won)||(result.reason!=='win'&&result.won))return failure('Resultado de batalha inválido.');
+  if(!result||typeof result.id!=='string'||!result.id.length||result.id.length>160||typeof result.won!=='boolean'||!integer(result.frames,0)||result.knockouts!==undefined&&!integer(result.knockouts,0,1000)||!integer(result.difficulty,1,5)||!['3v3','6v6'].includes(result.format)||!['win','loss','surrender'].includes(result.reason)||(result.reason==='win'&&!result.won)||(result.reason!=='win'&&result.won))return failure('Resultado de batalha inválido.');
    if(save.claimedBattles.includes(result.id))return failure('Essa batalha já foi registrada.');
-   save.claimedBattles.push(result.id);save.records.battles++;save.records[result.won?'wins':'losses']++;
+  save.claimedBattles.push(result.id);save.records.battles++;save.records[result.won?'wins':'losses']++;recordBattleMissions(result);
    const timestamp=time(),eligible=result.reason!=='surrender'&&result.frames>=300&&(save.lastRewardAt===null||timestamp-save.lastRewardAt>=8000);
    const coins=eligible?(result.won?60+10*result.difficulty:25+5*result.difficulty):0;
    const trainerXp=eligible?addTrainerXP(result.won?180+result.difficulty*35:60):null;const tickets=awardTicketWin(save,eligible&&result.won);if(eligible){save.coins+=coins;save.lastRewardAt=timestamp;}persist();return success(save,{coins,trainerXp,tickets,rewarded:eligible,won:result.won});
   },
   awardKnockoutXP({foeLevel=5,participants=[],killer=null}={}){const g=save.growth;if(!g)return failure('Progressão indisponível.');const total=koXpFor(foeLevel);const keys=[...new Set((participants||[]).filter(k=>g.pokemon[k]))];if(!keys.length)return failure('Nenhum participante válido.');const share=Math.floor(total/keys.length);let remainder=total-share*keys.length;const changes=[];for(const key of keys){const amount=share+(key===killer&&remainder>0?remainder:0);if(key===killer)remainder=0;changes.push(...addXP(save,[key],amount));}persist();return success(save,{total,changes,participants:keys});},
-  suppressAutoEvolution(mon,level){const g=save.growth;if(!g||!save.unlocked.includes(mon)||!integer(level,1,100))return failure('Evolução indisponível.');g.suppressedAuto??={};g.suppressedAuto[mon]=level;if(g.pendingAuto?.mon===mon)g.pendingAuto=null;persist();return success(save);},
-  deferAutoEvolution(mon,level){const g=save.growth;if(!g||!save.unlocked.includes(mon)||!integer(level,1,100))return failure('Evolução indisponível.');g.pendingAuto={mon,level};persist();return success(save);},
-  clearPendingAuto(){const g=save.growth;if(!g)return failure('Progressão indisponível.');g.pendingAuto=null;persist();return success(save);},
+    awardDamageXP({key:mon,amount=2}={}){const g=save.growth;if(!g)return failure('Progressão indisponível.');if(!save.unlocked.includes(mon)||!g.pokemon[mon])return failure('Pokémon não participa desta jornada.');if(![.5,1,2,4].includes(amount))return failure('Quantidade de XP inválida.');const changes=addXP(save,[mon],amount);if(!changes.length)return failure('Não foi possível aplicar XP.');persist();return success(save,{total:amount,changes,key:mon});},
   exportSave(){return JSON.stringify(save,null,2);},
   importSave(json){try{if(typeof json!=='string'||json.length>2*1024*1024)return failure('Arquivo de progresso inválido ou muito grande.');const candidate=validateSave(JSON.parse(json));const migrating=!candidate.growth;ensureGrowth(candidate,monsters);if(migrating&&candidate.growth)for(const key of candidate.team.mons)candidate.team.moves[key]=selectedMoves(candidate,entry(key));catalogValid(candidate);save=candidate;recovered=false;if(!memoryOnly)message='';persist();return success(save);}catch(error){return failure(error.message||'Arquivo de progresso inválido.');}}
  };

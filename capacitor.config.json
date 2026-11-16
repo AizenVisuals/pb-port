@@ -11,15 +11,17 @@
     "webContentsDebuggingEnabled": false
   },
   "plugins": {
-    "StatusBar": {
-      "style": "DARK",
-      "backgroundColor": "#10151D"
-    },
     "FirebaseAuthentication": {
       "skipNativeAuth": true,
       "providers": [
         "google.com"
       ]
+    },
+    "SystemBars": {
+      "hidden": true,
+      "style": "LIGHT",
+      "insetsHandling": "css",
+      "initialViewportFitValueHint": "cover"
     }
   }
 }

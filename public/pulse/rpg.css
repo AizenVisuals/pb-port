@@ -1,3 +1,38 @@
+/* Tabler Icons disc, recolored for the warm TM inventory accent. */
+.inventory-item-hero.tm-disc-hero{object-fit:contain}
+.technique-reveal img.tm-disc-inline{width:46px;height:46px}
+.bonus-screen{overflow:auto}
+.missions-section{display:flex;flex-direction:column;gap:8px;min-height:0;flex-shrink:0;margin-top:14px}
+.missions-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
+.missions-heading h2{font-size:21px}
+.missions-heading p{font-size:12px;margin-top:3px;font-variant-numeric:tabular-nums;color:#a8bec5}
+.mission-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px;max-height:min(42svh,390px);overflow:auto;border-top:1px solid #bac7b4;padding:0 3px}
+.mission-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:5px 12px;padding:9px 5px;border-bottom:1px solid #cbd2c2;min-width:0}
+.mission-copy{min-width:0}
+.mission-copy h3{font-size:14px;line-height:1.15;overflow-wrap:anywhere}
+.mission-copy>span{display:block;color:#adc0c5;font-size:11px;margin-top:2px}
+.mission-progress{display:grid;grid-template-columns:minmax(55px,1fr) auto;align-items:center;gap:8px;grid-column:1;min-width:0}
+.mission-progress progress{height:6px;min-width:0;background:#425662}
+.mission-progress progress::-webkit-progress-bar{background:#425662}
+.mission-progress progress::-webkit-progress-value{background:#39b6b0}
+.mission-progress progress::-moz-progress-bar{background:#39b6b0}
+.mission-progress small{font-size:11px;font-variant-numeric:tabular-nums;color:#b1c2c8;white-space:nowrap}
+.mission-reward{display:flex;align-items:center;gap:4px;color:#8a641c;font-size:11px;font-weight:700;white-space:nowrap}
+.mission-reward svg{width:16px;height:16px;flex-shrink:0}
+.mission-claim{grid-column:2;grid-row:1/4;min-width:96px;min-height:40px;padding:6px 10px;font-size:12px}
+.mission-claim:disabled{opacity:.58}
+.mission-row.is-complete .mission-progress progress::-webkit-progress-value{background:#438d71}
+.mission-row.is-claimed .mission-copy h3{text-decoration:line-through;text-decoration-color:#8ba39a}
+@media(orientation:landscape) and (max-height:440px){
+ .missions-section{margin-top:8px;gap:5px}
+ .missions-heading h2{font-size:18px}
+ .mission-list{max-height:36svh;gap:0 14px}
+ .mission-row{padding:6px 4px;gap:4px 8px}
+ .mission-copy h3{font-size:12px}
+ .mission-copy>span,.mission-progress small,.mission-reward{font-size:10px}
+ .mission-claim{min-width:86px;min-height:38px;font-size:11px}
+}
+@media(max-width:639px){.mission-list{grid-template-columns:1fr;max-height:45svh}}
 /* PULSE light game UI — user-pinned Pokémon: Champion composition, own palette. */
 :root{color-scheme:light;--bg:#d7e8e4;--surface:#fff9eb;--raised:#f2ead7;--ink:#263f4d;--muted:#526c75;--cyan:#2b9f9f;--coral:#e96758;--gold:#9a6812;--line:#c8c5ae;--good:#28734e;--bad:#ae3943}
 body{background:#c4ded9;color:var(--ink)}button{font-weight:700}button:disabled{opacity:.48}button:focus-visible,select:focus-visible,input:focus-visible{outline-color:#148b91;outline-offset:2px}button:active:not(:disabled){transform:translateY(2px)}h1,h2,h3{color:var(--ink)}p{color:var(--muted)}input,select{background:#fffdf6;color:var(--ink);border-color:#9eafa9;border-radius:9px;min-height:48px}input::placeholder{color:#637981}progress,progress::-webkit-progress-bar{background:#d7d5bf}progress::-webkit-progress-value{background:var(--cyan)}img{image-rendering:pixelated}.primary-button{background:linear-gradient(#f27b67,#e76558);color:#fffdf0;border:1px solid #c24e46;border-radius:11px;box-shadow:inset 0 1px #ffd9b7,inset 0 -3px #b94c442e,0 3px 6px #45514b22;min-height:48px;font-size:15px}.secondary-button{background:linear-gradient(#fffdf5,#eae8d6);color:#304a54;border:1px solid #b8bba7;box-shadow:inset 0 1px #fff,inset 0 -2px #2e514b12;border-radius:10px;min-height:48px}.text-button{color:#386572;min-height:48px}.icon-button,.section-back{background:#fff8e7;border:1px solid #aeb9ac;color:#355967;min-width:48px;min-height:48px;border-radius:13px;display:inline-grid;place-items:center;box-shadow:inset 0 -2px #35596714}.section-back svg{width:25px;height:25px}.count-mark,.level-badge{background:#f9efd1;color:#5d4a27;border:1px solid #d2c491;padding:7px 12px;border-radius:8px;white-space:nowrap}.type-tag{background:#e3eee5;color:#264b4b;border:1px solid #b8cec3;border-radius:6px;padding:3px 7px;font-size:12px}.segmented{background:#dddcc9;padding:3px;border:1px solid #babfac;border-radius:11px}.segmented button{background:transparent;color:#435f65;min-height:44px;border-radius:8px;padding:7px 16px}.segmented button[aria-pressed=true]{background:#fff9e9;color:#b84940;box-shadow:0 2px 3px #293f4420}
@@ -237,7 +272,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid 
 /* Finish review batch: a game prize screen, readable support text and full touch areas. */
 .bonus-screen{display:flex;flex-direction:column}
 .bonus-layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(220px,1fr);gap:24px;flex:1;min-height:0}
-.bonus-screen .daily-reward{display:flex;flex-direction:column;justify-content:center;gap:12px;margin:0;padding:14px 20px;border:1px solid #aac3ae;border-radius:16px;background:#e1ecda;min-height:0}
+.bonus-screen .daily-reward{display:flex;flex-direction:column;justify-content:safe center;gap:12px;margin:0;padding:14px 20px;border:1px solid #aac3ae;border-radius:16px;background:#e1ecda;min-height:0}
 .bonus-prizes{display:flex;justify-content:center;align-items:center;gap:55px;flex:1;min-height:0}
 .bonus-prize{display:grid;grid-template-columns:auto auto;align-items:center;gap:2px 12px}
 .bonus-prize svg{width:80px;height:80px;grid-row:1/3;filter:drop-shadow(0 3px 2px #37563825)}
@@ -245,7 +280,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid 
 .bonus-prize span{font-size:15px;color:#48645b}
 .bonus-screen .daily-reward .primary-button{width:100%;max-width:490px;min-height:54px;margin:0;flex-shrink:0}
 .bonus-reset{font-size:13px;color:#49655b;text-align:center}
-.bonus-side{display:flex;flex-direction:column;justify-content:center;gap:20px;min-height:0;overflow:auto}
+.bonus-side{display:flex;flex-direction:column;justify-content:safe center;gap:20px;min-height:0;overflow:auto}
 .bonus-side>#rewards-summon{min-height:58px;font-size:17px}
 .bonus-side .save-tools{margin:0;padding:14px 0;border-top:1px solid #bac7b4}
 .bonus-side .save-tools summary{min-height:48px;display:flex;align-items:center;font-size:15px;font-weight:700;color:#365b62;cursor:pointer}
@@ -256,7 +291,9 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid 
 .formation-command-list button small{display:block;font-weight:400;font-size:12px;margin-top:2px;line-height:1.1}
 .odds-details summary{min-height:48px;display:flex;align-items:center;font-size:13px;color:#3c5b60}
 @media(orientation:landscape) and (max-height:440px){
- .bonus-layout{gap:20px}
+ .bonus-layout{gap:20px;flex:none}
+ .result-dialog{max-width:min(94vw,660px)}
+ .dmg-graph{grid-template-columns:1fr 1fr}
  .bonus-screen .daily-reward{padding:12px 18px;gap:9px}
  .bonus-prizes{gap:32px}
  .bonus-prize{gap:2px 8px}
@@ -847,3 +884,36 @@ progress::-webkit-progress-value{background:#e60012}
 .battle-special .mega-action{width:calc(50% - 3px);flex:none}
 .battle-screen .battle-evolve{position:fixed;top:3px;left:27%;right:24%;bottom:auto;transform:none;max-width:none;padding:3px 7px;font-size:10px;min-height:32px;gap:6px;z-index:4}
 .battle-evolve .battle-evolve-cancel{min-height:28px;padding:3px 7px;font-size:10px}
+
+/* Seletor de formato do treino (Home): 4 formatos em card branco sobre o navy. */
+#screen-home .training-format{background:#fffaf0;color:#0f1c26;border-radius:8px 8px 18px 8px;box-shadow:0 3px 8px #0003;padding:10px 12px}
+#screen-home .training-format-label{margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0f1c26}
+#screen-home .training-format-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+#screen-home .lobby-play .training-format-option{flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:52px;width:100%;padding:8px 4px;border:1px solid #d7dee3;border-radius:10px;background:#fff;color:#0f1c26;box-shadow:none;text-align:center}
+#screen-home .lobby-play .training-format-option b{font-size:15px}
+#screen-home .lobby-play .training-format-option small{font-size:10px;color:#4c5e68}
+#screen-home .lobby-play .training-format-option.is-active{background:#e60012;border-color:#e60012;color:#fff}
+#screen-home .lobby-play .training-format-option.is-active small{color:#ffd9dd}
+#screen-home .lobby-play .training-format-option.is-coming-soon{border-style:dashed;opacity:.8}
+#screen-home .lobby-play .training-format-option:disabled{opacity:.45}
+@media(orientation:landscape) and (max-height:440px){
+ #screen-home .lobby-play{gap:6px}
+ #screen-home .training-format{padding:6px 10px}
+ #screen-home .training-format-label{display:none}
+ #screen-home .lobby-play .training-format-option{min-height:36px;padding:4px 2px}
+ #screen-home .lobby-play .training-format-option b{font-size:14px}
+ #screen-home .lobby-play .training-format-option small{font-size:9px;white-space:nowrap}
+ #screen-home .lobby-play .lobby-journey{min-height:52px!important;padding-top:6px;padding-bottom:6px}
+ #screen-home .lobby-play .lobby-battles button{padding:4px 10px}
+ #screen-home .lobby-play .lobby-battles svg{width:18px;height:18px}
+ #screen-home .lobby-play .lobby-recruit{padding-top:6px;padding-bottom:6px}
+}
+@media(orientation:landscape) and (max-height:380px){
+ #screen-home .lobby-play .lobby-journey b{font-size:18px}
+ #screen-home .lobby-play .lobby-battles button{flex-direction:row;align-items:center;gap:8px;min-height:44px;padding:6px 10px}
+ #screen-home .lobby-play .lobby-battles small{display:none}
+ #screen-home .lobby-play .lobby-battles b{font-size:16px}
+ #screen-home .lobby-play .lobby-recruit{min-height:44px;padding-top:4px;padding-bottom:4px}
+ #screen-home .training-format{padding:5px 10px}
+ #screen-home .lobby-play .training-format-option{min-height:32px}
+}
