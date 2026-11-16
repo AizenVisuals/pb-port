@@ -1,0 +1,33 @@
+name: PULSE CI
+
+on:
+  push:
+    branches: [fan-pack-public]
+  pull_request:
+    branches: [fan-pack-public]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pulse-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Node tests and Android web packaging
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run complete test suite
+        run: npm test
+      - name: Verify Android web bundle packaging
+        run: npm run android:package
