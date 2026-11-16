@@ -917,3 +917,37 @@ progress::-webkit-progress-value{background:#e60012}
  #screen-home .training-format{padding:5px 10px}
  #screen-home .lobby-play .training-format-option{min-height:32px}
 }
+
+/* Re-roll de IVs com trava (tela do parceiro, aba IVs): HUD navy #0f1c26,
+   cards brancos, vermelho #e60012. O hexágono vive num card branco para o
+   traço vermelho e os rótulos escuros lerem sobre o fundo navy. */
+.iv-reroll{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:12px;align-items:start;margin:10px 0}
+.iv-radar{display:block;width:100%;height:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 6px #0004}
+.iv-radar-ring{fill:none;stroke:var(--line);stroke-width:1}
+.iv-radar line{stroke:var(--line);stroke-width:1}
+.iv-radar-poly{fill:#e6001233;stroke:#e60012;stroke-width:2;stroke-linejoin:round}
+.iv-radar circle{fill:#e60012;stroke:#fff;stroke-width:1}
+.iv-radar-label{fill:var(--ink);font-size:11px;font-weight:700}
+.iv-radar-iv{fill:var(--muted);font-size:10px}
+.iv-lock-list{display:grid;gap:6px}
+.iv-lock-row{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:5px 10px}
+.iv-lock-row.locked{border-color:#e60012;background:#fff5f5}
+.iv-lock-name{flex:1;font-size:13px;font-weight:700;color:var(--ink)}
+.iv-lock-values{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.iv-lock-values b{color:var(--ink)}
+.iv-lock-button{min-width:44px;min-height:44px;font-size:18px;line-height:1;background:#fff;border:1px solid var(--line);border-radius:9px;cursor:pointer;display:grid;place-items:center}
+.iv-lock-button svg{width:20px;height:20px}
+.iv-reroll-cost+ .partner-actions .primary-button svg{width:17px;height:17px;vertical-align:-3px}
+.special-evolution{padding-top:8px;border-top:1px solid var(--line);margin-top:10px}
+.special-evolution .evolution-condition span{color:var(--muted)}
+.iv-lock-button[aria-pressed="true"]{background:#ffe9e9;border-color:#e60012}
+.iv-reroll-cost{font-size:13px}
+.iv-reroll-cost b{color:#fff}
+.iv-reroll-warning{color:#b3000e!important;background:#ffe9e9;border:1px solid #e60012;border-radius:8px;padding:8px 12px}
+@media(orientation:landscape) and (max-height:440px){
+ .iv-reroll{gap:8px;margin:6px 0}
+ .iv-lock-row{padding:3px 8px}
+ .iv-lock-button{min-width:40px;min-height:40px}
+ .iv-reroll-cost{font-size:12px}
+ .partner-panel .iv-reroll .iv-lock-name{font-size:12px}
+}

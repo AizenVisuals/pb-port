@@ -1,0 +1,249 @@
+{
+  "viewports": {
+    "800x360": {
+      "viewport": "800x360",
+      "checks": {
+        "static": "ok",
+        "collection": "ok",
+        "backToHome": "ok",
+        "journeyCta": "ok",
+        "walletAndProfile": "ok",
+        "railBattle": "ok"
+      },
+      "state": {
+        "route": "home",
+        "appPaddingBottom": "0px",
+        "headerDisplay": "none",
+        "navDisplay": "none",
+        "docScroll": {
+          "w": 800,
+          "h": 360,
+          "innerW": 800,
+          "innerH": 360
+        },
+        "screensH": 360,
+        "partnerName": "Bulbasaur",
+        "partnerTier": "SR",
+        "partnerTierClass": "tier-badge tier-sr",
+        "partnerLevel": "Nv. 5",
+        "partnerTypes": "PlantaVeneno",
+        "partnerHp": "25 / 25",
+        "hpBarWidth": "100%",
+        "journey": "Jornada de Kanto · 0 / 20 fases",
+        "coins": "600",
+        "diamonds": "0",
+        "tickets": "0",
+        "trainerName": "Treinador",
+        "trainerFace": "/faces/red.png",
+        "canvasPaintedPx": 44342,
+        "canvasSize": {
+          "w": 336,
+          "h": 336
+        },
+        "rects": {
+          "topbar": {
+            "x": 0,
+            "y": 0,
+            "w": 800,
+            "h": 48,
+            "right": 800,
+            "bottom": 48
+          },
+          "rail": {
+            "x": 0,
+            "y": 48,
+            "w": 72,
+            "h": 312,
+            "right": 72,
+            "bottom": 360
+          },
+          "stage": {
+            "x": 72,
+            "y": 48,
+            "w": 728,
+            "h": 312,
+            "right": 800,
+            "bottom": 360
+          },
+          "cta": {
+            "x": 88,
+            "y": 284,
+            "w": 696,
+            "h": 64,
+            "right": 784,
+            "bottom": 348
+          },
+          "partner": {
+            "x": 88,
+            "y": 62,
+            "w": 696,
+            "h": 222,
+            "right": 784,
+            "bottom": 284
+          },
+          "partnerStage": {
+            "x": 94,
+            "y": 89,
+            "w": 168,
+            "h": 168,
+            "right": 262,
+            "bottom": 257
+          },
+          "partnerCard": {
+            "x": 280,
+            "y": 94,
+            "w": 498,
+            "h": 158,
+            "right": 778,
+            "bottom": 252
+          }
+        },
+        "overlaps": {
+          "topbarRail": false,
+          "topbarStage": false,
+          "railStage": false,
+          "partnerCta": false,
+          "partnerOverlap": false
+        },
+        "ctaInsideStage": true,
+        "railButtons": [
+          "Lobby",
+          "Batalha",
+          "Equipe",
+          "Coleção",
+          "Loja",
+          "Recompensas"
+        ],
+        "ctaText": "Continuar jornada →",
+        "battle": {
+          "clock": "2:02",
+          "player": "BULBASAUR",
+          "moves": 4
+        }
+      }
+    },
+    "844x390": {
+      "viewport": "844x390",
+      "checks": {
+        "static": "ok",
+        "collection": "ok",
+        "backToHome": "ok",
+        "journeyCta": "ok",
+        "walletAndProfile": "ok",
+        "railBattle": "ok"
+      },
+      "state": {
+        "route": "home",
+        "appPaddingBottom": "0px",
+        "headerDisplay": "none",
+        "navDisplay": "none",
+        "docScroll": {
+          "w": 844,
+          "h": 390,
+          "innerW": 844,
+          "innerH": 390
+        },
+        "screensH": 390,
+        "partnerName": "Bulbasaur",
+        "partnerTier": "SR",
+        "partnerTierClass": "tier-badge tier-sr",
+        "partnerLevel": "Nv. 5",
+        "partnerTypes": "PlantaVeneno",
+        "partnerHp": "25 / 25",
+        "hpBarWidth": "100%",
+        "journey": "Jornada de Kanto · 0 / 20 fases",
+        "coins": "600",
+        "diamonds": "0",
+        "tickets": "0",
+        "trainerName": "Treinador",
+        "trainerFace": "/faces/red.png",
+        "canvasPaintedPx": 48984,
+        "canvasSize": {
+          "w": 336,
+          "h": 336
+        },
+        "rects": {
+          "topbar": {
+            "x": 0,
+            "y": 0,
+            "w": 844,
+            "h": 48,
+            "right": 844,
+            "bottom": 48
+          },
+          "rail": {
+            "x": 0,
+            "y": 48,
+            "w": 72,
+            "h": 342,
+            "right": 72,
+            "bottom": 390
+          },
+          "stage": {
+            "x": 72,
+            "y": 48,
+            "w": 772,
+            "h": 342,
+            "right": 844,
+            "bottom": 390
+          },
+          "cta": {
+            "x": 88,
+            "y": 314,
+            "w": 740,
+            "h": 64,
+            "right": 828,
+            "bottom": 378
+          },
+          "partner": {
+            "x": 88,
+            "y": 62,
+            "w": 740,
+            "h": 252,
+            "right": 828,
+            "bottom": 314
+          },
+          "partnerStage": {
+            "x": 94,
+            "y": 104,
+            "w": 168,
+            "h": 168,
+            "right": 262,
+            "bottom": 272
+          },
+          "partnerCard": {
+            "x": 280,
+            "y": 109,
+            "w": 542,
+            "h": 158,
+            "right": 822,
+            "bottom": 267
+          }
+        },
+        "overlaps": {
+          "topbarRail": false,
+          "topbarStage": false,
+          "railStage": false,
+          "partnerCta": false,
+          "partnerOverlap": false
+        },
+        "ctaInsideStage": true,
+        "railButtons": [
+          "Lobby",
+          "Batalha",
+          "Equipe",
+          "Coleção",
+          "Loja",
+          "Recompensas"
+        ],
+        "ctaText": "Continuar jornada →",
+        "battle": {
+          "clock": "2:02",
+          "player": "BULBASAUR",
+          "moves": 4
+        }
+      }
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,72 @@
+{
+  "scenarios": {
+    "guest-800x360": {
+      "checks": {
+        "loginShown": true,
+        "appHidden": true,
+        "trainerOptions": 35,
+        "teamOptions": 3,
+        "saveOnline": {
+          "provider": "guest",
+          "team": "valor",
+          "userId": "29351b57-e026-44bd-8f21-11941c1c1501",
+          "syncedAt": 1794765721351,
+          "pendingSync": false
+        },
+        "trainerName": "Bloody",
+        "trainerKey": "ash",
+        "serverProfile": {
+          "trainer_key": "ash",
+          "nick": "Bloody",
+          "team": "valor",
+          "updated_at": 1794765721342
+        },
+        "loginSkippedOnReload": true,
+        "teamAfterProfileSave": "mystic"
+      }
+    },
+    "guest-844x390": {
+      "checks": {
+        "loginShown": true,
+        "appHidden": true,
+        "trainerOptions": 35,
+        "teamOptions": 3,
+        "saveOnline": {
+          "provider": "guest",
+          "team": "valor",
+          "userId": "678db826-c6d2-4c02-8ade-8d590748dbd4",
+          "syncedAt": 1794765727954,
+          "pendingSync": false
+        },
+        "trainerName": "Bloody",
+        "trainerKey": "ash",
+        "serverProfile": {
+          "trainer_key": "ash",
+          "nick": "Bloody",
+          "team": "valor",
+          "updated_at": 1794765727951
+        },
+        "loginSkippedOnReload": true,
+        "teamAfterProfileSave": "mystic"
+      }
+    },
+    "offline-800x360": {
+      "checks": {
+        "saveOnline": {
+          "provider": "local",
+          "team": "valor",
+          "userId": null,
+          "syncedAt": null,
+          "pendingSync": true
+        }
+      }
+    },
+    "google-popup-800x360": {
+      "checks": {
+        "popupUrl": "https://pulse-arena-pb.firebaseapp.com/__/auth/handler?apiKey=AIzaSyDqOABWedeyHw6CmH64zKkiH1CwT1PIMlU&appName=pulse-account&authType=signInViaPopup&redirectUrl=http%3A%2F%2F127.0.0.1%3A3012%2Fpulse.html&v=12.19.0&eventId=6719080885&providerId=google.com&customParameters=%7B%22prompt%22%3A%22select_account%22%7D&scopes=profile",
+        "loginStillShown": true
+      }
+    }
+  },
+  "errors": []
+}

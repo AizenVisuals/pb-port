@@ -1,0 +1,674 @@
+{
+  "844x390": {
+    "viewport": "844x390",
+    "top": {
+      "screen": {
+        "clientH": 340,
+        "scrollH": 413,
+        "rect": {
+          "x": 0,
+          "y": 50,
+          "w": 844,
+          "h": 340
+        }
+      },
+      "bonus": {
+        "h": 285,
+        "rect": {
+          "x": 14,
+          "y": 124,
+          "w": 816,
+          "h": 285
+        }
+      },
+      "section": {
+        "clientH": 0,
+        "scrollH": 46,
+        "rect": {
+          "x": 14,
+          "y": 417,
+          "w": 816,
+          "h": 0
+        }
+      },
+      "list": {
+        "clientH": 0,
+        "scrollH": 2020,
+        "maxHeight": "140.4px",
+        "overflowY": "auto",
+        "rect": {
+          "x": 14,
+          "y": 462,
+          "w": 816,
+          "h": 1
+        }
+      },
+      "rows": 50,
+      "claimButtons": 50,
+      "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM",
+      "screenScrollTopMax": 73,
+      "listScrollTopMax": 2020,
+      "hits": [
+        {
+          "i": 0,
+          "cy": 503,
+          "hit": "undefined."
+        },
+        {
+          "i": 1,
+          "cy": 503,
+          "hit": "undefined."
+        },
+        {
+          "i": 2,
+          "cy": 584,
+          "hit": "undefined."
+        },
+        {
+          "i": 3,
+          "cy": 584,
+          "hit": "undefined."
+        },
+        {
+          "i": 4,
+          "cy": 665,
+          "hit": "undefined."
+        },
+        {
+          "i": 5,
+          "cy": 665,
+          "hit": "undefined."
+        },
+        {
+          "i": 6,
+          "cy": 745,
+          "hit": "undefined."
+        },
+        {
+          "i": 7,
+          "cy": 745,
+          "hit": "undefined."
+        },
+        {
+          "i": 8,
+          "cy": 826,
+          "hit": "undefined."
+        },
+        {
+          "i": 9,
+          "cy": 826,
+          "hit": "undefined."
+        },
+        {
+          "i": 10,
+          "cy": 907,
+          "hit": "undefined."
+        },
+        {
+          "i": 11,
+          "cy": 907,
+          "hit": "undefined."
+        }
+      ]
+    },
+    "scrolled": {
+      "screen": {
+        "clientH": 340,
+        "scrollH": 413,
+        "rect": {
+          "x": 0,
+          "y": 50,
+          "w": 844,
+          "h": 340
+        }
+      },
+      "bonus": {
+        "h": 285,
+        "rect": {
+          "x": 14,
+          "y": 51,
+          "w": 816,
+          "h": 285
+        }
+      },
+      "section": {
+        "clientH": 0,
+        "scrollH": 46,
+        "rect": {
+          "x": 14,
+          "y": 344,
+          "w": 816,
+          "h": 0
+        }
+      },
+      "list": {
+        "clientH": 0,
+        "scrollH": 2020,
+        "maxHeight": "140.4px",
+        "overflowY": "auto",
+        "rect": {
+          "x": 14,
+          "y": 389,
+          "w": 816,
+          "h": 1
+        }
+      },
+      "rows": 50,
+      "claimButtons": 50,
+      "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM",
+      "screenScrollTopMax": 73,
+      "listScrollTopMax": 2020,
+      "hits": [
+        {
+          "i": 0,
+          "cy": 430,
+          "hit": "undefined."
+        },
+        {
+          "i": 1,
+          "cy": 430,
+          "hit": "undefined."
+        },
+        {
+          "i": 2,
+          "cy": 511,
+          "hit": "undefined."
+        },
+        {
+          "i": 3,
+          "cy": 511,
+          "hit": "undefined."
+        },
+        {
+          "i": 4,
+          "cy": 592,
+          "hit": "undefined."
+        },
+        {
+          "i": 5,
+          "cy": 592,
+          "hit": "undefined."
+        },
+        {
+          "i": 6,
+          "cy": 672,
+          "hit": "undefined."
+        },
+        {
+          "i": 7,
+          "cy": 672,
+          "hit": "undefined."
+        },
+        {
+          "i": 8,
+          "cy": 753,
+          "hit": "undefined."
+        },
+        {
+          "i": 9,
+          "cy": 753,
+          "hit": "undefined."
+        },
+        {
+          "i": 10,
+          "cy": 834,
+          "hit": "undefined."
+        },
+        {
+          "i": 11,
+          "cy": 834,
+          "hit": "undefined."
+        }
+      ]
+    },
+    "errors": []
+  },
+  "800x360": {
+    "viewport": "800x360",
+    "top": {
+      "screen": {
+        "clientH": 310,
+        "scrollH": 435,
+        "rect": {
+          "x": 0,
+          "y": 50,
+          "w": 800,
+          "h": 310
+        }
+      },
+      "bonus": {
+        "h": 307,
+        "rect": {
+          "x": 14,
+          "y": 124,
+          "w": 772,
+          "h": 307
+        }
+      },
+      "section": {
+        "clientH": 0,
+        "scrollH": 46,
+        "rect": {
+          "x": 14,
+          "y": 439,
+          "w": 772,
+          "h": 0
+        }
+      },
+      "list": {
+        "clientH": 0,
+        "scrollH": 2020,
+        "maxHeight": "129.6px",
+        "overflowY": "auto",
+        "rect": {
+          "x": 14,
+          "y": 484,
+          "w": 772,
+          "h": 1
+        }
+      },
+      "rows": 50,
+      "claimButtons": 50,
+      "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM",
+      "screenScrollTopMax": 125,
+      "listScrollTopMax": 2020,
+      "hits": [
+        {
+          "i": 0,
+          "cy": 525,
+          "hit": "undefined."
+        },
+        {
+          "i": 1,
+          "cy": 525,
+          "hit": "undefined."
+        },
+        {
+          "i": 2,
+          "cy": 606,
+          "hit": "undefined."
+        },
+        {
+          "i": 3,
+          "cy": 606,
+          "hit": "undefined."
+        },
+        {
+          "i": 4,
+          "cy": 687,
+          "hit": "undefined."
+        },
+        {
+          "i": 5,
+          "cy": 687,
+          "hit": "undefined."
+        },
+        {
+          "i": 6,
+          "cy": 768,
+          "hit": "undefined."
+        },
+        {
+          "i": 7,
+          "cy": 768,
+          "hit": "undefined."
+        },
+        {
+          "i": 8,
+          "cy": 848,
+          "hit": "undefined."
+        },
+        {
+          "i": 9,
+          "cy": 848,
+          "hit": "undefined."
+        },
+        {
+          "i": 10,
+          "cy": 929,
+          "hit": "undefined."
+        },
+        {
+          "i": 11,
+          "cy": 929,
+          "hit": "undefined."
+        }
+      ]
+    },
+    "scrolled": {
+      "screen": {
+        "clientH": 310,
+        "scrollH": 435,
+        "rect": {
+          "x": 0,
+          "y": 50,
+          "w": 800,
+          "h": 310
+        }
+      },
+      "bonus": {
+        "h": 307,
+        "rect": {
+          "x": 14,
+          "y": -1,
+          "w": 772,
+          "h": 307
+        }
+      },
+      "section": {
+        "clientH": 0,
+        "scrollH": 46,
+        "rect": {
+          "x": 14,
+          "y": 314,
+          "w": 772,
+          "h": 0
+        }
+      },
+      "list": {
+        "clientH": 0,
+        "scrollH": 2020,
+        "maxHeight": "129.6px",
+        "overflowY": "auto",
+        "rect": {
+          "x": 14,
+          "y": 359,
+          "w": 772,
+          "h": 1
+        }
+      },
+      "rows": 50,
+      "claimButtons": 50,
+      "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM",
+      "screenScrollTopMax": 125,
+      "listScrollTopMax": 2020,
+      "hits": [
+        {
+          "i": 0,
+          "cy": 400,
+          "hit": "undefined."
+        },
+        {
+          "i": 1,
+          "cy": 400,
+          "hit": "undefined."
+        },
+        {
+          "i": 2,
+          "cy": 481,
+          "hit": "undefined."
+        },
+        {
+          "i": 3,
+          "cy": 481,
+          "hit": "undefined."
+        },
+        {
+          "i": 4,
+          "cy": 562,
+          "hit": "undefined."
+        },
+        {
+          "i": 5,
+          "cy": 562,
+          "hit": "undefined."
+        },
+        {
+          "i": 6,
+          "cy": 643,
+          "hit": "undefined."
+        },
+        {
+          "i": 7,
+          "cy": 643,
+          "hit": "undefined."
+        },
+        {
+          "i": 8,
+          "cy": 723,
+          "hit": "undefined."
+        },
+        {
+          "i": 9,
+          "cy": 723,
+          "hit": "undefined."
+        },
+        {
+          "i": 10,
+          "cy": 804,
+          "hit": "undefined."
+        },
+        {
+          "i": 11,
+          "cy": 804,
+          "hit": "undefined."
+        }
+      ]
+    },
+    "errors": []
+  },
+  "844x600": {
+    "viewport": "844x600",
+    "top": {
+      "screen": {
+        "clientH": 544,
+        "scrollH": 544,
+        "rect": {
+          "x": 0,
+          "y": 56,
+          "w": 844,
+          "h": 544
+        }
+      },
+      "bonus": {
+        "h": 134,
+        "rect": {
+          "x": 18,
+          "y": 137,
+          "w": 808,
+          "h": 134
+        }
+      },
+      "section": {
+        "clientH": 303,
+        "scrollH": 303,
+        "rect": {
+          "x": 18,
+          "y": 285,
+          "w": 808,
+          "h": 303
+        }
+      },
+      "list": {
+        "clientH": 251,
+        "scrollH": 2347,
+        "maxHeight": "252px",
+        "overflowY": "auto",
+        "rect": {
+          "x": 18,
+          "y": 336,
+          "w": 808,
+          "h": 252
+        }
+      },
+      "rows": 50,
+      "claimButtons": 50,
+      "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM",
+      "screenScrollTopMax": 0,
+      "listScrollTopMax": 2096,
+      "hits": [
+        {
+          "i": 0,
+          "cy": 384,
+          "hit": "capture-1"
+        },
+        {
+          "i": 1,
+          "cy": 384,
+          "hit": "capture-3"
+        },
+        {
+          "i": 2,
+          "cy": 478,
+          "hit": "capture-5"
+        },
+        {
+          "i": 3,
+          "cy": 478,
+          "hit": "capture-10"
+        },
+        {
+          "i": 4,
+          "cy": 572,
+          "hit": "capture-20"
+        },
+        {
+          "i": 5,
+          "cy": 572,
+          "hit": "pokemon-gacha-1"
+        },
+        {
+          "i": 6,
+          "cy": 666,
+          "hit": "undefined."
+        },
+        {
+          "i": 7,
+          "cy": 666,
+          "hit": "undefined."
+        },
+        {
+          "i": 8,
+          "cy": 759,
+          "hit": "undefined."
+        },
+        {
+          "i": 9,
+          "cy": 759,
+          "hit": "undefined."
+        },
+        {
+          "i": 10,
+          "cy": 853,
+          "hit": "undefined."
+        },
+        {
+          "i": 11,
+          "cy": 853,
+          "hit": "undefined."
+        }
+      ]
+    },
+    "scrolled": {
+      "screen": {
+        "clientH": 544,
+        "scrollH": 544,
+        "rect": {
+          "x": 0,
+          "y": 56,
+          "w": 844,
+          "h": 544
+        }
+      },
+      "bonus": {
+        "h": 134,
+        "rect": {
+          "x": 18,
+          "y": 137,
+          "w": 808,
+          "h": 134
+        }
+      },
+      "section": {
+        "clientH": 303,
+        "scrollH": 303,
+        "rect": {
+          "x": 18,
+          "y": 285,
+          "w": 808,
+          "h": 303
+        }
+      },
+      "list": {
+        "clientH": 251,
+        "scrollH": 2347,
+        "maxHeight": "252px",
+        "overflowY": "auto",
+        "rect": {
+          "x": 18,
+          "y": 336,
+          "w": 808,
+          "h": 252
+        }
+      },
+      "rows": 50,
+      "claimButtons": 50,
+      "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM",
+      "screenScrollTopMax": 0,
+      "listScrollTopMax": 2096,
+      "hits": [
+        {
+          "i": 0,
+          "cy": 384,
+          "hit": "capture-1"
+        },
+        {
+          "i": 1,
+          "cy": 384,
+          "hit": "capture-3"
+        },
+        {
+          "i": 2,
+          "cy": 478,
+          "hit": "capture-5"
+        },
+        {
+          "i": 3,
+          "cy": 478,
+          "hit": "capture-10"
+        },
+        {
+          "i": 4,
+          "cy": 572,
+          "hit": "capture-20"
+        },
+        {
+          "i": 5,
+          "cy": 572,
+          "hit": "pokemon-gacha-1"
+        },
+        {
+          "i": 6,
+          "cy": 666,
+          "hit": "undefined."
+        },
+        {
+          "i": 7,
+          "cy": 666,
+          "hit": "undefined."
+        },
+        {
+          "i": 8,
+          "cy": 759,
+          "hit": "undefined."
+        },
+        {
+          "i": 9,
+          "cy": 759,
+          "hit": "undefined."
+        },
+        {
+          "i": 10,
+          "cy": 853,
+          "hit": "undefined."
+        },
+        {
+          "i": 11,
+          "cy": 853,
+          "hit": "undefined."
+        }
+      ]
+    },
+    "errors": []
+  }
+}

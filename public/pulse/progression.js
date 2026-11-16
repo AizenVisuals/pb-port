@@ -1,13 +1,22 @@
 import {LEARNSETS} from './learnsets.js';
 import {NATIONAL_RARITIES} from './expansion-rules.js';
 const moveRequirementAvailable=(key,id)=>LEARNSETS[key]?.levelMoves[id]!==undefined||LEARNSETS[key]?.specialMoves.includes(id);
-import {initialGrowth,ensureGrowth,validateGrowth,learnedMoves,selectedMoves,levelOf,xpAt,addXP,koXpFor,ITEMS,STONES,STONE_EVOLUTIONS,EVOLUTIONS,specialPool,awardTicketWin,MINTS,rollTraits,effectiveNature} from './growth.js';
+import {initialGrowth,ensureGrowth,validateGrowth,learnedMoves,selectedMoves,levelOf,xpAt,addXP,koXpFor,ITEMS,STONES,STONE_EVOLUTIONS,SPECIAL_EVOLUTIONS,EVOLUTIONS,specialPool,awardTicketWin,MINTS,rollTraits,effectiveNature,STAT_KEYS,normalizeLocks,countLockedIVs,normalizeIVs,rerollIVs as rollIVs} from './growth.js';
 import {bannerPool,isSummonable,SUMMON_BANNERS} from './banners.js';
 import {INITIAL_PARTNERS,ALL_STAGES,newJourney,validateJourney} from './campaign.js';
 import {MISSIONS,MISSION_BY_ID,initialMissions,validateMissions} from './missions.js';
 /** PULSE ARENA local-only progression. Acquisition rarity never modifies combat stats. */
 export const SAVE_KEY='pulse-arena.save.v1';
-export const ECONOMY=Object.freeze({summonDiamondCost:100,dailyCoins:150,duplicateDiamonds:Object.freeze({C:10,R:30,SR:60,UR:300,SSS:150}),prices:Object.freeze({C:60,R:180,SR:360,UR:1800,SSS:900}),shinyPrice:300,rates:Object.freeze({C:.70,R:.21,SR:.078,UR:.005,SSS:.007}),pityAt:10,ticketDropRate:.10});
+export const ECONOMY=Object.freeze({summonDiamondCost:100,dailyCoins:150,duplicateDiamonds:Object.freeze({C:10,R:30,SR:60,UR:300,SSS:150}),prices:Object.freeze({C:60,R:180,SR:360,UR:1800,SSS:900}),shinyPrice:300,rates:Object.freeze({C:.70,R:.21,SR:.078,UR:.005,SSS:.007}),pityAt:10,ticketDropRate:.10,ivReroll:Object.freeze({base:100,perLock:50})});
+// Re-roll de IVs com trava — custo em diamantes, sem dinheiro real:
+// 100 de base + 50 por IV travado (0 travas = 100; 5 travas = 350).
+// A base é o preço de uma invocação; o teto (5 travas) fica na faixa de
+// comprar um Pokémon SR (360) — um re-roll mirado num IV ruim custa quase
+// o mesmo que um SR novo, e um re-roll livre custa uma invocação. Diamantes
+// vêm de duplicatas no gacha (C 10 / R 30 / SR 60; ~20 por invocação em
+// média quando tudo é duplicata) e da compra direta — alcançável em poucos
+// dias de jogo, sem virar gasto trivial de todo dia.
+export const ivRerollCost=(lockedCount=0)=>{const n=Math.max(0,Math.min(5,Math.floor(lockedCount)||0));return ECONOMY.ivReroll.base+ECONOMY.ivReroll.perLock*n;};
 export const STARTERS=Object.freeze(['marshadow','lucario','gengar','charizard','blastoise','venusaur']);
 export const TRAINERS=Object.freeze([
  {key:'alain',name:'Alain'},
@@ -219,11 +228,27 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
    if(record.mintNature===nature)return failure('Essa mint já está em efeito neste Pokémon.');
    record.mintNature=nature;g.mintInventory[mintId]--;persist();return success(save,{mon,mint:mintId,nature,original:record.nature});
   },
+  rerollIVs(mon,locks={}){const g=save.growth;if(!g||!save.unlocked.includes(mon))return failure('Escolha um Pokémon da sua coleção.');
+   const record=g.pokemon[mon];if(!record)return failure('Pokémon sem progresso.');
+   if(save.journey?.active)return failure('Termine a fase em andamento antes de re-rolar os IVs.');
+   const locked=normalizeLocks(locks),lockedCount=countLockedIVs(locked);
+   if(lockedCount>=6)return failure('Trave no máximo 5 IVs — com todos travados não há nada para sortear.');
+   const cost=ivRerollCost(lockedCount);
+   if(save.diamonds<cost)return failure(`Diamantes insuficientes — o re-roll custa ${cost} diamantes.`);
+   const before={...normalizeIVs(record.ivs)},after=rollIVs(record.ivs,locked,rng);
+   record.ivs=after;save.diamonds-=cost;persist();return success(save,{mon,cost,before,after,locked:STAT_KEYS.filter(s=>locked[s])});
+  },
   useStone(mon,stoneId){const g=save.growth;if(!g||!save.unlocked.includes(mon)||!(g.stoneInventory?.[stoneId]>0))return failure('Escolha uma pedra da mochila e um Pokémon obtido.');
    if(save.journey?.active)return failure('Use a pedra depois de concluir a fase em andamento.');
    const target=STONE_EVOLUTIONS[mon]?.[stoneId];if(!target||!entry(target))return failure('Essa pedra não evolui esse Pokémon.');
    const result=api.evolvePokemon(mon,target,stoneId);if(!result.ok)return result;
    g.stoneInventory[stoneId]--;persist();return success(save,{from:mon,target,stone:stoneId});
+  },
+  useEvolutionCatalyst(mon,target){const g=save.growth,stoneId='evolution-catalyst';if(!g||!save.unlocked.includes(mon)||!(g.stoneInventory?.[stoneId]>0))return failure('Você precisa de um Catalisador Evolutivo.');
+   if(save.journey?.active)return failure('Use o catalisador depois de concluir a fase em andamento.');
+   const route=SPECIAL_EVOLUTIONS[mon]?.find(edge=>edge.target===target);if(!route||!entry(target))return failure('Essa evolução especial não está disponível para este Pokémon.');
+   const result=api.evolvePokemon(mon,target,null,target);if(!result.ok)return result;
+   g.stoneInventory[stoneId]--;persist();return success(save,{from:mon,target,condition:route.condition,catalyst:stoneId});
   },
   equipItem(mon,id){if(!save.growth||!save.unlocked.includes(mon)||id!==null&&!ITEMS[id])return failure('Escolha um item e um Pokémon da coleção.');if(save.journey?.active)return failure('Troque os itens depois de terminar a fase em andamento.');const old=save.growth.held[mon];if(old===id)return success(save);if(id&&save.growth.inventory[id]<1)return failure('Esse item não está na mochila.');if(old)save.growth.inventory[old]++;delete save.growth.held[mon];if(id){save.growth.inventory[id]--;save.growth.held[mon]=id;}persist();return success(save);},
   consumeHeld({battleId,mon,item}){const g=save.growth,event=battleId+':'+mon+':'+item;if(!g||typeof battleId!=='string'||!battleId.length||battleId.length>160||g.held[mon]!==item||!ITEMS[item]||item==='leftovers'||g.processedItems.includes(event))return failure('Item já consumido ou indisponível.');delete g.held[mon];g.processedItems.push(event);persist();return success(save);},
@@ -234,9 +259,10 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
   if(!target)return failure('Esse Pokémon não é compatível com esta TM.');if(learnedMoves(save,item).some(x=>x.name===target.name))return failure('Esse Pokémon já conhece este golpe.');
   g.tmInventory[id]--;g.specialMoves[mon]||=[];g.specialMoves[mon].push(target.id);progressMission(save,'tmUses');persist();return success(save,{mon,move:clone(target)});
   },
-  previewEvolution(mon,stoneId=null){
+  previewEvolution(mon,stoneId=null,specialTarget=null){
    const stoneTarget=stoneId?STONE_EVOLUTIONS[mon]?.[stoneId]:null;
-   const edge=stoneTarget?[stoneTarget,1]:EVOLUTIONS[mon],record=save.growth?.pokemon[mon];if(!edge||!record||(!stoneTarget&&levelOf(record.xp)<edge[1])||!entry(edge[0]))return null;
+   const specialEdge=specialTarget&&SPECIAL_EVOLUTIONS[mon]?.find(edge=>edge.target===specialTarget);
+   const edge=stoneTarget?[stoneTarget,1]:specialEdge?[specialEdge.target,1]:EVOLUTIONS[mon],record=save.growth?.pokemon[mon];if(!edge||!record||(!stoneTarget&&!specialEdge&&levelOf(record.xp)<edge[1])||!entry(edge[0]))return null;
    const target=edge[0],next=clone(save);next.growth.pokemon[target]={xp:record.xp,nature:record.nature,ivs:record.ivs,...(record.mintNature?{mintNature:record.mintNature}:{})};
    const knownNames=learnedMoves(save,entry(mon)).map(m=>m.name);
    const inherited=entry(target).pool.filter(m=>knownNames.includes(m.name)).filter(m=>moveRequirementAvailable(target,m.id));
@@ -245,7 +271,7 @@ export function createProgression({storage:providedStorage,rng=randomFloat,now=D
    next.team.moves[target]=learnedMoves(next,entry(target)).filter(m=>oldNames.includes(m.name)).map(m=>m.id).slice(0,4);
    return {from:mon,target,level:levelOf(record.xp),moves:selectedMoves(next,entry(target)),inherited:next.growth.inherited[target]};
   },
-  evolvePokemon(mon,target,stoneId=null){const evolution=api.previewEvolution(mon,stoneId);if(!evolution||evolution.target!==target)return failure('Esse Pokémon ainda não pode evoluir.');const g=save.growth,xp=g.pokemon[mon].xp,source=g.pokemon[mon],hadTarget=!!g.pokemon[target];
+  evolvePokemon(mon,target,stoneId=null,specialTarget=null){const evolution=api.previewEvolution(mon,stoneId,specialTarget);if(!evolution||evolution.target!==target)return failure('Esse Pokémon ainda não pode evoluir.');const g=save.growth,xp=g.pokemon[mon].xp,source=g.pokemon[mon],hadTarget=!!g.pokemon[target];
    // A evolução mantém nature, IVs e mint do Pokémon — ou os do alvo, se a
    // forma evoluída já era da coleção (dois indivíduos, um registro).
    const traits=hadTarget?{nature:g.pokemon[target].nature,ivs:g.pokemon[target].ivs,...(g.pokemon[target].mintNature?{mintNature:g.pokemon[target].mintNature}:{})}:{nature:source?.nature??'hardy',ivs:source?.ivs,...(source?.mintNature?{mintNature:source.mintNature}:{})};
@@ -386,5 +412,6 @@ export const claimStarterTickets=(...args)=>local.claimStarterTickets(...args);
 export const summon=(...args)=>local.summon(...args);
 export const buyPokemon=(...args)=>local.buyPokemon(...args);
 export const recordBattle=(...args)=>local.recordBattle(...args);
+export const rerollIVs=(...args)=>local.rerollIVs(...args);
 export const exportSave=(...args)=>local.exportSave(...args);
 export const importSave=(...args)=>local.importSave(...args);

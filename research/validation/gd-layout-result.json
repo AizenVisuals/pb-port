@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "battle 844 screenshot",
+    "Growl narrado no log: Growl! O Ataque do Rattata caiu!",
+    "Thunder Wave narrado no log: Thunder Wave! O Rattata ficou paralisado!",
+    "coleção/loja/campanha 844 screenshots",
+    "battle 1280 screenshot"
+  ],
+  "errors": [],
+  "pass": true
+}

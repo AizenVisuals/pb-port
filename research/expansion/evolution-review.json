@@ -1,0 +1,1458 @@
+{
+  "levelOnly": 280,
+  "deferred": [
+    {
+      "fromId": 172,
+      "toId": 25,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo)",
+          "en": "Level up \u00b7 High friendship (threshold varies by game)",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego)"
+        }
+      ]
+    },
+    {
+      "fromId": 203,
+      "toId": 981,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Twin Beam",
+          "en": "Level up \u00b7 Knowing Twin Beam",
+          "es": "Subir de nivel \u00b7 Conociendo Twin Beam"
+        }
+      ]
+    },
+    {
+      "fromId": 206,
+      "toId": 982,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Hyper Drill",
+          "en": "Level up \u00b7 Knowing Hyper Drill",
+          "es": "Subir de nivel \u00b7 Conociendo Hyper Drill"
+        }
+      ]
+    },
+    {
+      "fromId": 207,
+      "toId": 472,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Segurando Razor Fang \u00b7 Durante a noite",
+          "en": "Level up \u00b7 Holding Razor Fang \u00b7 At night",
+          "es": "Subir de nivel \u00b7 Llevando Razor Fang \u00b7 De noche"
+        }
+      ]
+    },
+    {
+      "fromId": 215,
+      "toId": 461,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Segurando Razor Claw \u00b7 Durante a noite",
+          "en": "Level up \u00b7 Holding Razor Claw \u00b7 At night",
+          "es": "Subir de nivel \u00b7 Llevando Razor Claw \u00b7 De noche"
+        }
+      ]
+    },
+    {
+      "fromId": 217,
+      "toId": 901,
+      "conditions": [
+        {
+          "pt": "Usar Peat Block \u00b7 Usar o item em Crimson Mirelands durante a lua cheia",
+          "en": "Use Peat Block \u00b7 Use the item in Crimson Mirelands during a full moon",
+          "es": "Usar Peat Block \u00b7 Usa el objeto en Crimson Mirelands durante la luna llena"
+        }
+      ]
+    },
+    {
+      "fromId": 221,
+      "toId": 473,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Ancient Power",
+          "en": "Level up \u00b7 Knowing Ancient Power",
+          "es": "Subir de nivel \u00b7 Conociendo Ancient Power"
+        }
+      ]
+    },
+    {
+      "fromId": 458,
+      "toId": 226,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Na equipe com Remoraid",
+          "en": "Level up \u00b7 In party with Remoraid",
+          "es": "Subir de nivel \u00b7 En el equipo con Remoraid"
+        }
+      ]
+    },
+    {
+      "fromId": 234,
+      "toId": 899,
+      "conditions": [
+        {
+          "pt": "Usar Psyshield Bash 20 vezes no estilo \u00e1gil",
+          "en": "Use Psyshield Bash 20 times in Agile Style",
+          "es": "Usa Psyshield Bash 20 veces en estilo r\u00e1pido"
+        }
+      ]
+    },
+    {
+      "fromId": 266,
+      "toId": 267,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 10",
+          "en": "Level 10",
+          "es": "Nivel 10"
+        }
+      ]
+    },
+    {
+      "fromId": 266,
+      "toId": 268,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 7",
+          "en": "Level 7",
+          "es": "Nivel 7"
+        }
+      ]
+    },
+    {
+      "fromId": 173,
+      "toId": 35,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo)",
+          "en": "Level up \u00b7 High friendship (threshold varies by game)",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego)"
+        }
+      ]
+    },
+    {
+      "fromId": 281,
+      "toId": 282,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 30",
+          "en": "Level 30",
+          "es": "Nivel 30"
+        }
+      ]
+    },
+    {
+      "fromId": 281,
+      "toId": 475,
+      "conditions": [
+        {
+          "pt": "Usar Dawn Stone \u00b7 Macho",
+          "en": "Use Dawn Stone \u00b7 Male",
+          "es": "Usar Dawn Stone \u00b7 Macho"
+        }
+      ]
+    },
+    {
+      "fromId": 290,
+      "toId": 291,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 20",
+          "en": "Level 20",
+          "es": "Nivel 20"
+        }
+      ]
+    },
+    {
+      "fromId": 290,
+      "toId": 292,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 20, vaga na equipe e uma Pok\u00e9 Ball",
+          "en": "Level 20, an empty party slot and a Pok\u00e9 Ball",
+          "es": "Nivel 20, un hueco en el equipo y una Pok\u00e9 Ball"
+        }
+      ]
+    },
+    {
+      "fromId": 299,
+      "toId": 476,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Local: Mt Coronet",
+          "en": "Level up \u00b7 Location: Mt Coronet",
+          "es": "Subir de nivel \u00b7 Lugar: Mt Coronet"
+        },
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Local: Chargestone Cave",
+          "en": "Level up \u00b7 Location: Chargestone Cave",
+          "es": "Subir de nivel \u00b7 Lugar: Chargestone Cave"
+        },
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Local: Kalos Route 13",
+          "en": "Level up \u00b7 Location: Kalos Route 13",
+          "es": "Subir de nivel \u00b7 Lugar: Kalos Route 13"
+        }
+      ]
+    },
+    {
+      "fromId": 315,
+      "toId": 407,
+      "conditions": [
+        {
+          "pt": "Usar Shiny Stone",
+          "en": "Use Shiny Stone",
+          "es": "Usar Shiny Stone"
+        }
+      ]
+    },
+    {
+      "fromId": 174,
+      "toId": 39,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo)",
+          "en": "Level up \u00b7 High friendship (threshold varies by game)",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego)"
+        }
+      ]
+    },
+    {
+      "fromId": 42,
+      "toId": 169,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo)",
+          "en": "Level up \u00b7 High friendship (threshold varies by game)",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego)"
+        }
+      ]
+    },
+    {
+      "fromId": 349,
+      "toId": 350,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Beleza \u2265 171",
+          "en": "Level up \u00b7 Beauty \u2265 171",
+          "es": "Subir de nivel \u00b7 Belleza \u2265 171"
+        },
+        {
+          "pt": "Troca \u00b7 Segurando Prism Scale",
+          "en": "Trade \u00b7 Holding Prism Scale",
+          "es": "Intercambio \u00b7 Llevando Prism Scale"
+        }
+      ]
+    },
+    {
+      "fromId": 44,
+      "toId": 182,
+      "conditions": [
+        {
+          "pt": "Usar Sun Stone",
+          "en": "Use Sun Stone",
+          "es": "Usar Sun Stone"
+        }
+      ]
+    },
+    {
+      "fromId": 356,
+      "toId": 477,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando Reaper Cloth",
+          "en": "Trade \u00b7 Holding Reaper Cloth",
+          "es": "Intercambio \u00b7 Llevando Reaper Cloth"
+        }
+      ]
+    },
+    {
+      "fromId": 433,
+      "toId": 358,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo) \u00b7 Durante a noite",
+          "en": "Level up \u00b7 High friendship (threshold varies by game) \u00b7 At night",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego) \u00b7 De noche"
+        }
+      ]
+    },
+    {
+      "fromId": 361,
+      "toId": 362,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 42",
+          "en": "Level 42",
+          "es": "Nivel 42"
+        }
+      ]
+    },
+    {
+      "fromId": 361,
+      "toId": 478,
+      "conditions": [
+        {
+          "pt": "Usar Dawn Stone \u00b7 F\u00eamea",
+          "en": "Use Dawn Stone \u00b7 Female",
+          "es": "Usar Dawn Stone \u00b7 Hembra"
+        }
+      ]
+    },
+    {
+      "fromId": 366,
+      "toId": 367,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando Deep Sea Tooth",
+          "en": "Trade \u00b7 Holding Deep Sea Tooth",
+          "es": "Intercambio \u00b7 Llevando Deep Sea Tooth"
+        }
+      ]
+    },
+    {
+      "fromId": 366,
+      "toId": 368,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando Deep Sea Scale",
+          "en": "Trade \u00b7 Holding Deep Sea Scale",
+          "es": "Intercambio \u00b7 Llevando Deep Sea Scale"
+        }
+      ]
+    },
+    {
+      "fromId": 412,
+      "toId": 413,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 20 \u00b7 F\u00eamea",
+          "en": "Level 20 \u00b7 Female",
+          "es": "Nivel 20 \u00b7 Hembra"
+        }
+      ]
+    },
+    {
+      "fromId": 412,
+      "toId": 414,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 20 \u00b7 Macho",
+          "en": "Level 20 \u00b7 Male",
+          "es": "Nivel 20 \u00b7 Macho"
+        }
+      ]
+    },
+    {
+      "fromId": 427,
+      "toId": 428,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo)",
+          "en": "Level up \u00b7 High friendship (threshold varies by game)",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego)"
+        }
+      ]
+    },
+    {
+      "fromId": 447,
+      "toId": 448,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo) \u00b7 Durante o dia",
+          "en": "Level up \u00b7 High friendship (threshold varies by game) \u00b7 During the day",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego) \u00b7 De d\u00eda"
+        }
+      ]
+    },
+    {
+      "fromId": 57,
+      "toId": 979,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Usar Rage Fist 20 vezes antes de subir de n\u00edvel",
+          "en": "Level up \u00b7 Use Rage Fist 20 times before leveling up",
+          "es": "Subir de nivel \u00b7 Usa Rage Fist 20 veces antes de subir de nivel"
+        }
+      ]
+    },
+    {
+      "fromId": 502,
+      "toId": 503,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 36",
+          "en": "Level 36",
+          "es": "Nivel 36"
+        }
+      ]
+    },
+    {
+      "fromId": 61,
+      "toId": 186,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando King\u2019s Rock",
+          "en": "Trade \u00b7 Holding King\u2019s Rock",
+          "es": "Intercambio \u00b7 Llevando King\u2019s Rock"
+        }
+      ]
+    },
+    {
+      "fromId": 525,
+      "toId": 526,
+      "conditions": [
+        {
+          "pt": "Troca",
+          "en": "Trade",
+          "es": "Intercambio"
+        }
+      ]
+    },
+    {
+      "fromId": 527,
+      "toId": 528,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo)",
+          "en": "Level up \u00b7 High friendship (threshold varies by game)",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego)"
+        }
+      ]
+    },
+    {
+      "fromId": 64,
+      "toId": 65,
+      "conditions": [
+        {
+          "pt": "Troca",
+          "en": "Trade",
+          "es": "Intercambio"
+        }
+      ]
+    },
+    {
+      "fromId": 533,
+      "toId": 534,
+      "conditions": [
+        {
+          "pt": "Troca",
+          "en": "Trade",
+          "es": "Intercambio"
+        }
+      ]
+    },
+    {
+      "fromId": 541,
+      "toId": 542,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo)",
+          "en": "Level up \u00b7 High friendship (threshold varies by game)",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego)"
+        }
+      ]
+    },
+    {
+      "fromId": 546,
+      "toId": 547,
+      "conditions": [
+        {
+          "pt": "Usar Sun Stone",
+          "en": "Use Sun Stone",
+          "es": "Usar Sun Stone"
+        }
+      ]
+    },
+    {
+      "fromId": 548,
+      "toId": 549,
+      "conditions": [
+        {
+          "pt": "Usar Sun Stone",
+          "en": "Use Sun Stone",
+          "es": "Usar Sun Stone"
+        }
+      ]
+    },
+    {
+      "fromId": 67,
+      "toId": 68,
+      "conditions": [
+        {
+          "pt": "Troca",
+          "en": "Trade",
+          "es": "Intercambio"
+        }
+      ]
+    },
+    {
+      "fromId": 572,
+      "toId": 573,
+      "conditions": [
+        {
+          "pt": "Usar Shiny Stone",
+          "en": "Use Shiny Stone",
+          "es": "Usar Shiny Stone"
+        }
+      ]
+    },
+    {
+      "fromId": 588,
+      "toId": 589,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Trocar por Shelmet",
+          "en": "Trade \u00b7 Trade for Shelmet",
+          "es": "Intercambio \u00b7 Intercambiar por Shelmet"
+        }
+      ]
+    },
+    {
+      "fromId": 608,
+      "toId": 609,
+      "conditions": [
+        {
+          "pt": "Usar Dusk Stone",
+          "en": "Use Dusk Stone",
+          "es": "Usar Dusk Stone"
+        }
+      ]
+    },
+    {
+      "fromId": 75,
+      "toId": 76,
+      "conditions": [
+        {
+          "pt": "Troca",
+          "en": "Trade",
+          "es": "Intercambio"
+        }
+      ]
+    },
+    {
+      "fromId": 625,
+      "toId": 983,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Derrotar 3 Bisharp l\u00edderes que seguram Leader\u2019s Crest antes de subir de n\u00edvel",
+          "en": "Level up \u00b7 Defeat 3 leader Bisharp holding Leader\u2019s Crest before leveling up",
+          "es": "Subir de nivel \u00b7 Derrota a 3 Bisharp l\u00edderes que lleven Leader\u2019s Crest antes de subir de nivel"
+        }
+      ]
+    },
+    {
+      "fromId": 627,
+      "toId": 628,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 54",
+          "en": "Level 54",
+          "es": "Nivel 54"
+        }
+      ]
+    },
+    {
+      "fromId": 79,
+      "toId": 80,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 37",
+          "en": "Level 37",
+          "es": "Nivel 37"
+        }
+      ]
+    },
+    {
+      "fromId": 79,
+      "toId": 199,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando King\u2019s Rock",
+          "en": "Trade \u00b7 Holding King\u2019s Rock",
+          "es": "Intercambio \u00b7 Llevando King\u2019s Rock"
+        }
+      ]
+    },
+    {
+      "fromId": 82,
+      "toId": 462,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Local: Mt Coronet",
+          "en": "Level up \u00b7 Location: Mt Coronet",
+          "es": "Subir de nivel \u00b7 Lugar: Mt Coronet"
+        },
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Local: Chargestone Cave",
+          "en": "Level up \u00b7 Location: Chargestone Cave",
+          "es": "Subir de nivel \u00b7 Lugar: Chargestone Cave"
+        },
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Local: Kalos Route 13",
+          "en": "Level up \u00b7 Location: Kalos Route 13",
+          "es": "Subir de nivel \u00b7 Lugar: Kalos Route 13"
+        }
+      ]
+    },
+    {
+      "fromId": 674,
+      "toId": 675,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 32 \u00b7 Pok\u00e9mon do tipo Sombrio na equipe",
+          "en": "Level 32 \u00b7 Dark-type Pok\u00e9mon in party",
+          "es": "Nivel 32 \u00b7 Pok\u00e9mon de tipo Siniestro en el equipo"
+        }
+      ]
+    },
+    {
+      "fromId": 680,
+      "toId": 681,
+      "conditions": [
+        {
+          "pt": "Usar Dusk Stone",
+          "en": "Use Dusk Stone",
+          "es": "Usar Dusk Stone"
+        }
+      ]
+    },
+    {
+      "fromId": 684,
+      "toId": 685,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando Whipped Dream",
+          "en": "Trade \u00b7 Holding Whipped Dream",
+          "es": "Intercambio \u00b7 Llevando Whipped Dream"
+        }
+      ]
+    },
+    {
+      "fromId": 686,
+      "toId": 687,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 30 \u00b7 Virar o aparelho de cabe\u00e7a para baixo",
+          "en": "Level 30 \u00b7 Turn the device upside down",
+          "es": "Nivel 30 \u00b7 Gira el dispositivo boca abajo"
+        }
+      ]
+    },
+    {
+      "fromId": 694,
+      "toId": 695,
+      "conditions": [
+        {
+          "pt": "Usar Sun Stone",
+          "en": "Use Sun Stone",
+          "es": "Usar Sun Stone"
+        }
+      ]
+    },
+    {
+      "fromId": 696,
+      "toId": 697,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 39 \u00b7 Durante o dia",
+          "en": "Level 39 \u00b7 During the day",
+          "es": "Nivel 39 \u00b7 De d\u00eda"
+        }
+      ]
+    },
+    {
+      "fromId": 698,
+      "toId": 699,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 39 \u00b7 Durante a noite",
+          "en": "Level 39 \u00b7 At night",
+          "es": "Nivel 39 \u00b7 De noche"
+        }
+      ]
+    },
+    {
+      "fromId": 704,
+      "toId": 705,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 40",
+          "en": "Level 40",
+          "es": "Nivel 40"
+        }
+      ]
+    },
+    {
+      "fromId": 705,
+      "toId": 706,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 50 \u00b7 Com chuva no ambiente",
+          "en": "Level 50 \u00b7 While raining in the overworld",
+          "es": "Nivel 50 \u00b7 Con lluvia en el entorno"
+        }
+      ]
+    },
+    {
+      "fromId": 708,
+      "toId": 709,
+      "conditions": [
+        {
+          "pt": "Troca",
+          "en": "Trade",
+          "es": "Intercambio"
+        }
+      ]
+    },
+    {
+      "fromId": 712,
+      "toId": 713,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 37",
+          "en": "Level 37",
+          "es": "Nivel 37"
+        }
+      ]
+    },
+    {
+      "fromId": 723,
+      "toId": 724,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 34",
+          "en": "Level 34",
+          "es": "Nivel 34"
+        }
+      ]
+    },
+    {
+      "fromId": 737,
+      "toId": 738,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Local: Vast Poni Canyon",
+          "en": "Level up \u00b7 Location: Vast Poni Canyon",
+          "es": "Subir de nivel \u00b7 Lugar: Vast Poni Canyon"
+        }
+      ]
+    },
+    {
+      "fromId": 739,
+      "toId": 740,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Local: Mount Lanakila",
+          "en": "Level up \u00b7 Location: Mount Lanakila",
+          "es": "Subir de nivel \u00b7 Lugar: Mount Lanakila"
+        }
+      ]
+    },
+    {
+      "fromId": 753,
+      "toId": 754,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 34 \u00b7 Durante o dia",
+          "en": "Level 34 \u00b7 During the day",
+          "es": "Nivel 34 \u00b7 De d\u00eda"
+        }
+      ]
+    },
+    {
+      "fromId": 757,
+      "toId": 758,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 33 \u00b7 F\u00eamea",
+          "en": "Level 33 \u00b7 Female",
+          "es": "Nivel 33 \u00b7 Hembra"
+        }
+      ]
+    },
+    {
+      "fromId": 762,
+      "toId": 763,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Stomp",
+          "en": "Level up \u00b7 Knowing Stomp",
+          "es": "Subir de nivel \u00b7 Conociendo Stomp"
+        }
+      ]
+    },
+    {
+      "fromId": 772,
+      "toId": 773,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo)",
+          "en": "Level up \u00b7 High friendship (threshold varies by game)",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego)"
+        }
+      ]
+    },
+    {
+      "fromId": 93,
+      "toId": 94,
+      "conditions": [
+        {
+          "pt": "Troca",
+          "en": "Trade",
+          "es": "Intercambio"
+        }
+      ]
+    },
+    {
+      "fromId": 95,
+      "toId": 208,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando Metal Coat",
+          "en": "Trade \u00b7 Holding Metal Coat",
+          "es": "Intercambio \u00b7 Llevando Metal Coat"
+        }
+      ]
+    },
+    {
+      "fromId": 790,
+      "toId": 791,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 53 \u00b7 Vers\u00e3o: Sun",
+          "en": "Level 53 \u00b7 Version: Sun",
+          "es": "Nivel 53 \u00b7 Versi\u00f3n: Sun"
+        }
+      ]
+    },
+    {
+      "fromId": 790,
+      "toId": 792,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 53 \u00b7 Vers\u00e3o: Moon",
+          "en": "Level 53 \u00b7 Version: Moon",
+          "es": "Nivel 53 \u00b7 Versi\u00f3n: Moon"
+        }
+      ]
+    },
+    {
+      "fromId": 803,
+      "toId": 804,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Dragon Pulse",
+          "en": "Level up \u00b7 Knowing Dragon Pulse",
+          "es": "Subir de nivel \u00b7 Conociendo Dragon Pulse"
+        }
+      ]
+    },
+    {
+      "fromId": 808,
+      "toId": 809,
+      "conditions": [
+        {
+          "pt": "400 doces",
+          "en": "400 candies",
+          "es": "400 caramelos"
+        }
+      ]
+    },
+    {
+      "fromId": 840,
+      "toId": 841,
+      "conditions": [
+        {
+          "pt": "Usar Tart Apple",
+          "en": "Use Tart Apple",
+          "es": "Usar Tart Apple"
+        }
+      ]
+    },
+    {
+      "fromId": 840,
+      "toId": 842,
+      "conditions": [
+        {
+          "pt": "Usar Sweet Apple",
+          "en": "Use Sweet Apple",
+          "es": "Usar Sweet Apple"
+        }
+      ]
+    },
+    {
+      "fromId": 840,
+      "toId": 1011,
+      "conditions": [
+        {
+          "pt": "Usar Syrupy Apple",
+          "en": "Use Syrupy Apple",
+          "es": "Usar Syrupy Apple"
+        }
+      ]
+    },
+    {
+      "fromId": 1011,
+      "toId": 1019,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Dragon Cheer",
+          "en": "Level up \u00b7 Knowing Dragon Cheer",
+          "es": "Subir de nivel \u00b7 Conociendo Dragon Cheer"
+        }
+      ]
+    },
+    {
+      "fromId": 848,
+      "toId": 849,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 30",
+          "en": "Level 30",
+          "es": "Nivel 30"
+        }
+      ]
+    },
+    {
+      "fromId": 852,
+      "toId": 853,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Taunt",
+          "en": "Level up \u00b7 Knowing Taunt",
+          "es": "Subir de nivel \u00b7 Conociendo Taunt"
+        }
+      ]
+    },
+    {
+      "fromId": 854,
+      "toId": 855,
+      "conditions": [
+        {
+          "pt": "Usar Cracked Pot",
+          "en": "Use Cracked Pot",
+          "es": "Usar Cracked Pot"
+        }
+      ]
+    },
+    {
+      "fromId": 104,
+      "toId": 105,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 28",
+          "en": "Level 28",
+          "es": "Nivel 28"
+        }
+      ]
+    },
+    {
+      "fromId": 236,
+      "toId": 106,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 20 \u00b7 Ataque > Defesa",
+          "en": "Level 20 \u00b7 Attack > Defense",
+          "es": "Nivel 20 \u00b7 Ataque > Defensa"
+        }
+      ]
+    },
+    {
+      "fromId": 236,
+      "toId": 107,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 20 \u00b7 Ataque < Defesa",
+          "en": "Level 20 \u00b7 Attack < Defense",
+          "es": "Nivel 20 \u00b7 Ataque < Defensa"
+        }
+      ]
+    },
+    {
+      "fromId": 236,
+      "toId": 237,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 20 \u00b7 Ataque = Defesa",
+          "en": "Level 20 \u00b7 Attack = Defense",
+          "es": "Nivel 20 \u00b7 Ataque = Defensa"
+        }
+      ]
+    },
+    {
+      "fromId": 884,
+      "toId": 1018,
+      "conditions": [
+        {
+          "pt": "Usar Metal Alloy",
+          "en": "Use Metal Alloy",
+          "es": "Usar Metal Alloy"
+        }
+      ]
+    },
+    {
+      "fromId": 108,
+      "toId": 463,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Rollout",
+          "en": "Level up \u00b7 Knowing Rollout",
+          "es": "Subir de nivel \u00b7 Conociendo Rollout"
+        }
+      ]
+    },
+    {
+      "fromId": 109,
+      "toId": 110,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 35",
+          "en": "Level 35",
+          "es": "Nivel 35"
+        }
+      ]
+    },
+    {
+      "fromId": 891,
+      "toId": 892,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Treinar na Tower of Darkness",
+          "en": "Level up \u00b7 Train in the Tower of Darkness",
+          "es": "Subir de nivel \u00b7 Entrena en la Tower of Darkness"
+        }
+      ]
+    },
+    {
+      "fromId": 112,
+      "toId": 464,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando Protector",
+          "en": "Trade \u00b7 Holding Protector",
+          "es": "Intercambio \u00b7 Llevando Protector"
+        }
+      ]
+    },
+    {
+      "fromId": 113,
+      "toId": 242,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo)",
+          "en": "Level up \u00b7 High friendship (threshold varies by game)",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego)"
+        }
+      ]
+    },
+    {
+      "fromId": 915,
+      "toId": 916,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 18 \u00b7 Macho",
+          "en": "Level 18 \u00b7 Male",
+          "es": "Nivel 18 \u00b7 Macho"
+        }
+      ]
+    },
+    {
+      "fromId": 971,
+      "toId": 972,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 30 \u00b7 Durante a noite",
+          "en": "Level 30 \u00b7 At night",
+          "es": "Nivel 30 \u00b7 De noche"
+        }
+      ]
+    },
+    {
+      "fromId": 114,
+      "toId": 465,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Ancient Power",
+          "en": "Level up \u00b7 Knowing Ancient Power",
+          "es": "Subir de nivel \u00b7 Conociendo Ancient Power"
+        }
+      ]
+    },
+    {
+      "fromId": 963,
+      "toId": 964,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 38 \u00b7 Subir de n\u00edvel no Union Circle com outros jogadores",
+          "en": "Level 38 \u00b7 Level up in Union Circle with other players",
+          "es": "Nivel 38 \u00b7 Sube de nivel en el C\u00edrculo Uni\u00f3n con otros jugadores"
+        }
+      ]
+    },
+    {
+      "fromId": 924,
+      "toId": 925,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 25",
+          "en": "Level 25",
+          "es": "Nivel 25"
+        }
+      ]
+    },
+    {
+      "fromId": 974,
+      "toId": 975,
+      "conditions": [
+        {
+          "pt": "Usar Ice Stone",
+          "en": "Use Ice Stone",
+          "es": "Usar Ice Stone"
+        }
+      ]
+    },
+    {
+      "fromId": 922,
+      "toId": 923,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Caminhar 1.000 passos no modo Let\u2019s Go! antes de subir de n\u00edvel",
+          "en": "Level up \u00b7 Walk 1,000 steps in Let\u2019s Go! mode before leveling up",
+          "es": "Subir de nivel \u00b7 Camina 1.000 pasos en modo Let\u2019s Go! antes de subir de nivel"
+        }
+      ]
+    },
+    {
+      "fromId": 117,
+      "toId": 230,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando Dragon Scale",
+          "en": "Trade \u00b7 Holding Dragon Scale",
+          "es": "Intercambio \u00b7 Llevando Dragon Scale"
+        }
+      ]
+    },
+    {
+      "fromId": 935,
+      "toId": 936,
+      "conditions": [
+        {
+          "pt": "Usar Auspicious Armor",
+          "en": "Use Auspicious Armor",
+          "es": "Usar Auspicious Armor"
+        }
+      ]
+    },
+    {
+      "fromId": 935,
+      "toId": 937,
+      "conditions": [
+        {
+          "pt": "Usar Malicious Armor",
+          "en": "Use Malicious Armor",
+          "es": "Usar Malicious Armor"
+        }
+      ]
+    },
+    {
+      "fromId": 439,
+      "toId": 122,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Mimic",
+          "en": "Level up \u00b7 Knowing Mimic",
+          "es": "Subir de nivel \u00b7 Conociendo Mimic"
+        }
+      ]
+    },
+    {
+      "fromId": 1012,
+      "toId": 1013,
+      "conditions": [
+        {
+          "pt": "Usar Unremarkable Teacup",
+          "en": "Use Unremarkable Teacup",
+          "es": "Usar Unremarkable Teacup"
+        }
+      ]
+    },
+    {
+      "fromId": 123,
+      "toId": 212,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando Metal Coat",
+          "en": "Trade \u00b7 Holding Metal Coat",
+          "es": "Intercambio \u00b7 Llevando Metal Coat"
+        }
+      ]
+    },
+    {
+      "fromId": 123,
+      "toId": 900,
+      "conditions": [
+        {
+          "pt": "Usar Black Augurite",
+          "en": "Use Black Augurite",
+          "es": "Usar Black Augurite"
+        }
+      ]
+    },
+    {
+      "fromId": 125,
+      "toId": 466,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando Electirizer",
+          "en": "Trade \u00b7 Holding Electirizer",
+          "es": "Intercambio \u00b7 Llevando Electirizer"
+        }
+      ]
+    },
+    {
+      "fromId": 126,
+      "toId": 467,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando Magmarizer",
+          "en": "Trade \u00b7 Holding Magmarizer",
+          "es": "Intercambio \u00b7 Llevando Magmarizer"
+        }
+      ]
+    },
+    {
+      "fromId": 133,
+      "toId": 196,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo) \u00b7 Durante o dia",
+          "en": "Level up \u00b7 High friendship (threshold varies by game) \u00b7 During the day",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego) \u00b7 De d\u00eda"
+        }
+      ]
+    },
+    {
+      "fromId": 133,
+      "toId": 197,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo) \u00b7 Durante a noite",
+          "en": "Level up \u00b7 High friendship (threshold varies by game) \u00b7 At night",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego) \u00b7 De noche"
+        }
+      ]
+    },
+    {
+      "fromId": 133,
+      "toId": 470,
+      "conditions": [
+        {
+          "pt": "Usar Leaf Stone \u00b7 Sword / Shield",
+          "en": "Use Leaf Stone \u00b7 Sword / Shield",
+          "es": "Usar Leaf Stone \u00b7 Sword / Shield"
+        },
+        {
+          "pt": "M\u00e9todo por localiza\u00e7\u00e3o em jogos anteriores: Subir de n\u00edvel \u00b7 Local: Eterna Forest",
+          "en": "Location method in earlier games: Level up \u00b7 Location: Eterna Forest",
+          "es": "M\u00e9todo por ubicaci\u00f3n en juegos anteriores: Subir de nivel \u00b7 Lugar: Eterna Forest"
+        },
+        {
+          "pt": "M\u00e9todo por localiza\u00e7\u00e3o em jogos anteriores: Subir de n\u00edvel \u00b7 Local: Pinwheel Forest",
+          "en": "Location method in earlier games: Level up \u00b7 Location: Pinwheel Forest",
+          "es": "M\u00e9todo por ubicaci\u00f3n en juegos anteriores: Subir de nivel \u00b7 Lugar: Pinwheel Forest"
+        },
+        {
+          "pt": "M\u00e9todo por localiza\u00e7\u00e3o em jogos anteriores: Subir de n\u00edvel \u00b7 Local: Kalos Route 20",
+          "en": "Location method in earlier games: Level up \u00b7 Location: Kalos Route 20",
+          "es": "M\u00e9todo por ubicaci\u00f3n en juegos anteriores: Subir de nivel \u00b7 Lugar: Kalos Route 20"
+        }
+      ]
+    },
+    {
+      "fromId": 133,
+      "toId": 471,
+      "conditions": [
+        {
+          "pt": "Usar Ice Stone \u00b7 Sword / Shield",
+          "en": "Use Ice Stone \u00b7 Sword / Shield",
+          "es": "Usar Ice Stone \u00b7 Sword / Shield"
+        },
+        {
+          "pt": "M\u00e9todo por localiza\u00e7\u00e3o em jogos anteriores: Subir de n\u00edvel \u00b7 Local: Sinnoh Route 217",
+          "en": "Location method in earlier games: Level up \u00b7 Location: Sinnoh Route 217",
+          "es": "M\u00e9todo por ubicaci\u00f3n en juegos anteriores: Subir de nivel \u00b7 Lugar: Sinnoh Route 217"
+        },
+        {
+          "pt": "M\u00e9todo por localiza\u00e7\u00e3o em jogos anteriores: Subir de n\u00edvel \u00b7 Local: Twist Mountain",
+          "en": "Location method in earlier games: Level up \u00b7 Location: Twist Mountain",
+          "es": "M\u00e9todo por ubicaci\u00f3n en juegos anteriores: Subir de nivel \u00b7 Lugar: Twist Mountain"
+        },
+        {
+          "pt": "M\u00e9todo por localiza\u00e7\u00e3o em jogos anteriores: Subir de n\u00edvel \u00b7 Local: Frost Cavern",
+          "en": "Location method in earlier games: Level up \u00b7 Location: Frost Cavern",
+          "es": "M\u00e9todo por ubicaci\u00f3n en juegos anteriores: Subir de nivel \u00b7 Lugar: Frost Cavern"
+        }
+      ]
+    },
+    {
+      "fromId": 133,
+      "toId": 700,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Afei\u00e7\u00e3o \u2265 2 (depende do jogo) \u00b7 Conhecer golpe do tipo Fada",
+          "en": "Level up \u00b7 Affection \u2265 2 (game dependent) \u00b7 Know a Fairy-type move",
+          "es": "Subir de nivel \u00b7 Afecto \u2265 2 (seg\u00fan el juego) \u00b7 Conocer un movimiento de tipo Hada"
+        }
+      ]
+    },
+    {
+      "fromId": 137,
+      "toId": 233,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando Up-Grade",
+          "en": "Trade \u00b7 Holding Up-Grade",
+          "es": "Intercambio \u00b7 Llevando Up-Grade"
+        }
+      ]
+    },
+    {
+      "fromId": 233,
+      "toId": 474,
+      "conditions": [
+        {
+          "pt": "Troca \u00b7 Segurando Dubious Disc",
+          "en": "Trade \u00b7 Holding Dubious Disc",
+          "es": "Intercambio \u00b7 Llevando Dubious Disc"
+        }
+      ]
+    },
+    {
+      "fromId": 446,
+      "toId": 143,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo)",
+          "en": "Level up \u00b7 High friendship (threshold varies by game)",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego)"
+        }
+      ]
+    },
+    {
+      "fromId": 156,
+      "toId": 157,
+      "conditions": [
+        {
+          "pt": "N\u00edvel 36",
+          "en": "Level 36",
+          "es": "Nivel 36"
+        }
+      ]
+    },
+    {
+      "fromId": 175,
+      "toId": 176,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo)",
+          "en": "Level up \u00b7 High friendship (threshold varies by game)",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego)"
+        }
+      ]
+    },
+    {
+      "fromId": 176,
+      "toId": 468,
+      "conditions": [
+        {
+          "pt": "Usar Shiny Stone",
+          "en": "Use Shiny Stone",
+          "es": "Usar Shiny Stone"
+        }
+      ]
+    },
+    {
+      "fromId": 298,
+      "toId": 183,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Amizade alta (limiar varia por jogo)",
+          "en": "Level up \u00b7 High friendship (threshold varies by game)",
+          "es": "Subir de nivel \u00b7 Amistad alta (umbral seg\u00fan el juego)"
+        }
+      ]
+    },
+    {
+      "fromId": 438,
+      "toId": 185,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Mimic",
+          "en": "Level up \u00b7 Knowing Mimic",
+          "es": "Subir de nivel \u00b7 Conociendo Mimic"
+        }
+      ]
+    },
+    {
+      "fromId": 190,
+      "toId": 424,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Double Hit",
+          "en": "Level up \u00b7 Knowing Double Hit",
+          "es": "Subir de nivel \u00b7 Conociendo Double Hit"
+        }
+      ]
+    },
+    {
+      "fromId": 191,
+      "toId": 192,
+      "conditions": [
+        {
+          "pt": "Usar Sun Stone",
+          "en": "Use Sun Stone",
+          "es": "Usar Sun Stone"
+        }
+      ]
+    },
+    {
+      "fromId": 193,
+      "toId": 469,
+      "conditions": [
+        {
+          "pt": "Subir de n\u00edvel \u00b7 Conhecendo Ancient Power",
+          "en": "Level up \u00b7 Knowing Ancient Power",
+          "es": "Subir de nivel \u00b7 Conociendo Ancient Power"
+        }
+      ]
+    },
+    {
+      "fromId": 198,
+      "toId": 430,
+      "conditions": [
+        {
+          "pt": "Usar Dusk Stone",
+          "en": "Use Dusk Stone",
+          "es": "Usar Dusk Stone"
+        }
+      ]
+    },
+    {
+      "fromId": 200,
+      "toId": 429,
+      "conditions": [
+        {
+          "pt": "Usar Dusk Stone",
+          "en": "Use Dusk Stone",
+          "es": "Usar Dusk Stone"
+        }
+      ]
+    }
+  ],
+  "note": "Only unconditional non-branching level evolutions imported; other canonical methods explicitly deferred, never replaced by invented level rules."
+}

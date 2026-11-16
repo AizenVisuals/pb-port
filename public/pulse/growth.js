@@ -1,5 +1,5 @@
 import {KANTO_LEVEL_EVOLUTIONS} from './kanto.js';
-import {NATIONAL_LEVEL_EVOLUTIONS,NATIONAL_STONE_EVOLUTIONS} from './expansion-rules.js';
+import {NATIONAL_LEVEL_EVOLUTIONS,NATIONAL_STONE_EVOLUTIONS,NATIONAL_SPECIAL_EVOLUTIONS} from './expansion-rules.js';
 import {LEGACY_TECHNIQUES} from './legacy-techniques.js';
 import {LEARNSETS} from './learnsets.js';
 export const EVOLUTIONS=Object.freeze({...NATIONAL_LEVEL_EVOLUTIONS,...KANTO_LEVEL_EVOLUTIONS,bulbasaur:['ivysaur',16],ivysaur:['venusaur',32],charmander:['charmeleon',16],charmeleon:['charizard',36],squirtle:['wartortle',16],wartortle:['blastoise',36],chikorita:['bayleef',16],bayleef:['meganium',32],cyndaquil:['quilava',14],quilava:['typhlosion',36],totodile:['croconaw',18],croconaw:['feraligatr',30]});
@@ -13,6 +13,7 @@ export const ITEMS=Object.freeze({
  leftovers:{name:'Leftovers',price:450,description:'Recupera 1/16 do HP máximo a cada 6 segundos em campo. Não é consumido.'},
 });
 export const STONE_EVOLUTIONS=Object.freeze({...NATIONAL_STONE_EVOLUTIONS,vulpix:{'fire-stone':'ninetales'},eevee:{'water-stone':'vaporeon','thunder-stone':'jolteon','fire-stone':'flareon'},growlithe:{'fire-stone':'arcanine'},clefairy:{'moon-stone':'clefable'},jigglypuff:{'moon-stone':'wigglytuff'},gloom:{'leaf-stone':'vileplume'},exeggcute:{'leaf-stone':'exeggutor'},staryu:{'water-stone':'starmie'},shellder:{'water-stone':'cloyster'},poliwhirl:{'water-stone':'poliwrath'},pikachu:{'thunder-stone':'raichu'}});
+export const SPECIAL_EVOLUTIONS=Object.freeze(NATIONAL_SPECIAL_EVOLUTIONS);
 const EVOLUTION_TARGETS=new Set([...Object.values(EVOLUTIONS).map(([target])=>target),...Object.values(STONE_EVOLUTIONS).flatMap(targets=>Object.values(targets))]);
 export const BASE_FORM_KEYS=Object.freeze(new Set([...Object.keys(EVOLUTIONS),...Object.keys(STONE_EVOLUTIONS)].filter(key=>!EVOLUTION_TARGETS.has(key))));
 export const STONES=Object.freeze({
@@ -21,6 +22,7 @@ export const STONES=Object.freeze({
  'thunder-stone':{name:'Thunder Stone',price:400,description:'Evolui Pikachu e Eevee.'},
  'leaf-stone':{name:'Leaf Stone',price:400,description:'Evolui Gloom e Exeggcute.'},
  'moon-stone':{name:'Moon Stone',price:600,description:'Evolui Clefairy e Jigglypuff.'},
+ 'evolution-catalyst':{name:'Catalisador Evolutivo',price:750,asset:'/pulse/assets/items/evolution-catalyst.svg',description:'Adapta evoluções por troca, amizade, horário, local, golpe ou condição especial. A condição original continua indicada.'},
 });
 // Natures (25): 20 alteram um stat em ±10%, 5 são neutras. A nature fica no
 // save por Pokémon (`growth.pokemon[key].nature`); a mint não troca a nature,
@@ -45,6 +47,16 @@ const rollFloat=rng=>{const v=Number(rng());return Number.isFinite(v)&&v>=0&&v<1
 export const randomNature=(rng=Math.random)=>NATURE_KEYS[Math.floor(rollFloat(rng)*NATURE_KEYS.length)];
 export const randomIVs=(rng=Math.random)=>Object.fromEntries(STAT_KEYS.map(stat=>[stat,Math.floor(rollFloat(rng)*32)]));
 export const rollTraits=(rng=Math.random)=>({nature:randomNature(rng),ivs:randomIVs(rng)});
+// Re-roll de IVs com trava: cada IV pode ser travado individualmente e só
+// os destravados são sorteados de novo (0–31); o travado mantém o valor.
+// `locks` aceita objeto {hp:true,...}, array ['hp','atk'] ou Set — tudo o
+// mais é tratado como destravado. Não é Hyper Training: o IV muda de fato
+// (não há piso mínimo nem "IV 31 virtual") e os stats são recalculados por
+// displayStats / engine na próxima batalha. A evolução mantém os IVs
+// re-rolados como qualquer outro trait (ver previewEvolution/evolvePokemon).
+export const normalizeLocks=(locks)=>{const out=Object.fromEntries(STAT_KEYS.map(stat=>[stat,false]));if(!locks)return out;if(Array.isArray(locks)||locks instanceof Set){for(const stat of locks)if(STAT_KEYS.includes(stat))out[stat]=true;return out;}if(typeof locks==='object')for(const stat of STAT_KEYS)if(locks[stat]===true)out[stat]=true;return out;};
+export const countLockedIVs=(locks)=>STAT_KEYS.reduce((n,stat)=>n+(normalizeLocks(locks)[stat]?1:0),0);
+export const rerollIVs=(ivs,locks,rng=Math.random)=>{const locked=normalizeLocks(locks),current=normalizeIVs(ivs);return Object.fromEntries(STAT_KEYS.map(stat=>[stat,locked[stat]?current[stat]:Math.floor(rollFloat(rng)*32)]));};
 export const defaultIVs=()=>({hp:31,atk:31,def:31,spa:31,spd:31,spe:31});
 export const normalizeIVs=ivs=>{const out=defaultIVs();if(ivs&&typeof ivs==='object')for(const stat of STAT_KEYS)if(Number.isInteger(ivs[stat])&&ivs[stat]>=0&&ivs[stat]<=31)out[stat]=ivs[stat];return out;};
 // Mints (Sword/Shield): uma por nature com efeito (20) + Serious, que zera

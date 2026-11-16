@@ -17,3 +17,6 @@ A campanha não é sincronizada na nuvem. Desafio de amigo antigo continua trein
 
 ## PB continua pausado
 Não reiniciar3015 nem publicar no PB. Preservar alterações pré-existentes de Ferunoga em public/roster.json, public/custom/fan-pack-data.js e scripts/build-fan-pack-data.py, além do JSON native-moves/research/PB-PAUSED. Não foram feitas nesta rodada. O APK usa os assets/dados locais já existentes; essas mudanças do PB permanecem fora do commit desta revisão para continuidade separada.
+
+## Expansão nacional local — 15/11/2026
+SpriteCollab completo clonado em `/home/bloody/Projetos/SpriteCollab`, revisão `12c53e6a1b84378a3545fce42e6a9b27c64fd189`. 676 novas espécies registradas (catálogo total 972 entradas), animações originais completas, golpes canônicos já implementados por nível/TM, banner nacional e regras estritas de evolução. Ler `research/expansion/README.md`, `import-report.json` e `runtime-result.json`. As 296 definições anteriores foram preservadas. Trabalhos simultâneos do muse.ai permanecem no checkout. Não publicar GitHub nem substituir seu trabalho. O APK instalado anteriormente ainda não contém esta expansão. Métodos condicionais de evolução e habilidades exclusivas não implementadas pelo PB continuam com limites explícitos no relatório.

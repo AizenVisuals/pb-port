@@ -19,6 +19,8 @@ const paths={
  dash:'m4 18 9-12m-7 0h7v7m-9 1H1m5 5H3m17-8h3m-5-5h3',
  close:'m5 5 14 14M19 5 5 19',
  check:'m4 12 5 5L20 6',
+ lock:'M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z',
+ unlock:'M8 11V8a5 5 0 0 1 9-3M5 11h14v10H5z',
  star:'m12 2 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1 3-6Z'
 };
 export function icon(name,extra=''){return `<svg ${extra} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${paths[name]||paths.bolt}"/></svg>`;}

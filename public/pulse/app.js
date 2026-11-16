@@ -419,7 +419,7 @@ function renderShop() {
   $("buy-pokeballs").hidden=shopFilter!=="items";
   $("shop-balance").textContent=shopFilter==="items"?`${s.coins} moedas`:`${s.diamonds} diamantes`;
   if(shopFilter==="items"){
-    $("shop-grid").innerHTML=[...Object.entries(ITEMS).map(([id,item])=>[id,item,'item']),...Object.entries(STONES).map(([id,item])=>[id,item,'stone']),...Object.entries(MINTS).map(([id,item])=>[id,item,'mint'])].map(([id,item,kind])=>`<article class="shop-consumable">${kind==='mint'?'<span class="shop-mint-symbol" aria-hidden="true">🌿</span>':`<img src="/pulse/assets/items/${id}.png" alt="">`}<div><h2>${item.name}</h2><p>${item.description}</p></div><button data-buy-${kind}="${id}" class="primary-button" ${s.coins<item.price?'disabled':''}>${item.price} moedas</button></article>`).join('');return;
+    $("shop-grid").innerHTML=[...Object.entries(ITEMS).map(([id,item])=>[id,item,'item']),...Object.entries(STONES).map(([id,item])=>[id,item,'stone']),...Object.entries(MINTS).map(([id,item])=>[id,item,'mint'])].map(([id,item,kind])=>`<article class="shop-consumable">${kind==='mint'?'<span class="shop-mint-symbol" aria-hidden="true">🌿</span>':`<img src="${item.asset||`/pulse/assets/items/${id}.png`}" alt="">`}<div><h2>${item.name}</h2><p>${item.description}</p></div><button data-buy-${kind}="${id}" class="primary-button" ${s.coins<item.price?'disabled':''}>${item.price} moedas</button></article>`).join('');return;
   }
   const list =
     shopFilter === "shiny"

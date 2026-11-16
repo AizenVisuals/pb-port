@@ -1,0 +1,312 @@
+{
+  "844x390": {
+    "viewport": "844x390",
+    "checks": {
+      "listPainted": "ok",
+      "badgeReady": "ok",
+      "claim": "ok"
+    },
+    "errors": [],
+    "top": {
+      "screenClientH": 340,
+      "screenScrollH": 561,
+      "screenScrollMax": 221,
+      "bonusH": 285,
+      "sectionClientH": 185,
+      "listClientH": 139,
+      "listScrollH": 2020,
+      "listScrollMax": 1881,
+      "rows": 50,
+      "claimButtons": 50,
+      "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM"
+    },
+    "paintedTop": {
+      "painted": 0,
+      "ids": []
+    },
+    "listTopAtTop": 462,
+    "paintedScreenScrolled": {
+      "painted": 4,
+      "ids": [
+        "capture-1",
+        "capture-3",
+        "capture-5",
+        "capture-10"
+      ]
+    },
+    "paintedListScrolled": {
+      "painted": 4,
+      "ids": [
+        "collection-25",
+        "collection-50",
+        "collection-100",
+        "collection-150"
+      ]
+    },
+    "badgeAfterSummon": {
+      "hidden": false,
+      "text": "1",
+      "label": "Abrir missões, 1 prontas para resgatar"
+    },
+    "claim": {
+      "before": "9",
+      "after": {
+        "claimed": "Resgatada",
+        "summary": "0 prontas para resgatar · 1/50 resgatadas · 10 giros Pokémon · 2 giros TM"
+      }
+    }
+  },
+  "800x360": {
+    "viewport": "800x360",
+    "checks": {
+      "listPainted": "ok",
+      "badgeReady": "ok",
+      "claim": "ok"
+    },
+    "errors": [],
+    "top": {
+      "screenClientH": 310,
+      "screenScrollH": 573,
+      "screenScrollMax": 263,
+      "bonusH": 307,
+      "sectionClientH": 175,
+      "listClientH": 129,
+      "listScrollH": 2020,
+      "listScrollMax": 1891,
+      "rows": 50,
+      "claimButtons": 50,
+      "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM"
+    },
+    "paintedTop": {
+      "painted": 0,
+      "ids": []
+    },
+    "listTopAtTop": 484,
+    "paintedScreenScrolled": {
+      "painted": 4,
+      "ids": [
+        "capture-1",
+        "capture-3",
+        "capture-5",
+        "capture-10"
+      ]
+    },
+    "paintedListScrolled": {
+      "painted": 4,
+      "ids": [
+        "collection-25",
+        "collection-50",
+        "collection-100",
+        "collection-150"
+      ]
+    },
+    "badgeAfterSummon": {
+      "hidden": false,
+      "text": "1",
+      "label": "Abrir missões, 1 prontas para resgatar"
+    },
+    "claim": {
+      "before": "9",
+      "after": {
+        "claimed": "Resgatada",
+        "summary": "0 prontas para resgatar · 1/50 resgatadas · 10 giros Pokémon · 2 giros TM"
+      }
+    }
+  },
+  "844x600": {
+    "viewport": "844x600",
+    "checks": {
+      "listPainted": "ok"
+    },
+    "errors": [],
+    "top": {
+      "screenClientH": 544,
+      "screenScrollH": 544,
+      "screenScrollMax": 0,
+      "bonusH": 134,
+      "sectionClientH": 303,
+      "listClientH": 251,
+      "listScrollH": 2347,
+      "listScrollMax": 2096,
+      "rows": 50,
+      "claimButtons": 50,
+      "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM"
+    },
+    "paintedTop": {
+      "painted": 6,
+      "ids": [
+        "capture-1",
+        "capture-3",
+        "capture-5",
+        "capture-10",
+        "capture-20",
+        "pokemon-gacha-1"
+      ]
+    },
+    "listTopAtTop": 336,
+    "paintedScreenScrolled": {
+      "painted": 6,
+      "ids": [
+        "capture-1",
+        "capture-3",
+        "capture-5",
+        "capture-10",
+        "capture-20",
+        "pokemon-gacha-1"
+      ]
+    },
+    "paintedListScrolled": {
+      "painted": 6,
+      "ids": [
+        "collection-6",
+        "collection-12",
+        "collection-25",
+        "collection-50",
+        "collection-100",
+        "collection-150"
+      ]
+    }
+  },
+  "844x500": {
+    "viewport": "844x500",
+    "checks": {
+      "listPainted": "ok"
+    },
+    "errors": [],
+    "top": {
+      "screenClientH": 444,
+      "screenScrollH": 444,
+      "screenScrollMax": 0,
+      "bonusH": 76,
+      "sectionClientH": 261,
+      "listClientH": 209,
+      "listScrollH": 2347,
+      "listScrollMax": 2138,
+      "rows": 50,
+      "claimButtons": 50,
+      "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM"
+    },
+    "paintedTop": {
+      "painted": 4,
+      "ids": [
+        "capture-1",
+        "capture-3",
+        "capture-5",
+        "capture-10"
+      ]
+    },
+    "listTopAtTop": 278,
+    "paintedScreenScrolled": {
+      "painted": 4,
+      "ids": [
+        "capture-1",
+        "capture-3",
+        "capture-5",
+        "capture-10"
+      ]
+    },
+    "paintedListScrolled": {
+      "painted": 4,
+      "ids": [
+        "collection-25",
+        "collection-50",
+        "collection-100",
+        "collection-150"
+      ]
+    }
+  },
+  "1024x480": {
+    "viewport": "1024x480",
+    "checks": {
+      "listPainted": "ok"
+    },
+    "errors": [],
+    "top": {
+      "screenClientH": 424,
+      "screenScrollH": 424,
+      "screenScrollMax": 0,
+      "bonusH": 64,
+      "sectionClientH": 253,
+      "listClientH": 201,
+      "listScrollH": 2347,
+      "listScrollMax": 2146,
+      "rows": 50,
+      "claimButtons": 50,
+      "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM"
+    },
+    "paintedTop": {
+      "painted": 4,
+      "ids": [
+        "capture-1",
+        "capture-3",
+        "capture-5",
+        "capture-10"
+      ]
+    },
+    "listTopAtTop": 266,
+    "paintedScreenScrolled": {
+      "painted": 4,
+      "ids": [
+        "capture-1",
+        "capture-3",
+        "capture-5",
+        "capture-10"
+      ]
+    },
+    "paintedListScrolled": {
+      "painted": 4,
+      "ids": [
+        "collection-25",
+        "collection-50",
+        "collection-100",
+        "collection-150"
+      ]
+    }
+  },
+  "390x844": {
+    "viewport": "390x844",
+    "checks": {
+      "listPainted": "ok"
+    },
+    "errors": [],
+    "top": {
+      "screenClientH": 788,
+      "screenScrollH": 1005,
+      "screenScrollMax": 217,
+      "bonusH": 450,
+      "sectionClientH": 448,
+      "listClientH": 379,
+      "listScrollH": 4694,
+      "listScrollMax": 4315,
+      "rows": 50,
+      "claimButtons": 50,
+      "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM"
+    },
+    "paintedTop": {
+      "painted": 2,
+      "ids": [
+        "capture-1",
+        "capture-3"
+      ]
+    },
+    "listTopAtTop": 669,
+    "paintedScreenScrolled": {
+      "painted": 4,
+      "ids": [
+        "capture-1",
+        "capture-3",
+        "capture-5",
+        "capture-10"
+      ]
+    },
+    "paintedListScrolled": {
+      "painted": 4,
+      "ids": [
+        "collection-25",
+        "collection-50",
+        "collection-100",
+        "collection-150"
+      ]
+    }
+  }
+}

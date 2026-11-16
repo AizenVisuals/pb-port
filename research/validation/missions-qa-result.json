@@ -1,0 +1,200 @@
+{
+  "844x390": {
+    "viewport": "844x390",
+    "checks": {
+      "homeDock": "ok",
+      "rewardsList": "ok",
+      "badgeReady": "ok",
+      "claim": "ok"
+    },
+    "errors": [],
+    "state": {
+      "home": {
+        "route": "home",
+        "giftButton": false,
+        "dockButtons": [
+          "Equipe",
+          "Coleção",
+          "Mochila",
+          "Loja",
+          "Missões"
+        ],
+        "dockRects": [
+          {
+            "x": 68,
+            "y": 339,
+            "w": 132,
+            "h": 48,
+            "right": 200,
+            "bottom": 387
+          },
+          {
+            "x": 212,
+            "y": 339,
+            "w": 132,
+            "h": 48,
+            "right": 344,
+            "bottom": 387
+          },
+          {
+            "x": 356,
+            "y": 339,
+            "w": 132,
+            "h": 48,
+            "right": 488,
+            "bottom": 387
+          },
+          {
+            "x": 500,
+            "y": 339,
+            "w": 132,
+            "h": 48,
+            "right": 632,
+            "bottom": 387
+          },
+          {
+            "x": 644,
+            "y": 339,
+            "w": 132,
+            "h": 48,
+            "right": 776,
+            "bottom": 387
+          }
+        ],
+        "missionsId": "lobby-dock",
+        "missionsRect": {
+          "x": 644,
+          "y": 339,
+          "w": 132,
+          "h": 48,
+          "right": 776,
+          "bottom": 387
+        },
+        "badgeHidden": true,
+        "badgeText": "0",
+        "docScrollW": 844,
+        "innerW": 844,
+        "docScrollH": 390,
+        "innerH": 390
+      },
+      "rewards": {
+        "route": "rewards",
+        "rows": 50,
+        "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM",
+        "claimButtons": 50,
+        "firstRow": "Capture 1 PokémonCapturas0 / 1 1 giro PokémonEm progresso"
+      },
+      "badgeAfterSummon": {
+        "hidden": false,
+        "text": "1",
+        "label": "Abrir missões, 1 prontas para resgatar"
+      },
+      "claim": {
+        "before": "9",
+        "after": {
+          "claimed": "Resgatada",
+          "summary": "0 prontas para resgatar · 1/50 resgatadas · 10 giros Pokémon · 2 giros TM"
+        }
+      }
+    }
+  },
+  "800x360": {
+    "viewport": "800x360",
+    "checks": {
+      "homeDock": "ok",
+      "rewardsList": "ok",
+      "badgeReady": "ok",
+      "claim": "ok"
+    },
+    "errors": [],
+    "state": {
+      "home": {
+        "route": "home",
+        "giftButton": false,
+        "dockButtons": [
+          "Equipe",
+          "Coleção",
+          "Mochila",
+          "Loja",
+          "Missões"
+        ],
+        "dockRects": [
+          {
+            "x": 46,
+            "y": 309,
+            "w": 132,
+            "h": 48,
+            "right": 178,
+            "bottom": 357
+          },
+          {
+            "x": 190,
+            "y": 309,
+            "w": 132,
+            "h": 48,
+            "right": 322,
+            "bottom": 357
+          },
+          {
+            "x": 334,
+            "y": 309,
+            "w": 132,
+            "h": 48,
+            "right": 466,
+            "bottom": 357
+          },
+          {
+            "x": 478,
+            "y": 309,
+            "w": 132,
+            "h": 48,
+            "right": 610,
+            "bottom": 357
+          },
+          {
+            "x": 622,
+            "y": 309,
+            "w": 132,
+            "h": 48,
+            "right": 754,
+            "bottom": 357
+          }
+        ],
+        "missionsId": "lobby-dock",
+        "missionsRect": {
+          "x": 622,
+          "y": 309,
+          "w": 132,
+          "h": 48,
+          "right": 754,
+          "bottom": 357
+        },
+        "badgeHidden": true,
+        "badgeText": "0",
+        "docScrollW": 800,
+        "innerW": 800,
+        "docScrollH": 360,
+        "innerH": 360
+      },
+      "rewards": {
+        "route": "rewards",
+        "rows": 50,
+        "summary": "0 prontas para resgatar · 0/50 resgatadas · 0 giros Pokémon · 2 giros TM",
+        "claimButtons": 50,
+        "firstRow": "Capture 1 PokémonCapturas0 / 1 1 giro PokémonEm progresso"
+      },
+      "badgeAfterSummon": {
+        "hidden": false,
+        "text": "1",
+        "label": "Abrir missões, 1 prontas para resgatar"
+      },
+      "claim": {
+        "before": "9",
+        "after": {
+          "claimed": "Resgatada",
+          "summary": "0 prontas para resgatar · 1/50 resgatadas · 10 giros Pokémon · 2 giros TM"
+        }
+      }
+    }
+  }
+}
