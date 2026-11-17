@@ -1605,7 +1605,7 @@ function wire() {
   fullscreen.hidden=!!window.PulseNative?.isNative||!document.fullscreenEnabled;
   fullscreen.onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();$('lobby-menu-dialog').close();}catch{notify('Use o APK para abrir o jogo em tela cheia neste aparelho.');}};
   document.addEventListener('fullscreenchange',()=>{fullscreen.textContent=document.fullscreenElement?'Sair da tela cheia':'Tela cheia';});
-  management=createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,notify,apply,movePicker,launchStage,drawTechnique,goBack});
+  management=createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,notify,apply,movePicker,launchStage,drawTechnique,goBack,rarityTier,typeIcon,trainerFace,trainerLabel});
   for(const title of all('#screens>.screen:not(#screen-home) .screen-title')){const back=document.createElement('button');back.className='section-back';back.type='button';back.dataset.menuBack='true';back.setAttribute('aria-label','Voltar');back.innerHTML=icon('back');title.prepend(back);}
 
   $("technique-mon").onchange=()=>management.renderTechniques();
@@ -1626,8 +1626,10 @@ function wire() {
     "summon-core": "bolt",
     "summon-back": "back",
     "battle-pause": "pause",
-  }))
-    $(id).innerHTML = icon(name);
+  })) {
+    const el = $(id);
+    if (el) el.innerHTML = icon(name);
+  }
   all("[data-icon]").forEach((el) => (el.innerHTML = icon(el.dataset.icon)));
   $("battle-guard").querySelector("span").innerHTML = icon("shield");
   $("battle-dodge").querySelector("span").innerHTML = icon("dash");
@@ -1772,8 +1774,10 @@ function renderTrainerPicker() {
       if (apply(p.claimStarterTickets()))
         notify("Recompensa inicial: +10 tickets de invocação.");
     };
-  for (const id of ["collection-summon", "rewards-summon"])
-    $(id).onclick = () => navigate("summon");
+  for (const id of ["collection-summon", "rewards-summon"]) {
+    const button = $(id);
+    if (button) button.onclick = () => navigate("summon");
+  }
   $("summon-back").onclick = () => navigate("home");
   // O layout angular novo substituiu #team-add por cartões data-add-slot.
   // Mantenha compatibilidade caso o botão antigo exista, sem interromper o boot.

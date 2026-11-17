@@ -16,3 +16,24 @@ test('login, onboarding, and lobby honor the hidden attribute despite display fl
   assert.match(app,/screen\.hidden\s*=\s*true/);
   assert.match(app,/\$\("app"\)\.hidden\s*=\s*false/);
 });
+
+
+test('boot handles optional controls removed by the new lobby layout',()=>{
+  const required=['boot','app','type-filter','coin-icon','diamond-icon','daily-icon','summon-core','summon-back','battle-pause','rewards-summon'];
+  for(const id of required)assert.match(html,new RegExp('id="'+id+'"'));
+  assert.match(app,/if \(el\) el\.innerHTML = icon\(name\)/);
+  assert.match(app,/if \(button\) button\.onclick = \(\) => navigate\("summon"\)/);
+});
+
+test('management renders the new partner XP controls and receives team UI helpers',()=>{
+  const management=readFileSync(new URL('../public/pulse/management-ui.js',import.meta.url),'utf8');
+  for(const id of ['partner-xp-bar','partner-xp-current','partner-xp-max']){
+    assert.match(html,new RegExp('id="'+id+'"'));
+    assert.ok(management.includes("$('"+id+"')"),id+' must be wired');
+  }
+  assert.doesNotMatch(management,/\$\('partner-xp'\)/);
+  for(const helper of ['rarityTier','typeIcon','trainerFace','trainerLabel']){
+    assert.match(app,new RegExp('goBack,rarityTier,typeIcon,trainerFace,trainerLabel'));
+    assert.match(management,new RegExp('goBack,rarityTier,typeIcon,trainerFace,trainerLabel'));
+  }
+});

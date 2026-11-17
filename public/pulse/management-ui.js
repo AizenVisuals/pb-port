@@ -4,22 +4,24 @@ import {ivRerollCost,ECONOMY} from './progression.js';
 import {LEARNSETS} from './learnsets.js';
 import {CHAPTER_ONE,CHAPTER_TWO,ALL_STAGES} from './campaign.js';
 import {icon} from './icons.js';
-export function createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,notify,apply,movePicker,launchStage,drawTechnique,goBack}){
+export function createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,notify,apply,movePicker,launchStage,drawTechnique,goBack,rarityTier,typeIcon,trainerFace,trainerLabel}){
  const $=id=>document.getElementById(id);
  const panels={};
  for(const [id,title] of [['formation-detail','Formação'],['inventory-detail','Mochila'],['stage-detail','Preparar batalha']]){
-  const panel=$(id),sheet=document.createElement('dialog');sheet.className='sheet-dialog management-sheet';sheet.id=id+'-sheet';
+  const panel=$(id);
+  if(!panel)continue; // Legacy detail panels may not exist in the new layout.
+  const sheet=document.createElement('dialog');sheet.className='sheet-dialog management-sheet';sheet.id=id+'-sheet';
   const header=document.createElement('header');header.className='dialog-heading';header.innerHTML=`<h2>${title}</h2><button class="icon-button" aria-label="Fechar">×</button>`;
   header.querySelector('button').onclick=()=>sheet.close();sheet.append(header,panel);document.body.append(sheet);panels[id]=sheet;
  }
- const openPanel=id=>{for(const dialog of Object.values(panels))if(dialog.open)dialog.close();panels[id].showModal();};
+ const openPanel=id=>{for(const dialog of Object.values(panels))if(dialog.open)dialog.close();panels[id]?.showModal();};
  const closePanels=()=>{for(const dialog of Object.values(panels))if(dialog.open)dialog.close();};
  let partner=null,tab='attributes',slot=0,bagItem='oranberry',selectedStage=null,selectedChapter=1,stops=[],partnerStop,worldToken=0,invocation='pokemon',mapHintShown=false;
  // Re-roll de IVs: travas por Pokémon (só vivem na sessão — não vão pro save).
  const ivLocksByMon={};
  const ivLocksFor=key=>ivLocksByMon[key]||(ivLocksByMon[key]={});
  // Aba "IVs" na tela do parceiro, ao lado de Atributos/Golpes/Evolução/Item.
- const partnerTabs=document.querySelector('.partner-tabs');
+ const partnerTabs=document.querySelector('#screen-partner [role="tablist"]');
  if(partnerTabs&&!partnerTabs.querySelector('[data-partner-tab="iv-reroll"]')){const ivTab=document.createElement('button');ivTab.dataset.partnerTab='iv-reroll';ivTab.setAttribute('role','tab');ivTab.setAttribute('aria-selected','false');ivTab.textContent='IVs';partnerTabs.append(ivTab);}
  // Pílulas de tipo da folha 696 (Pokédex, 19 linhas de 32px) para a tela do
  // parceiro. Linha 9 é um tipo não usado (marcador); não há pílula para ela.
@@ -121,7 +123,11 @@ function renderPartner(){
   partner||=save().favorite;const m=mon(partner);if(!m){navigate('collection');return;}
   $('partner-name').textContent=m.name;$('partner-level').textContent=`Nv. ${m.level}`;$('partner-types').innerHTML=typePills696(m);
   const value=(m.xp??0)-xpAt(m.level),max=Math.max(1,xpAt(Math.min(100,m.level+1))-xpAt(m.level));
-  $('partner-xp').innerHTML=`<progress max="${max}" value="${m.level===100?1:value}" aria-label="Experiência de ${esc(m.name)}"></progress><span>${m.level===100?'Nível máximo':`${value} / ${max} XP para o próximo nível`}</span>`;
+  // Match the XP controls used by the current partner screen instead of the removed #partner-xp.
+  const xpValue=m.level>=100?max:Math.min(max,Math.max(0,value));
+  $('partner-xp-bar').style.width=`${(xpValue/max)*100}%`;
+  $('partner-xp-current').textContent=m.level>=100?'Nível máximo':`${xpValue} XP`;
+  $('partner-xp-max').textContent=m.level>=100?'':`/ ${max} XP`;
   document.querySelectorAll('[data-partner-tab]').forEach(button=>button.setAttribute('aria-selected',String(button.dataset.partnerTab===tab)));
   const box=$('partner-panel');
   if(tab==='attributes')box.innerHTML=`<h2>Atributos base</h2><div class="partner-stats">${Object.entries(m.stats).map(([key,value])=>`<div><span>${{hp:'HP base',atk:'Ataque',def:'Defesa',spa:'Atq. especial',spd:'Def. especial',spe:'Velocidade'}[key]}</span><b>${value}</b><i style="--stat:${Math.min(100,value/180*100)}%"></i></div>`).join('')}</div><h2>No nível ${m.level}</h2><div class="partner-stats">${Object.entries(displayStats(m.stats, m.level, {ivs:m.ivs,nature:m.effectiveNature})).map(([key,value])=>`<div><span>${{hp:'HP',atk:'Ataque',def:'Defesa',spa:'Atq. especial',spd:'Def. especial',spe:'Velocidade'}[key]}</span><b>${value}</b><i style="--stat:${Math.min(100,value/180*100)}%"></i></div>`).join('')}</div>${m.nature?`<p>Nature: <b>${esc(natureLabel(m.effectiveNature||m.nature))}</b>${m.mintNature?` · Mint ${esc(natureName(m.mintNature))} em efeito — nature original: ${esc(natureName(m.nature))}`:''}</p><p>IVs: ${['hp','atk','def','spa','spd','spe'].map(s=>`${{hp:'HP',atk:'Atq.',def:'Def.',spa:'Atq. Esp.',spd:'Def. Esp.',spe:'Vel.'}[s]} ${m.ivs?.[s]??31}`).join(' · ')}</p>`:''}${m.mega?`<label class="mega-label"><input type="checkbox" data-mega="${save().team.mons.indexOf(m.key)}" ${save().team.gimmick?.mon===save().team.mons.indexOf(m.key)?'checked':''} ${save().team.mons.includes(m.key)?'':'disabled'}>Selecionar Mega para a batalha${save().team.mons.includes(m.key)?'':' · adicione à formação'}</label>`:''}<div class="partner-actions"><button data-favorite="${m.key}" class="secondary-button">${save().favorite===m.key?'Favorito no início':'Destacar no início'}</button><button data-route="team" class="primary-button">Ver formação</button>${m.nature?`<button data-iv-reroll-tab="${m.key}" class="secondary-button">Re-rolar IVs</button>`:''}</div>`;
@@ -235,7 +241,7 @@ function renderPartner(){
  document.addEventListener('click',event=>{
   const b=event.target.closest('button');if(!b||b.disabled)return;
   if(b.dataset.route)closePanels();
-  if(b.id==='formation-swap'){closePanels();$('formation-roster').scrollIntoView({block:'nearest'});}
+  if(b.id==='formation-swap'){closePanels();($('formation-roster')||$('team-reserve-bar'))?.scrollIntoView({block:'nearest'});}
   if(b.dataset.menuBack){goBack();return;}
   if(b.dataset.partner){closePanels();openPartner(b.dataset.partner);return;}
   if(b.dataset.partnerTab){tab=b.dataset.partnerTab;renderPartner();}
@@ -249,7 +255,7 @@ function renderPartner(){
   if(b.dataset.invocationMode)setInvocation(b.dataset.invocationMode);
   if(b.dataset.mapStage){selectedStage=b.dataset.mapStage;renderCampaign();openPanel('stage-detail');}
   if(b.dataset.chapter){const ch=Number(b.dataset.chapter);if(ch===2&&!save().journey?.cleared.includes('1-10'))return;const chStages=ch===2?CHAPTER_TWO:CHAPTER_ONE,j=save().journey;selectedChapter=ch;selectedStage=j?.active?.stage&&j.active.stage.startsWith(ch+'-')?j.active.stage:chStages[Math.max(0,Math.min((j?.cleared.length||0)-(ch===2?10:0),9))].id;renderCampaign();}
-  if(b.dataset.formationSlot!==undefined){const i=Number(b.dataset.formationSlot);slot=Math.min(i,save().team.mons.length);renderTeam();if(save().team.mons[slot])openPanel('formation-detail');else $('formation-roster').scrollIntoView({block:'nearest'});}
+  if(b.dataset.formationSlot!==undefined){const i=Number(b.dataset.formationSlot);slot=Math.min(i,save().team.mons.length);renderTeam();if(save().team.mons[slot])openPanel('formation-detail');else ($('formation-roster')||$('team-reserve-bar'))?.scrollIntoView({block:'nearest'});}
   if(b.dataset.rosterAdd){const team=p.getTeam(),key=b.dataset.rosterAdd,prior=team.mons.indexOf(key);if(prior>=0&&slot<team.mons.length)[team.mons[slot],team.mons[prior]]=[team.mons[prior],team.mons[slot]];else if(prior<0){if(slot<team.mons.length)team.mons[slot]=key;else if(team.mons.length<6)team.mons.push(key);}team.gimmick=null;apply(p.setTeam(team));}
   if(b.dataset.formationLead!==undefined){const team=p.getTeam(),i=Number(b.dataset.formationLead);[team.mons[0],team.mons[i]]=[team.mons[i],team.mons[0]];team.gimmick=null;slot=0;apply(p.setTeam(team));}
   if(b.dataset.formationRemove!==undefined){closePanels();const team=p.getTeam();if(team.mons.length>1){team.mons.splice(Number(b.dataset.formationRemove),1);team.gimmick=null;apply(p.setTeam(team));}}
@@ -359,5 +365,5 @@ function renderPartner(){
     moveSelectorSlot = null;
   }
 
-return {addSlot(){slot=Math.min(5,save().team.mons.length);renderTeam();$('formation-roster').scrollIntoView({block:'nearest'});},renderTeam,renderPartner,renderBag,renderCampaign,renderTechniques,openPartner,setInvocation,stopSprites,partner:()=>partner,openMoveSelector,closeMoveSelector};;
+return {addSlot(){slot=Math.min(5,save().team.mons.length);renderTeam();($('formation-roster')||$('team-reserve-bar'))?.scrollIntoView({block:'nearest'});},renderTeam,renderPartner,renderBag,renderCampaign,renderTechniques,openPartner,setInvocation,stopSprites,partner:()=>partner,openMoveSelector,closeMoveSelector};;
 }
