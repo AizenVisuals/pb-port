@@ -198,3 +198,17 @@ test('exportar e importar preserva a conta online',()=>{
   assert.equal(other.importSave(json).ok,true);
   assert.deepEqual(other.getSave().online,{provider:'guest',team:'mystic',userId:'u-9',syncedAt:456,pendingSync:false,pendingMatches:[],ranking:null});
 });
+
+test('convidado pode continuar offline quando o túnel/servidor devolve erro HTTP 5xx',async()=>{
+  for(const status of [500,502,503,504]){
+    const storage=storageStub();
+    const fetchFn=fetchStub(()=>response(status,{error:'gateway_unavailable'}));
+    const client=createOnlineClient({fetchFn,storage,baseUrl:'http://127.0.0.1:3099'});
+    const result=await client.guestSignIn(guestProfile);
+    assert.equal(result.ok,false);
+    assert.equal(result.offline,true,`status ${status} precisa permitir fallback local`);
+    assert.equal(result.status,status);
+    assert.equal(client.hasSession(),false);
+    assert.equal(storage.getItem(ONLINE_SESSION_KEY),null);
+  }
+});
