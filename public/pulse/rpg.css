@@ -1,3 +1,6 @@
+/* Explicitly honor HTML hidden state, even when an element has a grid/flex layout. */
+[hidden] { display: none !important; }
+
 /* Tabler Icons disc, recolored for the warm TM inventory accent. */
 .inventory-item-hero.tm-disc-hero{object-fit:contain}
 .technique-reveal img.tm-disc-inline{width:46px;height:46px}
