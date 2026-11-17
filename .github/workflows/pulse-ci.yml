@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: tests
-    if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/v') || (github.ref == 'refs/heads/fan-pack-public' && contains(github.event.head_commit.message, '[build-apk]')))
+    if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/v') || (github.ref == 'refs/heads/fan-pack-public' && (contains(github.event.head_commit.message, '[build-apk]') || contains(github.event.head_commit.message, '[release-apk]'))))
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -60,11 +60,21 @@ jobs:
           name: pulse-arena-apk
           path: android/app/build/outputs/apk/debug/*.apk
           retention-days: 30
+      - name: Prepare named test APK for release
+        if: github.ref == 'refs/heads/fan-pack-public' && contains(github.event.head_commit.message, '[release-apk]')
+        run: |
+          mkdir -p release-files
+          cp android/app/build/outputs/apk/debug/app-debug.apk release-files/PULSE-ARENA-0.8.1-test.1.apk
       - name: Create Release
         uses: softprops/action-gh-release@v2
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/v') || (github.ref == 'refs/heads/fan-pack-public' && contains(github.event.head_commit.message, '[release-apk]')))
         with:
-          files: android/app/build/outputs/apk/debug/*.apk
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || 'pulse-arena-v0.8.1-test.1' }}
+          target_commitish: ${{ github.sha }}
+          name: ${{ github.ref == 'refs/heads/fan-pack-public' && 'PULSE ARENA 0.8.1-test.1 — Interfaces e golpes' || github.ref_name }}
+          prerelease: ${{ github.ref == 'refs/heads/fan-pack-public' }}
+          make_latest: false
+          files: ${{ github.ref == 'refs/heads/fan-pack-public' && 'release-files/PULSE-ARENA-0.8.1-test.1.apk' || 'android/app/build/outputs/apk/debug/*.apk' }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
