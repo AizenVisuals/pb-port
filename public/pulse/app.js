@@ -1775,7 +1775,9 @@ function renderTrainerPicker() {
   for (const id of ["collection-summon", "rewards-summon"])
     $(id).onclick = () => navigate("summon");
   $("summon-back").onclick = () => navigate("home");
-  $("team-add").onclick=()=>management.addSlot();
+  // O layout angular novo substituiu #team-add por cartões data-add-slot.
+  // Mantenha compatibilidade caso o botão antigo exista, sem interromper o boot.
+  $("team-add")?.addEventListener("click",()=>management.addSlot());
   $("collection-search").oninput = renderCollection;
   $("type-filter").onchange = renderCollection;
   $("format-select").onchange = (e) =>
@@ -1906,6 +1908,9 @@ async function boot() {
     flushPendingMatches().catch(()=>{});
     beatOnlineOnce();
   } catch (error) {
+    // Erros depois do login não podem deixar a tela vazia.
+    $("login-screen").hidden = true;
+    $("boot").hidden = false;
     $("boot").innerHTML =
       `<div class="wordmark">PULSE ARENA</div><p>Não foi possível carregar o jogo.</p><p>${esc(error.message)}</p><button class="primary-button" onclick="location.reload()">Tentar novamente</button>`;
   }
