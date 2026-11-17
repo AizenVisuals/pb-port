@@ -186,6 +186,9 @@ export function createOnlineClient({fetchFn,storage:providedStorage,baseUrl,time
     clearSession:()=>storeSession(null),
     async guestSignIn(profile){
       const result=await request('/api/auth/guest',{method:'POST',body:profile});
+      // A proxy/tunnel HTTP 5xx must not trap guest players on the login screen.
+      // Keep ordinary validation/auth failures visible; save progress locally on server outage.
+      if(!result.ok&&[500,502,503,504].includes(result.status))return {...result,offline:true};
       if(!result.ok)return result;
       return adoptSession(result.data,'guest');
     },
