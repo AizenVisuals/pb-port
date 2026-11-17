@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#16283a">
 <title>PULSE ARENA</title><meta name="description" content="Sua equipe. Seu ritmo. Batalhas Pokémon offline e uma coleção para descobrir.">
-<link rel="stylesheet" href="/pulse/style.css"><link rel="stylesheet" href="/pulse/rpg.css"><link rel="stylesheet" href="/pulse/battle-skin.css"><link rel="stylesheet" href="/pulse/arena.css"><link rel="stylesheet" href="/pulse/lobby.css"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%23fb725d' d='M4 26h11l7-18 7 31 6-13h9v6H31l-3 8-7-25-3 17H4z'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/pulse/style.css"><link rel="stylesheet" href="/pulse/rpg.css"><link rel="stylesheet" href="/pulse/battle-skin.css"><link rel="stylesheet" href="/pulse/arena.css"><link rel="stylesheet" href="/pulse/lobby.css"><link rel="stylesheet" href="/pulse/sword-shield-theme.css"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%23fb725d' d='M4 26h11l7-18 7 31 6-13h9v6H31l-3 8-7-25-3 17H4z'/%3E%3C/svg%3E">
 </head>
 <body>
 <div id="boot" class="boot"><div class="wordmark"><span>PULSE</span><b>ARENA</b></div><span class="boot-pulse" aria-hidden="true"></span><p>Preparando sua arena…</p></div>
@@ -64,14 +64,329 @@
  </div>
  <div hidden><label>Formato<select id="format-select"><option value="3v3">Equipe 3 × 3</option><option value="6v6">Equipe 6 × 6</option></select></label><label>Adversário<select id="difficulty-select"><option value="1">Bot · Iniciante</option><option value="2">Bot · Casual</option><option value="3" selected>Bot · Competitivo</option><option value="4">Bot · Avançado</option><option value="5">Bot · Desafio</option></select></label></div>
 </section>
-<section id="screen-team" class="screen content-screen formation-screen" aria-label="Formação" hidden><div class="screen-title"><div><h1>Formação</h1><p>O primeiro parceiro abre a batalha. Os demais são reservas.</p></div><span id="team-count" class="count-mark"></span></div><div class="formation-layout"><div class="formation-field"><div id="team-list" class="team-list"></div><p>Selecione uma posição para trocar o parceiro.</p></div><aside id="formation-detail" class="game-side-panel"></aside></div><div class="formation-roster-bar"><b>Sua coleção</b><div id="formation-roster" class="formation-roster"></div><button id="team-add" class="icon-button" aria-label="Adicionar parceiro">+</button></div><div id="team-format" hidden><button data-size="3">3 × 3</button><button data-size="6">6 × 6</button></div></section>
-<section id="screen-collection" class="screen content-screen" aria-label="Coleção" hidden><div class="screen-title"><div><h1>Pokémon</h1><p id="collection-total"></p></div><button id="collection-summon" class="secondary-button accent-button">Invocar</button></div><div class="collection-tools"><label class="search-field"><span id="search-icon"></span><input id="collection-search" type="search" placeholder="Nome ou tipo" autocomplete="off" aria-label="Buscar Pokémon"></label><div class="collection-filters"><div class="segmented"><button data-owned="all" aria-pressed="true">Todos</button><button data-owned="owned" aria-pressed="false">Meus Pokémon</button><button data-owned="locked" aria-pressed="false">A descobrir</button></div><select id="type-filter" aria-label="Filtrar tipo"><option value="">Todos os tipos</option></select></div></div><p id="collection-empty" class="empty-state" hidden>Nenhum Pokémon por aqui. Experimente outro nome ou filtro.</p><div id="collection-grid" class="collection-grid"></div></section>
+<!-- TELA DE FORMAÇÃO (Equipe) -->
+<section id="screen-team" class="screen content-screen formation-screen" aria-label="Formação" hidden>
+  <header class="ss-screen-header">
+    <button type="button" class="ss-btn-icon" data-route="home" aria-label="Voltar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="ss-flex-1 ss-flex ss-items-center ss-gap-3">
+      <div class="ss-panel ss-flex ss-items-center ss-gap-3" style="flex: 0 0 auto; padding: 8px 16px;">
+        <img id="team-trainer-avatar" class="ss-avatar-lg" src="/faces/red.png" alt="Treinador">
+        <div>
+          <h2 class="ss-title-headline" style="font-size: 18px;">Formação</h2>
+          <span class="ss-text-caption">Treinador</span>
+        </div>
+      </div>
+    </div>
+    <div class="ss-flex ss-items-center ss-gap-2">
+      <button id="team-diamonds" class="ss-currency ss-currency--diamonds" aria-label="Diamantes"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L22 12 L12 22 L2 12 Z"/></svg><b id="team-diamonds-value">0</b></button>
+      <button id="team-coins" class="ss-currency ss-currency--coins" aria-label="Moedas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/></svg><b id="team-coins-value">0</b></button>
+      <button id="team-menu" class="ss-btn-icon" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+  
+  <main class="ss-flex-1 ss-overflow-auto" style="padding: 16px;">
+    <!-- Equipe Principal: 3x2 Grid -->
+    <div id="team-main-grid" class="ss-grid ss-grid-cols-3" style="gap: 12px; margin-bottom: 24px;"></div>
+    
+    <!-- Faixa Inferior: Pokémon Adicionais -->
+    <div class="ss-panel" style="margin-top: 16px;">
+      <h3 class="ss-title-headline" style="font-size: 16px; margin-bottom: 12px;">Reservas</h3>
+      <div id="team-reserve-bar" class="ss-flex" style="gap: 8px; overflow-x: auto; padding: 4px 0;"></div>
+    </div>
+  </main>
+  
+  <!-- Navegação Inferior -->
+  <nav class="ss-bottom-nav" aria-label="Navegação principal">
+    <button type="button" class="ss-nav-item" data-route="home" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v6M3 9h18"/></svg>
+      <span>Início</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="team" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="3.2"/><path d="M2.5 20c.5-3.2 2.6-5 5.5-5s5 1.8 5.5 5"/><circle cx="17" cy="9" r="2.6"/><path d="M14.5 20c.4-2.6 1.9-4.2 4-4.2"/></svg>
+      <span>Equipe</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="collection" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+      <span>Coleção</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="bag" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8h12l2 13H4L6 8Z"/><path d="M9 8V5a3 3 0 0 1 6 0v3M7 14h10"/></svg>
+      <span>Mochila</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="shop" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1.2 13H7.2L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      <span>Loja</span>
+    </button>
+  </nav>
+  
+  <div hidden><label>Formato<select id="format-select"><option value="3v3">Equipe 3 × 3</option><option value="6v6">Equipe 6 × 6</option></select></label><label>Adversário<select id="difficulty-select"><option value="1">Bot · Iniciante</option><option value="2">Bot · Casual</option><option value="3" selected>Bot · Competitivo</option><option value="4">Bot · Avançado</option><option value="5">Bot · Desafio</option></select></label></div>
+</section>
+
+<!-- TELA DE COLEÇÃO -->
+<section id="screen-collection" class="screen content-screen" aria-label="Coleção" hidden>
+  <header class="ss-screen-header">
+    <button type="button" class="ss-btn-icon" data-route="team" aria-label="Voltar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h1 class="ss-title-display ss-flex-1" style="font-size: 28px; text-align: center;">Coleção</h1>
+    <div class="ss-flex ss-items-center ss-gap-2">
+      <button id="collection-diamonds" class="ss-currency ss-currency--diamonds" aria-label="Diamantes"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L22 12 L12 22 L2 12 Z"/></svg><b id="collection-diamonds-value">0</b></button>
+      <button id="collection-coins" class="ss-currency ss-currency--coins" aria-label="Moedas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/></svg><b id="collection-coins-value">0</b></button>
+      <button id="collection-menu" class="ss-btn-icon" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+  
+  <main class="ss-flex-1 ss-overflow-auto" style="padding: 16px;">
+    <!-- Busca e Filtros -->
+    <div class="ss-flex ss-flex-col ss-gap-3" style="margin-bottom: 16px;">
+      <div class="ss-search-field" style="flex: 1;">
+        <span class="ss-search-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+        </span>
+        <input id="collection-search" type="search" class="ss-input" placeholder="Nome ou tipo" autocomplete="off" aria-label="Buscar Pokémon">
+      </div>
+      <div class="ss-flex ss-gap-2 ss-flex-wrap">
+        <div class="ss-segmented" style="flex: 1;" role="tablist" aria-label="Filtro de posse">
+          <button type="button" class="ss-segmented-btn" data-owned="all" role="tab" aria-selected="true" aria-pressed="true">Todos</button>
+          <button type="button" class="ss-segmented-btn" data-owned="owned" role="tab" aria-selected="false" aria-pressed="false">Meus Pokémon</button>
+          <button type="button" class="ss-segmented-btn" data-owned="locked" role="tab" aria-selected="false" aria-pressed="false">A descobrir</button>
+        </div>
+        <select id="type-filter" class="ss-input" aria-label="Filtrar tipo" style="min-width: 160px; flex: 0 0 auto;">
+          <option value="">Todos os tipos</option>
+        </select>
+      </div>
+    </div>
+    
+    <p id="collection-total" class="ss-text-caption" style="margin-bottom: 12px;"></p>
+    <p id="collection-empty" class="empty-state ss-text-caption" hidden style="text-align: center; padding: 40px 20px; color: var(--ss-text-muted);">Nenhum Pokémon por aqui. Experimente outro nome ou filtro.</p>
+    <div id="collection-grid" class="ss-grid ss-grid-cols-auto" style="gap: 12px;"></div>
+  </main>
+  
+  <!-- Navegação Inferior (mesma da Formação) -->
+  <nav class="ss-bottom-nav" aria-label="Navegação principal">
+    <button type="button" class="ss-nav-item" data-route="home" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v6M3 9h18"/></svg>
+      <span>Início</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="team" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="3.2"/><path d="M2.5 20c.5-3.2 2.6-5 5.5-5s5 1.8 5.5 5"/><circle cx="17" cy="9" r="2.6"/><path d="M14.5 20c.4-2.6 1.9-4.2 4-4.2"/></svg>
+      <span>Equipe</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="collection" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+      <span>Coleção</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="bag" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8h12l2 13H4L6 8Z"/><path d="M9 8V5a3 3 0 0 1 6 0v3M7 14h10"/></svg>
+      <span>Mochila</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="shop" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1.2 13H7.2L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      <span>Loja</span>
+    </button>
+  </nav>
+</section>
 <section id="screen-rewards" class="screen content-screen bonus-screen" aria-label="Recompensas" hidden><div class="screen-title"><div><h1>Recompensas</h1></div></div><div class="bonus-layout"><div class="daily-reward"><div class="bonus-prizes"><div class="bonus-prize"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="#efc76c" stroke="#ad7a2b" stroke-width="3"/><circle cx="32" cy="32" r="20" fill="none" stroke="#fff2b9" stroke-width="2"/><path d="M27 45V20h10a8 8 0 0 1 0 16H27" fill="none" stroke="#8a5e24" stroke-width="5"/></svg><strong>150</strong><span>moedas</span></div><div class="bonus-prize"><svg viewBox="0 0 64 64" fill="none" stroke="#9a7134" stroke-width="3" aria-hidden="true"><path d="M7 15h50v12a6 6 0 0 0 0 12v10H7V39a6 6 0 0 0 0-12Z" fill="#f1ddb1"/><path d="M39 17v5m0 5v5m0 5v5m0 5v2"/></svg><strong>2</strong><span>tickets de TM</span></div></div><button id="daily-claim" class="primary-button">Resgatar presente</button><p class="bonus-reset">Disponível uma vez por dia.</p></div><div class="bonus-side"><button id="rewards-summon" class="secondary-button">Recrutar Pokémon</button><div class="starter-tickets"><p><b>Recompensa inicial</b></p><button id="starter-tickets-claim" class="secondary-button">Resgatar 10 tickets de invocação</button><p>Uma única vez. Tickets pagam as invocações.</p></div><details class="save-tools"><summary>Cópia do progresso</summary><p>Exporte seu save antes de trocar de aparelho.</p><div><button id="export-save" class="secondary-button">Exportar</button><button id="import-save" class="text-button">Importar</button><input id="import-file" type="file" accept="application/json,.json" hidden></div></details></div></div><section class="missions-section" aria-labelledby="missions-title"><header class="missions-heading"><div><h2 id="missions-title">Missões</h2><p id="mission-summary"></p></div></header><div id="mission-list" class="mission-list" aria-label="Lista de missões"></div></section><div hidden aria-hidden="true"><span id="daily-icon"></span><span id="record-battles"></span><span id="record-wins"></span><span id="record-collection"></span><span id="rewards-owned"></span><span id="rewards-roster"></span><progress id="collection-progress"></progress></div></section>
 <section id="screen-friends" class="screen content-screen friends-screen" aria-label="Amigos" hidden><div class="screen-title"><div><h1>Amigos</h1><p>Adicione treinadores pelo apelido e desafie seus amigos.</p></div><button id="friends-refresh" type="button" class="secondary-button">Atualizar</button></div><p id="friends-status" class="online-status" role="status"></p><div class="friends-add"><label>Adicionar por apelido<input id="friends-add-nick" maxlength="16" autocomplete="off" placeholder="Apelido do treinador"></label><button id="friends-add-btn" type="button" class="primary-button">Enviar convite</button></div><h2>Convites recebidos</h2><div id="friends-incoming" class="friends-list"></div><h2>Convites enviados</h2><div id="friends-outgoing" class="friends-list"></div><h2>Seus amigos</h2><div id="friends-list" class="friends-list"></div><p class="support-copy">Desafiar um amigo abre um treino contra o bot com o nome dele. O time real dele ainda não é sincronizado.</p></section>
 <section id="screen-rankings" class="screen content-screen rankings-screen" aria-label="Ranking" hidden><div class="screen-title"><div><h1>Ranking</h1><p>Batalhas ranqueadas contra o bot valem pontos.</p></div><button id="rankings-refresh" type="button" class="secondary-button">Atualizar</button></div><p id="rankings-status" class="online-status" role="status"></p><div id="ranking-me" class="ranking-me"></div><button id="ranked-battle-btn" type="button" class="primary-button ranked-battle-btn">Batalha ranqueada</button><p id="ranked-pending-note" class="support-copy" hidden></p><h2>Classificação</h2><div id="ranking-ladder" class="ranking-ladder"></div><h2>Últimas batalhas</h2><div id="ranking-history" class="ranking-history"></div><p class="support-copy">Vitória contra o bot: +5 pontos (0 no Master+). Derrota desconta conforme o tier, sem nunca cair de tier. Champion é o top 10% dos 600+.</p></section>
 <section id="screen-summon" class="screen content-screen summon-screen" aria-label="Invocações" hidden><div class="screen-title"><div><h1>Invocação</h1><p>Encontre novos parceiros ou aprenda técnicas especiais.</p></div><button class="icon-button" id="summon-back" aria-label="Voltar à coleção"></button></div><div class="invocation-tabs" role="tablist" aria-label="Tipo de invocação"><button data-invocation-mode="pokemon" role="tab" aria-selected="true">Pokémon</button><button data-invocation-mode="techniques" role="tab" aria-selected="false">TMs</button></div><div id="pokemon-invocation" class="pokemon-invocation"><div class="banner-picker"><div class="banner-nav"><button data-select-banner="route" aria-selected="true">Encontros da Rota</button><button data-select-banner="battle" aria-selected="false">Parceiros de Batalha</button><button data-select-banner="night" aria-selected="false">Ecos da Noite</button></div><label for="banner-select">Escolha sua invocação</label><select id="banner-select"></select><p id="banner-description"></p><small>A garantia é separada para cada banner.</small></div><div id="summon-display" class="summon-display"><canvas id="summon-partner" width="320" height="280" aria-label="Parceiro em destaque nesta invocação"></canvas><h2 id="summon-banner-title"></h2><div class="summon-rings"><span></span><span></span><span></span></div><div class="summon-core" id="summon-core"></div><p>Quem vai entrar na sua arena?</p></div><p id="summon-budget" class="summon-budget"></p><div class="summon-actions"><button id="summon-one" class="primary-button"><b>Invocar 1</b><span>1 ticket</span></button><button id="summon-ten" class="secondary-button"><b>Invocar 10</b><span>10 tickets</span></button></div><div class="pity-box"><div><b>Proteção contra azar</b><span id="pity-count">0 / 10</span></div><progress id="pity-progress" max="10" value="0"></progress><p>Após 9 resultados comuns seguidos, a próxima invocação garante R, SR, SSS ou UR.</p></div><details class="odds-details"><summary>Probabilidades, garantia e duplicatas</summary><p id="odds-guarantee">A garantia é separada para cada banner. Após nove comuns consecutivos naquele banner, a próxima invocação garante R, SR, SSS ou UR.</p><p id="odds-rates">C: 70% · R: 21% · SR: 7,8% · SSS: 0,7% · UR: 0,5%.</p><p id="odds-duplicates">Pokémon repetidos viram diamantes: C 10 · R 30 · SR 60 · SSS 150 · UR 300. Use na loja para escolher um Pokémon ou adquirir uma versão shiny. Na invocação garantida, as chances são R 70% · SR 26% · SSS 2,33% · UR 1,67%. Você também pode desbloquear Pokémon diretamente pela coleção.</p><p>Não há compras com dinheiro real. O sorteio funciona localmente no aparelho.</p></details></div><div id="technique-invocation" class="technique-invocation" hidden><div id="technique-partner" class="technique-partner"></div><div class="technique-controls"><h2>Máquinas técnicas</h2><p>Use tickets para obter TMs compatíveis.</p><label>Quem vai aprender?<select id="technique-mon"></select></label><p id="ticket-budget"></p><button id="technique-spin" class="primary-button">Obter TM · 1 ticket</button><details><summary>Golpes disponíveis e chances</summary><p id="technique-pool"></p></details><p class="support-copy">Tickets: 2 na diária, 1 por primeira vitória de fase e 1 a cada 3 vitórias recompensadas.</p></div></div></section>
-<section id="screen-shop" class="screen content-screen shop-screen" aria-label="Loja" hidden><div class="screen-title"><div><h1>Loja</h1><p>Pokémon, itens e visuais shiny.</p></div><span id="shop-balance" class="shop-balance"></span></div><div class="shop-toolbar"><div class="segmented"><button data-shop-filter="pokemon" aria-pressed="true">Pokémon</button><button data-shop-filter="shiny" aria-pressed="false">Shiny</button><button data-shop-filter="items" aria-pressed="false">Itens</button></div><p>Diamantes recebidos nas invocações. Sem dinheiro real.</p></div><button id="buy-pokeballs" class="secondary-button">Comprar 5 Poké Balls · 250 moedas</button><div id="shop-grid" class="shop-grid"></div><p class="support-copy">Shinies são visuais alternativos, sem bônus de poder. Novas versões entram conforme os sprites completos são integrados.</p></section><section id="screen-campaign" class="screen content-screen campaign-screen" hidden aria-label="Campanha"><div class="screen-title"><div><h1>Jornada de Kanto</h1><p id="campaign-subtitle">Capítulo 1 · Arraste o mapa para explorar.</p></div><span id="campaign-progress"></span></div><div class="campaign-layout"><div class="campaign-viewport"><div id="chapter-list" class="chapter-map" aria-label="Fases da campanha"></div><div id="campaign-hint" class="campaign-hint" hidden>Arraste para explorar</div><aside id="stage-detail" class="stage-detail-float"></aside></div></div></section><section id="screen-bag" class="screen content-screen inventory-screen" aria-label="Mochila" hidden><div class="screen-title"><div><h1>Mochila</h1><p>Escolha um item para usar ou equipar.</p></div><span id="bag-balls"></span></div><div class="inventory-layout"><div id="bag-items" class="bag-items"></div><aside id="inventory-detail" class="game-side-panel"></aside></div></section><section id="screen-partner" class="screen content-screen partner-screen" aria-label="Seu Pokémon" hidden><div class="screen-title"><div><h1 id="partner-name"></h1></div><span id="partner-level" class="level-badge"></span></div><div class="partner-layout"><div class="partner-stage"><canvas id="partner-sprite" width="360" height="300" aria-label="Seu Pokémon animado"></canvas><div id="partner-types" class="type-list"></div><div id="partner-xp" class="partner-xp"></div></div><div class="partner-workspace"><div class="partner-tabs" role="tablist" aria-label="Detalhes do parceiro"><button data-partner-tab="attributes" role="tab" aria-selected="true">Atributos</button><button data-partner-tab="moves" role="tab" aria-selected="false">Golpes</button><button data-partner-tab="evolution" role="tab" aria-selected="false">Evolução</button><button data-partner-tab="item" role="tab" aria-selected="false">Item</button></div><div id="partner-panel" class="partner-panel" role="tabpanel"></div></div></div></section></main>
-<nav id="main-nav" class="main-nav" aria-label="Navegação principal"><button data-route="home" aria-current="page"><span data-icon="home"></span><small>Início</small></button><button data-route="team"><span data-icon="team"></span><small>Equipe</small></button><button data-route="collection"><span data-icon="collection"></span><small>Pokémon</small></button><button data-route="summon"><span data-icon="bolt"></span><small>Recrutar</small></button><button data-route="shop"><span data-icon="diamond"></span><small>Loja</small></button><button data-route="bag"><span data-icon="bag"></span><small>Mochila</small></button><button data-route="rewards"><span data-icon="gift"></span><small>Bônus</small></button></nav>
+<section id="screen-shop" class="screen content-screen shop-screen" aria-label="Loja" hidden><div class="screen-title"><div><h1>Loja</h1><p>Pokémon, itens e visuais shiny.</p></div><span id="shop-balance" class="shop-balance"></span></div><div class="shop-toolbar"><div class="segmented"><button data-shop-filter="pokemon" aria-pressed="true">Pokémon</button><button data-shop-filter="shiny" aria-pressed="false">Shiny</button><button data-shop-filter="items" aria-pressed="false">Itens</button></div><p>Diamantes recebidos nas invocações. Sem dinheiro real.</p></div><button id="buy-pokeballs" class="secondary-button">Comprar 5 Poké Balls · 250 moedas</button><div id="shop-grid" class="shop-grid"></div><p class="support-copy">Shinies são visuais alternativos, sem bônus de poder. Novas versões entram conforme os sprites completos são integrados.</p></section><section id="screen-campaign" class="screen content-screen campaign-screen" hidden aria-label="Campanha"><div class="screen-title"><div><h1>Jornada de Kanto</h1><p id="campaign-subtitle">Capítulo 1 · Arraste o mapa para explorar.</p></div><span id="campaign-progress"></span></div><div class="campaign-layout"><div class="campaign-viewport"><div id="chapter-list" class="chapter-map" aria-label="Fases da campanha"></div><div id="campaign-hint" class="campaign-hint" hidden>Arraste para explorar</div><aside id="stage-detail" class="stage-detail-float"></aside></div></div></section><!-- TELA DE MOCHILA -->
+<section id="screen-bag" class="screen content-screen inventory-screen" aria-label="Mochila" hidden>
+  <header class="ss-screen-header">
+    <button type="button" class="ss-btn-icon" data-route="home" aria-label="Voltar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h1 class="ss-title-display ss-flex-1" style="font-size: 24px; text-align: center;">Mochila</h1>
+    <div class="ss-flex ss-items-center ss-gap-2">
+      <button id="bag-diamonds" class="ss-currency ss-currency--diamonds" aria-label="Diamantes"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L22 12 L12 22 L2 12 Z"/></svg><b id="bag-diamonds-value">0</b></button>
+      <button id="bag-coins" class="ss-currency ss-currency--coins" aria-label="Moedas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/></svg><b id="bag-coins-value">0</b></button>
+      <button id="bag-menu" class="ss-btn-icon" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+  
+  <main class="ss-flex-1 ss-overflow-auto" style="padding: 16px;">
+    <div id="bag-balls" class="ss-text-caption" style="margin-bottom: 16px; color: var(--ss-cyan);"></div>
+    
+    <div class="ss-grid" style="grid-template-columns: 1fr 320px; gap: 16px; align-items: start;">
+      <!-- Grid de Itens (esquerda) -->
+      <div id="bag-items" class="ss-grid ss-grid-cols-auto" style="gap: 12px;"></div>
+      
+      <!-- Detalhe do Item (direita) -->
+      <aside id="inventory-detail" class="ss-panel ss-flex ss-flex-col" style="min-width: 0; max-height: 100%;">
+        <div id="inventory-detail-content" class="ss-flex-1 ss-overflow-auto">
+          <p class="ss-text-caption" style="text-align: center; color: var(--ss-text-muted); padding: 40px 20px;">Selecione um item para ver detalhes</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+  
+  <nav class="ss-bottom-nav" aria-label="Navegação principal">
+    <button type="button" class="ss-nav-item" data-route="home" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v6M3 9h18"/></svg>
+      <span>Início</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="team" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="3.2"/><path d="M2.5 20c.5-3.2 2.6-5 5.5-5s5 1.8 5.5 5"/><circle cx="17" cy="9" r="2.6"/><path d="M14.5 20c.4-2.6 1.9-4.2 4-4.2"/></svg>
+      <span>Equipe</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="collection" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+      <span>Coleção</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="summon" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+      <span>Recrutar</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="shop" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1.2 13H7.2L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      <span>Loja</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="bag" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8h12l2 13H4L6 8Z"/><path d="M9 8V5a3 3 0 0 1 6 0v3M7 14h10"/></svg>
+      <span>Mochila</span>
+    </button>
+  </nav>
+</section><!-- TELA DE DETALHES DO POKÉMON -->
+<section id="screen-partner" class="screen content-screen partner-screen" aria-label="Seu Pokémon" hidden>
+  <header class="ss-screen-header">
+    <button type="button" class="ss-btn-icon" data-route="team" aria-label="Voltar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="ss-flex-1 ss-flex ss-flex-col ss-items-center ss-gap-1" style="min-width: 0;">
+      <h1 id="partner-name" class="ss-title-display" style="font-size: 24px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></h1>
+      <div class="ss-flex ss-items-center ss-gap-3">
+        <span id="partner-level" class="ss-rarity-badge" style="--rarity-color: var(--ss-cyan); font-size: 12px;"></span>
+        <div class="ss-diagonal-divider" style="width: 60px; height: 2px;"></div>
+      </div>
+    </div>
+    <div class="ss-flex ss-items-center ss-gap-2">
+      <button id="partner-diamonds" class="ss-currency ss-currency--diamonds" aria-label="Diamantes"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 L22 12 L12 22 L2 12 Z"/></svg><b id="partner-diamonds-value">0</b></button>
+      <button id="partner-coins" class="ss-currency ss-currency--coins" aria-label="Moedas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/></svg><b id="partner-coins-value">0</b></button>
+      <button id="partner-menu" class="ss-btn-icon" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+  
+  <main class="ss-flex-1 ss-overflow-auto" style="padding: 16px;">
+    <div class="ss-grid" style="grid-template-columns: 40% 60%; gap: 16px; align-items: start;">
+      <!-- Área Esquerda: Pokémon (40%) -->
+      <div class="ss-flex ss-flex-col ss-items-center ss-gap-4">
+        <!-- Sprite Grande -->
+        <div class="ss-relative" style="width: 100%; aspect-ratio: 1; max-width: 280px;">
+          <canvas id="partner-sprite" class="ss-sprite" width="360" height="360" aria-label="Seu Pokémon animado" style="width: 100%; height: 100%; object-fit: contain;"></canvas>
+        </div>
+        
+        <!-- Plataforma Estilo Poké Ball -->
+        <div class="ss-relative ss-flex ss-items-center ss-justify-center" style="width: 100%; max-width: 280px; height: 100px;">
+          <div class="ss-absolute ss-inset-0 ss-flex ss-items-center ss-justify-center" aria-hidden="true">
+            <!-- Anéis concêntricos -->
+            <div class="ss-absolute" style="width: 180px; height: 180px; border: 2px solid var(--ss-border); border-radius: 50%; opacity: 0.3;"></div>
+            <div class="ss-absolute" style="width: 140px; height: 140px; border: 2px solid var(--ss-border); border-radius: 50%; opacity: 0.2;"></div>
+            <div class="ss-absolute" style="width: 100px; height: 100px; border: 2px solid var(--ss-border); border-radius: 50%; opacity: 0.15;"></div>
+            <!-- Centro Poké Ball -->
+            <div class="ss-relative ss-flex ss-items-center ss-justify-center" style="width: 80px; height: 80px; background: linear-gradient(180deg, #FFFFFF 50%, #E9003B 50%); border-radius: 50%; border: 3px solid var(--ss-border); box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+              <div style="width: 36px; height: 36px; background: #121C2C; border-radius: 50%; border: 2px solid var(--ss-border);"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tipos -->
+        <div id="partner-types" class="ss-flex ss-flex-wrap ss-gap-2 ss-justify-center" style="min-height: 32px;"></div>
+        
+        <!-- Painel XP Trapezoidal -->
+        <div class="ss-card ss-card-bottom-accent" style="width: 100%; max-width: 280px; --ss-card-accent: var(--ss-cyan); padding: 16px;">
+          <div class="ss-flex ss-justify-between ss-items-center ss-gap-2 mb-3">
+            <h3 class="ss-title-headline" style="font-size: 16px;">XP</h3>
+          </div>
+          <div class="ss-progress ss-progress-bar--xp" style="height: 8px;">
+            <div id="partner-xp-bar" class="ss-progress-bar ss-progress-bar--xp" style="width: 0%;"></div>
+          </div>
+          <div class="ss-flex ss-justify-between ss-items-center mt-2">
+            <span id="partner-xp-current" class="ss-text-number" style="font-size: 13px;">0</span>
+            <span id="partner-xp-max" class="ss-text-number ss-text-muted" style="font-size: 13px;">/ 1000</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Área Direita: Informações e Abas (60%) -->
+      <div class="ss-flex-1 ss-min-h-0 ss-flex ss-flex-col">
+        <!-- Abas Angulares -->
+        <div class="ss-tabs" role="tablist" aria-label="Detalhes do parceiro" style="margin-bottom: 16px;">
+          <button type="button" class="ss-tab" data-partner-tab="attributes" role="tab" aria-selected="true">Atributos</button>
+          <button type="button" class="ss-tab" data-partner-tab="moves" role="tab" aria-selected="false">Golpes</button>
+          <button type="button" class="ss-tab" data-partner-tab="evolution" role="tab" aria-selected="false">Evolução</button>
+          <button type="button" class="ss-tab" data-partner-tab="item" role="tab" aria-selected="false">Item</button>
+        </div>
+        
+        <!-- Painel de Conteúdo das Abas -->
+        <div id="partner-panel" class="ss-flex-1 ss-min-h-0 ss-overflow-auto" role="tabpanel"></div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Navegação Inferior -->
+  <nav class="ss-bottom-nav" aria-label="Navegação principal">
+    <button type="button" class="ss-nav-item" data-route="home" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v6M3 9h18"/></svg>
+      <span>Início</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="team" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="3.2"/><path d="M2.5 20c.5-3.2 2.6-5 5.5-5s5 1.8 5.5 5"/><circle cx="17" cy="9" r="2.6"/><path d="M14.5 20c.4-2.6 1.9-4.2 4-4.2"/></svg>
+      <span>Equipe</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="collection" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+      <span>Coleção</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="bag" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8h12l2 13H4L6 8Z"/><path d="M9 8V5a3 3 0 0 1 6 0v3M7 14h10"/></svg>
+      <span>Mochila</span>
+    </button>
+    <button type="button" class="ss-nav-item" data-route="shop" aria-current="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1.2 13H7.2L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      <span>Loja</span>
+    </button>
+  </nav>
+</section></main>
+<nav id="main-nav" class="ss-bottom-nav" aria-label="Navegação principal">
+  <button type="button" class="ss-nav-item" data-route="home" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v6M3 9h18"/></svg>
+    <span>Início</span>
+  </button>
+  <button type="button" class="ss-nav-item" data-route="team" aria-current="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="3.2"/><path d="M2.5 20c.5-3.2 2.6-5 5.5-5s5 1.8 5.5 5"/><circle cx="17" cy="9" r="2.6"/><path d="M14.5 20c.4-2.6 1.9-4.2 4-4.2"/></svg>
+    <span>Equipe</span>
+  </button>
+  <button type="button" class="ss-nav-item" data-route="collection" aria-current="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+    <span>Coleção</span>
+  </button>
+  <button type="button" class="ss-nav-item" data-route="summon" aria-current="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+    <span>Recrutar</span>
+  </button>
+  <button type="button" class="ss-nav-item" data-route="shop" aria-current="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1.2 13H7.2L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+    <span>Loja</span>
+  </button>
+  <button type="button" class="ss-nav-item" data-route="bag" aria-current="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8h12l2 13H4L6 8Z"/><path d="M9 8V5a3 3 0 0 1 6 0v3M7 14h10"/></svg>
+    <span>Mochila</span>
+  </button>
+  <button type="button" class="ss-nav-item" data-route="rewards" aria-current="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="1"/><path d="M12 10v10M4 14h16"/><path d="M12 10c-4.5 0-5.5-2-4.5-4S11 4.5 12 10zm0 0c4.5 0 5.5-2 4.5-4S13 4.5 12 10z"/></svg>
+    <span>Missões</span>
+  </button>
+</nav>
 </div>
 <section id="battle-screen" class="battle-screen" hidden aria-label="Batalha offline">
  <span class="battle-side-label">VOCÊ · lado esquerdo</span>
@@ -103,6 +418,56 @@
 <dialog id="pause-dialog" class="pause-dialog"><div class="dialog-heading"><h2>Batalha pausada</h2></div><p>Seu tempo também está pausado.</p><button id="battle-resume" class="primary-button">Continuar</button><button id="battle-surrender" class="secondary-button">Desistir da batalha</button></dialog>
 <dialog id="result-dialog" class="result-dialog"><div id="result-content"></div></dialog>
 <dialog id="pull-dialog" class="pull-dialog"><div id="pull-content"></div></dialog>
+<!-- Move Selector Modal -->
+<dialog id="move-selector-modal" class="ss-modal" style="max-width: 480px;">
+  <header class="ss-modal-header">
+    <h2 class="ss-modal-title">Escolher Golpe</h2>
+    <button class="ss-modal-close" aria-label="Fechar" data-move-selector-cancel>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </header>
+  <div class="ss-modal-body"></div>
+</dialog>
+
+<!-- Battle Move Learning Modal -->
+<dialog id="battle-move-learn-modal" class="ss-modal" style="max-width: 480px;">
+  <header class="ss-modal-header">
+    <h2 class="ss-modal-title">Novo Golpe Desbloqueado!</h2>
+    <div class="ss-countdown" id="battle-move-countdown" style="margin-left: auto;">10</div>
+  </header>
+  <div class="ss-modal-body">
+    <div class="ss-flex ss-flex-col ss-gap-3 ss-items-center">
+      <div class="ss-sprite" style="width: 80px; height: 80px; background: var(--ss-bg-panel); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+        <img id="battle-move-learn-sprite" src="" alt="" style="width: 64px; height: 64px;">
+      </div>
+      <h3 id="battle-move-learn-name" class="ss-title-headline" style="font-size: 20px; text-align: center;"></h3>
+      <p class="ss-text-caption" style="color: var(--ss-cyan); text-align: center;">Novo golpe desbloqueado!</p>
+      
+      <div class="ss-card" style="width: 100%; padding: 16px; --ss-card-accent: var(--ss-red);">
+        <div class="ss-flex ss-items-center ss-gap-3 mb-2">
+          <span id="battle-move-learn-type" class="ss-type-tag"></span>
+          <span id="battle-move-learn-move-name" class="ss-title-headline" style="font-size: 16px;"></span>
+        </div>
+        <div class="ss-flex ss-gap-2 ss-text-caption">
+          <span id="battle-move-learn-power"></span>
+          <span>·</span>
+          <span id="battle-move-learn-cooldown"></span>
+        </div>
+        <p id="battle-move-learn-desc" class="ss-text-caption" style="margin-top: 8px;"></p>
+      </div>
+      
+      <p class="ss-text-caption" style="color: var(--ss-cyan); text-align: center; font-size: 12px;">Selecione qual golpe substituir:</p>
+      
+      <div class="ss-flex ss-flex-col ss-gap-2" style="width: 100%; max-height: 200px; overflow-y: auto;" id="battle-move-learn-slots"></div>
+      
+      <div class="ss-flex ss-gap-2" style="width: 100%; margin-top: 8px;">
+        <button class="ss-btn-secondary" style="flex: 1;" id="battle-move-learn-cancel">Cancelar</button>
+        <button class="ss-btn-primary" style="flex: 1;" id="battle-move-learn-confirm" disabled>Confirmar</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 <script type="module" src="/pulse/app.js"></script>
 </body></html>

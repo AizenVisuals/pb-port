@@ -239,7 +239,7 @@ test('displayStats: detalhe do parceiro mostra stats no nível, não base stats'
   assert.ok(app.includes("displayStats} from './growth.js'"), 'app.js importa displayStats');
   assert.ok(app.includes('Object.entries(displayStats(m.stats, m.level, {ivs:m.ivs,nature:m.effectiveNature}))'), 'detalhe do parceiro usa displayStats');
   const ui = await readFile(new URL('../public/pulse/management-ui.js', import.meta.url), 'utf8');
-  assert.ok(ui.includes("displayStats,natureLabel,natureName} from './growth.js'"), 'management-ui.js importa displayStats');
+  assert.ok(/displayStats[^}]*\}\s*from\s*'\.\/growth\.js'/.test(ui), 'management-ui.js importa displayStats');
   assert.ok(ui.includes('Atributos base'), 'seção de base mantida');
   assert.ok(ui.includes('<h2>No nível ${m.level}</h2>'), 'seção "No nível" existe');
   assert.ok(ui.includes('Object.entries(displayStats(m.stats, m.level, {ivs:m.ivs,nature:m.effectiveNature}))'), 'seção "No nível" usa displayStats');

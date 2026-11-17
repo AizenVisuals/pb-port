@@ -259,9 +259,13 @@ export class OfflineBattle {
     const active = b.fighters[own];
     const summary = (actor, index, activeActor) => {
       const key = keyOf(actor), info = e.INFO[key];
-      const maxHp = Math.max(1, actor?.maxHp || 1), hp = Math.max(0, actor?.hp || 0);
+      const level = actor?.level || 50;
+      const baseHp = actor?.spec?.base?.hp || info?.stats?.hp || 50;
+      const fallbackStHp = Math.floor((2 * baseHp + 31) * level / 100) + level + 10;
+      const stHp = actor?.st?.hp > 0 ? actor.st.hp : fallbackStHp;
+      const maxHp = Math.max(1, actor?.maxHp || stHp * 9 || 1), hp = Math.max(0, actor?.hp ?? maxHp);
       return {key, dex: actor?.spec?.dex || info?.dex, name: actor?.name || info?.name || key || '', index,
-        level:actor?.level||50,hpScale:actor?.st?.hp?maxHp/actor.st.hp:1,hp, maxHp, hpRatio: hp / maxHp, types: [...(actor?.types || info?.types || [])], status: actor?.status || null,
+        level, hpScale: stHp > 0 ? maxHp / stHp : 9, hp, maxHp, hpRatio: hp / maxHp, types: [...(actor?.types || info?.types || [])], status: actor?.status || null,
         frozen: (actor?.frozen || 0) > 0, confused: (actor?.confusedT || 0) > 0, toxic: !!actor?.toxic,
         guarding: !!actor?.guarding,
         stages: Object.fromEntries(Object.entries(actor?.stages || {}).filter(([, v]) => v)),
@@ -423,6 +427,9 @@ function normalizeTeam(engine, team, count) {
   return {mons:[...team.mons],moves,gimmick};
 }
 const total = info => Object.values(info.stats || {}).reduce((sum,n) => sum + (Number(n) || 0), 0);
+export const levelLegalMoveIds=(info,rules,level)=>(info?.pool||[])
+  .filter(move=>Number.isInteger(rules?.levelMoves?.[move.id])&&rules.levelMoves[move.id]<=level)
+  .map(move=>move.id).slice(-4);
 function buildBotTeam(engine, player, count, seed, growth) {
   const budget = player.mons.reduce((sum,key) => sum + total(engine.INFO[key]), 0) / count;
   const random = seeded(Number.isInteger(seed) ? seed ^ 0x8d12aa13 : randomSeed());
@@ -430,7 +437,14 @@ function buildBotTeam(engine, player, count, seed, growth) {
   const candidates = [...engine.ROSTER].filter(key => !player.mons.includes(key)&&(!growth||engine.INFO[key]?.pool.some(m=>m.power>0&&LEARNSETS[key]?.levelMoves[m.id]<=level)));
   const ranked = candidates.map(key => ({key,score:Math.abs(total(engine.INFO[key]) - budget) + random() * 170})).sort((a,b) => a.score-b.score);
   const mons = ranked.slice(0,count).map(x => x.key);
-  return {mons,moves:mons.map(key => engine.legalMoves(key)),gimmick:null};
+  // O bot obedece ao mesmo learnset por nível do jogador. Antes, o filtro
+  // só decidia quais espécies podiam entrar, mas `legalMoves(key)` ainda
+  // devolvia os defaults completos — inclusive golpes acima do nível.
+  const moves=mons.map(key=>{
+    const learned=levelLegalMoveIds(engine.INFO[key],LEARNSETS[key],level);
+    return engine.legalMoves(key,learned);
+  });
+  return {mons,moves,gimmick:null};
 }
 function randomSeed() { if (globalThis.crypto?.getRandomValues) return crypto.getRandomValues(new Uint32Array(1))[0]; return Math.floor(Math.random() * 0x100000000); }
 function seeded(value) { let n = value >>> 0 || 1; return () => { n ^= n << 13; n ^= n >>> 17; n ^= n << 5; return (n >>> 0) / 4294967296; }; }

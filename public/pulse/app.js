@@ -376,6 +376,14 @@ function refresh() {
   const status = p.status();
   $("save-status").hidden = !status.message;
   $("save-status").textContent = status.message;
+  // Atualiza moedas/diamantes nas novas telas
+  const setCurrency = (id, value) => { const el = $(id); if (el) el.textContent = value; };
+  setCurrency("team-coins-value", s.coins.toLocaleString("pt-BR"));
+  setCurrency("team-diamonds-value", s.diamonds.toLocaleString("pt-BR"));
+  setCurrency("collection-coins-value", s.coins.toLocaleString("pt-BR"));
+  setCurrency("collection-diamonds-value", s.diamonds.toLocaleString("pt-BR"));
+  setCurrency("partner-coins-value", s.coins.toLocaleString("pt-BR"));
+  setCurrency("partner-diamonds-value", s.diamonds.toLocaleString("pt-BR"));
   if (route === "team") renderTeam();
   if (route === "collection") renderCollection();
   if (route === "shop") renderShop();
@@ -390,6 +398,10 @@ function renderCollection() {
   all("[data-owned]").forEach((x) =>
     x.setAttribute("aria-pressed", String(x.dataset.owned === ownedFilter)),
   );
+  all(".ss-segmented-btn[data-owned]").forEach((btn) => {
+    btn.setAttribute("aria-pressed", btn.dataset.owned === ownedFilter);
+    btn.setAttribute("aria-selected", btn.dataset.owned === ownedFilter);
+  });
   const s = save(),
     q = $("collection-search").value.trim().toLocaleLowerCase("pt-BR"),
     type = $("type-filter").value;
@@ -409,8 +421,27 @@ function renderCollection() {
   $("collection-empty").hidden = !!matches.length;
   $("collection-grid").innerHTML = matches
     .map(
-      (m) =>
-        `<button data-detail="${m.key}" class="pokemon-card rarity-${rarityTier(m).code} ${m.owned ? "" : "is-locked"}" aria-label="${esc(m.name)}, ${m.owned ? "na coleção" : "não desbloqueado"}">${portrait(m)}<span class="card-main"><span class="card-name">${esc(m.name)}${save().shinies.includes(m.key) ? `<span class="card-shiny">Shiny</span>` : ""}${tierBadge(m)}</span><span class="card-types">${m.types.map((t) => typeIcon(t, 20)).join("")}</span></span><span class="card-level">${m.owned ? `Nv. ${m.level}` : "A descobrir"}</span></button>`,
+      (m) => {
+        const tier = rarityTier(m);
+        const owned = m.owned;
+        const shinyMark = save().shinies.includes(m.key) ? '<span class="ss-text-caption" style="color: var(--ss-gold); margin-left: 4px;">✦</span>' : '';
+        return `<button data-detail="${m.key}" class="ss-card pokemon-card-new ${owned ? '' : 'is-locked'}" style="--ss-card-accent: ${tier.code === 'C' ? 'var(--ss-rarity-c)' : tier.code === 'R' ? 'var(--ss-rarity-r)' : tier.code === 'SR' ? 'var(--ss-rarity-sr)' : tier.code === 'SSS' ? 'var(--ss-rarity-sss)' : 'var(--ss-rarity-ur)'};" aria-label="${esc(m.name)}, ${owned ? 'na coleção' : 'não desbloqueado'}" data-owned="${owned}">
+          <div class="ss-flex ss-items-start ss-gap-3" style="padding: 12px;">
+            <div class="ss-sprite" style="width: 64px; height: 64px; flex-shrink: 0; background: ${owned ? 'transparent' : 'var(--ss-bg-secondary)'}; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+              ${portrait(m, owned ? '' : 'style="filter: grayscale(1) opacity(0.5);"')}
+            </div>
+            <div class="ss-flex-1 ss-min-w-0 ss-flex ss-flex-col ss-gap-2">
+              <div class="ss-flex ss-items-center ss-gap-2 ss-flex-wrap">
+                <span class="ss-title-headline" style="font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${esc(m.name)}</span>
+                ${shinyMark}
+                <span class="ss-rarity-badge ss-rarity-badge--${tier.code.toLowerCase()}">${tier.code}</span>
+              </div>
+              <div class="ss-flex ss-gap-1 ss-flex-wrap">${m.types.map((t) => typeIcon(t, 18)).join("")}</div>
+              <span class="ss-text-label" style="color: ${owned ? 'var(--ss-cyan)' : 'var(--ss-text-muted)'};">${owned ? `Nv. ${m.level}` : 'A descobrir'}</span>
+            </div>
+          </div>
+        </button>`;
+      }
     )
     .join("");
 }
@@ -624,13 +655,158 @@ function startPulls(count) {
 }
 let itemIconsPromise;
 async function battleGrowth(opponentLevel){
- const state=save();if(!state.growth)return undefined;
- itemIconsPromise||=Promise.all(Object.keys(ITEMS).map(async id=>{const image=new Image();image.src=`/pulse/assets/items/${id}.png`;try{await image.decode();return [id,image];}catch{return [id,null];}})).then(Object.fromEntries);
- const levels=Object.fromEntries(Object.entries(state.growth.pokemon).map(([key,pokemon])=>[key,levelOf(pokemon.xp)]));
- // Nature/IVs por Pokémon: entram no spec do ator em growth-battle.js e o
- // engine calcula os stats de batalha com eles (display == batalha).
- const traits=Object.fromEntries(Object.entries(state.growth.pokemon).map(([key,pokemon])=>[key,{ivs:pokemon.ivs,nature:pokemon.nature,mintNature:pokemon.mintNature}]));
- return {levels,traits,opponentLevel:opponentLevel||Math.max(...state.team.mons.map(k=>levels[k]||5)),selected:p.getTeam().moves,held:state.growth.held,icons:await itemIconsPromise,preview:key=>p.previewEvolution(key),onConsume:event=>p.consumeHeld({...event,battleId:battle.id}).ok,onEvolve:(from,to)=>{const result=p.evolvePokemon(from,to);refresh();if(!result.ok)notify(result.error);},onEvent:event=>playPulseSound(event.kind),onKnockout:event=>p.awardKnockoutXP(event),onDamageXP:event=>p.awardDamageXP(event)};
+  const state=save();if(!state.growth)return undefined;
+  itemIconsPromise||=Promise.all(Object.keys(ITEMS).map(async id=>{const image=new Image();image.src=`/pulse/assets/items/${id}.png`;try{await image.decode();return [id,image];}catch{return [id,null];}})).then(Object.fromEntries);
+  const levels=Object.fromEntries(Object.entries(state.growth.pokemon).map(([key,pokemon])=>[key,levelOf(pokemon.xp)]));
+  // Nature/IVs por Pokémon: entram no spec do ator em growth-battle.js e o
+  // engine calcula os stats de batalha com eles (display == batalha).
+  const traits=Object.fromEntries(Object.entries(state.growth.pokemon).map(([key,pokemon])=>[key,{ivs:pokemon.ivs,nature:pokemon.nature,mintNature:pokemon.mintNature}]));
+  
+  let battleGrowthRef = null;
+  let moveLearnResolve = null;
+  let moveLearnReject = null;
+  let moveLearnTimeout = null;
+  
+  const handleMoveLearn = (event) => {
+    if(event.kind !== 'move-learn') return;
+    
+    const { entry, actor } = event;
+    const m = mon(entry.key);
+    const moveData = m.pool.find(mv => mv.id === entry.moveId);
+    if(!moveData) return;
+    
+    // Pause battle
+    battle?.pause();
+    
+    // Show modal
+    const modal = $('battle-move-learn-modal');
+    const spriteEl = $('battle-move-learn-sprite');
+    const nameEl = $('battle-move-learn-name');
+    const typeEl = $('battle-move-learn-type');
+    const moveNameEl = $('battle-move-learn-move-name');
+    const powerEl = $('battle-move-learn-power');
+    const cooldownEl = $('battle-move-learn-cooldown');
+    const descEl = $('battle-move-learn-desc');
+    const slotsEl = $('battle-move-learn-slots');
+    const confirmBtn = $('battle-move-learn-confirm');
+    const cancelBtn = $('battle-move-learn-cancel');
+    const countdownEl = $('battle-move-countdown');
+    
+    // Set move data
+    spriteEl.src = face(m);
+    spriteEl.alt = m.name;
+    nameEl.textContent = m.name;
+    typeEl.style.setProperty('--type-color', TYPE_COLORS[moveData.type] || '#8fa8b3');
+    typeEl.textContent = types[moveData.type] || moveData.type;
+    moveNameEl.textContent = moveData.name;
+    powerEl.textContent = moveData.power ? `Poder ${moveData.power}` : 'Efeito';
+    cooldownEl.textContent = `${(moveData.cd/60).toFixed(1)}s`;
+    descEl.textContent = `Tipo: ${types[moveData.type] || moveData.type} · ${moveData.cat === 'status' ? 'STATUS' : moveData.cat === 'phys' ? 'FÍSICO' : 'ESPECIAL'}`;
+    
+    // Get current equipped moves
+    const selected = p.getTeam().moves[entry.key] || [];
+    const learnedMoves = m.pool.filter(mv => m.learned.includes(mv.id));
+    
+    // Build slots
+    slotsEl.innerHTML = Array.from({length: 4}, (_, i) => {
+      const currentMoveId = selected[i];
+      const currentMove = currentMoveId ? learnedMoves.find(mv => mv.id === currentMoveId) : null;
+      const isEmpty = !currentMoveId;
+      
+      return `<button class="ss-card battle-move-slot ${isEmpty ? 'empty' : ''}" data-slot="${i}" data-move-id="${currentMoveId || ''}" style="--ss-card-accent: ${currentMove ? (TYPE_COLORS[currentMove.type] || '#8fa8b3') : 'var(--ss-border)'}; padding: 12px 16px; display: flex; align-items: center; gap: 12px; justify-content: space-between;">
+        <div class="ss-flex ss-items-center ss-gap-3 ss-flex-1 ss-min-w-0">
+          ${currentMove ? `<span class="ss-type-tag" style="--type-color: ${TYPE_COLORS[currentMove.type] || '#8fa8b3'};">${types[currentMove.type] || currentMove.type}</span>` : '<span class="ss-text-caption" style="color: var(--ss-text-muted);">Vazio</span>'}
+          <div class="ss-flex-1 ss-min-w-0">
+            <span class="ss-title-headline" style="font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${currentMove ? esc(currentMove.name) : '<span class="ss-text-caption" style="color: var(--ss-text-muted);">Slot vazio</span>'}</span>
+            <div class="ss-flex ss-gap-2 ss-text-caption">
+              ${currentMove ? `<span>${currentMove.power ? 'Poder ' + currentMove.power : 'Efeito'}</span><span>·</span><span>${(currentMove.cd/60).toFixed(1)}s</span>` : ''}
+            </div>
+          </div>
+        </div>
+        ${!isEmpty ? '<span class="ss-text-label" style="color: var(--ss-cyan);">Substituir</span>' : '<span class="ss-text-label" style="color: var(--ss-cyan);">Aprender</span>'}
+      </button>`;
+    }).join('');
+    
+    // Slot selection
+    let selectedSlot = null;
+    slotsEl.querySelectorAll('.battle-move-slot').forEach(btn => {
+      btn.addEventListener('click', () => {
+        slotsEl.querySelectorAll('.battle-move-slot').forEach(b => b.classList.remove('chosen'));
+        btn.classList.add('chosen');
+        selectedSlot = parseInt(btn.dataset.slot, 10);
+        confirmBtn.disabled = false;
+      });
+    });
+    
+    // Countdown
+    let countdown = 10;
+    countdownEl.textContent = countdown;
+    const countdownInterval = setInterval(() => {
+      countdown--;
+      countdownEl.textContent = countdown;
+      if(countdown <= 0) {
+        clearInterval(countdownInterval);
+        // Time expired - cancel
+        closeModal();
+        moveLearnResolve({cancelled: true, reason: 'timeout'});
+      }
+    }, 1000);
+    
+    const closeModal = () => {
+      clearInterval(countdownInterval);
+      modal.close();
+      battle?.resume();
+    };
+    
+    const confirmMove = () => {
+      if(selectedSlot === null) return;
+      const currentMoveId = selected[selectedSlot];
+      const newMoveId = entry.moveId;
+      
+      // Check for duplicates
+      if(selected.includes(newMoveId) && selected.indexOf(newMoveId) !== selectedSlot) {
+        notify('Este golpe já está equipado em outro slot.');
+        return;
+      }
+      
+      // Update save
+      selected[selectedSlot] = newMoveId;
+      const result = p.setMoves(entry.key, selected);
+      if(apply(result)) {
+        notify(`${m.name}: ${moveData.name} equipado no slot ${selectedSlot + 1}.`);
+        // Confirm in battle growth
+        battleGrowthRef?.confirmMoveLearn(newMoveId, currentMoveId || null);
+      }
+      
+      closeModal();
+      moveLearnResolve({confirmed: true, moveId: newMoveId, replaceMoveId: currentMoveId});
+    };
+    
+    const cancelMove = () => {
+      closeModal();
+      battleGrowthRef?.cancelMoveLearn();
+      moveLearnResolve({cancelled: true, reason: 'user'});
+    };
+    
+    confirmBtn.onclick = confirmMove;
+    cancelBtn.onclick = cancelMove;
+    
+    modal.showModal();
+    
+    // Return promise that resolves when user makes choice
+    return new Promise((resolve, reject) => {
+      moveLearnResolve = resolve;
+      moveLearnReject = reject;
+    });
+  };
+  
+  return {levels,traits,opponentLevel:opponentLevel||Math.max(...state.team.mons.map(k=>levels[k]||5)),selected:p.getTeam().moves,held:state.growth.held,icons:await itemIconsPromise,preview:key=>p.previewEvolution(key),onConsume:event=>p.consumeHeld({...event,battleId:battle.id}).ok,onEvolve:(from,to)=>{const result=p.evolvePokemon(from,to);refresh();if(!result.ok)notify(result.error);},onEvent:event=>{
+    if(event.kind === 'move-learn'){
+      handleMoveLearn(event);
+    } else {
+      playPulseSound(event.kind);
+    }
+  },onKnockout:event=>p.awardKnockoutXP(event),onDamageXP:event=>p.awardDamageXP(event)};
 }
 function renderBag(){management?.renderBag();}
 function drawTechnique(){

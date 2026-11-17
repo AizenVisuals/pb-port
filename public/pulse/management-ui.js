@@ -46,16 +46,78 @@ export function createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,
  const stopSprites=()=>{worldToken++;for(const stop of stops)stop?.();stops=[];partnerStop?.();partnerStop=null;};
  const animate=async(canvas,key)=>{const token=worldToken;try{const stop=await animatePartner(canvas,mon(key),{reduced:matchMedia('(prefers-reduced-motion:reduce)').matches});if(canvas.isConnected&&token===worldToken)stops.push(stop);else stop();}catch{}};
  const openPartner=(key,section='attributes')=>{partner=key;tab=section;navigate('partner');};
- function renderTeam(){
-  stopSprites();const s=save(),team=p.getTeam();slot=Math.min(slot,team.mons.length<6?team.mons.length:5);
-  $('team-count').textContent=`${team.mons.length} / 6 parceiros`;
-  $('team-list').innerHTML=Array.from({length:6},(_,i)=>{const key=team.mons[i],m=key&&mon(key);return `<button class="formation-slot ${m?'team-member':'empty-slot'} ${i===slot?'selected':''}" data-formation-slot="${i}" aria-label="${m?esc(m.name):'Adicionar parceiro'}, posição ${i+1}" aria-pressed="${i===slot}"><span class="slot-number">${i===0?'Inicial':`Reserva ${i}`}</span>${m?`<canvas id="formation-sprite-${i}" width="160" height="140" aria-hidden="true"></canvas><b>${esc(m.name)}</b><small>Nv. ${m.level}${m.heldItem?' · Item equipado':''}</small>`:`<span class="empty-slot-mark">${icon('team')}</span><b>Adicionar</b>`}</button>`;}).join('');
-  const key=team.mons[slot],m=key&&mon(key);
-  $('formation-detail').innerHTML=m?`<div class="formation-selected">${portrait(m)}<div><h2>${esc(m.name)}</h2><span class="type-list">${tags(m)}</span><p>Nível ${m.level} · ${slot===0?'Abre a batalha':'Entra como reserva'}</p></div></div><div class="formation-command-list"><button data-partner="${key}" class="primary-button">Ver Pokémon</button><button data-formation-lead="${slot}" class="secondary-button" ${slot===0?'disabled title="Já abre a batalha"':''}>Liderar${slot===0?'<small>Já é o inicial</small>':''}</button><button data-formation-remove="${slot}" class="text-button" ${team.mons.length===1?'disabled title="A equipe precisa de ao menos um Pokémon"':''}>Retirar${team.mons.length===1?'<small>Único parceiro</small>':''}</button></div><button id="formation-swap" class="secondary-button">Escolher outro parceiro</button>`:'<h2>Posição livre</h2><p>Toque em um Pokémon da reserva abaixo.</p>';
-  $('formation-roster').innerHTML=s.unlocked.map(key=>{const m=mon(key),position=team.mons.indexOf(key);return `<button class="roster-thumb ${position>=0?'in-team':''}" data-roster-add="${key}" aria-label="Selecionar ${esc(m.name)}">${portrait(m)}<span>${esc(m.name)}</span><small>Nv. ${m.level}${position>=0?' · Na equipe':''}</small></button>`;}).join('');
-  team.mons.forEach((key,i)=>animate($('formation-sprite-'+i),key));
- }
- function renderPartner(){
+function renderTeam(){
+  stopSprites();const s=save(),team=p.getTeam();
+  
+  // Grid principal 3x2 (6 slots)
+  const mainGrid = $('team-main-grid');
+  if (mainGrid) {
+    mainGrid.innerHTML = Array.from({length: 6}, (_, i) => {
+      const key = team.mons[i];
+      const m = key && mon(key);
+      const isLeader = i === 0;
+      if (m) {
+        const tier = rarityTier(m);
+        return `<button class="ss-card pokemon-team-card" data-detail="${m.key}" style="--ss-card-accent: ${tier.code === 'C' ? 'var(--ss-rarity-c)' : tier.code === 'R' ? 'var(--ss-rarity-r)' : tier.code === 'SR' ? 'var(--ss-rarity-sr)' : tier.code === 'SSS' ? 'var(--ss-rarity-sss)' : 'var(--ss-rarity-ur)'};" aria-label="${esc(m.name)}, Nv. ${m.level}">
+          <div class="ss-flex ss-flex-col ss-items-center ss-gap-2" style="padding: 16px 12px; text-align: center;">
+            ${isLeader ? '<span class="ss-leader-badge">LÍDER</span>' : ''}
+            <div class="ss-sprite" style="width: 96px; height: 96px; background: transparent; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: visible;">
+              <canvas id="team-sprite-${i}" width="192" height="192" aria-hidden="true" style="width: 100%; height: 100%;"></canvas>
+            </div>
+            <span class="ss-title-headline" style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">${esc(m.name)}</span>
+            <span class="ss-rarity-badge ss-rarity-badge--${tier.code.toLowerCase()}">${tier.code}</span>
+            <div class="ss-flex ss-gap-1 ss-flex-wrap ss-justify-center">${m.types.map((t) => typeIcon(t, 16)).join("")}</div>
+            <span class="ss-text-label">Nv. ${m.level}</span>
+          </div>
+        </button>`;
+      } else {
+        return `<button class="ss-card pokemon-team-card empty-slot" data-add-slot="${i}" style="--ss-card-accent: var(--ss-border);" aria-label="Adicionar parceiro, posição ${i+1}">
+          <div class="ss-flex ss-flex-col ss-items-center ss-gap-2" style="padding: 16px 12px; text-align: center; color: var(--ss-text-muted);">
+            <span style="font-size: 32px;">+</span>
+            <span class="ss-text-label">${i === 0 ? 'Líder' : `Reserva ${i}`}</span>
+            <span class="ss-text-caption">Toque para adicionar</span>
+          </div>
+        </button>`;
+      }
+    }).join('');
+    
+    // Anima sprites dos Pokémon na equipe
+    team.mons.forEach((key, i) => {
+      const canvas = $('team-sprite-' + i);
+      if (canvas && key) animate(canvas, key);
+    });
+  }
+  
+  // Faixa inferior de reservas (Pokémon desbloqueados não na equipe)
+  const reserveBar = $('team-reserve-bar');
+  if (reserveBar) {
+    const teamSet = new Set(team.mons);
+    const reserves = s.unlocked.filter(key => !teamSet.has(key));
+    reserveBar.innerHTML = reserves.map(key => {
+      const m = mon(key);
+      const tier = rarityTier(m);
+      return `<button class="ss-card pokemon-reserve-card" data-roster-add="${key}" style="--ss-card-accent: ${tier.code === 'C' ? 'var(--ss-rarity-c)' : tier.code === 'R' ? 'var(--ss-rarity-r)' : tier.code === 'SR' ? 'var(--ss-rarity-sr)' : tier.code === 'SSS' ? 'var(--ss-rarity-sss)' : 'var(--ss-rarity-ur)'}; min-width: 100px;" aria-label="${esc(m.name)}, Nv. ${m.level}">
+        <div class="ss-flex ss-flex-col ss-items-center ss-gap-1" style="padding: 10px 8px; text-align: center;">
+          <div class="ss-sprite" style="width: 48px; height: 48px; background: transparent; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+            ${portrait(m, 'width="48" height="48"')}
+          </div>
+          <span class="ss-rarity-badge ss-rarity-badge--${tier.code.toLowerCase()}" style="font-size: 10px;">${tier.code}</span>
+          <span class="ss-text-caption" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px;">${esc(m.name)}</span>
+          <span class="ss-text-caption">Nv. ${m.level}</span>
+        </div>
+      </button>`;
+    }).join('') || '<span class="ss-text-caption" style="color: var(--ss-text-muted); padding: 8px;">Nenhum Pokémon reserva disponível.</span>';
+  }
+  
+  // Atualiza avatar do treinador no header
+  const trainerAvatar = $('team-trainer-avatar');
+  if (trainerAvatar) {
+    const facePath = trainerFace(s.trainerKey);
+    if (trainerAvatar.getAttribute("src") !== facePath) trainerAvatar.src = facePath;
+    trainerAvatar.alt = `Treinador ${trainerLabel(s.trainerKey)}`;
+  }
+}
+function renderPartner(){
   partner||=save().favorite;const m=mon(partner);if(!m){navigate('collection');return;}
   $('partner-name').textContent=m.name;$('partner-level').textContent=`Nv. ${m.level}`;$('partner-types').innerHTML=typePills696(m);
   const value=(m.xp??0)-xpAt(m.level),max=Math.max(1,xpAt(Math.min(100,m.level+1))-xpAt(m.level));
@@ -89,7 +151,7 @@ export function createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,
    }
   }
   stopSprites();animate($('partner-sprite'),m.key);
- }
+}
  function renderBag(){
   const s=save(),g=s.growth;if(!g)return;
   $('bag-balls').textContent=`${s.journey?.inventory.pokeball||0} Poké Balls`;
@@ -192,5 +254,110 @@ export function createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,
   if(b.dataset.formationLead!==undefined){const team=p.getTeam(),i=Number(b.dataset.formationLead);[team.mons[0],team.mons[i]]=[team.mons[i],team.mons[0]];team.gimmick=null;slot=0;apply(p.setTeam(team));}
   if(b.dataset.formationRemove!==undefined){closePanels();const team=p.getTeam();if(team.mons.length>1){team.mons.splice(Number(b.dataset.formationRemove),1);team.gimmick=null;apply(p.setTeam(team));}}
  });
- return {addSlot(){slot=Math.min(5,save().team.mons.length);renderTeam();$('formation-roster').scrollIntoView({block:'nearest'});},renderTeam,renderPartner,renderBag,renderCampaign,renderTechniques,openPartner,setInvocation,stopSprites,partner:()=>partner};
+ 
+  // Move Selector Floating Window
+  let moveSelectorMon = null;
+  let moveSelectorSlot = null;
+  
+  function openMoveSelector(monKey, slotIndex){
+    moveSelectorMon = monKey;
+    moveSelectorSlot = slotIndex;
+    const m = mon(monKey);
+    const learnedMoves = m.pool.filter(move => m.learned.includes(move.id));
+    const selected = p.getTeam().moves[monKey] || [];
+    const currentMoveId = selected[slotIndex];
+    
+    const modal = document.getElementById('move-selector-modal');
+    const content = modal.querySelector('.ss-modal-body');
+    
+    content.innerHTML = `
+      <div class="ss-flex ss-flex-col ss-gap-3">
+        <div class="ss-flex ss-items-center ss-gap-3 ss-flex-wrap">
+          ${portrait(m, 'width="56" height="56"')}
+          <div>
+            <h3 class="ss-title-headline" style="font-size: 18px;">${esc(m.name)}</h3>
+            <span class="ss-text-caption">Slot ${slotIndex + 1} ${currentMoveId ? `· Atual: ${learnedMoves.find(mv => mv.id === currentMoveId)?.name || currentMoveId}` : '· Vazio'}</span>
+          </div>
+        </div>
+        <p class="ss-text-caption" style="color: var(--ss-cyan);">Toque em um golpe para selecionar. ${currentMoveId ? 'O golpe atual será movido para a lista de aprendidos.' : 'Slot vazio — nenhum golpe será removido.'}</p>
+        <div class="ss-flex ss-flex-col ss-gap-2" style="max-height: 300px; overflow-y: auto;">
+          ${learnedMoves.map(move => {
+            const isCurrent = move.id === currentMoveId;
+            const isSelected = selected.includes(move.id);
+            const typeColor = TYPE_COLORS[move.type] || '#8fa8b3';
+            return `<button class="ss-card move-selector-option ${isCurrent ? 'current' : ''} ${isSelected ? 'selected' : ''}" data-move-id="${move.id}" style="--ss-card-accent: ${typeColor}; padding: 12px 16px; display: flex; align-items: center; gap: 12px; justify-content: space-between;" aria-label="${esc(move.name)}, ${move.power ? 'Poder ' + move.power : 'Efeito'}, ${(move.cd/60).toFixed(1)}s${isCurrent ? ' (atual)' : ''}${isSelected && !isCurrent ? ' (já equipado em outro slot)' : ''}">
+              <div class="ss-flex ss-items-center ss-gap-3 ss-flex-1 ss-min-w-0">
+                <span class="ss-type-tag" style="--type-color: ${typeColor};">${esc(move.type)}</span>
+                <div class="ss-flex-1 ss-min-w-0">
+                  <span class="ss-title-headline" style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${esc(move.name)}${isCurrent ? ' <span class="ss-text-caption" style="color: var(--ss-cyan);">(atual)</span>' : ''}${isSelected && !isCurrent ? ' <span class="ss-text-caption" style="color: var(--ss-gold);">(equipado)</span>' : ''}</span>
+                  <div class="ss-flex ss-gap-2 ss-text-caption">
+                    <span>${move.power ? 'Poder ' + move.power : 'Efeito'}</span>
+                    <span>·</span>
+                    <span>${(move.cd/60).toFixed(1)}s</span>
+                    <span class="ss-rarity-badge" style="--rarity-color: ${typeColor}; font-size: 10px;">${move.cat === 'status' ? 'STATUS' : move.cat === 'phys' ? 'FÍSICO' : 'ESPECIAL'}</span>
+                  </div>
+                </div>
+              </div>
+              ${!isCurrent && !isSelected ? '<span class="ss-text-label" style="color: var(--ss-cyan);">Selecionar</span>' : isCurrent ? '<span class="ss-text-caption" style="color: var(--ss-text-muted);">Golpe atual</span>' : '<span class="ss-text-caption" style="color: var(--ss-text-muted);">Já equipado</span>'}
+            </button>`;
+          }).join('')}
+        </div>
+        <div class="ss-flex ss-gap-2" style="margin-top: 8px;">
+          <button class="ss-btn-secondary" style="flex: 1;" data-move-selector-cancel>Cancelar</button>
+          <button class="ss-btn-primary" style="flex: 1;" data-move-selector-confirm disabled>Confirmar</button>
+        </div>
+      </div>
+    `;
+    
+    // Event listeners for move options
+    content.querySelectorAll('.move-selector-option:not(.current):not(.selected)').forEach(btn => {
+      btn.addEventListener('click', () => {
+        content.querySelectorAll('.move-selector-option').forEach(b => b.classList.remove('chosen'));
+        btn.classList.add('chosen');
+        content.querySelector('[data-move-selector-confirm]').disabled = false;
+        content.querySelector('[data-move-selector-confirm]').dataset.moveId = btn.dataset.moveId;
+      });
+    });
+    
+    content.querySelector('[data-move-selector-confirm]').addEventListener('click', () => {
+      const moveId = content.querySelector('[data-move-selector-confirm]').dataset.moveId;
+      if (moveId) confirmMoveSelection(moveSelectorMon, moveSelectorSlot, moveId);
+    });
+    
+    content.querySelector('[data-move-selector-cancel]').addEventListener('click', closeMoveSelector);
+    
+    modal.showModal();
+  }
+  
+  function confirmMoveSelection(monKey, slotIndex, newMoveId){
+    const m = mon(monKey);
+    const selected = p.getTeam().moves[monKey] || [];
+    const oldMoveId = selected[slotIndex];
+    const learnedMoves = m.pool.filter(move => m.learned.includes(move.id));
+    
+    // Check for duplicates
+    if (selected.includes(newMoveId) && selected.indexOf(newMoveId) !== slotIndex) {
+      notify('Este golpe já está equipado em outro slot.');
+      return;
+    }
+    
+    // Update moves
+    selected[slotIndex] = newMoveId;
+    const result = p.setMoves(monKey, selected);
+    
+    if (apply(result)) {
+      notify(`${m.name}: ${learnedMoves.find(mv => mv.id === newMoveId)?.name || newMoveId} equipado no slot ${slotIndex + 1}.`);
+      closeMoveSelector();
+      renderPartner();
+    }
+  }
+  
+  function closeMoveSelector(){
+    const modal = document.getElementById('move-selector-modal');
+    if (modal) modal.close();
+    moveSelectorMon = null;
+    moveSelectorSlot = null;
+  }
+
+return {addSlot(){slot=Math.min(5,save().team.mons.length);renderTeam();$('formation-roster').scrollIntoView({block:'nearest'});},renderTeam,renderPartner,renderBag,renderCampaign,renderTechniques,openPartner,setInvocation,stopSprites,partner:()=>partner,openMoveSelector,closeMoveSelector};;
 }

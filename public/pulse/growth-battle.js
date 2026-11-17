@@ -1,9 +1,10 @@
 import {planCPU} from './tactical-ai.js';
 import {EVOLUTIONS,ITEMS,selectedMoves,xpAt,effectiveNature,natureMultiplier} from './growth.js';
+import {LEARNSETS} from './learnsets.js';
 // PULSE runs at 60 fixed simulation steps/second. The native PB cinematic
-// yields 254 frames (50 entrance + 154 transformation + 50 exit).
-// Pace ONLY PULSE's controller to 300 frames = 5 seconds without altering PB.
-export const PULSE_EVOLUTION_FRAMES=300;
+// yields 254 frames (50 entrance + 154 transformation + 50 exit), plus 5
+// transition frames in the live battle loop. Pace to 295 so total = 300.
+export const PULSE_EVOLUTION_FRAMES=295;
 const PB_EVOLUTION_FRAMES=254;
 export function* pacePulseEvolution(nativeController){
  let step=0;
@@ -16,6 +17,9 @@ export function* pacePulseEvolution(nativeController){
   step++;
  }
 }
+
+// Move learning during battle
+export const MOVE_LEARN_EVENT = 'move-learn';
 
 /** Apply earned levels without replaying Mega transitions, healing, or resetting commands. */
 export function applyEarnedLevel(actor,level){
@@ -104,11 +108,29 @@ export function configureGrowthBattle(b,engine,{levels={},traits={},opponentLeve
     if(!preview(key))return false;
     evolutionQueue.push({key,level});return true;
   };
+  
+  // Move learning queue for battle
+  const moveLearnQueue=[];
+  const queueMoveLearn=(key,learnedMoveIds,currentLevel)=>{
+    if(!learnedMoveIds?.length)return;
+    // Only queue moves that are not already in the queue for this Pokémon
+    for(const moveId of learnedMoveIds){
+      if(!moveLearnQueue.some(entry=>entry.key===key && entry.moveId===moveId)){
+        moveLearnQueue.push({key,moveId,level:currentLevel,timestamp:Date.now()});
+      }
+    }
+  };
+  
   const applyGrowthChanges=changes=>{
     for(const change of changes||[]){
       for(const actor of b.teams[0].mons)if(actor.rkKey===change.key)applyEarnedLevel(actor,change.to);
       const edge=EVOLUTIONS[change.key];
       if(edge&&change.from<edge[1]&&change.to>=edge[1]&&b.teams[0].mons.some(actor=>actor.rkKey===change.key))queueEvolution(change.key,edge[1]);
+      
+      // Detect new moves learned
+      if(change.learned?.length){
+        queueMoveLearn(change.key, change.learned, change.to);
+      }
     }
   };
   const tryQueuedEvolutions=()=>{
@@ -117,6 +139,20 @@ export function configureGrowthBattle(b,engine,{levels={},traits={},opponentLeve
     const index=evolutionQueue.findIndex(entry=>entry.key===actor.rkKey);
     if(index<0)return;
     if(tryEvolve()!=='retry')evolutionQueue.splice(index,1);
+  };
+  
+  // Process move learning queue
+  const tryQueuedMoveLearns=()=>{
+    if(b.phase!=='fight'||b.cinematic||b.done)return;
+    if(!moveLearnQueue.length)return;
+    
+    // Process one move learn at a time
+    const entry = moveLearnQueue[0];
+    const actor = b.fighters[0];
+    if(!actor || actor.rkKey !== entry.key || actor.fainted)return;
+    
+    // Emit event for UI to show move learning modal
+    onEvent({kind: MOVE_LEARN_EVENT, entry, actor});
   };
   const flushEvolutions=()=>{
     for(const entry of evolutionQueue.splice(0)){
@@ -155,6 +191,41 @@ export function configureGrowthBattle(b,engine,{levels={},traits={},opponentLeve
     cancelAutoEvolution(){return false;},
     evolutionPrompt(){return null;},
     queuedEvolutions(){return evolutionQueue.map(entry=>({...entry}));},
+    
+    // Move learning during battle
+    confirmMoveLearn(moveId, replaceMoveId = null){
+      const entry = moveLearnQueue.shift();
+      if(!entry || entry.moveId !== moveId)return false;
+      
+      const actor = b.fighters[0];
+      if(!actor || actor.rkKey !== entry.key)return false;
+      
+      // Add move to actor's learned moves in battle
+      const moveObj = engine.moveObj(moveId);
+      if(moveObj && !actor.moves.some(m => m.name === moveObj.name)){
+        actor.moves.push(moveObj);
+      }
+      
+      // If replacing a move, remove the old one
+      if(replaceMoveId){
+        const replaceIdx = actor.moves.findIndex(m => m.name === engine.moveObj(replaceMoveId)?.name);
+        if(replaceIdx >= 0) actor.moves.splice(replaceIdx, 1);
+      }
+      
+      // Limit to 4 moves
+      while(actor.moves.length > 4) actor.moves.shift();
+      
+      onEvent({kind: 'move-learned', key: entry.key, moveId, replaceMoveId});
+      return true;
+    },
+    
+    cancelMoveLearn(){
+      moveLearnQueue.shift();
+      return true;
+    },
+    
+    queuedMoveLearns(){return moveLearnQueue.map(entry=>({...entry}));},
+    
     koXpTotal(){return koXpTotal;},
     hitXpTotal(){return hitXpTotal;},
     damageReport(){return {entries:[...damageByKey.entries()].map(([key,stats])=>({key,...stats})),damagingMoves:[...damagingMoveNames]};},
@@ -166,6 +237,7 @@ export function configureGrowthBattle(b,engine,{levels={},traits={},opponentLeve
       if(b.phase==='fight'&&!b.cinematic&&!b.done){const actor=b.fighters[1],opponent=b.fighters[0];if(actor?.ai&&!actor.action&&!actor.fainted&&!actor.hidden&&b.tick%36===0){const move=planCPU(actor,opponent,engine.moveStatus(b,1),b.teams[1].mons);if(move)actor.ai.plan=actor.moves.find(m=>m.name===move);}}
 
       tryQueuedEvolutions();
+      tryQueuedMoveLearns();
       if(!wanted||b.phase!=='fight'||b.cinematic)return;
       if(tryEvolve()!=='retry')wanted=false;
     },

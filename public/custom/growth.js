@@ -59,7 +59,9 @@ export function installGrowth({species,catalog,ranked,roster,entries,faces,getMo
     faces[entry.dex]=['Normal'];
   }
   for(const entry of sourceEntries)if(species[entry.key]){catalog[entry.key]=entry;ranked[entry.key]=entry;}
-  for(const key of ['bulbasaur','charmander','squirtle'])if(species[key])Object.assign(species[key],{flies:false,glide:false,levitate:false,hover:0});
+  // Ter tipo Voador não significa permanecer no ar durante a batalha.
+  // Doduo é explicitamente terrestre na série e deve receber golpes de chão.
+  for(const key of ['bulbasaur','charmander','squirtle','doduo'])if(species[key])Object.assign(species[key],{flies:false,glide:false,levitate:false,hover:0});
   // The downloaded catalog already contains the legal PB implementations shared across species.
   for(const entry of Object.values(catalog)){
     const spec=species[entry.key];if(!spec)continue;
