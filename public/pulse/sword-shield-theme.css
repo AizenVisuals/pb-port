@@ -1194,3 +1194,35 @@ h6 { font-size: var(--ss-text-base); }
     flex-wrap: wrap;
   }
 }
+
+/* Mobile-landscape layout repair: one footer and compact, scrollable screens. */
+#app .screen > nav.ss-bottom-nav{display:none!important}
+#app[data-route="home"] #main-nav.ss-bottom-nav{display:none!important}
+#app:not([data-route="home"]) #main-nav.ss-bottom-nav{display:flex}
+.iv-lock-button{color:#16283a}
+#screen-collection .pokemon-card-new .ss-title-headline{min-width:0;max-width:100%;display:block;overflow:hidden;text-overflow:ellipsis}
+#screen-collection .pokemon-card-new .ss-rarity-badge{flex:none}
+@media(orientation:landscape) and (max-height:540px){
+ #app:not([data-route="home"]) #main-nav.ss-bottom-nav{height:62px;min-height:62px;padding:3px 10px max(3px,env(safe-area-inset-bottom));gap:3px;box-sizing:border-box;z-index:30}
+ #app:not([data-route="home"]) #main-nav .ss-nav-item{min-height:48px;height:52px;padding:3px 5px;gap:2px;font-size:11px}
+ #app:not([data-route="home"]) #main-nav .ss-nav-item svg{width:20px;height:20px}
+ #screen-team,#screen-collection,#screen-bag,#screen-partner{display:flex;flex-direction:column;overflow:hidden;height:100%;min-height:0;padding:0 12px calc(66px + env(safe-area-inset-bottom));box-sizing:border-box}
+ #screen-team>main,#screen-collection>main,#screen-bag>main,#screen-partner>main{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;padding:10px 8px 14px!important;overscroll-behavior:contain}
+ #screen-team>.ss-screen-header,#screen-collection>.ss-screen-header,#screen-bag>.ss-screen-header,#screen-partner>.ss-screen-header{flex:0 0 auto;min-height:56px;padding:5px 8px;gap:8px}
+ #screen-team .ss-screen-header .ss-btn-icon,#screen-collection .ss-screen-header .ss-btn-icon,#screen-bag .ss-screen-header .ss-btn-icon,#screen-partner .ss-screen-header .ss-btn-icon{width:40px;height:40px;min-width:40px;min-height:40px;padding:8px}
+ #screen-team .ss-screen-header .ss-currency,#screen-collection .ss-screen-header .ss-currency,#screen-bag .ss-screen-header .ss-currency,#screen-partner .ss-screen-header .ss-currency{min-height:36px;padding:5px 10px;font-size:12px}
+ #screen-team .ss-screen-header .ss-panel{padding:3px 8px!important}
+ #screen-team .ss-screen-header .ss-avatar-lg{width:44px;height:44px;object-fit:contain}
+ #screen-team #team-main-grid{gap:8px!important;margin-bottom:10px!important}
+ #screen-team .pokemon-team-card{min-height:146px}
+ #screen-team .pokemon-team-card .ss-sprite{height:68px!important;width:68px!important}
+ #screen-team .pokemon-team-card .ss-flex-col{padding:8px!important;gap:4px}
+ #screen-collection #collection-grid{grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:8px!important}
+ #screen-collection .pokemon-card-new>.ss-flex{padding:8px!important;gap:8px}
+ #screen-collection .pokemon-card-new .ss-sprite{width:54px!important;height:54px!important}
+ #screen-bag #bag-items{grid-template-columns:repeat(auto-fill,minmax(124px,1fr));gap:8px!important}
+ #screen-bag .inventory-slot{min-height:120px}
+ #screen-bag #inventory-detail{min-width:0;overflow-y:auto}
+ #screen-partner .ss-grid{min-width:0}
+ #screen-partner .ss-grid>*{min-width:0}
+}

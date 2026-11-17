@@ -10,6 +10,8 @@ export function createManagementUI({p,save,mon,portrait,tags,types,esc,navigate,
  for(const [id,title] of [['formation-detail','Formação'],['inventory-detail','Mochila'],['stage-detail','Preparar batalha']]){
   const panel=$(id);
   if(!panel)continue; // Legacy detail panels may not exist in the new layout.
+  // Keep the modern bag details inline instead of moving the aside to a modal.
+  if(id==='inventory-detail' && panel.closest('#screen-bag'))continue;
   const sheet=document.createElement('dialog');sheet.className='sheet-dialog management-sheet';sheet.id=id+'-sheet';
   const header=document.createElement('header');header.className='dialog-heading';header.innerHTML=`<h2>${title}</h2><button class="icon-button" aria-label="Fechar">×</button>`;
   header.querySelector('button').onclick=()=>sheet.close();sheet.append(header,panel);document.body.append(sheet);panels[id]=sheet;

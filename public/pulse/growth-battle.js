@@ -18,6 +18,16 @@ export function* pacePulseEvolution(nativeController){
  }
 }
 
+// The Buizel-native Water Gun animation is a huge cinematic beam. Use the
+// smaller Blastoise Water Pulse projectile for the Water Gun visual only.
+// Damage, type, name and cooldown remain those of Water Gun.
+export function withCompactWaterGunVisual(move,lookupMove){
+ if(move?.name!=='Water Gun')return move;
+ const visual=lookupMove('blastoiseB:Water Pulse');
+ if(typeof visual?.run!=='function')return move;
+ return {...move,run:visual.run,beam:!!visual.beam,projectile:!!visual.projectile};
+}
+
 // Move learning during battle
 export const MOVE_LEARN_EVENT = 'move-learn';
 
@@ -49,7 +59,7 @@ export function configureGrowthBattle(b,engine,{levels={},traits={},opponentLeve
   for(const team of b.teams)for(const actor of team.mons){
     const key=actor.rkKey,level=team.side===0?levels[key]||5:opponentLevel;
     const cpuSave={growth:{pokemon:{[key]:{xp:xpAt(level)}},specialMoves:{},inherited:{}},team:{moves:{}}};
-    const moves=team.side===0?selected[key]?.map(engine.moveObj).filter(Boolean):selectedMoves(cpuSave,engine.INFO[key]).map(engine.moveObj).filter(Boolean);
+    const moves=(team.side===0?selected[key]?.map(engine.moveObj).filter(Boolean):selectedMoves(cpuSave,engine.INFO[key]).map(engine.moveObj).filter(Boolean))?.map(move=>withCompactWaterGunVisual(move,engine.moveObj));
     if(team.side===0&&!moves?.length)throw Error(`Nenhum golpe aprendido para ${key}.`);
     // IV/nature entram no spec do ator: o megaEvolve recalcula `st` via e7a
     // com os traits (o engine preserva traits sem eles — default IV 31 e

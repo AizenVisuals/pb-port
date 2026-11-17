@@ -384,6 +384,8 @@ function refresh() {
   setCurrency("collection-diamonds-value", s.diamonds.toLocaleString("pt-BR"));
   setCurrency("partner-coins-value", s.coins.toLocaleString("pt-BR"));
   setCurrency("partner-diamonds-value", s.diamonds.toLocaleString("pt-BR"));
+  setCurrency("bag-coins-value", s.coins.toLocaleString("pt-BR"));
+  setCurrency("bag-diamonds-value", s.diamonds.toLocaleString("pt-BR"));
   if (route === "team") renderTeam();
   if (route === "collection") renderCollection();
   if (route === "shop") renderShop();
@@ -1600,6 +1602,10 @@ function wire() {
   $('home-menu').onclick=()=>showDialog('lobby-menu-dialog');
   $('lobby-menu-close').onclick=()=>$('lobby-menu-dialog').close();
   $('lobby-menu-dialog').addEventListener('click',event=>{if(event.target.closest('[data-route]'))$('lobby-menu-dialog').close();});
+  // Route-specific header menu buttons should open the shared settings dialog.
+  for(const id of ['team-menu','collection-menu','bag-menu','partner-menu']){
+    $(id)?.addEventListener('click',()=>showDialog('lobby-menu-dialog'));
+  }
   $('lobby-settings').onclick=()=>{$('lobby-menu-dialog').close();$('home-profile').click();};
   const fullscreen=$('lobby-fullscreen');
   fullscreen.hidden=!!window.PulseNative?.isNative||!document.fullscreenEnabled;
