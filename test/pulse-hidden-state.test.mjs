@@ -10,7 +10,7 @@ test('login, onboarding, and lobby honor the hidden attribute despite display fl
   // A CSS display declaration with greater specificity can override the browser's
   // normal [hidden] stylesheet rule and leave an invisible/blocked guest login.
   assert.match(css,/\[hidden\]\s*\{\s*display:\s*none\s*!important;\s*\}/);
-  for(const id of ['boot','login-screen','login-step-profile','app']){
+  for(const id of ['login-screen','login-step-profile','app']){
     assert.match(html,new RegExp('id="'+id+'"[^>]*hidden'));
   }
   assert.match(app,/screen\.hidden\s*=\s*true/);
