@@ -77,6 +77,10 @@ export function configureGrowthBattle(b,engine,{levels={},traits={},opponentLeve
   };
   const hit=b.hit;
   if(typeof hit==='function')b.hit=(attacker,target,move,...args)=>{
+    // Water Gun borrows the smaller Water Pulse artwork, not its 20% flinch.
+    if(move?.name==='Water Gun' && args[0]?.flinch){
+      args[0]={...args[0],flinch:0};
+    }
     const oldHp=target?.hp,battleText=b.text;let critical=false,result;
     b.text=(x,y,message,options)=>{
       if(typeof message==='string'&&/^CRITICAL!?$/i.test(message))critical=true;

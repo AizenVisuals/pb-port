@@ -25,3 +25,9 @@ test('bag and screen menus retain working hookups',()=>{
  assert.ok(app.includes("['team-menu','collection-menu','bag-menu','partner-menu']"));
  assert.ok(management.includes("id==='inventory-detail' && panel.closest('#screen-bag')"));
 });
+
+test('Water Gun does not inherit Water Pulse flinch chance',()=>{
+  const growth=source('public/pulse/growth-battle.js');
+  assert.ok(growth.includes("if(move?.name==='Water Gun' && args[0]?.flinch)"));
+  assert.ok(growth.includes('args[0]={...args[0],flinch:0}'));
+});
